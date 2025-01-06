@@ -2,7 +2,7 @@
 
 import { usePathname} from 'next/navigation';
 import {Book, BookmarkIcon, MessageCircleIcon, Trophy } from 'lucide-react';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 const NAV_ITEMS = [
     { path: '/', label: '학습', icon: Book },
@@ -13,6 +13,7 @@ const NAV_ITEMS = [
 ];
 
 export default function BottomNavigation() {
+  const router = useRouter();
   const pathname = usePathname();
 
   return (
@@ -20,24 +21,23 @@ export default function BottomNavigation() {
       <div className="max-w-lg mx-auto px-4">
         <div className="flex justify-around py-3">
           {NAV_ITEMS.map(({ path, label, icon: Icon }) => (
-            <Link href={path} key={path}>
-              <button
-                  key={path}
-                  className="flex flex-col items-center gap-1"
-              >
-              <Icon
-                  size={20}
-                  className={pathname === path ? "text-purple-600" : "text-gray-400"}
-              />
-              <span
-                  className={`text-sm ${
-                      pathname === path ? "text-purple-600" : "text-gray-400"
-                  }`}
-              >
-                {label}
-              </span>
-              </button>
-            </Link>
+            <button
+                key={path}
+                className="flex flex-col items-center gap-1"
+                onClick={() => {router.push(path)}}
+            >
+            <Icon
+                size={20}
+                className={pathname === path ? "text-purple-600" : "text-gray-400"}
+            />
+            <span
+                className={`text-sm ${
+                    pathname === path ? "text-purple-600" : "text-gray-400"
+                }`}
+            >
+              {label}
+            </span>
+            </button>
           ))}
         </div>
       </div>

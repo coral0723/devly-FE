@@ -1,11 +1,8 @@
 import BottomNavigation from "../_component/BottomNavigation";
-import FirstIconSection from "./_component/FirstIconSection";
 import Header from "./_component/Header";
 import MainFeatures from "./_component/MainFeatures";
 import RecentActivities from "./_component/RecentActivities";
-import SecondIconSection from "./_component/SecondIconSection";
 import WeeklyActivity from "./_component/WeeklyActivity";
-
 
 export default function Home() {
   return (
@@ -14,9 +11,33 @@ export default function Home() {
       <div className="flex-1 overflow-auto h-[calc(100vh-64px)]"> {/* 헤더 높이만큼 뺌 */}
         <div className="p-5 space-y-6 relative z-10 pb-10"> {/* 하단 패딩 증가 */}
           <MainFeatures/>
-          <FirstIconSection/>
+          {/* First Icon Section */}
+          <div className="relative h-9 z-0"> 
+            <div className="absolute left-10 animate-float-slow">
+              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.2 }}>
+                <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
+              </svg>
+            </div>
+            <div className="absolute right-10 animate-float-medium">
+              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#A855F7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.2 }}>
+                <polyline points="4 17 10 11 4 5"/><line x1="12" x2="20" y1="19" y2="19"/>
+              </svg>
+            </div>
+          </div>
           <WeeklyActivity/>
-          <SecondIconSection/>
+          {/* Second Icon Section */}
+          <div className="relative h-9 z-0"> 
+            <div className="absolute right-10 animate-float-medium">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#10B981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.2 }}>
+                  <path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/>
+                </svg>
+            </div>
+            <div className="absolute left-10 animate-float-slow">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.2 }}>
+                  <path d="M10 12.5 8 15l2 2.5"/><path d="m14 12.5 2 2.5-2 2.5"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"/>
+                </svg>
+            </div>
+          </div>
 
           {/* Recent Activities */}
           <div className="flex-1 overflow-y-auto">

@@ -98,7 +98,7 @@ export default function Main() {
                 {/* Login Button */}
                 <div className="space-y-4 mb-10">
                     <button
-                        onClick={() => router.push('/')}
+                        onClick={() => router.push('/home')}
                         className="w-full py-4 bg-white border border-gray-300 rounded-xl font-medium hover:bg-gray-50 active:scale-[0.98] transition-all flex items-center justify-center gap-3 shadow-sm"
                     >
                         <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
