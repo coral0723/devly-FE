@@ -1,6 +1,6 @@
 import FloatingIcons from './_component/FloatingIcons';
 import BottomButton from './_component/BottomButton';
-import BackButton from './_component/BackButton';
+import BackButton from '../_component/BackButton';
 
 export default function WordsPage() {
   return (

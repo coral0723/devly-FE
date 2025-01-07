@@ -72,8 +72,8 @@ export default function MainFeatures() {
             완료!
           </span>
         </div>
-        <h3 className="font-medium">모의 논의</h3>
-        <p className="text-base text-gray-500">실제 개발 영어 토론 스피킹</p>
+        <h3 className="font-medium">모의 면접</h3>
+        <p className="text-base text-gray-500">실제 개발 면접 스피킹</p>
       </div>
   </div>
   )
