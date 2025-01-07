@@ -46,7 +46,7 @@ export default function MainFeatures() {
       {/* 모의 PR */}
       <div
           className="bg-white rounded-2xl border border-gray-200 p-5 space-y-2 cursor-pointer hover:bg-purple-50 hover:border-purple-200 transition-all"
-          onClick={() => {router.push('/pr/main')}}
+          onClick={() => {router.push('/pr')}}
       >
         <div className="flex items-center justify-between">
           <GitPullRequest size={24} className="text-purple-500"/>
