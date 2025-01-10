@@ -5,7 +5,7 @@ import {Book, BookmarkIcon, MessageCircleIcon, Trophy } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 const NAV_ITEMS = [
-    { path: '/', label: '학습', icon: Book },
+    { path: '/home', label: '학습', icon: Book },
     { path: '/review', label: '복습', icon: BookmarkIcon },
     // { path: '/roadmap/backend', label: '로드맵', icon: MapIcon},
     { path: '/community', label: '커뮤니티', icon: MessageCircleIcon },

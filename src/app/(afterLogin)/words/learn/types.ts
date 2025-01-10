@@ -12,8 +12,3 @@ export interface WordData {
   meaning: string;
   example: WordExample;
 }
-
-export interface FeedbackData {
-  accuracy: number;
-  message: string;
-}
