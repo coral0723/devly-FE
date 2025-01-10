@@ -12,7 +12,7 @@ export default function WordsPage() {
         <BackButton/>
         <div className="text-center mb-8">
           <div className="inline-block p-3 bg-blue-100 rounded-2xl mb-4">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#2563eb" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/>
             </svg>
           </div>
@@ -56,7 +56,7 @@ export default function WordsPage() {
             </div>
             <div>
               <h3 className="font-medium">오늘의 학습</h3>
-              <p className="text-sm text-gray-500">10개의 새로운 단어</p>
+              <p className="text-sm text-gray-500">5개의 새로운 단어</p>
             </div>
           </div>
           <div className="bg-gray-50 rounded-lg p-3 text-sm text-gray-600">

@@ -6,11 +6,12 @@ import { WORDS_DATA } from '../words';
 import { WordData } from '../types';
 
 interface ContextStepProps {
+    index: number;
     word: WordData;
     onNext: () => void;
 }
 
-export function ContextStep({ word, onNext }: ContextStepProps) {
+export function ContextStep({ index, word, onNext }: ContextStepProps) {
     return (
         <div className="space-y-8">
             <div className="bg-white rounded-xl p-6 shadow-sm">
@@ -38,7 +39,7 @@ export function ContextStep({ word, onNext }: ContextStepProps) {
                 onClick={onNext}
                 className="w-full py-4 bg-green-500 text-white rounded-xl text-lg font-medium hover:bg-green-600 active:scale-[0.98] transition-all"
             >
-                발음 연습하기
+                {index === 1 ? "퀴즈 풀기": "다음 단어"}
             </button>
         </div>
     );
