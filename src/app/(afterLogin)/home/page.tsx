@@ -1,12 +1,19 @@
+import { dehydrate, QueryClient, HydrationBoundary } from "@tanstack/react-query";
 import BottomNavigation from "../_component/BottomNavigation";
 import Header from "./_component/Header";
 import MainFeatures from "./_component/MainFeatures";
 import RecentActivities from "./_component/RecentActivities";
 import WeeklyActivity from "./_component/WeeklyActivity";
+import { getTodayTasks } from "./_lib/getTodayTasks";
 
-export default function Home() {
+export default async function Home() {
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery({ queryKey: ['today-tasks'], queryFn: getTodayTasks});
+  const dehydratedState = dehydrate(queryClient);
+
   return (
     <div className="max-w-lg mx-auto min-h-[100dvh] bg-gray-50 flex flex-col">
+      <HydrationBoundary state={dehydratedState}>
       <Header/>
       <div className="flex-1 overflow-auto h-[calc(100vh-64px)]"> {/* 헤더 높이만큼 뺌 */}
         <div className="p-5 space-y-6 relative z-10 pb-10"> {/* 하단 패딩 증가 */}
@@ -53,6 +60,7 @@ export default function Home() {
               <BottomNavigation/>
           </div>
         </div>
+        </HydrationBoundary>
     </div>
   );
 }

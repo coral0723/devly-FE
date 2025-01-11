@@ -2,8 +2,6 @@ import { http, HttpResponse } from 'msw';
 
 export const handlers = [
   http.get('/study/today-tasks', async ({ }) => {
-    console.log('오늘 할 일들');
-    
     return new HttpResponse(
       JSON.stringify({
         word: {
@@ -24,7 +22,7 @@ export const handlers = [
         discussion: {
           groupId: 4,
           total: 5,
-          completed: false
+          completed: true
         },
       }),
       { 
