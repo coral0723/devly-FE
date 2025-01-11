@@ -26,12 +26,15 @@ export function WordStep({ word, onNext }: WordStepProps) {
 				<div className="text-center text-lg text-gray-600">
 					{word.meaning}
 				</div>
-				<button
-					onClick={onNext}
-					className="w-full py-4 bg-green-500 text-white rounded-xl text-lg font-medium hover:bg-green-600 active:scale-[0.98] transition-all"
-				>
-					다음
-				</button>
+        <div className="absolute bottom-0 left-0 flex justify-center w-full mb-4">
+          <button
+            onClick={onNext}
+            className="py-4 mb-4 bg-green-500 text-white rounded-xl text-lg font-medium hover:bg-green-600 active:scale-[0.98] transition-all"
+            style={{ width: "90%" }}
+          >
+            다음
+          </button>
+			</div>
 		</div>
   );
 }

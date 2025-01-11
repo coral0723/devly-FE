@@ -38,7 +38,7 @@ export default function WordLearning() {
   }
 
   return (
-      <div className="max-w-lg mx-auto min-h-screen bg-gray-50">
+      <div className="relative max-w-lg mx-auto min-h-screen bg-gray-50">
           {/* Progress Header */}
           <div className="sticky top-0 z-10 bg-white shadow-sm">
             <div className="px-5 py-3">
@@ -79,6 +79,7 @@ export default function WordLearning() {
               <ContextStep
                 index={currentWordIndex}
                 word={currentWord}
+                wordsLength={WORDS_DATA.length}
                 onNext={() => {
                   setCompletedWords(prev => prev + 1);
                   handleNext()
@@ -90,6 +91,7 @@ export default function WordLearning() {
               <QuizStep
                 index={currentWordIndex}
                 word={currentWord}
+                wordsLength={WORDS_DATA.length}
                 completedWords={completedWords}
                 setCompletedWords={setCompletedWords}
                 handleQuizNext={handleQuizNext}

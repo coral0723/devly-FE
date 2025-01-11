@@ -2,36 +2,44 @@
 
 import { BookOpen, Check } from "lucide-react";
 import { WordData } from "../types";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 
 type Props = {
   index: number;
   word: WordData;
+  wordsLength: number;
   completedWords: number;
   setCompletedWords: (completedWords: number) => void;
   handleQuizNext: () => void;
 }
 
-export default function QuizStep({index, word, completedWords, setCompletedWords, handleQuizNext }: Props) {
+export default function QuizStep({index, word, wordsLength, completedWords, setCompletedWords, handleQuizNext }: Props) {
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [showCorect, setShowCorrect] = useState<boolean>(false);
-  
-  const options = [
-    "implementation",
-    "book",
-    "number",
-    "deprecated",
-    "import"
-  ];
+  const [options, setOptions] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (word) {
+      // 새로운 `word` 데이터를 기반으로 options 생성
+      const updatedOptions = [...word.quiz.distractors, word.word];
+      // 배열을 무작위로 섞기
+      updatedOptions.sort(() => Math.random() - 0.5);
+      // 상태 업데이트
+      setOptions(updatedOptions);
+    }
+  }, [word]);
+
+  const onCheck = () => {
+    window.scrollTo(0, 0);
+    setShowCorrect(true);
+  }
 
   const onNext = () => {
-    setTimeout(() => {
-      setShowCorrect(false);
-      setSelectedOption(null);
-      setCompletedWords(completedWords + 1);
-      handleQuizNext();
-    }, 1500);
-    setShowCorrect(true);
+    window.scrollTo(0, 0);
+    setShowCorrect(false);
+    setSelectedOption(null);
+    setCompletedWords(completedWords + 1);
+    handleQuizNext();
   }
 
   const getButtonStyle = (option: string, idx: number) => {
@@ -72,16 +80,15 @@ export default function QuizStep({index, word, completedWords, setCompletedWords
               <span>출처: {word.example.source}</span>
           </div>
           <div className="text-lg mb-4 font-mono">
-              {word.example.text.split(word.word).map((part, i, arr) => (
+              {word.example.text.split(new RegExp(`(${word.word})`, 'i')).map((part, i) => (
                   <Fragment key={i}>
-                      {part}
-                      {i < arr.length - 1 && (
-                          <div className="inline-block border-2 border-gray p-1">
-                            <span className="font-bold text-blue-600">
-                              {showCorect ? word.word: <span className="opacity-0">{word.word}</span>}
-                            </span>
-                          </div>
-                      )}
+                    {part.toLowerCase() === word.word.toLowerCase() ? (
+                      <div className="inline-block border-2 border-gray p-1">
+                        <span className="font-bold text-blue-600">
+                          {showCorect ? part : <span className="opacity-0">{part}</span>}
+                        </span>
+                      </div>
+                    ) : part}
                   </Fragment>
               ))}
           </div>
@@ -113,12 +120,27 @@ export default function QuizStep({index, word, completedWords, setCompletedWords
         </div>
       </div>
       <button
-          onClick={onNext}
-          className={`w-full py-4 text-white rounded-xl text-lg font-medium transition-all
-            ${selectedOption === null? 'bg-gray-300 cursor-now-allowed': 'bg-green-500 hover:bg-green-600 active:scale-[0.98]'}`}
+        onClick={showCorect ? onNext : onCheck}
+        className={`w-full py-4 mb-4 text-white rounded-xl text-lg font-medium transition-all
+          ${selectedOption === null 
+            ? 'bg-gray-300 cursor-not-allowed' 
+            : showCorect && index === wordsLength - 1
+                ? 'bg-blue-500 hover:bg-blue-600 shadow-lg shadow-blue-500/50 border-2 border-blue-400 active:scale-[0.98]'
+                : 'bg-green-500 hover:bg-green-600 active:scale-[0.98]'
+          }`}
       >
-          {index === 1 ? "결과 확인": "다음 단어"}
+        {showCorect ? (
+          index === wordsLength - 1 ? (
+            <div className="flex items-center justify-center gap-2">
+              <span>학습 끝내기</span>
+            </div>
+          ) : (
+            "다음 문제"
+          )
+        ) : (
+          "결과 확인"
+        )}
       </button>
-  </div>
+    </div>
   )
 }

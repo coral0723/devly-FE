@@ -7,10 +7,11 @@ import { WordData } from '../types';
 interface ContextStepProps {
 	index: number;
 	word: WordData;
+  wordsLength: number;
 	onNext: () => void;
 }
 
-export function ContextStep({ index, word, onNext }: ContextStepProps) {
+export function ContextStep({ index, word, wordsLength, onNext }: ContextStepProps) {
 	return (
 		<div className="space-y-8">
 			<div className="bg-white rounded-xl p-6 shadow-sm">
@@ -34,12 +35,38 @@ export function ContextStep({ index, word, onNext }: ContextStepProps) {
 					{word.example.context}
 				</div>
 			</div>
-			<button
-				onClick={onNext}
-				className="w-full py-4 bg-green-500 text-white rounded-xl text-lg font-medium hover:bg-green-600 active:scale-[0.98] transition-all"
-			>
-				{index === 1 ? "퀴즈 풀기": "다음 단어"}
-			</button>
+			<div className="absolute bottom-0 left-0 flex justify-center w-full mb-4">
+        <button
+            onClick={onNext}
+            className={`py-4 mb-4 text-white rounded-xl text-lg font-medium transition-all active:scale-[0.98]
+              ${index === wordsLength-1 
+                ? "bg-blue-500 hover:bg-blue-600 border-blue-400" 
+                : "bg-green-500 hover:bg-green-600"
+              }`}
+            style={{ width: "90%" }}
+        >
+          {index === wordsLength-1 ? (
+            <div className="flex items-center justify-center gap-2">
+              <span>퀴즈 풀기</span>
+              <svg 
+                className="w-6 h-6 animate-bounce" 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path 
+                    strokeLinecap="round" 
+                    strokeLinejoin="round" 
+                    strokeWidth={2} 
+                    d="M13 7l5 5m0 0l-5 5m5-5H6"
+                />
+              </svg>
+            </div>
+          ) : (
+            "다음 단어"
+          )}
+        </button>
+      </div>
 		</div>
 	);
 }
