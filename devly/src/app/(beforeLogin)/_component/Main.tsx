@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import {BookOpen, Mic, GitPullRequest, MessageSquare, Code, Terminal, FileCode} from 'lucide-react';
+import {BookOpen, Mic, GitPullRequest, Code, Terminal, FileCode} from 'lucide-react';
 
 export default function Main() {
     const router = useRouter();
