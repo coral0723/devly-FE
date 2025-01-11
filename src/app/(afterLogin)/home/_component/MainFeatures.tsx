@@ -27,7 +27,7 @@ export default function MainFeatures() {
       <div
           className={`bg-white rounded-2xl border border-gray-200 p-5 space-y-3 transition-all
             ${tasks?.word.completed === false && "cursor-pointer hover:bg-emerald-50 hover:border-emerald-200 active:scale-95"}`}
-          onClick={tasks?.word.completed ? undefined : (() => {router.push('/words')})}
+          onClick={tasks?.word.completed ? undefined : (() => {router.push(`/words?groupId=${tasks?.word.groupId}`)})}
       >
         <div className="flex items-center justify-between">
           <BookOpen size={32} className="text-emerald-500"/>

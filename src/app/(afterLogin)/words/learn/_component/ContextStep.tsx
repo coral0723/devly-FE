@@ -3,10 +3,11 @@
 import { Fragment } from 'react';
 import { BookOpen } from 'lucide-react';
 import { WordData } from '../types';
+import { Word } from '@/model/Word';
 
 interface ContextStepProps {
 	index: number;
-	word: WordData;
+	word: Word;
   wordsLength: number;
 	onNext: () => void;
 }
@@ -20,12 +21,12 @@ export function ContextStep({ index, word, wordsLength, onNext }: ContextStepPro
 					<span>출처: {word.example.source}</span>
 				</div>
 				<div className="text-lg mb-4 font-mono">
-					{word.example.text.split(word.example.highlight).map((part, i, arr) => (
+					{word.example.text.split(word.word).map((part, i, arr) => (
 						<Fragment key={i}>
 							{part}
 							{i < arr.length - 1 && (
 								<span className="font-bold text-blue-600">
-									{word.example.highlight}
+									{word.word}
 								</span>
 							)}
 						</Fragment>

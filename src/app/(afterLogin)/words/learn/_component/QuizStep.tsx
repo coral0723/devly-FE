@@ -3,10 +3,11 @@
 import { BookOpen, Check } from "lucide-react";
 import { WordData } from "../types";
 import { Fragment, useEffect, useState } from "react";
+import { Word } from "@/model/Word";
 
 type Props = {
   index: number;
-  word: WordData;
+  word: Word;
   wordsLength: number;
   completedWords: number;
   setCompletedWords: (completedWords: number) => void;

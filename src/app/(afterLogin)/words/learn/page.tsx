@@ -8,6 +8,10 @@ import { CompletionModal } from "./_component/CompletionModal";
 import { X } from "lucide-react";
 import { ContextStep } from "./_component/ContextStep";
 import QuizStep from "./_component/QuizStep";
+import { useQuery } from "@tanstack/react-query";
+import { Word } from "@/model/Word";
+import { useSearchParams } from "next/navigation";
+import { getWords } from "../_lib/getWords";
 
 export default function WordLearning() {
   const [currentWordIndex, setCurrentWordIndex] = useState<number>(0);
@@ -16,10 +20,21 @@ export default function WordLearning() {
   const [showExitConfirm, setShowExitConfirm] = useState<boolean>(false);
   const [showCompletion, setShowCompletion] = useState<boolean>(false);
 
+  
+  const searchParams = useSearchParams();
+  const groupId = searchParams.get('groupId');
+  
+  const {data: words, error} = useQuery<Word[], Object, Word[], [_1: string, _2: string, string]>({
+    queryKey: ['words', 'learn', groupId!],
+    queryFn: getWords,
+    staleTime: 60 * 1000,
+    gcTime: 300 * 1000,
+  });
+  
   const currentWord = WORDS_DATA[currentWordIndex];
 
   const handleNext = () => {
-    if (currentWordIndex < WORDS_DATA.length - 1) {
+    if (currentWordIndex < words!.length - 1) {
       setCurrentWordIndex(prev => prev + 1);
       setStep('word');
     } else {
@@ -30,7 +45,7 @@ export default function WordLearning() {
   };
 
   const handleQuizNext = () => {
-    if(currentWordIndex < WORDS_DATA.length - 1) {
+    if(currentWordIndex < words!.length - 1) {
       setCurrentWordIndex(prev => prev + 1);
     } else {
       setShowCompletion(true);
@@ -53,11 +68,11 @@ export default function WordLearning() {
                   <div className="w-full h-2 bg-gray-100 rounded-full">
                     <div
                       className="h-full bg-green-500 rounded-full transition-all"
-                      style={{width: `${(completedWords / WORDS_DATA.length) * 100}%`}}
+                      style={{width: `${(completedWords / words!.length) * 100}%`}}
                     />
                   </div>
                   <div className="text-sm text-gray-500 mt-1">
-                    {completedWords}/{WORDS_DATA.length} {step==="quiz"? "문제": "단어"}
+                    {completedWords}/{words!.length} {step==="quiz"? "문제": "단어"}
                   </div>
                 </div>
                 <div className="w-10"/>
@@ -70,7 +85,7 @@ export default function WordLearning() {
           <div className="p-5">
             {step === 'word' && (
               <WordStep 
-                word={currentWord} 
+                word={words![currentWordIndex]} 
                 onNext={() => setStep('context')} 
               />
             )}
@@ -78,8 +93,8 @@ export default function WordLearning() {
             {step === 'context' && (
               <ContextStep
                 index={currentWordIndex}
-                word={currentWord}
-                wordsLength={WORDS_DATA.length}
+                word={words![currentWordIndex]}
+                wordsLength={words!.length}
                 onNext={() => {
                   setCompletedWords(prev => prev + 1);
                   handleNext()
@@ -90,8 +105,8 @@ export default function WordLearning() {
             {step === 'quiz' && (
               <QuizStep
                 index={currentWordIndex}
-                word={currentWord}
-                wordsLength={WORDS_DATA.length}
+                word={words![currentWordIndex]}
+                wordsLength={words!.length}
                 completedWords={completedWords}
                 setCompletedWords={setCompletedWords}
                 handleQuizNext={handleQuizNext}
@@ -104,7 +119,7 @@ export default function WordLearning() {
           )}
 
           {showCompletion && (
-              <CompletionModal totalWords={WORDS_DATA.length} />
+              <CompletionModal totalWords={words!.length} />
           )}
       </div>
   );

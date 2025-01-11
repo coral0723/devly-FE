@@ -1,8 +1,20 @@
 import FloatingIcons from './_component/FloatingIcons';
 import BottomButton from './_component/BottomButton';
 import BackButton from '../_component/BackButton';
+import { QueryClient } from '@tanstack/react-query';
+import { getWords } from './_lib/getWords';
 
-export default function WordsPage() {
+type Props = {
+  searchParams: {
+    groupId: string;
+  }
+}
+
+export default async function WordsPage({searchParams}: Props) {
+  const {groupId} = await searchParams;
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery({queryKey: ['words', 'learn', groupId], queryFn: getWords});
+
   return (
     <div className="min-h-screen bg-gray-50 relative overflow-hidden">
       <FloatingIcons/>
@@ -64,7 +76,9 @@ export default function WordsPage() {
           </div>
         </div>
       </div>
-      <BottomButton/>
+      <BottomButton
+        groupId={groupId}
+      />
     </div>
   )
 }

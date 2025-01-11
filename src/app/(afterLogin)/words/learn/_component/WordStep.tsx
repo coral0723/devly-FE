@@ -1,9 +1,10 @@
 "use client"
 
+import { Word } from '@/model/Word';
 import type { WordData } from '../types';
 
 interface WordStepProps {
-    word: WordData;
+    word: Word;
     onNext: () => void;
 }
 
