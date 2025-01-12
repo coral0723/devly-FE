@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react";
-import { WORDS_DATA } from "./words";
 import { WordStep } from "./_component/WordStep";
 import { ExitConfirmModal } from "./_component/ExitConfirmModal";
 import { CompletionModal } from "./_component/CompletionModal";
@@ -30,8 +29,6 @@ export default function WordLearning() {
     staleTime: 60 * 1000,
     gcTime: 300 * 1000,
   });
-  
-  const currentWord = WORDS_DATA[currentWordIndex];
 
   const handleNext = () => {
     if (currentWordIndex < words!.length - 1) {

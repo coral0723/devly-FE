@@ -1,7 +1,7 @@
 import FloatingIcons from './_component/FloatingIcons';
 import BottomButton from './_component/BottomButton';
 import BackButton from '../_component/BackButton';
-import { QueryClient } from '@tanstack/react-query';
+import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
 import { getWords } from './_lib/getWords';
 
 type Props = {
@@ -14,9 +14,11 @@ export default async function WordsPage({searchParams}: Props) {
   const {groupId} = await searchParams;
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery({queryKey: ['words', 'learn', groupId], queryFn: getWords});
+  const dehydratedState = dehydrate(queryClient);
 
   return (
     <div className="min-h-screen bg-gray-50 relative overflow-hidden">
+      <HydrationBoundary state={dehydratedState}>
       <FloatingIcons/>
 
       {/* Main Content */}
@@ -79,6 +81,7 @@ export default async function WordsPage({searchParams}: Props) {
       <BottomButton
         groupId={groupId}
       />
+      </HydrationBoundary>
     </div>
   )
 }
