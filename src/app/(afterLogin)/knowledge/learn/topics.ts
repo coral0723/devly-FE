@@ -1,6 +1,6 @@
-import { Topic } from "./types";
+import { Knowlege } from "./types";
 
-export const TOPIC_DATA: Topic[] = [
+export const TOPIC_DATA: Knowlege[] = [
   {
     id: 1,
     title: "시간 복잡도와 공간 복잡도",
@@ -31,33 +31,37 @@ export const TOPIC_DATA: Topic[] = [
     ]
 },
 {
-    id: 2,
-    title: "데이터베이스 인덱스",
-    subtitle: "빠른 검색을 위한 핵심 기술",
-    tags: ["Database", "Performance", "Index"],
-    content: [
-        {
-            type: "intro",
-            text: "인덱스는 어떻게 데이터베이스 성능을 향상시킬까요?",
-            imageSrc: "/images/index.svg"
-        },
-        {
-            type: "explanation",
-            title: "인덱스의 원리",
-            text: "도서관의 목차와 같이, 데이터를 빠르게 찾을 수 있게 도와줍니다.",
-            examples: [
-                "B-Tree 구조",
-                "Primary Key 인덱스",
-                "Secondary 인덱스"
-            ]
-        },
-        {
-            type: "realWorld",
-            title: "실무에서는?",
-            text: "적절한 인덱스 설계로 쿼리 성능을 최적화할 수 있습니다.",
-            examples: ["사용자 검색 최적화", "주문 조회 성능 향상"]
-        }
-    ]
+  id: 2,
+  title: "React의 상태 관리",
+  subtitle: "효율적인 상태 관리를 위한 기초",
+  tags: ["React", "State Management", "Frontend"],
+  content: [
+      {
+          type: "intro",
+          text: "React에서 상태 관리의 개념과 기법을 알아봅시다.",
+          imageSrc: "/images/state-management.svg"
+      },
+      {
+          type: "explanation",
+          title: "상태 관리란?",
+          text: "컴포넌트와 애플리케이션의 상태를 추적하고 업데이트하는 방법을 의미합니다.",
+          examples: [
+              "useState: 간단한 로컬 상태 관리",
+              "useReducer: 복잡한 상태 로직 관리",
+              "Context API: 전역 상태 관리"
+          ]
+      },
+      {
+          type: "realWorld",
+          title: "실무에서는?",
+          text: "다양한 상태 관리 라이브러리와 기법이 사용됩니다.",
+          examples: [
+              "Redux: 전역 상태 관리와 미들웨어 사용",
+              "Recoil: React를 위한 모던 상태 관리",
+              "zustand: 가벼운 상태 관리 라이브러리"
+          ]
+      }
+  ]
 },
 {
     id: 3,

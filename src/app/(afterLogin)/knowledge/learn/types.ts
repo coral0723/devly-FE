@@ -6,7 +6,7 @@ export interface Content {
   examples?: string[];
 }
 
-export interface Topic {
+export interface Knowlege {
   id: number;
   title: string;
   subtitle: string;

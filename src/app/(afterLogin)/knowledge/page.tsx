@@ -4,7 +4,7 @@ import BottomButton from './_component/BottomButton';
 export default function KnowledgePage() {
 
     return (
-        <div className="min-h-screen bg-gray-50 relative overflow-hidden">
+        <div className="max-w-lg mx-auto min-h-screen bg-gray-50 relative overflow-hidden">
             {/* Floating Icons */}
             <div className="absolute inset-0 pointer-events-none">
                 <div className="absolute top-20 left-10 animate-float-slow opacity-10">

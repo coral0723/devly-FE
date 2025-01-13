@@ -15,7 +15,6 @@ import { getWords } from "../_lib/getWords";
 export default function WordLearning() {
   const [currentWordIndex, setCurrentWordIndex] = useState<number>(0);
   const [step, setStep] = useState<'word' | 'context' | 'quiz'>('word');
-  const [completedWords, setCompletedWords] = useState<number>(0);
   const [showExitConfirm, setShowExitConfirm] = useState<boolean>(false);
   const [showCompletion, setShowCompletion] = useState<boolean>(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -24,7 +23,7 @@ export default function WordLearning() {
   const searchParams = useSearchParams();
   const groupId = searchParams.get('groupId');
   
-  const {data: words, error} = useQuery<Word[], Object, Word[], [_1: string, _2: string, string]>({
+  const {data: words} = useQuery<Word[], object, Word[], [_1: string, _2: string, string]>({
     queryKey: ['words', 'learn', groupId!],
     queryFn: getWords,
     staleTime: 60 * 1000,
@@ -40,7 +39,6 @@ export default function WordLearning() {
       setCurrentWordIndex(prev => prev + 1);
       setStep('word');
     } else {
-      setCompletedWords(0);
       setCurrentWordIndex(0);
       setStep('quiz');
     }
@@ -55,36 +53,32 @@ export default function WordLearning() {
   }
 
   return (
-      <div className="relative max-w-lg mx-auto min-h-screen bg-gray-50 overflow-y-auto">
+      <div className="relative max-w-lg mx-auto min-h-screen bg-gray-50">
           {/* Progress Header */}
-          <div className="sticky top-0 z-10 bg-white shadow-sm">
-            <div className="px-5 py-3">
-              <div className="grid grid-cols-3 items-center">
+          <div className="sticky top-0 z-20 bg-white border-b border-gray-200">
+            <div className="px-4 py-2">
+              <div className="flex items-center justify-between mb-2">
                 <button
                     onClick={() => setShowExitConfirm(true)}
-                    className="w-10 h-10 flex items-center justify-center hover:bg-gray-100 rounded-full"
+                    className="p-2 -ml-2 hover:bg-gray-100 rounded-full"
                 >
                   <X size={24}/>
                 </button>
-                <div className="flex flex-col items-center">
-                  <div className="w-full h-2 bg-gray-100 rounded-full">
-                    <div
-                      className="h-full bg-green-500 rounded-full transition-all"
-                      style={{width: `${(completedWords / words!.length) * 100}%`}}
-                    />
-                  </div>
-                  <div className="text-sm text-gray-500 mt-1">
-                    {completedWords}/{words!.length} {step==="quiz"? "문제": "단어"}
-                  </div>
-                </div>
-                <div className="w-10"/>
-                {/* 균형을 위한 빈 공간 */}
+                <span className="text-sm text-gray-500">
+                  {currentWordIndex + 1} / {words?.length}
+                </span>
+              </div>
+              <div className="h-1 bg-gray-100 rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-green-500 transition-all duration-300"
+                  style={{ width: `${((currentWordIndex + 1) / words!.length) * 100}%`}}
+                />
               </div>
             </div>
           </div>
 
           {/* Main Content */}
-          <div ref={containerRef} className="p-5 h-[calc(100vh-84px)] overflow-y-auto scrollbar-hide">
+          <div ref={containerRef} className="p-5 h-[calc(100vh-64px)] overflow-y-auto scrollbar-hide">
             {step === 'word' && (
               <WordStep 
                 word={words![currentWordIndex]} 
@@ -98,7 +92,6 @@ export default function WordLearning() {
                 word={words![currentWordIndex]}
                 wordsLength={words!.length}
                 onNext={() => {
-                  setCompletedWords(prev => prev + 1);
                   handleNext()
                 }}
               />
@@ -109,8 +102,6 @@ export default function WordLearning() {
                 index={currentWordIndex}
                 word={words![currentWordIndex]}
                 wordsLength={words!.length}
-                completedWords={completedWords}
-                setCompletedWords={setCompletedWords}
                 handleQuizNext={handleQuizNext}
                 onScrollUp={onScrollUp}
                 />

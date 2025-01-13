@@ -8,13 +8,11 @@ type Props = {
   index: number;
   word: Word;
   wordsLength: number;
-  completedWords: number;
-  setCompletedWords: (completedWords: number) => void;
   handleQuizNext: () => void;
   onScrollUp: () => void;
 }
 
-export default function QuizStep({index, word, wordsLength, completedWords, setCompletedWords, handleQuizNext, onScrollUp }: Props) {
+export default function QuizStep({index, word, wordsLength, handleQuizNext, onScrollUp }: Props) {
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [showCorect, setShowCorrect] = useState<boolean>(false);
   const [options, setOptions] = useState<string[]>([]);
@@ -37,9 +35,10 @@ export default function QuizStep({index, word, wordsLength, completedWords, setC
 
   const onNext = () => {
     onScrollUp();
-    setShowCorrect(false);
-    setSelectedOption(null);
-    setCompletedWords(completedWords + 1);
+    if(index < wordsLength - 1) {
+      setShowCorrect(false);
+      setSelectedOption(null);
+    }
     handleQuizNext();
   }
 
@@ -129,6 +128,7 @@ export default function QuizStep({index, word, wordsLength, completedWords, setC
                 ? 'bg-blue-500 hover:bg-blue-600 shadow-lg shadow-blue-500/50 border-2 border-blue-400 active:scale-[0.98]'
                 : 'bg-green-500 hover:bg-green-600 active:scale-[0.98]'
           }`}
+        disabled={!!!selectedOption}
       >
         {showCorect ? (
           index === wordsLength - 1 ? (
