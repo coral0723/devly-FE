@@ -11,9 +11,10 @@ type Props = {
   completedWords: number;
   setCompletedWords: (completedWords: number) => void;
   handleQuizNext: () => void;
+  onScrollUp: () => void;
 }
 
-export default function QuizStep({index, word, wordsLength, completedWords, setCompletedWords, handleQuizNext }: Props) {
+export default function QuizStep({index, word, wordsLength, completedWords, setCompletedWords, handleQuizNext, onScrollUp }: Props) {
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [showCorect, setShowCorrect] = useState<boolean>(false);
   const [options, setOptions] = useState<string[]>([]);
@@ -30,12 +31,12 @@ export default function QuizStep({index, word, wordsLength, completedWords, setC
   }, [word]);
 
   const onCheck = () => {
-    window.scrollTo(0, 0);
+    onScrollUp();
     setShowCorrect(true);
   }
 
   const onNext = () => {
-    window.scrollTo(0, 0);
+    onScrollUp();
     setShowCorrect(false);
     setSelectedOption(null);
     setCompletedWords(completedWords + 1);

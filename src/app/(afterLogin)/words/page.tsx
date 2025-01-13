@@ -17,7 +17,7 @@ export default async function WordsPage({searchParams}: Props) {
   const dehydratedState = dehydrate(queryClient);
 
   return (
-    <div className="min-h-screen bg-gray-50 relative overflow-hidden">
+    <div className="max-w-lg mx-auto min-h-screen bg-gray-50 relative overflow-hidden">
       <HydrationBoundary state={dehydratedState}>
       <FloatingIcons/>
 

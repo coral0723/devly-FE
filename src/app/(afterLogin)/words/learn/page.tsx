@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { WordStep } from "./_component/WordStep";
 import { ExitConfirmModal } from "./_component/ExitConfirmModal";
 import { CompletionModal } from "./_component/CompletionModal";
@@ -18,6 +18,7 @@ export default function WordLearning() {
   const [completedWords, setCompletedWords] = useState<number>(0);
   const [showExitConfirm, setShowExitConfirm] = useState<boolean>(false);
   const [showCompletion, setShowCompletion] = useState<boolean>(false);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   
   const searchParams = useSearchParams();
@@ -29,6 +30,10 @@ export default function WordLearning() {
     staleTime: 60 * 1000,
     gcTime: 300 * 1000,
   });
+
+  const onScrollUp = () => {
+    containerRef.current?.scrollTo(0, 0);
+  };
 
   const handleNext = () => {
     if (currentWordIndex < words!.length - 1) {
@@ -50,7 +55,7 @@ export default function WordLearning() {
   }
 
   return (
-      <div className="relative max-w-lg mx-auto min-h-screen bg-gray-50">
+      <div className="relative max-w-lg mx-auto min-h-screen bg-gray-50 overflow-y-auto">
           {/* Progress Header */}
           <div className="sticky top-0 z-10 bg-white shadow-sm">
             <div className="px-5 py-3">
@@ -79,7 +84,7 @@ export default function WordLearning() {
           </div>
 
           {/* Main Content */}
-          <div className="p-5">
+          <div ref={containerRef} className="p-5 h-[calc(100vh-84px)] overflow-y-auto scrollbar-hide">
             {step === 'word' && (
               <WordStep 
                 word={words![currentWordIndex]} 
@@ -107,6 +112,7 @@ export default function WordLearning() {
                 completedWords={completedWords}
                 setCompletedWords={setCompletedWords}
                 handleQuizNext={handleQuizNext}
+                onScrollUp={onScrollUp}
                 />
             )}
           </div>

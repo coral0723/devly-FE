@@ -12,11 +12,11 @@ export default async function Home() {
   const dehydratedState = dehydrate(queryClient);
 
   return (
-    <div className="max-w-lg mx-auto min-h-[100dvh] scrollbar-hide bg-gray-50 flex flex-col">
+    <div className="max-w-lg mx-auto h-[100dvh] bg-gray-50 flex flex-col">
       <HydrationBoundary state={dehydratedState}>
       <Header/>
-      <div className="flex-1 overflow-y-auto scrollbar-hide h-[calc(100vh-64px)]"> {/* 헤더 높이만큼 뺌 */}
-        <div className="p-5 space-y-6 relative z-10 pb-10 scrollbar-hide"> {/* 하단 패딩 증가 */}
+      <div className="flex-1 overflow-y-auto scrollbar-hide"> {/* 헤더 높이만큼 뺌 */}
+        <div className="p-5 space-y-6 relative z-10 pb-24"> {/* 하단 패딩 증가 */}
           <MainFeatures/>
           {/* First Icon Section */}
           <div className="relative h-9 z-0"> 
@@ -47,7 +47,7 @@ export default async function Home() {
           </div>
 
           {/* Recent Activities */}
-          <div className="flex-1 overflow-y-auto scrollbar-hide">
+          <div className="flex-1 overflow-y-auto">
             <div className="space-y-6 relative z-10 pb-24 space-below"> {/* 하단 패딩 증가 */}
                 {/* 여기에서 다른 컴포넌트들 배치 */}
                 <RecentActivities/>
