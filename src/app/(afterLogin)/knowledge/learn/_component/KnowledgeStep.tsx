@@ -15,13 +15,13 @@ export default function KnowledgeStep({knowledge, knowledgesLength, currentStep,
     <div className="space-y-6">
       {/* Topic Header */}
       <div>
-        <div className="flex gap-2 mb-2">
+        {/* <div className="flex gap-2 mb-2">
           {knowledge.tags.map((tag) => (
             <span key={tag} className="px-2 py-1 bg-blue-100 text-blue-600 rounded-full text-xs">
               {tag}
             </span>
           ))}
-        </div>
+        </div> */}
         <h1 className="text-2xl font-bold mb-1">{knowledge.title}</h1>
         <p className="text-gray-600">{knowledge.subtitle}</p>
       </div>

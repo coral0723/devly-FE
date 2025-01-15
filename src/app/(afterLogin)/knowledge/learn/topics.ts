@@ -8,11 +8,6 @@ export const TOPIC_DATA: Knowlege[] = [
     tags: ["Algorithm", "Performance", "BigO"],
     content: [
         {
-            type: "intro",
-            text: "프로그램의 성능을 측정하는 두 가지 중요한 지표에 대해 알아봅시다.",
-            imageSrc: "/images/complexity.svg"
-        },
-        {
             type: "explanation",
             title: "시간 복잡도란?",
             text: "알고리즘이 실행되는 데 걸리는 시간을 나타내는 지표입니다.",
@@ -36,11 +31,6 @@ export const TOPIC_DATA: Knowlege[] = [
   subtitle: "효율적인 상태 관리를 위한 기초",
   tags: ["React", "State Management", "Frontend"],
   content: [
-      {
-          type: "intro",
-          text: "React에서 상태 관리의 개념과 기법을 알아봅시다.",
-          imageSrc: "/images/state-management.svg"
-      },
       {
           type: "explanation",
           title: "상태 관리란?",
@@ -69,11 +59,6 @@ export const TOPIC_DATA: Knowlege[] = [
     subtitle: "현대적 애플리케이션 배포",
     tags: ["DevOps", "Container", "Deployment"],
     content: [
-        {
-            type: "intro",
-            text: "컨테이너화가 왜 현대 개발에서 중요할까요?",
-            imageSrc: "/images/docker.svg"
-        },
         {
             type: "explanation",
             title: "컨테이너란?",
