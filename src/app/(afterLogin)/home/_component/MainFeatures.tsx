@@ -14,7 +14,7 @@ import { getTodayTasks } from '../_lib/getTodayTasks';
 export default function MainFeatures() {
   const router = useRouter();
 
-  const {data: tasks, error} = useQuery<Tasks, Object, Tasks, [_1: string]>({
+  const {data: tasks} = useQuery<Tasks, object, Tasks, [_1: string]>({
     queryKey: ['today-tasks'],
     queryFn: getTodayTasks,
     staleTime: 60 * 1000,
@@ -49,7 +49,7 @@ export default function MainFeatures() {
       <div
           className={`bg-white rounded-2xl border border-gray-200 p-5 space-y-3 transition-all
             ${tasks?.knowledge.completed === false && "cursor-pointer hover:bg-blue-50 hover:border-blue-200 active:scale-95"}`}
-          onClick={tasks?.knowledge.completed ? undefined : (() => {router.push('/knowledge')})}
+          onClick={tasks?.knowledge.completed ? undefined : (() => {router.push(`/knowledge?groupId=${tasks?.knowledge.groupId}`)})}
       >
         <div className="flex items-center justify-between">
           <Lightbulb size={32} className="text-blue-500"/>

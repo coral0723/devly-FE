@@ -1,9 +1,9 @@
+import { Knowledge } from "@/model/Knowledge";
 import { Check, Code, Lightbulb, BookOpen, FileCode2 } from "lucide-react";
-import { Concept } from "../types";
 import { useEffect, useState } from "react";
 
 type Props = {
-  knowledge: Concept;
+  knowledge: Knowledge;
   knowledgesLength: number;
   currentStep: number;
   handleNext: () => void;

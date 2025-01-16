@@ -1,4 +1,4 @@
-export interface Concept {
+export interface Knowledge {
   id: number;
   title: string;
   content: string;

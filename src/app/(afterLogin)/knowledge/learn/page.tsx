@@ -2,10 +2,13 @@
 
 import { useState, useRef } from 'react';
 import { X } from 'lucide-react';
-import { CONCEPT_DATA } from './concepts';
 import ExitConfirmModal from './_component/ExitConfirmModal';
 import CompletionModal from './_component/CompletionModal';
 import KnowledgeStep from './_component/KnowledgeStep';
+import { useSearchParams } from 'next/navigation';
+import { useQuery } from '@tanstack/react-query';
+import { Knowledge } from '@/model/Knowledge';
+import { getKnowledges } from '../_lib/getKnowledges';
 
 export default function KnowledgeLearnPage() {
     const [currentKnowledgeIndex, setCurrentKnowledgeIndex] = useState<number>(0);
@@ -13,10 +16,18 @@ export default function KnowledgeLearnPage() {
     const [showCompletion, setShowCompletion] = useState<boolean>(false);
     const containerRef = useRef<HTMLDivElement>(null);
 
-    const currentKnowledge = CONCEPT_DATA[currentKnowledgeIndex];
+    const searchParams = useSearchParams();
+    const groupId = searchParams.get('groupId');
+
+    const {data: knowledges} = useQuery<Knowledge[], object, Knowledge[], [_1: string, _2: string, string]>({
+      queryKey: ['knowledge', 'learn', groupId!],
+      queryFn: getKnowledges,
+      staleTime: 60 * 1000,
+      gcTime: 300 * 1000,
+    });
 
     const handleNext = () => {
-      if(currentKnowledgeIndex < CONCEPT_DATA.length - 1) {
+      if(currentKnowledgeIndex < knowledges!.length - 1) {
         setCurrentKnowledgeIndex(prev => prev + 1);
       } else {
         setShowCompletion(true);
@@ -37,13 +48,13 @@ export default function KnowledgeLearnPage() {
                 <X size={24}/>
               </button>
               <span className="text-sm text-gray-500">
-                {currentKnowledgeIndex + 1} / {CONCEPT_DATA.length}
+                {currentKnowledgeIndex + 1} / {knowledges?.length}
               </span>
             </div>
             <div className="h-1 bg-gray-100 rounded-full overflow-hidden">
               <div
                 className="h-full bg-green-500 transition-all duration-300"
-                style={{ width: `${((currentKnowledgeIndex + 1) / CONCEPT_DATA.length) * 100}%` }}
+                style={{ width: `${((currentKnowledgeIndex + 1) / knowledges!.length) * 100}%` }}
               />
             </div>
           </div>
@@ -52,8 +63,8 @@ export default function KnowledgeLearnPage() {
         {/* Main Content */}
         <div ref={containerRef} className="p-5 h-[calc(100vh-64px)] overflow-y-auto scrollbar-hide">
           <KnowledgeStep
-            knowledge={currentKnowledge}
-            knowledgesLength={CONCEPT_DATA.length}
+            knowledge={knowledges![currentKnowledgeIndex]}
+            knowledgesLength={knowledges!.length}
             currentStep={currentKnowledgeIndex}
             handleNext={handleNext}/>
         </div>

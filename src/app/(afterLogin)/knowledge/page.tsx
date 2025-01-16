@@ -1,10 +1,23 @@
+import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
 import BackButton from '../_component/BackButton';
 import BottomButton from './_component/BottomButton';
+import { getKnowledges } from './_lib/getKnowledges'
 
-export default function KnowledgePage() {
+type Props = {
+  searchParams: {
+    groupId: string;
+  }
+}
+
+export default async function KnowledgePage({searchParams}: Props) {
+  const {groupId} = await searchParams;
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery({queryKey: ['knowledge', 'learn', groupId], queryFn: getKnowledges});
+  const dehydratedState = dehydrate(queryClient);
 
     return (
         <div className="max-w-lg mx-auto min-h-screen bg-gray-50 relative overflow-hidden">
+            <HydrationBoundary state={dehydratedState}>
             {/* Floating Icons */}
             <div className="absolute inset-0 pointer-events-none">
                 <div className="absolute top-20 left-10 animate-float-slow opacity-10">
@@ -87,7 +100,8 @@ export default function KnowledgePage() {
                     </div>
                 </div>
             </div>
-            <BottomButton/>
+            <BottomButton groupId={groupId}/>
+            </HydrationBoundary>
         </div>
     );
 }

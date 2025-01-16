@@ -18,7 +18,6 @@ export default function WordLearning() {
   const [showExitConfirm, setShowExitConfirm] = useState<boolean>(false);
   const [showCompletion, setShowCompletion] = useState<boolean>(false);
   const containerRef = useRef<HTMLDivElement>(null);
-
   
   const searchParams = useSearchParams();
   const groupId = searchParams.get('groupId');
@@ -65,7 +64,7 @@ export default function WordLearning() {
                   <X size={24}/>
                 </button>
                 <span className="text-sm text-gray-500">
-                  {currentWordIndex + 1} / {words?.length}
+                  {currentWordIndex + 1} / {words!.length}
                 </span>
               </div>
               <div className="h-1 bg-gray-100 rounded-full overflow-hidden">
