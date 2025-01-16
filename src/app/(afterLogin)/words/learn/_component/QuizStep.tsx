@@ -128,7 +128,7 @@ export default function QuizStep({index, word, wordsLength, handleQuizNext, onSc
                 ? 'bg-blue-500 hover:bg-blue-600 shadow-lg shadow-blue-500/50 border-2 border-blue-400 active:scale-[0.98]'
                 : 'bg-green-500 hover:bg-green-600 active:scale-[0.98]'
           }`}
-        disabled={!!!selectedOption}
+        disabled={selectedOption === null}
       >
         {showCorect ? (
           index === wordsLength - 1 ? (

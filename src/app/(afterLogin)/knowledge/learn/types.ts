@@ -1,15 +1,11 @@
-export interface Content {
-  type: string;
-  text: string;
-  title?: string;
-  imageSrc?: string;
-  examples?: string[];
-}
-
-export interface Knowlege {
+export interface Concept {
   id: number;
   title: string;
-  subtitle: string;
-  tags: string[];
-  content: Content[];
+  content: string;
+  practice: {
+    question: string;
+    options: string[];
+    answer: number;
+  };
+  code: string;
 }

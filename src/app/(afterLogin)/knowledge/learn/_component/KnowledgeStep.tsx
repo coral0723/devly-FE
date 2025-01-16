@@ -1,100 +1,193 @@
-"use client"
-
-import { CheckCircle } from "lucide-react";
-import { Knowlege } from "../types";
+import { Check, Code, Lightbulb, BookOpen, FileCode2 } from "lucide-react";
+import { Concept } from "../types";
+import { useEffect, useState } from "react";
 
 type Props = {
-  knowledge: Knowlege;
+  knowledge: Concept;
   knowledgesLength: number;
   currentStep: number;
-  onNext: () => void;
+  handleNext: () => void;
 }
 
-export default function KnowledgeStep({knowledge, knowledgesLength, currentStep, onNext}: Props) {
-  return (
-    <div className="space-y-6">
-      {/* Topic Header */}
-      <div>
-        {/* <div className="flex gap-2 mb-2">
-          {knowledge.tags.map((tag) => (
-            <span key={tag} className="px-2 py-1 bg-blue-100 text-blue-600 rounded-full text-xs">
-              {tag}
-            </span>
-          ))}
-        </div> */}
-        <h1 className="text-2xl font-bold mb-1">{knowledge.title}</h1>
-        <p className="text-gray-600">{knowledge.subtitle}</p>
-      </div>
+export default function KnowledgeStep({knowledge, knowledgesLength, currentStep, handleNext}: Props) {
+  const [selectedOption, setSelectedOption] = useState<number | null>(null);
+  const [showCorect, setShowCorrect] = useState<boolean>(false);
+  const [options, setOptions] = useState<string[]>([]);
+  const [activeTab, setActiveTab] = useState('concept');
 
-      {/* Content Sections */}
-      {knowledge.content.map((section, idx) => (
-        <div key={idx} className="bg-white rounded-xl p-5 border border-gray-200">
-          {section.type === 'intro' && (
-            <div className="text-center">
-              <p className="text-lg mb-6">{section.text}</p>
-              {/* 이미지나 다이어그램이 있다면 표시 */}
+  useEffect(() => {
+    if (knowledge) {
+      setActiveTab('concept');
+      setOptions(knowledge.practice.options);
+    }
+  }, [knowledge]);
+
+  const onCheck = () => {
+    setShowCorrect(true);
+  }
+
+  const onNext = () => {
+    if(currentStep < knowledgesLength - 1) {
+      setShowCorrect(false);
+      setSelectedOption(null);
+    }
+    handleNext();
+  }
+
+  const getButtonStyle = (option: string, idx: number) => {
+    if (!showCorect) {
+      return "hover:bg-gray-50";
+    }
+    
+    if (option === knowledge.practice.options[knowledge.practice.answer-1]) {
+      return "bg-green-100";
+    }
+    
+    if (selectedOption === idx && option !== knowledge.practice.options[knowledge.practice.answer-1]) {
+      return "bg-red-100";
+    }
+    
+    return "";
+  };
+
+  const getCircleStyle = (option: string, idx: number) => {
+    if (showCorect) {
+      if (option === knowledge.practice.options[knowledge.practice.answer-1]) {
+        return "bg-green-500 border-green-500";
+      }
+      if (selectedOption === idx && option !== knowledge.practice.options[knowledge.practice.answer-1]) {
+        return "bg-red-500 border-red-500";
+      }
+      return "border-gray-300";
+    }
+    
+    return selectedOption === idx ? "bg-blue-500 border-blue-500" : "border-gray-300";
+  };
+  
+  return (
+    <div className="max-w-4xl mx-auto space-y-6">
+      {/* Topic Header with Progress */}
+      <div className="bg-white rounded-xl p-6 shadow-sm">
+        <div className="flex items-center gap-4 mb-4">
+          <h1 className="text-2xl font-bold flex-1">{knowledge.title}</h1>
+          <span className="text-sm text-gray-500 flex-shrink-0">
+            {currentStep + 1} / {knowledgesLength}
+          </span>
+        </div>
+        
+        {/* Navigation Tabs */}
+        <div className="flex space-x-1 border-b">
+          <button
+            onClick={() => setActiveTab('concept')}
+            className={`flex items-center px-4 py-2 space-x-2 text-sm font-medium rounded-t-lg transition-colors
+              ${activeTab === 'concept' 
+                ? 'text-blue-600 bg-blue-50 border-b-2 border-blue-500' 
+                : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'}`}
+          >
+            <Lightbulb size={16} />
+            <span>개념</span>
+          </button>
+          <button
+            onClick={() => setActiveTab('example')}
+            className={`flex items-center px-4 py-2 space-x-2 text-sm font-medium rounded-t-lg transition-colors
+              ${activeTab === 'example' 
+                ? 'text-blue-600 bg-blue-50 border-b-2 border-blue-500' 
+                : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'}`}
+          >
+            <FileCode2 size={16} />
+            <span>예시 코드</span>
+          </button>
+          <button
+            onClick={() => setActiveTab('practice')}
+            className={`flex items-center px-4 py-2 space-x-2 text-sm font-medium rounded-t-lg transition-colors
+              ${activeTab === 'practice' 
+                ? 'text-blue-600 bg-blue-50 border-b-2 border-blue-500' 
+                : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'}`}
+          >
+            <BookOpen size={16} />
+            <span>실습 문제</span>
+          </button>
+        </div>
+
+        {/* Content Based on Active Tab */}
+        <div className="mt-4">
+          {activeTab === 'concept' && (
+            <div className="prose max-w-none">
+              <p className="text-gray-600 leading-relaxed">{knowledge.content}</p>
             </div>
           )}
 
-          {section.type === 'explanation' && (
-            <>
-              <h2 className="font-medium text-lg mb-3">{section.title}</h2>
-              <p className="text-gray-600 mb-4">{section.text}</p>
-              <div className="bg-gray-50 rounded-lg p-4">
-                <ul className="space-y-2">
-                  {section.examples!.map((example, i) => (
-                    <li key={i} className="flex items-start gap-2">
-                      <CheckCircle className="w-5 h-5 text-green-500 shrink-0 mt-0.5" />
-                      <span>{example}</span>
-                    </li>
-                  ))}
-                </ul>
+          {activeTab === 'example' && (
+            <div className="space-y-4">
+              <div className="bg-gray-900 text-gray-100 p-4 rounded-lg relative">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-sm text-gray-400">예시 코드</span>
+                  <div className="flex items-center space-x-2">
+                    <Code size={16} className="text-gray-400" />
+                  </div>
+                </div>
+                <pre className="overflow-x-auto text-sm">
+                  <code>{knowledge.code}</code>
+                </pre>
               </div>
-            </>
+            </div>
           )}
 
-          {section.type === 'realWorld' && (
-            <div className="bg-orange-50 rounded-lg p-4">
-              <h3 className="font-medium mb-2 text-orange-800">{section.title}</h3>
-              <p className="text-orange-700 mb-3">{section.text}</p>
-              <ul className="space-y-1">
-                {section.examples!.map((example, i) => (
-                  <li key={i} className="text-sm text-orange-600">• {example}</li>
+          {activeTab === 'practice' && (
+            <div className="space-y-4">
+              <div className="bg-blue-50 border border-blue-100 rounded-lg p-4 mb-4">
+                <h2 className="text-lg font-semibold text-blue-800 mb-2">문제</h2>
+                <p className="text-blue-900">{knowledge.practice.question || "주어진 코드를 보고 알맞은 답을 선택하세요."}</p>
+              </div>
+
+              <div className="space-y-4">
+                {knowledge.practice.options.map((option, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() =>!showCorect && setSelectedOption(idx)}
+                    className={`w-full flex items-center gap-4 p-4 text-left border rounded-lg transition-all ${getButtonStyle(option, idx)}`}
+                    disabled={showCorect}
+                  >
+                    <div className={`w-8 h-8 flex items-center justify-center rounded-full border-2 ${getCircleStyle(option, idx)}`}>
+                      {(selectedOption === idx || (showCorect && option === options[knowledge.practice.answer-1])) && 
+                        <Check size={16} className="text-white" />
+                      }
+                      {selectedOption !== idx && !showCorect && 
+                        <span className="text-gray-500">{idx + 1}</span>
+                      }
+                    </div>
+                    <span className="text-base">{option}</span>
+                  </button>
                 ))}
-              </ul>
+              </div>
+
+              <button
+                onClick={showCorect ? onNext : onCheck}
+                className={`w-full py-4 mb-4 text-white rounded-xl text-lg font-medium transition-all
+                  ${selectedOption === null 
+                    ? 'bg-gray-300 cursor-not-allowed' 
+                    : showCorect && currentStep === knowledgesLength - 1
+                        ? 'bg-blue-500 hover:bg-blue-600 shadow-lg shadow-blue-500/50 border-2 border-blue-400 active:scale-[0.98]'
+                        : 'bg-green-500 hover:bg-green-600 active:scale-[0.98]'
+                  }`}
+                disabled={selectedOption === null}
+              >
+                {showCorect ? (
+                  currentStep === knowledgesLength - 1 ? (
+                    <div className="flex items-center justify-center gap-2">
+                      <span>학습 끝내기</span>
+                    </div>
+                  ) : (
+                    "다음 문제"
+                  )
+                ) : (
+                  "결과 확인"
+                )}
+              </button>
             </div>
           )}
         </div>
-      ))}
-
-      {/* Navigation Button */}
-        <button
-          onClick={onNext}
-          className={`w-full py-4 text-white rounded-xl font-medium active:scale-[0.98] transition-all
-            ${currentStep < knowledgesLength - 1
-              ? 'bg-green-500 hover:bg-green-600'
-              : 'bg-blue-500 hover:bg-blue-600'
-            }`}
-        >
-          {currentStep === knowledgesLength - 1 ? (
-            <div className="flex items-center justify-center gap-2">
-              <span>퀴즈 풀기</span>
-              <svg 
-                className="w-6 h-6 animate-bounce" 
-                fill="none" 
-                stroke="currentColor" 
-                viewBox="0 0 24 24"
-              >
-                <path 
-                    strokeLinecap="round" 
-                    strokeLinejoin="round" 
-                    strokeWidth={2} 
-                    d="M13 7l5 5m0 0l-5 5m5-5H6"
-                />
-              </svg>
-            </div>
-          ) : '다음'}
-        </button>
+      </div>
     </div>
   )
 }
