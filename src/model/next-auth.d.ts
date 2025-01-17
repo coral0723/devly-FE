@@ -1,16 +1,16 @@
 import "next-auth";
 import { DeveloperType } from "./User";
 
-declare module "next-auth" {
+export declare module 'next-auth' {
+  interface User {
+    accessToken: string
+  }
   interface Session {
-    accessToken?: string;
-    developerType?: DeveloperType;
+    accessToken: string
   }
 }
-
-declare module "next-auth/jwt" {
+export declare module '@auth/core/jwt' {
   interface JWT {
-    accessToken?: string;
-    developerType?: DeveloperType;
+    accessToken: string
   }
 }

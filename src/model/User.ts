@@ -1,6 +1,6 @@
 export enum DeveloperType {
-  Backend = 1,
-  Frontend = 2
+  BACKEND = 1,
+  FRONTEND = 2
 }
 
 export interface User{
