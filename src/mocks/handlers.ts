@@ -223,5 +223,10 @@ export const handlers = [
         },
       ])
     )
+  }),
+  http.get('/developerType', async ({ }) => {
+    return new HttpResponse(
+      JSON.stringify([1, 2])
+    )
   })
 ];
