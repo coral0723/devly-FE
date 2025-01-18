@@ -7,6 +7,14 @@ import { signIn } from 'next-auth/react';
 export default function Main() {
     const router = useRouter();
 
+    const handleLogin = () => {
+        window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/oauth2/authorization/google`;
+    }
+
+    const handleSignup = () => {
+        router.push('/selectDev');
+    }
+
     return (
         <div className="min-h-screen bg-white-50 to-white relative overflow-hidden">
             {/* Floating Background Icons */}
@@ -96,7 +104,7 @@ export default function Main() {
                 {/* Login Button */}
                 <div className="space-y-4 mb-6">
                     <button
-                        onClick={() => router.push('/selectDev')}
+                        onClick={handleSignup}
                         className="w-full py-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-xl font-medium hover:opacity-90 active:scale-[0.98] transition-all flex items-center justify-center gap-3 shadow-sm"
                     >
                         <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" className="opacity-90">
@@ -108,8 +116,7 @@ export default function Main() {
                         Google로 회원가입
                     </button>
                     <button
-                        // onClick={() => router.push('/home')}
-                        onClick={() => signIn('google')}
+                        onClick={handleLogin}
                         className="w-full py-4 bg-white border border-gray-300 rounded-xl font-medium hover:bg-gray-50 active:scale-[0.98] transition-all flex items-center justify-center gap-3 shadow-sm"
                     >
                         <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
