@@ -1,7 +1,7 @@
 'use client'
 
 import React, {useMemo, useState} from 'react';
-import { useRouter, useParams } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { PR_DETAILED_DATA } from './PrDatas';
 import Header from './_component/Header';
 import { Pr } from '@/model/Pr';
@@ -10,29 +10,29 @@ import { getPr } from './_lib/getPr';
 import CommitModal from './_component/CommitModal';
 import LoadingSpinner from '@/app/_component/LoadingSpinner';
 import ChangedFilesModal from './_component/ChangedFilesModal';
+import FinalScoreModal from './_component/FinalScoreModal';
 
 export default function PRLearnPage() {
-  const params = useParams();
-  const id = params.id;
-
-  const {data: pr, isLoading} = useQuery<Pr, object, Pr, [_1: string, _2: string, string]>({
-    queryKey: ['pr', 'learn', id as string],
-    queryFn: getPr,
-    staleTime: 60 * 1000,
-    gcTime: 300 * 1000,
-  });
-  
-  const router = useRouter();
-
-  const [currentStep, setCurrentStep] = useState(1);
+  const [currentStep, setCurrentStep] = useState<number>(1);
+  const [showFiles, setShowFiles] = useState<boolean>(false); //"커밋 내역" Modal
+  const [showCommits, setShowCommits] = useState<boolean>(false); //"변경된 파일" Modal
   const [prDescription, setPrDescription] = useState('');
   const [grammarFeedback, setGrammarFeedback] = useState(null);
   const [replies, setReplies] = useState({});
   const [submittedReplies, setSubmittedReplies] = useState({}); // 답변 제출 여부만 체크
   const [replyScores, setReplyScores] = useState({}); // 점수는 마무리 시점에 계산
-  const [showFiles, setShowFiles] = useState(false);
-  const [showCommits, setShowCommits] = useState(false);
   const [showFinalScore, setShowFinalScore] = useState(false);
+
+  const params = useParams();
+  const id = params.id as string;
+
+  const {data: pr, isLoading} = useQuery<Pr, object, Pr, [_1: string, _2: string, string]>({
+    queryKey: ['pr', 'learn', id],
+    queryFn: getPr,
+    staleTime: 60 * 1000,
+    gcTime: 300 * 1000,
+  });
+
 
   const handleReplySubmit = (commentId) => {
       if (!replies[commentId]) return;
@@ -335,89 +335,10 @@ export default function PRLearnPage() {
           />
         ): <></>}
 
-        <Modal
-            isOpen={showFinalScore}
-            onClose={() => {
-                setShowFinalScore(false);
-                setCurrentStep(1);
-                setPrDescription('');
-                setGrammarFeedback(null);
-                setReplies({});
-                setSubmittedReplies({});
-                setReplyScores({});
-            }}
-            title="최종 평가"
-        >
-            <div className="text-center py-8 bg-white">
-                <div className="text-2xl font-bold text-green-600 mb-6">
-                    🎉 학습을 완료했습니다!
-                </div>
-                <div className="space-y-6 mb-8">
-                    <div>
-                        <div className="text-sm text-gray-600 mb-1">전체 점수</div>
-                        <div className="text-3xl font-bold text-blue-600 mb-4">85/100</div>
-                    </div>
+        {showFinalScore ? (
+          <FinalScoreModal/>
+        ): <></>}
 
-                    <div className="text-left p-4 bg-gray-50 rounded-lg">
-                        <h3 className="font-medium mb-3">학습 분석</h3>
-
-                        <div className="space-y-4">
-                            <div>
-                                <h4 className="font-medium text-blue-800">강점</h4>
-                                <ul className="list-disc pl-4 mt-2 space-y-1 text-gray-600">
-                                    <li>기술적 용어의 적절한 사용</li>
-                                    <li>명확한 문장 구조로 의도 전달이 잘 됨</li>
-                                </ul>
-                            </div>
-
-                            <div>
-                                <h4 className="font-medium text-blue-800">개선이 필요한 부분</h4>
-                                <ul className="list-disc pl-4 mt-2 space-y-1 text-gray-600">
-                                    <li>
-                                        <span className="font-medium">시제 활용:</span>
-                                        <br/>
-                                        <span className="text-gray-500">현재완료(have/has + p.p.)와 단순과거 시제의 구분이 필요해요.
-          특히 구현 결과를 설명할 때는 현재완료를 사용하면 좋습니다.</span>
-                                    </li>
-                                    <li>
-                                        <span className="font-medium">디자인 패턴 이해:</span>
-                                        <br/>
-                                        <span className="text-gray-500">Singleton Pattern의 장단점과 적용 시나리오에 대한
-          더 깊은 이해가 도움될 것 같아요. 특히 Thread Safety와 관련된 부분을
-          추가로 학습해보세요.</span>
-                                    </li>
-                                </ul>
-                            </div>
-
-                            <div>
-                                <h4 className="font-medium text-blue-800">추천 학습 자료</h4>
-                                <ul className="list-disc pl-4 mt-2 space-y-1 text-gray-600">
-                                    <li>Java의 시제와 관사 사용법 가이드</li>
-                                    <li>Effective Java - Chapter 2: Singleton Pattern</li>
-                                    <li>Thread Safety in Java - Best Practices</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <button
-                    onClick={() => {
-                        setShowFinalScore(false);
-                        setCurrentStep(1);
-                        setPrDescription('');
-                        setGrammarFeedback(null);
-                        setReplies({});
-                        setSubmittedReplies({});
-                        setReplyScores({});
-                        router.push("/")
-                    }}
-                    className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-                >
-                    새로운 PR 시작하기
-                </button>
-            </div>
-        </Modal>
     </div>
   );
 };

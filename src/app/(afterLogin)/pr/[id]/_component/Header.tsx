@@ -1,7 +1,7 @@
 "use client"
 
 type Props = {
-  title?: string;
+  title: string;
   currentStep: number;
   setCurrentStep: (currentStep: number) => void; 
   setShowCommits: (value: boolean) => void;

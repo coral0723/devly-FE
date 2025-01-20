@@ -93,7 +93,7 @@ export default function QuizStep({index, word, wordsLength, handleQuizNext, onSc
               ))}
           </div>
           <div className="text-gray-600 border-t border-gray-100 pt-4">
-              {word.example.context}
+              {word.example.translation}
           </div>
       </div>
 
