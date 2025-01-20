@@ -9,23 +9,29 @@ export default function AuthCallback() {
  const router = useRouter();
 
  useEffect(() => {
-   const handleCallback = async () => {
-     const params = new URLSearchParams(window.location.search);
-     const accessToken = params.get('access_token');
-     const refreshToken = params.get('refresh_token');
+  const handleCallback = async () => {
+    const params = new URLSearchParams(window.location.search);
+    const accessToken = params.get('access_token');
+    const refreshToken = params.get('refresh_token');
 
-     if (accessToken && refreshToken) {
-       localStorage.setItem('accessToken', accessToken);
-       localStorage.setItem('refreshToken', refreshToken);
-       router.push('/home');
-     } else {
-      window.alert('문제가 발생했습니다.');
+    if (accessToken) {
+      localStorage.setItem('accessToken', accessToken);
+      
+      // refreshToken이 있는 경우에만 업데이트
+      if (refreshToken) {
+        localStorage.setItem('refreshToken', refreshToken);
+      }
+
+      router.push('/home');
+    } else {
+      // accessToken이 없는 경우에만 에러 처리
+      window.alert('로그인에 실패했습니다.');
       router.push('/');
-     }
-   };
+    }
+  };
 
-   handleCallback();
- }, [router]);
+  handleCallback();
+}, [router]);
 
  return (
    <div className='min-h-screen bg-white-50 to-white relative overflow-hidden flex items-center justify-center'>
