@@ -16,7 +16,7 @@ export const handlers = [
         },
         pr: {
           groupId: 3,
-          total: 5,
+          total: 1,
           completed: false
         },
         discussion: {
@@ -227,6 +227,21 @@ export const handlers = [
   http.get('/developerType', async ({ }) => {
     return new HttpResponse(
       JSON.stringify([1, 2])
+    )
+  }),
+  http.get('/study/prs/:groupId', async ({ }) => {
+    return new HttpResponse(
+      JSON.stringify([
+        {
+          id: 1,
+          title: "Singleton Pattern PR",
+          description: "Database Connection을 관리하는 Singleton 패턴을 구현해보세요.",
+          difficulty: "중급",
+          estimatedTime: "30분",
+          category: "Design Pattern",
+          tags: ["Java", "Singleton", "Thread-safe"]
+        }
+      ])
     )
   })
 ];

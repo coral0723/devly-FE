@@ -71,7 +71,7 @@ export default function MainFeatures() {
       <div
           className={`bg-white rounded-2xl border border-gray-200 p-5 space-y-2 transition-all
             ${tasks?.pr.completed === false && "cursor-pointer hover:bg-purple-50 hover:border-purple-200 active:scale-95"}`}
-          onClick={tasks?.pr.completed ? undefined : (() => {router.push('/pr')})}
+          onClick={tasks?.pr.completed ? undefined : (() => {router.push(`/pr?groupId=${tasks?.pr.groupId}`)})}
       >
         <div className="flex items-center justify-between">
           <GitPullRequest size={24} className="text-purple-500"/>
@@ -86,7 +86,7 @@ export default function MainFeatures() {
           )}
         </div>
         <h3 className="font-medium">모의 PR</h3>
-        <p className="text-base text-gray-500">영어 PR 작성 연습과 질문 답변 연습</p>
+        <p className="text-base text-gray-500">PR 작성 연습과 질문 답변 연습</p>
       </div>
 
       {/* 모의 논의 */}
