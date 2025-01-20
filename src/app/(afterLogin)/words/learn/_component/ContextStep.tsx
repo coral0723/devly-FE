@@ -31,7 +31,7 @@ export function ContextStep({ index, word, wordsLength, onNext }: ContextStepPro
 					))}
 				</div>
 				<div className="text-gray-600 border-t border-gray-100 pt-4">
-					{word.example.context}
+					{word.example.translation}
 				</div>
 			</div>
 			<div className="absolute bottom-0 left-0 flex justify-center w-full mb-4">

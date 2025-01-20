@@ -1,10 +1,27 @@
 'use client'
+
 import React, {useMemo, useState} from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 import { PR_DETAILED_DATA } from './PrDatas';
 import Header from './_component/Header';
+import { Pr } from '@/model/Pr';
+import { useQuery } from '@tanstack/react-query';
+import { getPr } from './_lib/getPr';
+import CommitModal from './_component/CommitModal';
+import LoadingSpinner from '@/app/_component/LoadingSpinner';
+import ChangedFilesModal from './_component/ChangedFilesModal';
 
 export default function PRLearnPage() {
+  const params = useParams();
+  const id = params.id;
+
+  const {data: pr, isLoading} = useQuery<Pr, object, Pr, [_1: string, _2: string, string]>({
+    queryKey: ['pr', 'learn', id as string],
+    queryFn: getPr,
+    staleTime: 60 * 1000,
+    gcTime: 300 * 1000,
+  });
+  
   const router = useRouter();
 
   const [currentStep, setCurrentStep] = useState(1);
@@ -72,10 +89,20 @@ export default function PRLearnPage() {
       });
   };
 
+  if(isLoading) {
+    return (
+      <>
+        <div>
+          <LoadingSpinner size={"lg"} />
+        </div>
+      </>
+    )
+  }
+
   return (
     <div className="max-w-lg mx-auto min-h-screen bg-gray-50">
       <Header
-        title={PR_DETAILED_DATA.title}
+        title={pr?.title}
         currentStep={currentStep}
         setCurrentStep={setCurrentStep}
         setShowCommits={setShowCommits}
@@ -88,12 +115,12 @@ export default function PRLearnPage() {
                   <div className="bg-white p-4 rounded-lg border border-gray-200">
                       <h3 className="font-medium mb-2">PR 설명 작성</h3>
                       <p className="text-sm text-gray-600">
-                          커밋 로그와 변경된 파일을 확인해 어떤 부분을 반영하고 개선한 PR인지 영어로 설명해주세요!
+                          커밋 로그와 변경된 파일을 확인해 어떤 부분을 반영하고 개선한 PR인지 설명해주세요!
                       </p>
                   </div>
                   <textarea
                       className="w-full h-32 p-3 border border-gray-300 rounded-lg text-sm bg-white"
-                      placeholder="PR 설명을 영어로 작성해주세요..."
+                      placeholder="PR 설명을 작성해주세요..."
                       value={prDescription}
                       onChange={(e) => setPrDescription(e.target.value)}
                   />
@@ -102,7 +129,7 @@ export default function PRLearnPage() {
                           onClick={handleCheckGrammar}
                           className="w-full py-3 bg-green-600 text-white rounded-lg hover:bg-green-700"
                       >
-                          문법 검사하기
+                        검사하기
                       </button>
                       {grammarFeedback && (
                           <button
@@ -294,72 +321,19 @@ export default function PRLearnPage() {
         )}
 
         {/* Modals */}
-        <Modal
-            isOpen={showCommits}
+        {showCommits ? (
+          <CommitModal
+            pr={pr!}
             onClose={() => setShowCommits(false)}
-            title="커밋 내역"
-        >
-            <div className="space-y-3">
-                {PR_DETAILED_DATA.commits.map((commit, idx) => (
-                    <div key={idx} className="p-3 bg-white border border-gray-200 rounded-lg">
-                        <div className="font-mono text-sm text-[#6A737D] mb-1">
-                            {commit.hash}
-                        </div>
-                        <div className="text-[#24292E]">{commit.message}</div>
-                        <div className="text-sm text-[#6A737D] mt-1">{commit.date}</div>
-                    </div>
-                ))}
-            </div>
-        </Modal>
-
-        <Modal
-            isOpen={showFiles}
+          />
+        ): <></>}
+        
+        {showFiles ? (
+          <ChangedFilesModal
+            pr={pr!}
             onClose={() => setShowFiles(false)}
-            title="변경된 파일"
-        >
-            <div className="space-y-4 max-h-[calc(100vh-12rem)] overflow-y-auto">
-                {PR_DETAILED_DATA.changedFiles.map((file, idx) => (
-                    <div key={idx} className="bg-white border border-gray-200 rounded-lg overflow-hidden">
-                        <div className="px-4 py-2 border-b border-gray-200 flex justify-between items-center">
-                            <span className="font-medium text-gray-800">{file.name}</span>
-                            <span className="text-xs text-gray-500">Java</span>
-                        </div>
-                        <div className="overflow-x-auto">
-                            <table className="w-full">
-                                <tbody>
-                                {file.changes.map((line, i) => (
-                                    <tr key={i} className="hover:bg-gray-50">
-                                        <td className="select-none w-12 pl-4 pr-2 text-right text-gray-400 border-r border-gray-100">
-                                            {i + 1}
-                                        </td>
-                                        <td className="w-12 px-2 text-green-600">+</td>
-                                        <td className="px-2 font-mono whitespace-pre">
-                    <span
-                        className={
-                            line.content.includes('import ') || line.content.includes('package ')
-                                ? 'text-[#7A3E9D]' :
-                                line.content.includes('class ') || line.content.includes('public ') ||
-                                line.content.includes('private ') || line.content.includes('protected ')
-                                    ? 'text-[#00627A]' :
-                                    line.content.includes('@')
-                                        ? 'text-[#87939A]' :
-                                        line.content.includes('return ') || line.content.includes('new ')
-                                            ? 'text-[#0033B3]' :
-                                            'text-[#080808]'
-                        }
-                    >
-                      {line.content}
-                    </span>
-                                        </td>
-                                    </tr>
-                                ))}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                ))}
-            </div>
-        </Modal>
+          />
+        ): <></>}
 
         <Modal
             isOpen={showFinalScore}

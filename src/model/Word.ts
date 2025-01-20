@@ -6,7 +6,7 @@ export interface Word {
   example: {
     source: string;
     text: string;
-    context: string;
+    translation: string;
   };
   quiz: {
     text: string;

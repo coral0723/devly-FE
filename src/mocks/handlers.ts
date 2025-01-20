@@ -35,95 +35,238 @@ export const handlers = [
 
     return new HttpResponse(
       JSON.stringify([
-        {
-          id: 1,
-          word: 'implementation',
-          pronunciation: '/ˌɪmplɪmenˈteɪʃən/',
-          meaning: '구현, 실행',
-          example: {
-              source: 'React Documentation',
-              text: "The implementation details of React components should be hidden from their consumers.",
-              highlight: "implementation",
-              context: "React 컴포넌트의 구현 세부사항은 해당 컴포넌트를 사용하는 쪽으로부터 숨겨져야 합니다.",
-          },
-          quiz: {
-            text: "The implementation details of React components should be hidden from their consumers.",
-            distractors: [
-              "import",
-              "book",
-              "number",
-            ]
-          }
-      },
-      {
-          id: 2,
-          word: 'deprecated',
-          pronunciation: '/ˈdeprəkeɪtɪd/',
-          meaning: '더 이상 사용되지 않는, 권장되지 않는',
-          example: {
-              source: 'Node.js Documentation',
-              text: "This API is deprecated and will be removed in the next major version.",
-              highlight: "deprecated",
-              context: "이 API는 더 이상 사용되지 않으며 다음 주요 버전에서 제거될 예정입니다.",
-          },
-          quiz: {
-            text: "The implementation details of React components should be hidden from their consumers.",
-            distractors: [
-              "import",
-              "book",
-              "number",
-            ]
-          }
-      },
-      {
-        id: 3,
-        word: "function",
-        pronunciation: "ˈfəŋkʃn",
-        meaning: "특정 작업을 수행하는 재사용 가능한 코드 블록.",
-        quiz: {
-          text: "A function is a block of organized and reusable code that performs a single action.",
-          distractors: ["fuction", "functoin", "functon"],
-        },
-        example: {
-          text: "A function is a block of organized and reusable code that performs a single action.",
-          highlight: "function",
-          source: "Programming 101",
-          context: "Functions are used to create reusable code and make programs modular.",
-        },
-      },
-      {
-        id: 4,
-        word: "variable",
-        pronunciation: "ˈvɛːrɪəbl",
-        meaning: "값을 저장하는 메모리의 명명된 위치.",
-        quiz: {
-          text: "A variable is used to store data that can be changed during program execution.",
-          distractors: ["varible", "variabel", "veriable"],
-        },
-        example: {
-          text: "A variable is used to store data that can be changed during program execution.",
-          highlight: "variable",
-          source: "Intro to Programming",
-          context: "Variables provide a way to name data that can be referenced and manipulated.",
-        },
-      },
-      {
-        id: 5,
-        word: "iteration",
-        pronunciation: "ˌɪtəˈreɪʃn",
-        meaning: "조건이 충족될 때까지 명령어 집합을 반복하는 과정.",
-        quiz: {
-          text: "Iteration is a process where a set of instructions is repeated until a condition is met.",
-          distractors: ["iteraton", "iterarion", "itertion"],
-        },
-        example: {
-          text: "Iteration is a process where a set of instructions is repeated until a condition is met.",
-          highlight: "iteration",
-          source: "Algorithm Basics",
-          context: "In programming, iteration is often implemented using loops such as for or while.",
-        },
-      }
-      ])
+            {
+              "createdAt": "2025-01-20 15:18:53.752306",
+              "id": 1,
+              "studyId": 1,
+              "updatedAt": "2025-01-20 15:18:53.752306",
+              "example": {
+                "source": "Spring Framework Documentation",
+                "text": "Spring allows for annotation-based configuration of your application.",
+                "translation": "스프링은 애플리케이션의 주석 기반 설정을 허용합니다."
+              },
+              "quiz": {
+                "text": "What does Annotation-based Configuration mean in Spring Framework?",
+                "distractors": [
+                  "Code-based Configuration",
+                  "XML-based Configuration",
+                  "Java-based Configuration",
+                  "HTML-based Configuration"
+                ]
+              },
+              "meaning": "주석 기반 설정",
+              "pronunciation": "/ænəʊˈteɪʃən beɪst kənˈfɪɡəˈreɪʃən/",
+              "word": "Annotation-based Configuration"
+            },
+            {
+              "createdAt": "2025-01-20 15:18:53.754271",
+              "id": 2,
+              "studyId": 1,
+              "updatedAt": "2025-01-20 15:18:53.754271",
+              "example": {
+                "source": "Spring Framework Documentation",
+                "text": "Dependency Injection is a fundamental aspect of the Spring framework.",
+                "translation": "의존성 주입은 스프링 프레임워크의 기본적인 측면입니다."
+              },
+              "quiz": {
+                "text": "What is a fundamental aspect of the Spring framework?",
+                "distractors": [
+                  "Dependency Extraction",
+                  "Dependency Reduction",
+                  "Dependency Increase",
+                  "Dependency Multiplication"
+                ]
+              },
+              "meaning": "의존성 주입",
+              "pronunciation": "/dɪˈpɛndənsi ɪnˈdʒɛkʃən/",
+              "word": "Dependency Injection"
+            },
+            {
+              "createdAt": "2025-01-20 15:18:53.754702",
+              "id": 3,
+              "studyId": 1,
+              "updatedAt": "2025-01-20 15:18:53.754702",
+              "example": {
+                "source": "Spring Framework Documentation",
+                "text": "Spring supports Aspect Oriented Programming (AOP) for separation of concerns.",
+                "translation": "스프링은 관심사의 분리를 위해 관점 지향 프로그래밍(AOP)를 지원합니다."
+              },
+              "quiz": {
+                "text": "What does Spring use for separation of concerns?",
+                "distractors": [
+                  "Object Oriented Programming",
+                  "Functional Programming",
+                  "Procedural Programming",
+                  "Modular Programming"
+                ]
+              },
+              "meaning": "관점 지향 프로그래밍",
+              "pronunciation": "/ˈæspekt ˈɔːrientid ˈproʊgræmɪŋ/",
+              "word": "Aspect Oriented Programming (AOP)"
+            },
+            {
+              "createdAt": "2025-01-20 15:18:53.755095",
+              "id": 4,
+              "studyId": 1,
+              "updatedAt": "2025-01-20 15:18:53.755095",
+              "example": {
+                "source": "Spring Framework Documentation",
+                "text": "Inversion of Control (IoC) is a design principle which guides the design of Spring Framework.",
+                "translation": "제어의 역전(IoC)은 스프링 프레임워크의 설계를 안내하는 설계 원칙입니다."
+              },
+              "quiz": {
+                "text": "What is a design principle which guides the design of Spring Framework?",
+                "distractors": [
+                  "Control of Inversion",
+                  "Inversion of Command",
+                  "Control of Command",
+                  "Command of Inversion"
+                ]
+              },
+              "meaning": "제어의 역전",
+              "pronunciation": "/ɪnˈvɜːrʒən ɒv kənˈtroʊl/",
+              "word": "Inversion of Control (IoC)"
+            },
+            {
+              "createdAt": "2025-01-20 15:18:53.755493",
+              "id": 5,
+              "studyId": 1,
+              "updatedAt": "2025-01-20 15:18:53.755493",
+              "example": {
+                "source": "Spring Framework Documentation",
+                "text": "Spring Boot makes it easy to create stand-alone, production-grade Spring based Applications.",
+                "translation": "스프링 부트는 독립 실행형, 생산 수준의 스프링 기반 애플리케이션을 쉽게 만들 수 있습니다."
+              },
+              "quiz": {
+                "text": "What makes it easy to create stand-alone, production-grade Spring based Applications?",
+                "distractors": [
+                  "Spring Bean",
+                  "Spring Cloud",
+                  "Spring MVC",
+                  "Spring Batch"
+                ]
+              },
+              "meaning": "스프링 부트",
+              "pronunciation": "/sprɪŋ buːt/",
+              "word": "Spring Boot"
+            },
+            {
+              "createdAt": "2025-01-20 15:18:53.755886",
+              "id": 6,
+              "studyId": 1,
+              "updatedAt": "2025-01-20 15:18:53.755886",
+              "example": {
+                "source": "Spring Framework Documentation",
+                "text": "Spring MVC is a Java framework which is used to build web applications.",
+                "translation": "스프링 MVC는 웹 애플리케이션을 구축하는 데 사용되는 자바 프레임워크입니다."
+              },
+              "quiz": {
+                "text": "What is a Java framework which is used to build web applications?",
+                "distractors": [
+                  "Spring Boot",
+                  "Spring Cloud",
+                  "Spring Batch",
+                  "Spring Security"
+                ]
+              },
+              "meaning": "스프링 MVC",
+              "pronunciation": "/sprɪŋ ɛmviːsiː/",
+              "word": "Spring MVC"
+            },
+            {
+              "createdAt": "2025-01-20 15:18:53.756252",
+              "id": 7,
+              "studyId": 1,
+              "updatedAt": "2025-01-20 15:18:53.756252",
+              "example": {
+                "source": "Spring Framework Documentation",
+                "text": "A bean is an object that is instantiated, assembled, and otherwise managed by a Spring IoC container.",
+                "translation": "빈은 스프링 IoC 컨테이너에 의해 인스턴스화, 조립, 그리고 관리되는 객체입니다."
+              },
+              "quiz": {
+                "text": "What is an object that is instantiated, assembled, and otherwise managed by a Spring IoC container?",
+                "distractors": [
+                  "Module",
+                  "Class",
+                  "Component",
+                  "Package"
+                ]
+              },
+              "meaning": "빈",
+              "pronunciation": "/biːn/",
+              "word": "Bean"
+            },
+            {
+              "createdAt": "2025-01-20 15:18:53.756635",
+              "id": 8,
+              "studyId": 1,
+              "updatedAt": "2025-01-20 15:18:53.756635",
+              "example": {
+                "source": "Spring Framework Documentation",
+                "text": "The DispatcherServlet is the entry point of a Spring MVC application.",
+                "translation": "디스패처 서블릿은 스프링 MVC 애플리케이션의 진입점입니다."
+              },
+              "quiz": {
+                "text": "What is the entry point of a Spring MVC application?",
+                "distractors": [
+                  "Controller",
+                  "Model",
+                  "View",
+                  "Service"
+                ]
+              },
+              "meaning": "디스패처 서블릿",
+              "pronunciation": "/dɪsˈpæʧərsɜːrvlɪt/",
+              "word": "DispatcherServlet"
+            },
+            {
+              "createdAt": "2025-01-20 15:18:53.75699",
+              "id": 9,
+              "studyId": 1,
+              "updatedAt": "2025-01-20 15:18:53.75699",
+              "example": {
+                "source": "Spring Framework Documentation",
+                "text": "The ApplicationContext is the central interface within a Spring application for providing configuration.",
+                "translation": "ApplicationContext는 스프링 애플리케이션에서 구성을 제공하는 중앙 인터페이스입니다."
+              },
+              "quiz": {
+                "text": "What is the central interface within a Spring application for providing configuration?",
+                "distractors": [
+                  "BeanFactory",
+                  "ConfigurableApplicationContext",
+                  "WebApplicationContext",
+                  "AnnotationConfigApplicationContext"
+                ]
+              },
+              "meaning": "애플리케이션 컨텍스트",
+              "pronunciation": "/ˈæplɪkeɪʃən kɒnˈtekst/",
+              "word": "ApplicationContext"
+            },
+            {
+              "createdAt": "2025-01-20 15:18:53.757475",
+              "id": 10,
+              "studyId": 1,
+              "updatedAt": "2025-01-20 15:18:53.757475",
+              "example": {
+                "source": "Spring Framework Documentation",
+                "text": "Spring Data’s mission is to provide a familiar and consistent, Spring-based programming model for data access.",
+                "translation": "스프링 데이터의 목표는 데이터 접근을 위한 친숙하고 일관된 스프링 기반 프로그래밍 모델을 제공하는 것입니다."
+              },
+              "quiz": {
+                "text": "What is the mission of Spring Data?",
+                "distractors": [
+                  "To provide a difficult and inconsistent, Spring-based programming model for data access",
+                  "To provide a familiar and consistent, Java-based programming model for data access",
+                  "To provide a familiar and inconsistent, Spring-based programming model for data access",
+                  "To provide a difficult and consistent, Spring-based programming model for data access"
+                ]
+              },
+              "meaning": "스프링 데이터",
+              "pronunciation": "/sprɪŋ deɪtə/",
+              "word": "Spring Data"
+            }
+          ]
+      )
     )
   }),
   http.get('/study/knowledges/:groupId', async ({ }) => {
@@ -242,6 +385,236 @@ export const handlers = [
           tags: ["Java", "Singleton", "Thread-safe"]
         }
       ])
+    )
+  }),
+  http.get('/study/pr/:id', async ({ }) => {
+    return new HttpResponse(
+      JSON.stringify({
+        title: 'Database Connector 싱글톤 패턴 구현',
+        commits: [
+            { hash: 'a1b2c3d', message: 'Add DatabaseConnector singleton class' },
+            { hash: 'e4f5g6h', message: 'Implement connection pool' },
+            { hash: 'i7j8k9l', message: 'Add configuration loader' }
+        ],
+        changedFiles: [
+          {
+            name: 'src/main/java/com/example/database/DatabaseConnector.java',
+            language: 'java',
+            changes: [
+              {
+                  type: 'addition',
+                  content: 'package com.example.database;',
+                  highlight: { color: 'text-purple-600' }
+              },
+              {
+                  type: 'addition',
+                  content: '',
+              },
+              {
+                  type: 'addition',
+                  content: 'import java.sql.Connection;',
+                  highlight: { color: 'text-purple-600' }
+              },
+              {
+                  type: 'addition',
+                  content: 'import java.sql.SQLException;',
+                  highlight: { color: 'text-purple-600' }
+              },
+              {
+                  type: 'addition',
+                  content: 'import com.zaxxer.hikari.HikariConfig;',
+                  highlight: { color: 'text-purple-600' }
+              },
+              {
+                  type: 'addition',
+                  content: 'import com.zaxxer.hikari.HikariDataSource;',
+                  highlight: { color: 'text-purple-600' }
+              },
+              {
+                  type: 'addition',
+                  content: '',
+              },
+              {
+                  type: 'addition',
+                  content: '@ThreadSafe',
+                  highlight: { color: 'text-blue-600' }
+              },
+              {
+                  type: 'addition',
+                  content: 'public final class DatabaseConnector {',
+                  highlight: { color: 'text-blue-600' }
+              },
+              {
+                  type: 'addition',
+                  content: '    private static volatile DatabaseConnector instance;',
+                  highlight: { color: 'text-purple-600' }
+              },
+              {
+                  type: 'addition',
+                  content: '    private final HikariDataSource dataSource;',
+                  highlight: { color: 'text-purple-600' }
+              },
+              {
+                  type: 'addition',
+                  content: '',
+              },
+              {
+                  type: 'addition',
+                  content: '    private DatabaseConnector() {',
+                  highlight: { color: 'text-blue-600' }
+              },
+              {
+                  type: 'addition',
+                  content: '        HikariConfig config = loadConfiguration();',
+                  highlight: { color: 'text-black' }
+              },
+              {
+                  type: 'addition',
+                  content: '        this.dataSource = new HikariDataSource(config);',
+                  highlight: { color: 'text-black' }
+              },
+              {
+                  type: 'addition',
+                  content: '    }',
+                  highlight: { color: 'text-black' }
+              },
+              {
+                  type: 'addition',
+                  content: '}',
+                  highlight: { color: 'text-black' }
+              }
+            ]
+          },
+          {
+            name: 'src/main/java/com/example/database/DatabaseConfig.java',
+            language: 'java',
+            changes: [
+              {
+                  type: 'addition',
+                  content: 'package com.example.database;',
+                  highlight: { color: 'text-purple-600' }
+              },
+              {
+                  type: 'addition',
+                  content: '',
+              },
+              {
+                  type: 'addition',
+                  content: 'import java.io.IOException;',
+                  highlight: { color: 'text-purple-600' }
+              },
+              {
+                  type: 'addition',
+                  content: 'import java.util.Properties;',
+                  highlight: { color: 'text-purple-600' }
+              },
+              {
+                  type: 'addition',
+                  content: '',
+              },
+              {
+                  type: 'addition',
+                  content: 'public class DatabaseConfig {',
+                  highlight: { color: 'text-blue-600' }
+              },
+              {
+                  type: 'addition',
+                  content: '    private static final String CONFIG_FILE = "database.properties";',
+                  highlight: { color: 'text-purple-600' }
+              },
+              {
+                  type: 'addition',
+                  content: '',
+              },
+              {
+                  type: 'addition',
+                  content: '    public static Properties loadProperties() throws IOException {',
+                  highlight: { color: 'text-blue-600' }
+              },
+              {
+                  type: 'addition',
+                  content: '        Properties props = new Properties();',
+                  highlight: { color: 'text-black' }
+              },
+              {
+                  type: 'addition',
+                  content: '        ClassLoader loader = Thread.currentThread().getContextClassLoader();',
+                  highlight: { color: 'text-black' }
+              },
+              {
+                  type: 'addition',
+                  content: '        props.load(loader.getResourceAsStream(CONFIG_FILE));',
+                  highlight: { color: 'text-black' }
+              },
+              {
+                  type: 'addition',
+                  content: '        return props;',
+                  highlight: { color: 'text-black' }
+              },
+              {
+                  type: 'addition',
+                  content: '    }',
+                  highlight: { color: 'text-black' }
+              },
+              {
+                  type: 'addition',
+                  content: '}',
+                  highlight: { color: 'text-black' }
+              }
+            ]
+          }
+        ],
+        reviewComments: [
+          {
+            id: 1,
+            comment: "The singleton implementation looks good, but have you considered using double-checked locking for better thread safety? Also, what happens if the connection pool exhausts all available connections?"
+          },
+          {
+            id: 2,
+            comment: "I noticed you're loading the configuration file in the constructor. This might cause issues if the file is not found. Could you add some error handling and maybe make the file path configurable?"
+          }
+        ]
+      })
+    )
+  }),
+  http.get('/study/pr/:id/feedback', async ({ }) => {
+    return new HttpResponse(
+      JSON.stringify({
+        score: 65, 
+        feedbackPoints: {
+          strengths: [
+            "핵심 구현 내용(싱글톤 패턴, 커넥션 풀)을 언급함",
+            "주요 메서드(getInstance)를 명시함"
+          ],
+          improvements: [
+            "구체적인 구현 세부사항이 부족함 (스레드 세이프티, 풀 사이즈 등)",
+            "변경된 파일과 영향도에 대한 설명이 없음",
+            "테스트 관련 내용이 누락됨"
+          ]
+        },
+        suggestions: {
+          title: "패턴 구현의 목적이나 이점을 제목에 포함하면 좋을 것 같습니다 (예: '... - 커넥션 풀 최적화')",
+          description: "다음 내용들을 추가하면 좋을 것 같습니다:\n- 구현한 스레드 세이프티 방식\n- 커넥션 풀 크기 및 설정값\n- 수행한 테스트 내용\n- 변경된 파일 목록"
+        },
+        betterPRExplainer: `제목: Database Connector 싱글톤 패턴 적용 - 커넥션 풀 최적화
+      
+      설명:
+      데이터베이스 연결 관리를 위한 싱글톤 패턴을 구현했습니다:
+      - 커넥션 풀을 도입하여 DB 연결 리소스 관리 최적화
+      - getInstance() 메서드를 통한 단일 인스턴스 접근 보장
+      - 최대 연결 수 설정으로 리소스 사용량 제어
+      
+      변경사항:
+      1. DatabaseConnector 클래스에 private 생성자 구현
+      2. 스레드 세이프를 위한 동기화 처리 추가
+      3. 커넥션 풀 설정 (최대 연결 수: 10)
+      4. 연결 타임아웃 및 재시도 로직 구현
+      
+      테스트:
+      - 멀티스레드 환경에서 인스턴스 동일성 검증
+      - 커넥션 풀 동작 확인
+      - 메모리 누수 테스트 완료`,
+      })
     )
   })
 ];
