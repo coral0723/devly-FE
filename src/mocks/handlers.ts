@@ -564,16 +564,9 @@ export const handlers = [
             ]
           }
         ],
-        reviewComments: [
-          {
-            id: 1,
-            comment: "The singleton implementation looks good, but have you considered using double-checked locking for better thread safety? Also, what happens if the connection pool exhausts all available connections?"
-          },
-          {
-            id: 2,
-            comment: "I noticed you're loading the configuration file in the constructor. This might cause issues if the file is not found. Could you add some error handling and maybe make the file path configurable?"
-          }
-        ]
+        reviewComment: {
+          comment: "The singleton implementation looks good, but have you considered using double-checked locking for better thread safety? Also, what happens if the connection pool exhausts all available connections?"
+        },
       })
     )
   }),

@@ -16,8 +16,7 @@ export interface Pr {
       }
     }[];
   }[];
-  reviewComments: { // "리뷰어 답변" 페이지의 코멘트
-    id: number;
+  reviewComment: { // "리뷰어 답변" 페이지의 코멘트
     comment: string;
-  }[];
+  };
 }
