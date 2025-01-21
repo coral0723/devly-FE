@@ -7,7 +7,7 @@ type Props = {
   feedback: Feedback
 }
 
-export default function FirstFeedback({feedback}: Props) {
+export default function ReviewAssessment({feedback}: Props) {
   return (
     <div className="mt-4 bg-white border border-gray-200 rounded-lg p-4">
 
@@ -28,7 +28,7 @@ export default function FirstFeedback({feedback}: Props) {
                   {strength.example}
                   <br/>
                   <span className="text-gray-500">
-                    {strength.content}
+                    {strength.explanation}
                   </span>
                 </p>
               </li>
@@ -42,9 +42,13 @@ export default function FirstFeedback({feedback}: Props) {
           <ul className="list-disc pl-4 space-y-2 text-gray-600">
             {feedback.feedbackPoints.improvements.map((improvement, idx) => (
               <li key={idx}>
-                <span className="text-gray-500">
-                  {improvement}
-                </span>
+                <p className="mt-1">
+                  {improvement.point}
+                  <br/>
+                  <span className="text-gray-500">
+                    {improvement.reason}
+                  </span>
+                </p>
               </li>
             ))}
           </ul>

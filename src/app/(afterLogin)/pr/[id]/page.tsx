@@ -1,8 +1,7 @@
 'use client'
 
-import React, {useMemo, useState} from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'next/navigation';
-import { PR_DETAILED_DATA } from './PrDatas';
 import Header from './_component/Header';
 import { Pr } from '@/model/Pr';
 import { useQuery, useMutation } from '@tanstack/react-query';
@@ -14,18 +13,18 @@ import FinalScoreModal from './_component/FinalScoreModal';
 import { FinalFeedback } from '@/model/FinalFeedback';
 import { api } from '@/app/_lib/axios';
 import { Feedback } from '@/model/Feedback';
-import FirstFeedback from './_component/FirstFeedback';
+import ReviewAssessment from './_component/ReviewAssessment';
 
 export default function PRLearnPage() {
   const [currentStep, setCurrentStep] = useState<number>(1);
+  const [prDescription, setPrDescription] = useState<string>(''); //첫 번째 답안 저장용
+  const [firstFeedback, setFirstFeedback] = useState<Feedback>(); 
+  const [replies, setReplies] = useState<string>(''); //두 번째 답안 저장용용
+  const [secondFeedback, setSecondFeedback] = useState<Feedback>();
+  const [finalFeedback, setFinalFeedback] = useState<FinalFeedback>(); 
   const [showFiles, setShowFiles] = useState<boolean>(false); //"커밋 내역" Modal
   const [showCommits, setShowCommits] = useState<boolean>(false); //"변경된 파일" Modal
   const [showFinalScore, setShowFinalScore] = useState<boolean>(false); //"최종 결과" Modal
-  const [prDescription, setPrDescription] = useState<string>(''); //첫 번째 답안 저장용
-  const [firstFeedback, setFirstFeedback] = useState<Feedback>(); 
-  const [finalFeedback, setFinalFeedback] = useState<FinalFeedback>(); // finalFeedback 저장
-  const [replies, setReplies] = useState<string>('');
-  const [secondFeedback, setSecondFeedback] = useState<Feedback>();
 
   const params = useParams();
   const id = params.id as string;
@@ -45,7 +44,6 @@ export default function PRLearnPage() {
 		},
 		onSuccess: (response) => {
 			setFirstFeedback(response.data);
-			
 		},
 		onError: (error) => {
 			console.log('에러 상세:', error);
@@ -60,7 +58,6 @@ export default function PRLearnPage() {
 		},
 		onSuccess: (response) => {
 			setSecondFeedback(response.data);
-			
 		},
 		onError: (error) => {
 			console.log('에러 상세:', error);
@@ -98,7 +95,7 @@ export default function PRLearnPage() {
         setShowFiles={setShowFiles}/>
 
       {/* Main Content */}
-      <div className="p-4 overflow-y-auto" style={{ height: 'calc(100vh - 140px)' }}>
+      <div className="p-4 overflow-y-auto scrollbar-hide" style={{ height: 'calc(100vh - 176px)' }}>
 				{currentStep === 1 ? ( // PR 설명 작성 Step
 					<div className="space-y-4">
 						<div className="bg-white p-4 rounded-lg border border-gray-200">
@@ -113,7 +110,7 @@ export default function PRLearnPage() {
 							value={prDescription}
 							onChange={(e) => setPrDescription(e.target.value)}
 						/>
-						<div className="flex flex-col gap-2">
+						<div className="fixed w-full max-w-lg bottom-0 left-1/2 transform -translate-x-1/2 p-2 bg-white border border-gray-200 z-10">
 							{firstFeedback ? (
 								<button
 									className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
@@ -130,7 +127,7 @@ export default function PRLearnPage() {
 								</button>
 							)}
 						</div>
-						{firstFeedback && <FirstFeedback feedback={firstFeedback}/>}
+						{firstFeedback && <ReviewAssessment feedback={firstFeedback}/>}
 					</div>
 				) : ( //리뷰어 답변 Step
               <div className="space-y-4">
@@ -151,7 +148,7 @@ export default function PRLearnPage() {
                       onChange={(e) => setReplies(e.target.value)}
                     />
                   </div>
-                  <div className="flex flex-col gap-2">
+                  <div className="fixed w-full max-w-lg bottom-0 left-1/2 transform -translate-x-1/2 p-2 bg-white border border-gray-200 z-10">
                     {secondFeedback ? (
                       <></>
                     ) : (
@@ -163,14 +160,15 @@ export default function PRLearnPage() {
                       </button>
                     )}
                   </div>
-                  {secondFeedback && <FirstFeedback feedback={secondFeedback}/>}
+                  {secondFeedback && <ReviewAssessment feedback={secondFeedback}/>}
               </div>
           )}
       </div>
 
 			{/* 마무리 버튼 - 모든 답변이 제출되었을 때만 표시 */}
 			{currentStep === 2 && secondFeedback && (
-				<div className="sticky bottom-0 left-0 right-0 p-4 bg-white border-t border-gray-200">
+				// <div className="sticky bottom-0 left-0 right-0 p-4 bg-white border-t border-gray-200">
+        <div className="fixed w-full max-w-lg bottom-0 left-1/2 transform -translate-x-1/2 p-2 bg-white border border-gray-200 z-10">
 					<div className="max-w-lg mx-auto">
 						<button
 							className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700"

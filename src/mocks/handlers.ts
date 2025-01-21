@@ -578,17 +578,26 @@ export const handlers = [
           strengths: [
             {
               example: '"I fix the issue" → "The issue has been fixed"',
-              content: "핵심 구현 내용(싱글톤 패턴, 커넥션 풀)을 언급함",
+              explanation: "핵심 구현 내용(싱글톤 패턴, 커넥션 풀)을 언급함",
             },
             {
               example: '"I fix the issue" → "The issue has been fixed"',
-              content: "주요 메서드(getInstance)를 명시함",
+              explanation: "주요 메서드(getInstance)를 명시함",
             }
           ],
           improvements: [
-            "구체적인 구현 세부사항이 부족함 (스레드 세이프티, 풀 사이즈 등)",
-            "변경된 파일과 영향도에 대한 설명이 없음",
-            "테스트 관련 내용이 누락됨"
+            {
+              point: '"I fix the issue" → "The issue has been fixed"',
+              reason: "구체적인 구현 세부사항이 부족함 (스레드 세이프티, 풀 사이즈 등)",
+            },
+            {
+              point: '"I fix the issue" → "The issue has been fixed"',
+              reason: "변경된 파일과 영향도에 대한 설명이 없음",
+            },
+            {
+              point: '"I fix the issue" → "The issue has been fixed"',
+              reason: "테스트 관련 내용이 누락됨",
+            },
           ]
         },
         suggestions: {

@@ -1,16 +1,19 @@
 export interface Feedback {
-  score: number; //점수
+  score: number;  // 점수
   feedbackPoints: {
-    strengths: { // 잘한 점들 
-      example: string; //사용자가 적은 텍스트
-      content: string; //그에 따른 설명
-    }[];    
-    improvements: string[]; // 개선이 필요한 점들
+    strengths: {
+      example: string;      // 실제 작성된 텍스트 예시
+      explanation: string;  // 왜 잘했는지에 대한 구체적인 설명
+    }[];
+    improvements: {
+      point: string;       // 개선이 필요한 부분
+      reason: string;      // 왜 개선이 필요한지에 대한 설명
+    }[];
   };
-  suggestions: {           // 구체적인 개선 제안
-    title?: string;        // 제목 개선 제안
-    description?: string;  // 설명 개선 제안
+  suggestions: {
+    title: string; // 제안하는 개선된 내용
+    description: string;  // 개선 제안에 대한 설명
   };
-  betterPRExplainer: string; //개선된 pr 설명 예시
+  betterPRExplainer: string;  // 모범 답안 예시
 }
 
