@@ -53,7 +53,7 @@ export default function KnowledgeLearnPage() {
             </div>
             <div className="h-1 bg-gray-100 rounded-full overflow-hidden">
               <div
-                className="h-full bg-green-500 transition-all duration-300"
+                className="h-full bg-blue-500 transition-all duration-300"
                 style={{ width: `${((currentKnowledgeIndex + 1) / knowledges!.length) * 100}%` }}
               />
             </div>

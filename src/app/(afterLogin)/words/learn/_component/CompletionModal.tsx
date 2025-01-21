@@ -28,7 +28,7 @@ export function CompletionModal({ totalWords }: Props) {
         </div>
         <button
           onClick={() => router.push('/home')}
-          className="w-full py-4 bg-green-500 text-white rounded-xl text-lg font-medium hover:bg-green-600"
+          className="w-full py-4 bg-gradient-to-r from-green-400 to-teal-500 hover:from-green-500 hover:to-teal-600 text-white rounded-xl text-lg font-medium"
         >
           완료
         </button>

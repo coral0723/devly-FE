@@ -22,7 +22,7 @@ export default function Header({title, currentStep, setCurrentStep, setShowCommi
                 이전 단계
               </button>
             )}
-            <span className="px-2 py-1 text-sm bg-green-100 text-green-800 rounded-full">
+            <span className="px-2 py-1 text-sm bg-purple-100 text-purple-800 rounded-full">
               Step {currentStep}/2
             </span>
           </div>

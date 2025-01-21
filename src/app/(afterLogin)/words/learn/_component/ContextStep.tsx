@@ -39,7 +39,7 @@ export function ContextStep({ index, word, wordsLength, onNext }: ContextStepPro
             onClick={onNext}
             className={`py-4 mb-4 text-white rounded-xl text-lg font-medium transition-all active:scale-[0.98]
               ${index === wordsLength-1 
-                ? "bg-blue-500 hover:bg-blue-600 border-blue-400" 
+                ? "bg-gradient-to-r from-green-400 to-teal-500 hover:from-green-500 hover:to-teal-600" 
                 : "bg-green-500 hover:bg-green-600"
               }`}
             style={{ width: "90%" }}

@@ -113,14 +113,14 @@ export default function PRLearnPage() {
 						<div className="fixed w-full max-w-lg bottom-0 left-1/2 transform -translate-x-1/2 p-2 bg-white border border-gray-200 z-10">
 							{firstFeedback ? (
 								<button
-									className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+									className="w-full py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
 									onClick={() => setCurrentStep(2)}
 								>
 									다음 단계
 								</button>
 							) : (
 								<button
-									className="w-full py-3 bg-green-600 text-white rounded-lg hover:bg-green-700"
+									className="w-full py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
 									onClick={() => firstLearning()}
 								>
 									{isFirstLoading ? (<LoadingSpinner size={'xs'}/>) : "검사하기"}
@@ -153,7 +153,7 @@ export default function PRLearnPage() {
                       <></>
                     ) : (
                       <button
-                        className="w-full py-3 bg-green-600 text-white rounded-lg hover:bg-green-700"
+                        className="w-full py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
                         onClick={() => secondLearning()}
                       >
                         {isSecondLoading ? (<LoadingSpinner size={'xs'}/>) : "검사하기"}
@@ -171,7 +171,7 @@ export default function PRLearnPage() {
         <div className="fixed w-full max-w-lg bottom-0 left-1/2 transform -translate-x-1/2 p-2 bg-white border border-gray-200 z-10">
 					<div className="max-w-lg mx-auto">
 						<button
-							className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+							className="w-full py-3 bg-gradient-to-r from-purple-400 to-pink-500 hover:from-purple-500 hover:to-pink-600 text-white rounded-lg"
 							onClick={() => finishLearning()}
 						>
 							{isFinalLoading ? (<LoadingSpinner size={'xs'}/>): "학습 마무리하기"}

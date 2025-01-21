@@ -14,7 +14,7 @@ export default function ReviewAssessment({feedback}: Props) {
       {/* Score Area */}
       <div className="mb-4">
         <span className="font-medium">문법 점수: </span>
-        <span className="text-blue-600 font-bold">{feedback.score}/100</span>
+        <span className="text-purple-600 font-bold">{feedback.score}/100</span>
       </div>
 
       <div className="space-y-4">

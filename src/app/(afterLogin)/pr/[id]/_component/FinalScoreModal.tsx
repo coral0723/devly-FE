@@ -24,13 +24,13 @@ export default function FinalScoreModal({finalFeedback}: Props) {
         <div className="flex-1 overflow-y-auto scrollbar-hide">
           <div className="p-4">
             <div className="text-center pt-8 bg-white">
-              <div className="text-2xl font-bold text-green-600 mb-6">
-                🎉 학습을 완료했습니다!
+              <div className="text-2xl font-bold mb-6">
+                학습을 완료했습니다! 🎉
               </div>
               <div className="space-y-6 mb-8">
                 <div>
                   <div className="text-sm text-gray-600 mb-1">전체 점수</div>
-                  <div className="text-3xl font-bold text-blue-600 mb-4">{finalFeedback.score}/100</div>
+                  <div className="text-3xl font-bold text-purple-700 mb-4">{finalFeedback.score}/100</div>
                 </div>
                 <div className="text-left p-4 bg-gray-50 rounded-lg">
                   <h3 className="font-medium mb-3">학습 분석</h3>
@@ -90,7 +90,7 @@ export default function FinalScoreModal({finalFeedback}: Props) {
             onClick={() => {
               router.push("/home");
             }}
-            className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+            className="w-full py-3 bg-gradient-to-r from-purple-400 to-pink-500 hover:from-purple-500 hover:to-pink-600 rounded-lg text-white"
           >
             학습 끝내기
           </button>

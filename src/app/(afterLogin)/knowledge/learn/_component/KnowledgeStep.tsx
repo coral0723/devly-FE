@@ -167,8 +167,8 @@ export default function KnowledgeStep({knowledge, knowledgesLength, currentStep,
                   ${selectedOption === null 
                     ? 'bg-gray-300 cursor-not-allowed' 
                     : showCorect && currentStep === knowledgesLength - 1
-                        ? 'bg-blue-500 hover:bg-blue-600 shadow-lg shadow-blue-500/50 border-2 border-blue-400 active:scale-[0.98]'
-                        : 'bg-green-500 hover:bg-green-600 active:scale-[0.98]'
+                        ? 'bg-gradient-to-r from-sky-400 to-blue-600 hover:from-sky-500 hover:to-blue-700 active:scale-[0.98]'
+                        : 'bg-blue-500 hover:bg-blue-600 active:scale-[0.98]'
                   }`}
                 disabled={selectedOption === null}
               >
