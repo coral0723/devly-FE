@@ -577,7 +577,7 @@ export const handlers = [
       })
     )
   }),
-  http.get('/study/pr/:id/feedback', async ({ }) => {
+  http.post('/study/pr/:id/feedback', async ({ }) => {
     return new HttpResponse(
       JSON.stringify({
         score: 65, 
@@ -614,6 +614,26 @@ export const handlers = [
       - 멀티스레드 환경에서 인스턴스 동일성 검증
       - 커넥션 풀 동작 확인
       - 메모리 누수 테스트 완료`,
+      })
+    )
+  }),
+  http.get('/study/pr/:id/finalFeedback', async ({ }) => {
+    return new HttpResponse(
+      JSON.stringify({
+        score: 85,
+        strengths: [
+          "기술적 용어의 적절한 사용",
+          "명확한 문장 구조로 의도 전달이 잘 됨"
+        ],
+        improvements: [
+          "현재완료(have/has + p.p.)와 단순과거 시제의 구분이 필요해요. 특히 구현 결과를 설명할 때는 현재완료를 사용하면 좋습니다.",
+          "Singleton Pattern의 장단점과 적용 시나리오에 대한 더 깊은 이해가 도움될 것 같아요. 특히 Thread Safety와 관련된 부분을 추가로 학습해보세요."
+        ],
+        recommendedResources: [
+          "Java의 시제와 관사 사용법 가이드",
+          "Effective Java - Chapter 2: Singleton Pattern",
+          "Thread Safety in Java - Best Practices"
+        ]
       })
     )
   })

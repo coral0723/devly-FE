@@ -5,23 +5,26 @@ import { useParams } from 'next/navigation';
 import { PR_DETAILED_DATA } from './PrDatas';
 import Header from './_component/Header';
 import { Pr } from '@/model/Pr';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation } from '@tanstack/react-query';
 import { getPr } from './_lib/getPr';
 import CommitModal from './_component/CommitModal';
 import LoadingSpinner from '@/app/_component/LoadingSpinner';
 import ChangedFilesModal from './_component/ChangedFilesModal';
 import FinalScoreModal from './_component/FinalScoreModal';
+import { FinalFeedback } from '@/model/FinalFeedback';
+import { api } from '@/app/_lib/axios';
 
 export default function PRLearnPage() {
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [showFiles, setShowFiles] = useState<boolean>(false); //"커밋 내역" Modal
   const [showCommits, setShowCommits] = useState<boolean>(false); //"변경된 파일" Modal
+  const [showFinalScore, setShowFinalScore] = useState<boolean>(false); //"최종 결과" Modal
+  const [finalFeedback, setFinalFeedback] = useState<FinalFeedback>(); // finalFeedback 저장
+
   const [prDescription, setPrDescription] = useState('');
   const [grammarFeedback, setGrammarFeedback] = useState(null);
   const [replies, setReplies] = useState({});
   const [submittedReplies, setSubmittedReplies] = useState({}); // 답변 제출 여부만 체크
-  const [replyScores, setReplyScores] = useState({}); // 점수는 마무리 시점에 계산
-  const [showFinalScore, setShowFinalScore] = useState(false);
 
   const params = useParams();
   const id = params.id as string;
@@ -33,6 +36,18 @@ export default function PRLearnPage() {
     gcTime: 300 * 1000,
   });
 
+  const { mutate: finishLearning, isPending: isFinalLoading } = useMutation({
+    mutationFn: async () => {
+			return await api.get(`/study/pr/${id}/finalFeedback`);
+    },
+    onSuccess: (response) => {
+			setFinalFeedback(response.data);
+			setShowFinalScore(true);
+    },
+    onError: (error) => {
+			console.log('에러 상세:', error);
+    }
+  })
 
   const handleReplySubmit = (commentId) => {
       if (!replies[commentId]) return;
@@ -48,39 +63,6 @@ export default function PRLearnPage() {
       );
   }, [submittedReplies]);
 
-  const handleFinishLearning = () => {
-      // 이 시점에서 모든 답변의 점수 계산
-      const scores = {};
-      PR_DETAILED_DATA.reviewComments.forEach(comment => {
-          scores[comment.id] = Math.floor(Math.random() * 20) + 80; // 예시 점수 계산
-      });
-
-      setReplyScores(scores);
-      setShowFinalScore(true);
-  };
-
-  const Modal = ({ isOpen, onClose, title, children }) => {
-      if (!isOpen) return null;
-
-      return (
-          <div className="fixed inset-0 bg-black bg-opacity-30 z-50">
-              <div className="h-[calc(100vh-4rem)] mt-8 flex flex-col bg-gray-50 max-w-3xl mx-auto rounded-lg overflow-hidden">
-                  <div className="p-4 bg-white border-b border-gray-200 flex justify-between items-center">
-                      <h3 className="font-semibold text-lg text-gray-800">{title}</h3>
-                      <button
-                          onClick={onClose}
-                          className="px-3 py-1 text-sm border border-gray-300 rounded hover:bg-gray-100"
-                      >
-                          닫기
-                      </button>
-                  </div>
-                  <div className="flex-1 overflow-hidden p-4">
-                      {children}
-                  </div>
-              </div>
-          </div>
-      );
-  };
 
   const handleCheckGrammar = () => {
       setGrammarFeedback({
@@ -91,18 +73,16 @@ export default function PRLearnPage() {
 
   if(isLoading) {
     return (
-      <>
-        <div>
-          <LoadingSpinner size={"lg"} />
-        </div>
-      </>
+			<div>
+				<LoadingSpinner size={"lg"} />
+			</div>
     )
   }
 
   return (
     <div className="max-w-lg mx-auto min-h-screen bg-gray-50">
       <Header
-        title={pr?.title}
+        title={pr!.title}
         currentStep={currentStep}
         setCurrentStep={setCurrentStep}
         setShowCommits={setShowCommits}
@@ -306,38 +286,40 @@ export default function PRLearnPage() {
           )}
       </div>
 
-        {/* 마무리 버튼 - 모든 답변이 제출되었을 때만 표시 */}
-        {currentStep === 2 && allRepliesSubmitted && (
-            <div className="sticky bottom-0 left-0 right-0 p-4 bg-white border-t border-gray-200">
-                <div className="max-w-lg mx-auto">
-                    <button
-                        onClick={handleFinishLearning}
-                        className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-                    >
-                        학습 마무리하기
-                    </button>
-                </div>
-            </div>
-        )}
+			{/* 마무리 버튼 - 모든 답변이 제출되었을 때만 표시 */}
+			{currentStep === 2 && allRepliesSubmitted && (
+				<div className="sticky bottom-0 left-0 right-0 p-4 bg-white border-t border-gray-200">
+					<div className="max-w-lg mx-auto">
+						<button
+							className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+							onClick={() => finishLearning()}
+						>
+							{isFinalLoading ? (<LoadingSpinner size={'xs'}/>): "학습 마무리하기"}
+						</button>
+					</div>
+				</div>
+			)}
 
-        {/* Modals */}
-        {showCommits ? (
-          <CommitModal
-            pr={pr!}
-            onClose={() => setShowCommits(false)}
-          />
-        ): <></>}
-        
-        {showFiles ? (
-          <ChangedFilesModal
-            pr={pr!}
-            onClose={() => setShowFiles(false)}
-          />
-        ): <></>}
+			{/* Modals */}
+			{showCommits ? (
+				<CommitModal
+					pr={pr!}
+					onClose={() => setShowCommits(false)}
+				/>
+			): <></>}
+			
+			{showFiles ? (
+				<ChangedFilesModal
+					pr={pr!}
+					onClose={() => setShowFiles(false)}
+				/>
+			): <></>}
 
-        {showFinalScore ? (
-          <FinalScoreModal/>
-        ): <></>}
+			{showFinalScore && finalFeedback ? (
+				<FinalScoreModal
+					finalFeedback={finalFeedback}
+				/>
+			): <></>}
 
     </div>
   );

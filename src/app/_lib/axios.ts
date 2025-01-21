@@ -2,7 +2,8 @@ import axios from 'axios';
 
 // 기본 인스턴스
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL
+  // baseURL: process.env.NEXT_PUBLIC_API_URL
+  baseURL: process.env.NEXT_PUBLIC_BASE_URL
 });
 
 // 인증이 필요한 요청을 위한 인스턴스

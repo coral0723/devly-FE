@@ -1,9 +1,14 @@
 "use client";
 
+import { FinalFeedback } from "@/model/FinalFeedback";
 import { useRouter } from "next/navigation";
 
+type Props = {
+  finalFeedback: FinalFeedback;
+}
 
-export default function FinalScoreModal() {
+
+export default function FinalScoreModal({finalFeedback}: Props) {
   const router = useRouter();
 
   return (
@@ -22,7 +27,7 @@ export default function FinalScoreModal() {
             <div className="space-y-6 mb-8">
               <div>
                 <div className="text-sm text-gray-600 mb-1">전체 점수</div>
-                <div className="text-3xl font-bold text-blue-600 mb-4">85/100</div>
+                <div className="text-3xl font-bold text-blue-600 mb-4">{finalFeedback.score}/100</div>
               </div>
 
               <div className="text-left p-4 bg-gray-50 rounded-lg">
@@ -32,14 +37,15 @@ export default function FinalScoreModal() {
                   <div>
                     <h4 className="font-medium text-blue-800">강점</h4>
                     <ul className="list-disc pl-4 mt-2 space-y-1 text-gray-600">
-                      <li>기술적 용어의 적절한 사용</li>
-                      <li>명확한 문장 구조로 의도 전달이 잘 됨</li>
+                      {finalFeedback.strengths.map((strength) => (
+                        <li key={strength}>{strength}</li>
+                      ))}
                     </ul>
                   </div>
 
                   <div>
                     <h4 className="font-medium text-blue-800">개선이 필요한 부분</h4>
-                    <ul className="list-disc pl-4 mt-2 space-y-1 text-gray-600">
+                    {/* <ul className="list-disc pl-4 mt-2 space-y-1 text-gray-600">
                       <li>
                         <span className="font-medium">시제 활용:</span>
                         <br />
@@ -54,15 +60,20 @@ export default function FinalScoreModal() {
                           Singleton Pattern의 장단점과 적용 시나리오에 대한 더 깊은 이해가 도움될 것 같아요. 특히 Thread Safety와 관련된 부분을 추가로 학습해보세요.
                         </span>
                       </li>
+                    </ul> */}
+                    <ul className="list-disc pl-4 mt-2 space-y-1 text-gray-600">
+                      {finalFeedback.improvements.map((improvement) => (
+                        <li key={improvement}>{improvement}</li>
+                      ))}
                     </ul>
                   </div>
 
                   <div>
                     <h4 className="font-medium text-blue-800">추천 학습 자료</h4>
                     <ul className="list-disc pl-4 mt-2 space-y-1 text-gray-600">
-                      <li>Java의 시제와 관사 사용법 가이드</li>
-                      <li>Effective Java - Chapter 2: Singleton Pattern</li>
-                      <li>Thread Safety in Java - Best Practices</li>
+                      {finalFeedback.recommendedResources.map((recommendedResource) => (
+                        <li key={recommendedResource}>{recommendedResource}</li>
+                      ))}
                     </ul>
                   </div>
                 </div>
