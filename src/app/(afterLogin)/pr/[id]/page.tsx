@@ -13,16 +13,18 @@ import ChangedFilesModal from './_component/ChangedFilesModal';
 import FinalScoreModal from './_component/FinalScoreModal';
 import { FinalFeedback } from '@/model/FinalFeedback';
 import { api } from '@/app/_lib/axios';
+import { Feedback } from '@/model/Feedback';
+import FirstFeedback from './_component/FirstFeedback';
 
 export default function PRLearnPage() {
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [showFiles, setShowFiles] = useState<boolean>(false); //"커밋 내역" Modal
   const [showCommits, setShowCommits] = useState<boolean>(false); //"변경된 파일" Modal
   const [showFinalScore, setShowFinalScore] = useState<boolean>(false); //"최종 결과" Modal
+  const [prDescription, setPrDescription] = useState(''); //첫 번째 답안 저장용
+	const [firstFeedback, setFirstFeedback] = useState<Feedback>(); 
   const [finalFeedback, setFinalFeedback] = useState<FinalFeedback>(); // finalFeedback 저장
 
-  const [prDescription, setPrDescription] = useState('');
-  const [grammarFeedback, setGrammarFeedback] = useState(null);
   const [replies, setReplies] = useState({});
   const [submittedReplies, setSubmittedReplies] = useState({}); // 답변 제출 여부만 체크
 
@@ -36,6 +38,21 @@ export default function PRLearnPage() {
     gcTime: 300 * 1000,
   });
 
+	const { mutate: firstLearning, isPending: isFirstLoading } = useMutation({
+		mutationFn: async () => {
+			return await api.post(`/study/pr/${id}/feedback`, {
+				prDescription: prDescription
+			});
+		},
+		onSuccess: (response) => {
+			setFirstFeedback(response.data);
+			
+		},
+		onError: (error) => {
+			console.log('에러 상세:', error);
+		}
+	});
+
   const { mutate: finishLearning, isPending: isFinalLoading } = useMutation({
     mutationFn: async () => {
 			return await api.get(`/study/pr/${id}/finalFeedback`);
@@ -47,7 +64,7 @@ export default function PRLearnPage() {
     onError: (error) => {
 			console.log('에러 상세:', error);
     }
-  })
+  });
 
   const handleReplySubmit = (commentId) => {
       if (!replies[commentId]) return;
@@ -64,12 +81,6 @@ export default function PRLearnPage() {
   }, [submittedReplies]);
 
 
-  const handleCheckGrammar = () => {
-      setGrammarFeedback({
-          score: 85,
-          suggestions: ['기술적 용어의 대소문자를 확인해주세요.']
-      });
-  };
 
   if(isLoading) {
     return (
@@ -90,124 +101,40 @@ export default function PRLearnPage() {
 
       {/* Main Content */}
       <div className="p-4 overflow-y-auto" style={{ height: 'calc(100vh - 140px)' }}>
-          {currentStep === 1 ? (
-              <div className="space-y-4">
-                  <div className="bg-white p-4 rounded-lg border border-gray-200">
-                      <h3 className="font-medium mb-2">PR 설명 작성</h3>
-                      <p className="text-sm text-gray-600">
-                          커밋 로그와 변경된 파일을 확인해 어떤 부분을 반영하고 개선한 PR인지 설명해주세요!
-                      </p>
-                  </div>
-                  <textarea
-                      className="w-full h-32 p-3 border border-gray-300 rounded-lg text-sm bg-white"
-                      placeholder="PR 설명을 작성해주세요..."
-                      value={prDescription}
-                      onChange={(e) => setPrDescription(e.target.value)}
-                  />
-                  <div className="flex flex-col gap-2">
-                      <button
-                          onClick={handleCheckGrammar}
-                          className="w-full py-3 bg-green-600 text-white rounded-lg hover:bg-green-700"
-                      >
-                        검사하기
-                      </button>
-                      {grammarFeedback && (
-                          <button
-                              onClick={() => setCurrentStep(2)}
-                              className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-                          >
-                              다음 단계
-                          </button>
-                      )}
-                  </div>
-                  {grammarFeedback && (
-                      <div className="mt-4 bg-white border border-gray-200 rounded-lg p-4">
-                          <div className="mb-4">
-                              <span className="font-medium">문법 점수: </span>
-                              <span className="text-blue-600 font-bold">{grammarFeedback.score}/100</span>
-                          </div>
-                          <div className="space-y-4">
-                              <div className="text-sm">
-                                  <h4 className="font-medium mb-2">문법 및 표현</h4>
-                                  <ul className="list-disc pl-4 space-y-2 text-gray-600">
-                                      <li>
-                                          <div className="font-medium text-gray-700">수동태 사용이 필요한 부분</div>
-                                          <p className="mt-1">
-                                              "I fix the issue" → "The issue has been fixed"
-                                              <br/>
-                                              <span className="text-gray-500">
-          (버그나 이슈를 수정했다고 할 때는 보통 수동태를 사용하면 더 자연스러워요.
-          "제가 수정했다"보다는 "수정되었다"라고 표현하는 것이 PR에서 더 일반적입니다.)
-        </span>
-                                          </p>
-                                      </li>
-                                      <li>
-                                          <div className="font-medium text-gray-700">시제 사용</div>
-                                          <p className="mt-1">
-                                              "When user use this function" → "When users use this function"
-                                              <br/>
-                                              <span className="text-gray-500">
-          (단수 주어(user)를 사용할 때는 동사에 s를 붙여야 해요.
-          보통은 복수형(users)을 사용하는 것이 더 자연스럽습니다.)
-        </span>
-                                          </p>
-                                      </li>
-                                  </ul>
-                              </div>
-
-                              <div className="text-sm">
-                                  <h4 className="font-medium mb-2">전문 용어 사용</h4>
-                                  <ul className="list-disc pl-4 space-y-2 text-gray-600">
-                                      <li>
-                                          <div className="font-medium text-gray-700">대문자 사용</div>
-                                          <p className="mt-1">
-                                              "singleton pattern" → "Singleton Pattern"
-                                              <br/>
-                                              <span className="text-gray-500">
-          (디자인 패턴의 이름은 보통 대문자로 시작합니다.
-          Java나 Spring 같은 기술 용어들도 항상 대문자로 시작해주세요.)
-        </span>
-                                          </p>
-                                      </li>
-                                  </ul>
-                              </div>
-
-                              <div className="text-sm">
-                                  <h4 className="font-medium mb-2">PR 설명 구조</h4>
-                                  <ul className="list-disc pl-4 space-y-2 text-gray-600">
-                                      <li>
-                                          <div className="font-medium text-gray-700">설명 순서</div>
-                                          <p className="mt-1">
-                                              변경 내용의 순서를 다음과 같이 작성하면 더 좋습니다:
-                                              1. 무엇을 변경했는지 (What)
-                                              2. 왜 변경했는지 (Why)
-                                              3. 어떻게 테스트했는지 (How to test)
-                                          </p>
-                                      </li>
-                                  </ul>
-                              </div>
-
-                              <div className="text-sm">
-                                  <h4 className="font-medium mb-2">개선된 PR 설명 예시</h4>
-                                  <div className="bg-gray-50 p-3 rounded border border-gray-200 text-gray-600">
-                                      The Singleton Pattern has been implemented for the DatabaseConnector class.
-                                      This change ensures that only one database connection instance is maintained
-                                      throughout the application's lifecycle.
-
-                                      Key changes:
-                                      - Added thread-safe implementation using double-checked locking
-                                      - Implemented lazy initialization for better performance
-                                      - Added comprehensive unit tests for concurrent access scenarios
-
-                                      To test: Run DatabaseConnectorTest with multiple threads to verify thread
-                                      safety.
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                  )}
-              </div>
-          ) : (
+				{currentStep === 1 ? ( // PR 설명 작성 Step
+					<div className="space-y-4">
+						<div className="bg-white p-4 rounded-lg border border-gray-200">
+							<h3 className="font-medium mb-2">PR 설명 작성</h3>
+							<p className="text-sm text-gray-600">
+								커밋 로그와 변경된 파일을 확인해 어떤 부분을 반영하고 개선한 PR인지 설명해주세요!
+							</p>
+						</div>
+						<textarea
+							className="w-full h-32 p-3 border border-gray-300 rounded-lg text-sm bg-white"
+							placeholder="PR 설명을 작성해주세요..."
+							value={prDescription}
+							onChange={(e) => setPrDescription(e.target.value)}
+						/>
+						<div className="flex flex-col gap-2">
+							{firstFeedback ? (
+								<button
+									className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+									onClick={() => setCurrentStep(2)}
+								>
+									다음 단계
+								</button>
+							) : (
+								<button
+									className="w-full py-3 bg-green-600 text-white rounded-lg hover:bg-green-700"
+									onClick={() => firstLearning()}
+								>
+									{isFirstLoading ? (<LoadingSpinner size={'xs'}/>) : "검사하기"}
+								</button>
+							)}
+						</div>
+						{firstFeedback && <FirstFeedback feedback={firstFeedback}/>}
+					</div>
+				) : ( //리뷰어 답변 Step
               <div className="space-y-4 pb-20">
                   <div className="bg-white p-4 rounded-lg border border-gray-200 mb-4">
                       <h3 className="font-medium mb-2">리뷰어 답변</h3>

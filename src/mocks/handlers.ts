@@ -583,8 +583,14 @@ export const handlers = [
         score: 65, 
         feedbackPoints: {
           strengths: [
-            "핵심 구현 내용(싱글톤 패턴, 커넥션 풀)을 언급함",
-            "주요 메서드(getInstance)를 명시함"
+            {
+              example: '"I fix the issue" → "The issue has been fixed"',
+              content: "핵심 구현 내용(싱글톤 패턴, 커넥션 풀)을 언급함",
+            },
+            {
+              example: '"I fix the issue" → "The issue has been fixed"',
+              content: "주요 메서드(getInstance)를 명시함",
+            }
           ],
           improvements: [
             "구체적인 구현 세부사항이 부족함 (스레드 세이프티, 풀 사이즈 등)",
@@ -596,24 +602,22 @@ export const handlers = [
           title: "패턴 구현의 목적이나 이점을 제목에 포함하면 좋을 것 같습니다 (예: '... - 커넥션 풀 최적화')",
           description: "다음 내용들을 추가하면 좋을 것 같습니다:\n- 구현한 스레드 세이프티 방식\n- 커넥션 풀 크기 및 설정값\n- 수행한 테스트 내용\n- 변경된 파일 목록"
         },
-        betterPRExplainer: `제목: Database Connector 싱글톤 패턴 적용 - 커넥션 풀 최적화
-      
-      설명:
-      데이터베이스 연결 관리를 위한 싱글톤 패턴을 구현했습니다:
-      - 커넥션 풀을 도입하여 DB 연결 리소스 관리 최적화
-      - getInstance() 메서드를 통한 단일 인스턴스 접근 보장
-      - 최대 연결 수 설정으로 리소스 사용량 제어
-      
-      변경사항:
-      1. DatabaseConnector 클래스에 private 생성자 구현
-      2. 스레드 세이프를 위한 동기화 처리 추가
-      3. 커넥션 풀 설정 (최대 연결 수: 10)
-      4. 연결 타임아웃 및 재시도 로직 구현
-      
-      테스트:
-      - 멀티스레드 환경에서 인스턴스 동일성 검증
-      - 커넥션 풀 동작 확인
-      - 메모리 누수 테스트 완료`,
+        betterPRExplainer: `제목: Database Connector 싱글톤 패턴 적용 - 커넥션 풀 최적화\n
+          설명: 데이터베이스 연결 관리를 위한 싱글톤 패턴을 구현했습니다:\n
+          - 커넥션 풀을 도입하여 DB 연결 리소스 관리 최적화\n
+          - getInstance() 메서드를 통한 단일 인스턴스 접근 보장\n
+          - 최대 연결 수 설정으로 리소스 사용량 제어\n
+          
+          변경사항:\n
+          1. DatabaseConnector 클래스에 private 생성자 구현\n
+          2. 스레드 세이프를 위한 동기화 처리 추가\n
+          3. 커넥션 풀 설정 (최대 연결 수: 10)\n
+          4. 연결 타임아웃 및 재시도 로직 구현\n
+          
+          테스트:\n
+          - 멀티스레드 환경에서 인스턴스 동일성 검증\n
+          - 커넥션 풀 동작 확인\n
+          - 메모리 누수 테스트 완료`,
       })
     )
   }),
