@@ -8,5 +8,6 @@ export interface User{
   email: string;
   nickname: string;
   profile: string;
-  developer_type: DeveloperType;
+  developerType: DeveloperType;
+  level: number
 }

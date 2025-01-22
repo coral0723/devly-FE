@@ -1,3 +1,4 @@
+import { faker } from '@faker-js/faker';
 import { http, HttpResponse } from 'msw';
 
 export const handlers = [
@@ -640,6 +641,28 @@ export const handlers = [
           "Effective Java - Chapter 2: Singleton Pattern",
           "Thread Safety in Java - Best Practices"
         ]
+      })
+    )
+  }),
+  http.get(`/profile/stats`, async ({ }) => {
+    return new HttpResponse(
+      JSON.stringify({
+        days: 24,
+        exp: 3434,
+        words: 32,
+        knowledge: 55,
+        pr: 19,
+        discussion: 4
+      })
+    )
+  }),
+  http.get(`/profile`, async ({ }) => {
+    return new HttpResponse(
+      JSON.stringify({
+        nickname: "김데블리",
+        profile: faker.image.urlLoremFlickr(),
+        developerType: 2,
+        level: 6
       })
     )
   })
