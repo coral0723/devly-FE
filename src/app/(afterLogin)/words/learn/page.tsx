@@ -77,7 +77,7 @@ export default function WordLearning() {
           </div>
 
           {/* Main Content */}
-          <div ref={containerRef} className="p-5 h-[calc(100vh-64px)] overflow-y-auto scrollbar-hide">
+          <div ref={containerRef} className="p-5 h-[calc(100vh-150px)] overflow-y-auto scrollbar-hide">
             {step === 'word' && (
               <WordStep 
                 word={words![currentWordIndex]} 

@@ -90,7 +90,7 @@ export default function FinalScoreModal({finalFeedback}: Props) {
             onClick={() => {
               router.push("/home");
             }}
-            className="w-full py-3 bg-gradient-to-r from-purple-400 to-pink-500 hover:from-purple-500 hover:to-pink-600 rounded-lg text-white"
+            className="w-full py-3 bg-gradient-to-r from-purple-400 to-pink-500 hover:from-purple-500 hover:to-pink-600 rounded-lg text-white text-lg font-medium"
           >
             학습 끝내기
           </button>

@@ -70,9 +70,6 @@ export default function KnowledgeStep({knowledge, knowledgesLength, currentStep,
       <div className="bg-white rounded-xl p-6 shadow-sm">
         <div className="flex items-center gap-4 mb-4">
           <h1 className="text-2xl font-bold flex-1">{knowledge.title}</h1>
-          <span className="text-sm text-gray-500 flex-shrink-0">
-            {currentStep + 1} / {knowledgesLength}
-          </span>
         </div>
         
         {/* Navigation Tabs */}
@@ -161,29 +158,32 @@ export default function KnowledgeStep({knowledge, knowledgesLength, currentStep,
                 ))}
               </div>
 
-              <button
-                onClick={showCorect ? onNext : onCheck}
-                className={`w-full py-4 mb-4 text-white rounded-xl text-lg font-medium transition-all
-                  ${selectedOption === null 
-                    ? 'bg-gray-300 cursor-not-allowed' 
-                    : showCorect && currentStep === knowledgesLength - 1
-                        ? 'bg-gradient-to-r from-sky-400 to-blue-600 hover:from-sky-500 hover:to-blue-700 active:scale-[0.98]'
-                        : 'bg-blue-500 hover:bg-blue-600 active:scale-[0.98]'
-                  }`}
-                disabled={selectedOption === null}
-              >
-                {showCorect ? (
-                  currentStep === knowledgesLength - 1 ? (
-                    <div className="flex items-center justify-center gap-2">
-                      <span>학습 끝내기</span>
-                    </div>
+              <div className="fixed w-full max-w-lg left-1/2 transform -translate-x-1/2 bottom-0 bg-white p-2 border border-gray-200 z-10">
+                <button
+                  onClick={showCorect ? onNext : onCheck}
+                  className={`w-full py-3 text-white rounded-xl text-lg font-medium transition-all
+                    ${selectedOption === null 
+                      ? 'bg-gray-300 cursor-not-allowed' 
+                      : showCorect && currentStep === knowledgesLength - 1
+                          ? 'bg-gradient-to-r from-sky-400 to-blue-600 hover:from-sky-500 hover:to-blue-700 active:scale-[0.98]'
+                          : 'bg-blue-500 hover:bg-blue-600 active:scale-[0.98]'
+                    }`}
+                  disabled={selectedOption === null}
+                >
+                  {showCorect ? (
+                    currentStep === knowledgesLength - 1 ? (
+                      <div className="flex items-center justify-center gap-2">
+                        <span>학습 끝내기</span>
+                      </div>
+                    ) : (
+                      "다음 문제"
+                    )
                   ) : (
-                    "다음 문제"
-                  )
-                ) : (
-                  "결과 확인"
-                )}
-              </button>
+                    "결과 확인"
+                  )}
+                </button>
+              </div>
+
             </div>
           )}
         </div>

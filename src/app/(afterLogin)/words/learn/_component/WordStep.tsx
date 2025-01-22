@@ -81,11 +81,10 @@ export function WordStep({ word, onNext }: WordStepProps) {
       <div className="text-center text-lg text-gray-600">
         {word.meaning}
       </div>
-      <div className="absolute bottom-0 left-0 flex justify-center w-full mb-4">
+      <div className="fixed w-full max-w-lg bottom-0 left-1/2 transform -translate-x-1/2 p-2 bg-white border border-gray-200 z-10">
         <button
+          className=" w-full py-3 bg-green-500 text-white rounded-xl text-lg font-medium hover:bg-green-600 active:scale-[0.98] transition-all"
           onClick={onNext}
-          className="py-4 mb-4 bg-green-500 text-white rounded-xl text-lg font-medium hover:bg-green-600 active:scale-[0.98] transition-all"
-          style={{ width: "90%" }}
         >
           다음
         </button>

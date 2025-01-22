@@ -34,15 +34,14 @@ export function ContextStep({ index, word, wordsLength, onNext }: ContextStepPro
 					{word.example.translation}
 				</div>
 			</div>
-			<div className="absolute bottom-0 left-0 flex justify-center w-full mb-4">
+			<div className="fixed w-full max-w-lg bottom-0 left-1/2 transform -translate-x-1/2 bg-white p-2 border border-gray-200 z-10">
         <button
             onClick={onNext}
-            className={`py-4 mb-4 text-white rounded-xl text-lg font-medium transition-all active:scale-[0.98]
+            className={`w-full py-3 text-white rounded-xl text-lg font-medium transition-all active:scale-[0.98]
               ${index === wordsLength-1 
                 ? "bg-gradient-to-r from-green-400 to-teal-500 hover:from-green-500 hover:to-teal-600" 
                 : "bg-green-500 hover:bg-green-600"
               }`}
-            style={{ width: "90%" }}
         >
           {index === wordsLength-1 ? (
             <div className="flex items-center justify-center gap-2">

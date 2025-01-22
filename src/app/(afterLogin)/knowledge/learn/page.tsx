@@ -61,7 +61,7 @@ export default function KnowledgeLearnPage() {
         </div>
 
         {/* Main Content */}
-        <div ref={containerRef} className="p-5 h-[calc(100vh-64px)] overflow-y-auto scrollbar-hide">
+        <div ref={containerRef} className="p-5 h-[calc(100vh-140px)] overflow-y-auto scrollbar-hide">
           <KnowledgeStep
             knowledge={knowledges![currentKnowledgeIndex]}
             knowledgesLength={knowledges!.length}

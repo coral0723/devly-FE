@@ -110,24 +110,24 @@ export default function PRLearnPage() {
 							value={prDescription}
 							onChange={(e) => setPrDescription(e.target.value)}
 						/>
+						{firstFeedback && <ReviewAssessment feedback={firstFeedback}/>}
 						<div className="fixed w-full max-w-lg bottom-0 left-1/2 transform -translate-x-1/2 p-2 bg-white border border-gray-200 z-10">
 							{firstFeedback ? (
 								<button
-									className="w-full py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
+									className="w-full py-3 bg-purple-600 text-white rounded-lg text-lg font-medium hover:bg-purple-700"
 									onClick={() => setCurrentStep(2)}
 								>
 									다음 단계
 								</button>
 							) : (
 								<button
-									className="w-full py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
+									className="w-full py-3 bg-purple-600 text-white rounded-lg text-lg font-medium hover:bg-purple-700"
 									onClick={() => firstLearning()}
 								>
 									{isFirstLoading ? (<LoadingSpinner size={'xs'}/>) : "검사하기"}
 								</button>
 							)}
 						</div>
-						{firstFeedback && <ReviewAssessment feedback={firstFeedback}/>}
 					</div>
 				) : ( //리뷰어 답변 Step
               <div className="space-y-4">
@@ -148,19 +148,19 @@ export default function PRLearnPage() {
                       onChange={(e) => setReplies(e.target.value)}
                     />
                   </div>
+                  {secondFeedback && <ReviewAssessment feedback={secondFeedback}/>}
                   <div className="fixed w-full max-w-lg bottom-0 left-1/2 transform -translate-x-1/2 p-2 bg-white border border-gray-200 z-10">
                     {secondFeedback ? (
                       <></>
                     ) : (
                       <button
-                        className="w-full py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
+                        className="w-full py-3 bg-purple-600 text-white text-lg font-medium rounded-lg hover:bg-purple-700"
                         onClick={() => secondLearning()}
                       >
                         {isSecondLoading ? (<LoadingSpinner size={'xs'}/>) : "검사하기"}
                       </button>
                     )}
                   </div>
-                  {secondFeedback && <ReviewAssessment feedback={secondFeedback}/>}
               </div>
           )}
       </div>
@@ -171,7 +171,7 @@ export default function PRLearnPage() {
         <div className="fixed w-full max-w-lg bottom-0 left-1/2 transform -translate-x-1/2 p-2 bg-white border border-gray-200 z-10">
 					<div className="max-w-lg mx-auto">
 						<button
-							className="w-full py-3 bg-gradient-to-r from-purple-400 to-pink-500 hover:from-purple-500 hover:to-pink-600 text-white rounded-lg"
+							className="w-full py-3 bg-gradient-to-r from-purple-400 to-pink-500 hover:from-purple-500 hover:to-pink-600 text-white text-lg font-medium rounded-lg"
 							onClick={() => finishLearning()}
 						>
 							{isFinalLoading ? (<LoadingSpinner size={'xs'}/>): "학습 마무리하기"}
