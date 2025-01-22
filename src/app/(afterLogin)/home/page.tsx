@@ -2,13 +2,14 @@ import { dehydrate, QueryClient, HydrationBoundary } from "@tanstack/react-query
 import BottomNavigation from "../_component/BottomNavigation";
 import Header from "./_component/Header";
 import MainFeatures from "./_component/MainFeatures";
-import RecentActivities from "./_component/RecentActivities";
 import WeeklyActivity from "./_component/WeeklyActivity";
 import { getTodayTasks } from "./_lib/getTodayTasks";
+import { getWeeklyActivity } from "./_lib/getWeeklyActivity";
 
 export default async function Home() {
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery({ queryKey: ['today-tasks'], queryFn: getTodayTasks});
+  await queryClient.prefetchQuery({ queryKey: ['weekly-activity'], queryFn: getWeeklyActivity});
   const dehydratedState = dehydrate(queryClient);
 
   return (
@@ -43,14 +44,6 @@ export default async function Home() {
                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.2 }}>
                   <path d="M10 12.5 8 15l2 2.5"/><path d="m14 12.5 2 2.5-2 2.5"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"/>
                 </svg>
-            </div>
-          </div>
-
-          {/* Recent Activities */}
-          <div className="flex-1 overflow-y-auto">
-            <div className="space-y-6 relative z-10 pb-24 space-below"> {/* 하단 패딩 증가 */}
-                {/* 여기에서 다른 컴포넌트들 배치 */}
-                <RecentActivities/>
             </div>
           </div>
         </div>
