@@ -665,5 +665,30 @@ export const handlers = [
         level: 6
       })
     )
+  }),
+  http.get(`/rankings`, async ({ }) => {
+    return new HttpResponse(
+      JSON.stringify({
+        totalUsers: 1234,
+        myRank: 33,
+        rankings: [
+          // Top 3
+          { rank: 1, name: "김서준", score: 2840, level: 8, change: 'up' },
+          { rank: 2, name: "이도윤", score: 2790, level: 7, change: 'same' },
+          { rank: 3, name: "박지호", score: 2755, level: 7, change: 'up' },
+          // 4-5위
+          { rank: 4, name: "최수아", score: 2720, level: 6, change: 'down' },
+          { rank: 5, name: "정하준", score: 2685, level: 6, change: 'up' },
+          // 구분선
+          { type: 'separator', rank: '...' },
+          // 내 주변 순위
+          { rank: 40, name: "장현우", score: 2250, level: 4, change: 'up' },
+          { rank: 41, name: "임지원", score: 2235, level: 4, change: 'down' },
+          { rank: 42, name: "박정수", score: 2220, level: 4, change: 'same', isMe: true },
+          { rank: 42, name: "한소희", score: 2220, level: 4, change: 'up' },
+          { rank: 44, name: "송태호", score: 2190, level: 4, change: 'down' },
+        ]
+      })
+    )
   })
 ];
