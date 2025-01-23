@@ -27,7 +27,7 @@ export function CompletionModal({ totalWords }: Props) {
           <div className="text-2xl font-bold text-green-600">+100 XP</div>
         </div>
         <button
-          onClick={() => router.push('/home')}
+          onClick={() => router.replace('/home')}
           className="w-full py-4 bg-gradient-to-r from-green-400 to-teal-500 hover:from-green-500 hover:to-teal-600 text-white rounded-xl text-lg font-medium"
         >
           완료

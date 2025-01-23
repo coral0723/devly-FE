@@ -24,7 +24,7 @@ export function ExitConfirmModal({ onClose }: Props) {
             계속 학습하기
           </button>
           <button
-            onClick={() => router.push('/home')}
+            onClick={() => router.replace('/home')}
             className="flex-1 py-3 bg-red-500 text-white rounded-xl font-medium hover:bg-red-600"
           >
             나가기

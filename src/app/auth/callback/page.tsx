@@ -22,11 +22,11 @@ export default function AuthCallback() {
         localStorage.setItem('refreshToken', refreshToken);
       }
 
-      router.push('/home');
+      router.replace('/home');
     } else {
       // accessToken이 없는 경우에만 에러 처리
       window.alert('로그인에 실패했습니다.');
-      router.push('/');
+      router.replace('/');
     }
   };
 

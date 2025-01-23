@@ -21,7 +21,7 @@ export default function CompletionModal() {
           <div className="text-2xl font-bold text-blue-600">+150 XP</div>
         </div>
         <button
-          onClick={() => router.push('/home')}
+          onClick={() => router.replace('/home')}
           className="w-full py-4 bg-gradient-to-r from-sky-400 to-blue-600 hover:from-sky-500 hover:to-blue-700 text-white rounded-xl text-lg font-medium"
         >
           완료

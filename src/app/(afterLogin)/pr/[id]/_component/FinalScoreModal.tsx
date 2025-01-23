@@ -88,7 +88,7 @@ export default function FinalScoreModal({finalFeedback}: Props) {
         <div className="p-4 bg-white border-t border-gray-200">
           <button
             onClick={() => {
-              router.push("/home");
+              router.replace("/home");
             }}
             className="w-full py-3 bg-gradient-to-r from-purple-400 to-pink-500 hover:from-purple-500 hover:to-pink-600 rounded-lg text-white text-lg font-medium"
           >
