@@ -8,23 +8,39 @@ import LoadingSpinner from "@/app/_component/LoadingSpinner";
 export default function AuthCallback() {
  const router = useRouter();
 
- useEffect(() => {
+//  useEffect(() => {
+//   const handleCallback = async () => {
+//     const params = new URLSearchParams(window.location.search);
+//     const accessToken = params.get('access_token');
+//     const refreshToken = params.get('refresh_token');
+
+//     if (accessToken) {
+//       localStorage.setItem('accessToken', accessToken);
+      
+//       // refreshToken이 있는 경우에만 업데이트
+//       if (refreshToken) {
+//         localStorage.setItem('refreshToken', refreshToken);
+//       }
+
+//       router.replace('/home');
+//     } else {
+//       // accessToken이 없는 경우에만 에러 처리
+//       window.alert('로그인에 실패했습니다.');
+//       router.replace('/');
+//     }
+//   };
+
+//   handleCallback();
+// }, [router]);
+
+useEffect(() => {
   const handleCallback = async () => {
     const params = new URLSearchParams(window.location.search);
-    const accessToken = params.get('access_token');
-    const refreshToken = params.get('refresh_token');
-
-    if (accessToken) {
-      localStorage.setItem('accessToken', accessToken);
-      
-      // refreshToken이 있는 경우에만 업데이트
-      if (refreshToken) {
-        localStorage.setItem('refreshToken', refreshToken);
-      }
-
+    const success = params.get('success');
+    
+    if (success === 'true') {
       router.replace('/home');
     } else {
-      // accessToken이 없는 경우에만 에러 처리
       window.alert('로그인에 실패했습니다.');
       router.replace('/');
     }
