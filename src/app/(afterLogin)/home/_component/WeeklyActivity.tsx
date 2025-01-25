@@ -5,28 +5,28 @@ import { BookOpen, GitPullRequest, Lightbulb, MessageSquare } from "lucide-react
 import { DailyActivity } from "@/model/DailyActivity";
 import { useQuery } from "@tanstack/react-query";
 import { getWeeklyActivity } from "../_lib/getWeeklyActivity";
+import WeeklyActivitySkeleton from "./skeleton/WeeklyActivitySkeleton";
 
 export default function WeeklyActivity() {
   const [selectedDay, setSelectedDay] = useState<string | null>(null);
-
-  const getCurrentDay = () => {
-    const days = ['일', '월', '화', '수', '목', '금', '토'];
-    const currentDay = days[new Date().getDay()];
-    return currentDay;
-  };
-
+  
   // 컴포넌트 마운트 시 현재 요일 설정
   useEffect(() => {
+    const getCurrentDay = () => {
+      const days = ['일', '월', '화', '수', '목', '금', '토'];
+      const currentDay = days[new Date().getDay()];
+      return currentDay;
+    };
+
     setSelectedDay(getCurrentDay());
   }, []);
 
-  const {data: weeklyActivity} = useQuery<DailyActivity[], object, DailyActivity[], [_1: string]>({
+  const {data: weeklyActivity, isLoading} = useQuery<DailyActivity[], object, DailyActivity[], [_1: string]>({
     queryKey: ['weeklyActivity'],
     queryFn: getWeeklyActivity,
     staleTime: 60 * 1000,
     gcTime: 300 * 1000,
   })
-
 
   // 선택된 날짜의 활동을 필터링하는 함수
   const getFilteredActivities = () => {
@@ -37,6 +37,12 @@ export default function WeeklyActivity() {
       date: new Date(activity.date) //json으로 응답이 오기 때문에 string이여서, Date 객체로 변환
     })) : [];
   };
+
+  if(isLoading || !weeklyActivity) {
+    return (
+      <WeeklyActivitySkeleton/>
+    )
+  }
 
   return (
     <div className="bg-white/80 backdrop-blur-sm rounded-xl border border-gray-200 p-4">
@@ -51,7 +57,7 @@ export default function WeeklyActivity() {
       </div>
 
       <div className="flex justify-between">
-        {weeklyActivity?.map((activity) => (
+        {weeklyActivity.map((activity) => (
           <div
             key={activity.day}
             onClick={() => setSelectedDay(selectedDay === activity.day ? null : activity.day)}
