@@ -77,10 +77,10 @@ export default function PRLearnPage() {
     }
   });
 
-  if(isLoading) {
+  if(isLoading || !pr) {
     return (
-			<div>
-				<LoadingSpinner size={"lg"} />
+			<div className='flex max-w-lg mx-auto min-h-screen bg-gray-50 items-center justify-center'>
+				<LoadingSpinner size={"md"} />
 			</div>
     )
   }
@@ -88,7 +88,7 @@ export default function PRLearnPage() {
   return (
     <div className="max-w-lg mx-auto min-h-screen bg-gray-50">
       <Header
-        title={pr!.title}
+        title={pr.title}
         currentStep={currentStep}
         setCurrentStep={setCurrentStep}
         setShowCommits={setShowCommits}
@@ -139,7 +139,7 @@ export default function PRLearnPage() {
                   </div>
                   <div className="bg-white border border-gray-200 rounded-lg p-4">
                     <div className="bg-gray-50 p-3 rounded-lg mb-3">
-                      <p className="text-sm text-gray-700">{pr?.reviewComment.comment}</p>
+                      <p className="text-sm text-gray-700">{pr.reviewComment.comment}</p>
                     </div>
                     <textarea
                       className="w-full h-32 p-3 border border-gray-300 rounded-lg text-sm bg-white"
@@ -183,14 +183,14 @@ export default function PRLearnPage() {
 			{/* Modals */}
 			{showCommits ? (
 				<CommitModal
-					pr={pr!}
+					pr={pr}
 					onClose={() => setShowCommits(false)}
 				/>
 			): <></>}
 			
 			{showFiles ? (
 				<ChangedFilesModal
-					pr={pr!}
+					pr={pr}
 					onClose={() => setShowFiles(false)}
 				/>
 			): <></>}
