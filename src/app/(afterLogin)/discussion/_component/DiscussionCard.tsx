@@ -15,7 +15,7 @@ export default function DisscussionCard({pr}: Props) {
     <div
       key={pr.id}
       onClick={() => router.replace(`/discussion/${pr.id}`)}
-      className="bg-white rounded-xl border border-gray-200 p-4 space-y-3 hover:border-purple-200 cursor-pointer"
+      className="bg-white rounded-xl border border-gray-200 p-4 space-y-3 hover:border-orange-200 cursor-pointer"
     >
       <div className="flex items-start justify-between">
         <div>
