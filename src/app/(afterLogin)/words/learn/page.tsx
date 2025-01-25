@@ -11,6 +11,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Word } from "@/model/Word";
 import { useSearchParams } from "next/navigation";
 import { getWords } from "../_lib/getWords";
+import LoadingSpinner from "@/app/_component/LoadingSpinner";
 
 export default function WordLearning() {
   const [currentWordIndex, setCurrentWordIndex] = useState<number>(0);
@@ -22,7 +23,7 @@ export default function WordLearning() {
   const searchParams = useSearchParams();
   const groupId = searchParams.get('groupId');
   
-  const {data: words} = useQuery<Word[], object, Word[], [_1: string, _2: string, string]>({
+  const {data: words, isLoading} = useQuery<Word[], object, Word[], [_1: string, _2: string, string]>({
     queryKey: ['words', 'learn', groupId!],
     queryFn: getWords,
     staleTime: 60 * 1000,
@@ -51,6 +52,14 @@ export default function WordLearning() {
     }
   }
 
+  if(isLoading || !words) {
+    return (
+      <div className="flex max-w-lg mx-auto min-h-screen bg-gray-50 items-center justify-center">
+        <LoadingSpinner size="md"/>
+      </div>
+    )
+  }
+
   return (
       <div className="relative max-w-lg mx-auto min-h-screen bg-gray-50">
           {/* Progress Header */}
@@ -64,13 +73,13 @@ export default function WordLearning() {
                   <X size={24}/>
                 </button>
                 <span className="text-sm text-gray-500">
-                  {currentWordIndex + 1} / {words!.length}
+                  {currentWordIndex + 1} / {words.length}
                 </span>
               </div>
               <div className="h-1 bg-gray-100 rounded-full overflow-hidden">
                 <div
                   className="h-full bg-green-500 transition-all duration-300"
-                  style={{ width: `${((currentWordIndex + 1) / words!.length) * 100}%`}}
+                  style={{ width: `${((currentWordIndex + 1) / words.length) * 100}%`}}
                 />
               </div>
             </div>
@@ -80,7 +89,7 @@ export default function WordLearning() {
           <div ref={containerRef} className="p-5 h-[calc(100vh-150px)] overflow-y-auto scrollbar-hide">
             {step === 'word' && (
               <WordStep 
-                word={words![currentWordIndex]} 
+                word={words[currentWordIndex]} 
                 onNext={() => setStep('context')} 
               />
             )}
@@ -88,8 +97,8 @@ export default function WordLearning() {
             {step === 'context' && (
               <ContextStep
                 index={currentWordIndex}
-                word={words![currentWordIndex]}
-                wordsLength={words!.length}
+                word={words[currentWordIndex]}
+                wordsLength={words.length}
                 onNext={() => {
                   handleNext()
                 }}
@@ -99,8 +108,8 @@ export default function WordLearning() {
             {step === 'quiz' && (
               <QuizStep
                 index={currentWordIndex}
-                word={words![currentWordIndex]}
-                wordsLength={words!.length}
+                word={words[currentWordIndex]}
+                wordsLength={words.length}
                 handleQuizNext={handleQuizNext}
                 onScrollUp={onScrollUp}
                 />
@@ -112,7 +121,7 @@ export default function WordLearning() {
           )}
 
           {showCompletion && (
-              <CompletionModal totalWords={words!.length} />
+              <CompletionModal totalWords={words.length} />
           )}
       </div>
   );
