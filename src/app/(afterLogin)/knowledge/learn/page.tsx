@@ -9,6 +9,7 @@ import { useSearchParams } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { Knowledge } from '@/model/Knowledge';
 import { getKnowledges } from '../_lib/getKnowledges';
+import LoadingSpinner from '@/app/_component/LoadingSpinner';
 
 export default function KnowledgeLearnPage() {
     const [currentKnowledgeIndex, setCurrentKnowledgeIndex] = useState<number>(0);
@@ -19,7 +20,7 @@ export default function KnowledgeLearnPage() {
     const searchParams = useSearchParams();
     const groupId = searchParams.get('groupId');
 
-    const {data: knowledges} = useQuery<Knowledge[], object, Knowledge[], [_1: string, _2: string, string]>({
+    const {data: knowledges, isLoading} = useQuery<Knowledge[], object, Knowledge[], [_1: string, _2: string, string]>({
       queryKey: ['knowledge', 'learn', groupId!],
       queryFn: getKnowledges,
       staleTime: 60 * 1000,
@@ -32,6 +33,14 @@ export default function KnowledgeLearnPage() {
       } else {
         setShowCompletion(true);
       }
+    }
+
+    if(isLoading || !knowledges) {
+      return (
+        <div className='flex max-w-lg mx-auto min-h-screen bg-gray-50 items-center justify-center'>
+          <LoadingSpinner size={"md"} />
+        </div>
+      )
     }
 
     return (
@@ -48,13 +57,13 @@ export default function KnowledgeLearnPage() {
                 <X size={24}/>
               </button>
               <span className="text-sm text-gray-500">
-                {currentKnowledgeIndex + 1} / {knowledges?.length}
+                {currentKnowledgeIndex + 1} / {knowledges.length}
               </span>
             </div>
             <div className="h-1 bg-gray-100 rounded-full overflow-hidden">
               <div
                 className="h-full bg-blue-500 transition-all duration-300"
-                style={{ width: `${((currentKnowledgeIndex + 1) / knowledges!.length) * 100}%` }}
+                style={{ width: `${((currentKnowledgeIndex + 1) / knowledges.length) * 100}%` }}
               />
             </div>
           </div>
@@ -63,8 +72,8 @@ export default function KnowledgeLearnPage() {
         {/* Main Content */}
         <div ref={containerRef} className="p-5 h-[calc(100vh-140px)] overflow-y-auto scrollbar-hide">
           <KnowledgeStep
-            knowledge={knowledges![currentKnowledgeIndex]}
-            knowledgesLength={knowledges!.length}
+            knowledge={knowledges[currentKnowledgeIndex]}
+            knowledgesLength={knowledges.length}
             currentStep={currentKnowledgeIndex}
             handleNext={handleNext}/>
         </div>
