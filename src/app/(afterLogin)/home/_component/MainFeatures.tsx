@@ -101,7 +101,7 @@ export default function MainFeatures() {
       <div
           className={`bg-white rounded-2xl border border-gray-200 p-5 space-y-2 transition-all
             ${tasks.discussion.completed === false && "cursor-pointer hover:bg-orange-50 hover:border-orange-200 active:scale-95"}`}
-          onClick={tasks.discussion.completed ? undefined : (() => {router.replace('/discussion')})}
+          onClick={tasks.discussion.completed ? undefined : (() => {router.replace(`/discussion?groupId=${tasks.discussion.groupId}`)})}
       >
         <div className="flex items-center justify-between">
           <MessageSquare size={24} className="text-orange-500"/>

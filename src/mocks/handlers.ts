@@ -22,8 +22,8 @@ export const handlers = [
         },
         discussion: {
           groupId: 4,
-          total: 5,
-          completed: true
+          total: 1,
+          completed: false
         },
       }),
       { 
@@ -802,5 +802,20 @@ export const handlers = [
         }
       ])
     )
-  })
+  }),
+  http.get('/study/discussions/:groupId', async ({ }) => {
+    return new HttpResponse(
+      JSON.stringify([
+        {
+          id: 1,
+          title: "React Virtual DOM",
+          description: "간단한 Virtual DOM과 실제 DOM의 차이점을 설명해보세요.",
+          difficulty: "고급",
+          estimatedTime: "45분",
+          category: "React",
+          tags: ["Virtual DOM", "React", "Performance"]
+          },
+      ])
+    )
+  }),
 ];
