@@ -35,18 +35,11 @@ export default function AuthCallback() {
 
 useEffect(() => {
   const handleCallback = async () => {
-    const params = new URLSearchParams(window.location.search);
-    const success = params.get('success');
-    
-    if (success === 'true') {
-      router.replace('/home');
-    } else {
-      window.alert('로그인에 실패했습니다.');
-      router.replace('/');
-    }
+    // const params = new URLSearchParams(window.location.search);
+    // const success = params.get('success');
+    router.replace('/home');
   };
-
-  handleCallback();
+  setTimeout(handleCallback, 5000);
 }, [router]);
 
  return (
