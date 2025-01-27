@@ -818,4 +818,12 @@ export const handlers = [
       ])
     )
   }),
+  http.get('/study/discussion/:id', async ({ }) => {
+    return new HttpResponse(
+      JSON.stringify({
+        role: 'ai',
+        content: 'Virtual DOM의 개념에 대해 설명해주시겠어요?'
+      })
+    )
+  })
 ];

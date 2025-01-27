@@ -6,15 +6,20 @@ import TimeoutModal from './_component/TimeoutModal';
 import BottomButton from './_component/BottomButton';
 import ChatMessage from './_component/ChatMessage';
 import Header from './_component/Header';
+import { useQuery } from '@tanstack/react-query';
+import { Chat } from '@/model/Chat';
+import { useParams } from 'next/navigation';
+import { getDiscussion } from './_lib/getDiscussion';
 
 export default function DiscussionLearnPage() {
   const [timeLeft, setTimeLeft] = useState<number>(300); // 5분
   const [showTimeoutModal, setShowTimeoutModal] = useState<boolean>(false);
   const [showExitConfirm, setShowExitConfirm] = useState<boolean>(false);
-  const [messages, setMessages] = useState([
-    { role: 'ai', content: 'Virtual DOM의 개념에 대해 설명해주시겠어요?' },
-  ]);
+  const [chats, setChats] = useState<Chat[]>([]);
   const [isRecording, setIsRecording] = useState<boolean>(false);
+
+  const params = useParams();
+  const id = params.id as string;
 
   useEffect(() => {
     if (timeLeft > 0) {
@@ -25,11 +30,24 @@ export default function DiscussionLearnPage() {
     }
   }, [timeLeft]);
 
+  const {data: discussion, isLoading} = useQuery<Chat, object, Chat, [_1: string, _2: string, string]>({
+    queryKey: ['discussion', 'learn', id],
+    queryFn: getDiscussion,
+    staleTime: 60 * 1000,
+    gcTime: 300 * 1000,
+  });
+
+  useEffect(() => {
+    if(discussion)
+      setChats(prev => [...prev, discussion])
+  }, [discussion]);
+
+
   const handleRecord = () => {
     setIsRecording(!isRecording);
     if (!isRecording) {
       setTimeout(() => {
-        setMessages(prev => [...prev, 
+        setChats(prev => [...prev, 
           { role: 'user', content: '가상 DOM은 실제 DOM의 복사본으로...' },
           { role: 'ai', content: '좋은 설명입니다. 그렇다면 Virtual DOM이 성능 최적화에 어떤 도움을 주나요?' }
         ]);
@@ -56,10 +74,10 @@ export default function DiscussionLearnPage() {
 
     {/* Chat Messages */}
     <div className="p-4 pb-24">
-      {messages.map((message, index) => (
+      {discussion && chats.map((chat, index) => (
         <ChatMessage
           key={index}
-          message={message}
+          chat={chat}
         />
       ))}
       </div>
