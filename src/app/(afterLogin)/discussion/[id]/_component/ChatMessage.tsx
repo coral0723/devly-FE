@@ -1,17 +1,17 @@
 "use client"
 
 type Props = {
-  index: number;
+  key: number;
   message: {
     role: string;
     content: string;
   }
 }
 
-export default function ChatMessage({index, message}: Props) {
+export default function ChatMessage({key, message}: Props) {
   return (
     <div 
-      key={index} 
+      key={key} 
       className={`mb-4 p-4 rounded-xl ${
         message.role === 'ai' 
           ? 'bg-orange-100 border-orange-200 mr-12' 

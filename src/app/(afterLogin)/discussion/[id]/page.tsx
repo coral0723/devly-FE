@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import ExitConfirmModal from './_component/ExitConfirmModal';
 import TimeoutModal from './_component/TimeoutModal';
 import BottomButton from './_component/BottomButton';
-import ChatMessage from './_component/chatMessage';
+import ChatMessage from './_component/ChatMessage';
 import Header from './_component/Header';
 
 export default function DiscussionLearnPage() {
@@ -58,7 +58,7 @@ export default function DiscussionLearnPage() {
     <div className="p-4 pb-24">
       {messages.map((message, index) => (
         <ChatMessage
-          index={index}
+          key={index}
           message={message}
         />
       ))}
