@@ -1,14 +1,18 @@
 "use client"
 
+import LoadingSpinner from "@/app/_component/LoadingSpinner";
+import { Bot } from "lucide-react"
+
 type Props = {
   key: number;
   chat: {
     role: string;
     content: string;
-  }
+  };
+  isLoading: boolean;
 }
 
-export default function ChatMessage({key, chat}: Props) {
+export default function ChatMessage({key, chat, isLoading}: Props) {
   return (
     <div 
       key={key} 
@@ -18,10 +22,15 @@ export default function ChatMessage({key, chat}: Props) {
           : 'bg-white ml-12'
       }`}
     >
-      <div className="text-sm text-gray-600 mb-1">
-        {chat.role === 'ai' ? 'AI 면접관' : '나'}
+      <div className="text-sm mb-1">
+        {chat.role === 'ai' && (<Bot size={24} className="text-orange-400"/>)}
       </div>
-      <div>{chat.content}</div>
+      <div>
+        {isLoading ? (
+          <LoadingSpinner size={"xs"}/>
+        ) : 
+        chat.content}
+      </div>
     </div>
   )
 }
