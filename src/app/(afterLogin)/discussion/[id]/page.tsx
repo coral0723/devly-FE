@@ -10,6 +10,14 @@ import { useQuery } from '@tanstack/react-query';
 import { Chat } from '@/model/Chat';
 import { useParams } from 'next/navigation';
 import { getDiscussion } from './_lib/getDiscussion';
+import { SpeechRecognition as ISpeechRecognition } from '@/model/Speech';
+
+declare global {
+  interface Window {
+    SpeechRecognition: new () => ISpeechRecognition;
+    webkitSpeechRecognition: new () => ISpeechRecognition;
+  }
+}
 
 export default function DiscussionLearnPage() {
   const [timeLeft, setTimeLeft] = useState<number>(300); // 5분
@@ -18,10 +26,20 @@ export default function DiscussionLearnPage() {
   const [chats, setChats] = useState<Chat[]>([]);
   const [isRecording, setIsRecording] = useState<boolean>(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const [transcript, setTranscript] = useState<string>('');
+  const recognition = useRef<ISpeechRecognition | null>(null);
 
   const params = useParams();
   const id = params.id as string;
 
+  const {data: discussion, isLoading} = useQuery<Chat, object, Chat, [_1: string, _2: string, string]>({
+    queryKey: ['discussion', 'learn', id],
+    queryFn: getDiscussion,
+    staleTime: 60 * 1000,
+    gcTime: 300 * 1000,
+  });
+
+  // 남은 시간
   useEffect(() => {
     if (timeLeft > 0) {
       const timer = setInterval(() => setTimeLeft(prev => prev - 1), 1000);
@@ -31,13 +49,7 @@ export default function DiscussionLearnPage() {
     }
   }, [timeLeft]);
 
-  const {data: discussion, isLoading} = useQuery<Chat, object, Chat, [_1: string, _2: string, string]>({
-    queryKey: ['discussion', 'learn', id],
-    queryFn: getDiscussion,
-    staleTime: 60 * 1000,
-    gcTime: 300 * 1000,
-  });
-
+  // 채팅 저장
   useEffect(() => {
     if(discussion){
       // discussion에 id가 없거나 이미 있는 메시지인지 확인
@@ -51,6 +63,7 @@ export default function DiscussionLearnPage() {
     }
   }, [discussion]);
 
+  // 채팅 추가될 때마다 스크롤 다운
   useEffect(() => {
     if (chats.length > 0) {
       const scrollToBottom = () => {
@@ -70,19 +83,57 @@ export default function DiscussionLearnPage() {
   }, [chats]);
 
 
+  // 음성 인식 코드
   const handleRecord = () => {
-    setIsRecording(!isRecording);
-    if (!isRecording) {
-      setTimeout(() => {
-        const now = Date.now();
-        setChats(prev => [...prev, 
-          { id: now,  role: 'user', content: '가상 DOM은 실제 DOM의 복사본으로...' },
-          { id: now+1, role: 'ai', content: '좋은 설명입니다. 그렇다면 Virtual DOM이 성능 최적화에 어떤 도움을 주나요?' }
-        ]);
-        setIsRecording(false);
-      }, 2000);
+    try {
+      if (!isRecording) {
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (!SpeechRecognition) {
+          console.error('Speech Recognition is not supported in this browser');
+          return;
+        }
+        
+        recognition.current = new SpeechRecognition();
+        if (!recognition.current) {
+          console.error('Failed to initialize Speech Recognition');
+          return;
+        }
+  
+        recognition.current.lang = 'ko-KR';
+        recognition.current.continuous = true;
+        recognition.current.interimResults = true;
+    
+        recognition.current.onresult = (event) => {
+          const transcript = Array.from(event.results)
+            .map(result => result[0].transcript)
+            .join('');
+          
+          setTranscript(transcript);
+          console.log('변환된 텍스트:', transcript);
+        };
+    
+        recognition.current.start();
+      } else {
+        if (recognition.current) {
+          recognition.current.stop();
+        }
+      }
+      
+      setIsRecording(!isRecording);
+    } catch (error) {
+      console.error('Speech Recognition error:', error);
+      setIsRecording(false);
     }
   };
+  
+  // 컴포넌트가 언마운트될 때 정리
+  useEffect(() => {
+    return () => {
+      if (recognition.current) {
+        recognition.current.stop();
+      }
+    };
+  }, []);
 
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
