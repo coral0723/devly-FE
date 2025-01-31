@@ -224,7 +224,15 @@ export default function DiscussionLearnPage() {
 
       {/* Timeout Modal */}
       {showTimeoutModal && (
-        <TimeoutModal/>
+        <TimeoutModal
+          onClose={() => {
+            queryClient.removeQueries({
+              queryKey: ["discussion", "learn", id],
+              exact: true
+            });
+            setChats([]);
+            router.replace('/home');
+          }}/>
       )}
 
       {showExitConfirm && (
