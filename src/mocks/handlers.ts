@@ -1,6 +1,10 @@
 import { faker } from '@faker-js/faker';
 import { http, HttpResponse } from 'msw';
 
+const delay = (ms: number) => new Promise((res) => {
+  setTimeout(res, ms);
+});
+
 export const handlers = [
   http.get('/study/today-tasks', async ({ }) => {
     return new HttpResponse(
@@ -820,9 +824,20 @@ export const handlers = [
   }),
   http.get('/study/discussion/:id', async ({ }) => {
     return new HttpResponse(
-      JSON.stringify({
+      JSON.stringify([{
+        id: Date.now(),
         role: 'ai',
         content: 'Virtual DOM의 개념에 대해 설명해주시겠어요?'
+      }])
+    )
+  }),
+  http.post(`/study/discussion/recomment/:id`, async ({ }) => {
+    await delay(2000);
+    return new HttpResponse(
+      JSON.stringify({
+        id: Date.now() + 1,
+        role: 'ai',
+        content: '정말 chill 하군요...'
       })
     )
   })

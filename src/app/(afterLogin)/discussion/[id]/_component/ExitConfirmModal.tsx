@@ -1,13 +1,11 @@
 "use client"
 
-import { useRouter } from 'next/navigation';
-
 type Props = {
     onClose: () => void;
+    onExit: () => void;
 }
 
-export default function ExitConfirmModal({onClose}: Props) {
-  const router = useRouter();
+export default function ExitConfirmModal({onClose, onExit}: Props) {
 
   return (
     <>
@@ -25,7 +23,7 @@ export default function ExitConfirmModal({onClose}: Props) {
               계속 학습하기
             </button>
             <button
-              onClick={() => router.push('/home')}
+              onClick={onExit}
               className="flex-1 py-3 bg-red-500 text-white rounded-xl font-medium hover:bg-red-600"
             >
               나가기

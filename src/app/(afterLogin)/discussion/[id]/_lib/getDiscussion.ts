@@ -2,7 +2,7 @@ import { QueryFunction } from "@tanstack/react-query";
 import axios from "axios";
 import { Chat } from "@/model/Chat";
 
-export const getDiscussion: QueryFunction<Chat, [_1: string, _2: string, string]>
+export const getDiscussion: QueryFunction<Chat[], [_1: string, _2: string, string]>
  = async ({ queryKey }) => {
   try {
     const [_1, _2, id] = queryKey;

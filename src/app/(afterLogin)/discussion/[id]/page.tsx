@@ -6,11 +6,13 @@ import TimeoutModal from './_component/TimeoutModal';
 import BottomButton from './_component/BottomButton';
 import ChatMessage from './_component/ChatMessage';
 import Header from './_component/Header';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Chat } from '@/model/Chat';
 import { useParams } from 'next/navigation';
 import { getDiscussion } from './_lib/getDiscussion';
 import { SpeechRecognition as ISpeechRecognition } from '@/model/Speech';
+import { api } from '@/app/_lib/axios';
+import { useRouter } from 'next/navigation';
 
 declare global {
   interface Window {
@@ -28,11 +30,13 @@ export default function DiscussionLearnPage() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [transcript, setTranscript] = useState<string>('');
   const recognition = useRef<ISpeechRecognition | null>(null);
+  const queryClient = useQueryClient();
+  const router = useRouter();
 
   const params = useParams();
   const id = params.id as string;
 
-  const {data: discussion, isLoading} = useQuery<Chat, object, Chat, [_1: string, _2: string, string]>({
+  const {data: discussion, isLoading} = useQuery<Chat[], object, Chat[], [_1: string, _2: string, string]>({
     queryKey: ['discussion', 'learn', id],
     queryFn: getDiscussion,
     staleTime: 60 * 1000,
@@ -49,19 +53,13 @@ export default function DiscussionLearnPage() {
     }
   }, [timeLeft]);
 
-  // 채팅 저장
+  //초기 채팅 저장
+  // discussion이 undefined일 때도 chats를 빈 배열로 설정하도록 변경
   useEffect(() => {
-    if(discussion){
-      // discussion에 id가 없거나 이미 있는 메시지인지 확인
-      const exists = chats.some(chat => chat.id === discussion.id);
-      if (!exists) {
-        setChats([{
-          ...discussion,
-          id: discussion.id ?? Date.now() // discussion에 id가 없을 경우를 대비
-        }]);
-      }
+    if (!isLoading) {
+      setChats(discussion ? [...discussion] : []);
     }
-  }, [discussion]);
+  }, [isLoading, discussion]);
 
   // 채팅 추가될 때마다 스크롤 다운
   useEffect(() => {
@@ -82,20 +80,73 @@ export default function DiscussionLearnPage() {
     }
   }, [chats]);
 
+  const postChat = useMutation({
+    mutationFn: () => {
+      return api.post(`/study/discussion/recomment/${chats[chats.length-1].id}`, {
+        id: Date.now(),
+        role: 'user',
+        content: transcript,
+      })
+    },
+    onMutate() {
+      const queryCache = queryClient.getQueryCache();
+      const queryKeys = queryCache.getAll().map(cache => cache.queryKey);
+      queryKeys.forEach((queryKey) => {
+        if(queryKey[0] === "discussion" && queryKey[1] === "learn") {
+          const value: Chat[] = queryClient.getQueryData(queryKey) ?? []; //undefined라면 빈 배열 추가
+          const shallow = [...value];
+          shallow.push({
+            id: Date.now(),
+            role: 'user',
+            content: transcript,
+          });
+          shallow.push({
+            id: Date.now() + 1,
+            role: 'ai',
+            content: '', // 빈 content로 시작
+          });
+          queryClient.setQueryData(queryKey, shallow);
+          setChats(shallow);
+
+        }
+      })
+    },
+    onSuccess: (response) => {
+      const recomment = response.data;
+
+      // 쿼리 캐시 업데이트
+      const queryCache = queryClient.getQueryCache();
+      const queryKeys = queryCache.getAll().map(cache => cache.queryKey);
+      queryKeys.forEach((queryKey) => {
+        if(queryKey[0] === "discussion" && queryKey[1] === "learn") {
+          const value: Chat[] = queryClient.getQueryData(queryKey) ?? [];
+          const shallow = [...value];
+          // 마지막 메시지(빈 AI 응답)를 실제 응답으로 교체
+          shallow[shallow.length - 1] = recomment;
+          queryClient.setQueryData(queryKey, shallow);
+          setChats(shallow);
+        }
+      });
+    },
+    onError: (error) => {
+      console.error('Mutation error:', error);
+    },
+   });
+
 
   // 음성 인식 코드
   const handleRecord = () => {
     try {
-      if (!isRecording) {
+      if (!isRecording) { //녹음 중
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         if (!SpeechRecognition) {
-          console.error('Speech Recognition is not supported in this browser');
+          console.error('이 브라우저에서는 음성 인식을 지원하지 않습니다.');
           return;
         }
         
         recognition.current = new SpeechRecognition();
         if (!recognition.current) {
-          console.error('Failed to initialize Speech Recognition');
+          console.error('음성 인식에 실패했습니다.');
           return;
         }
   
@@ -113,9 +164,10 @@ export default function DiscussionLearnPage() {
         };
     
         recognition.current.start();
-      } else {
+      } else { //녹음 중단
         if (recognition.current) {
           recognition.current.stop();
+          postChat.mutate();
         }
       }
       
@@ -125,7 +177,7 @@ export default function DiscussionLearnPage() {
       setIsRecording(false);
     }
   };
-  
+
   // 컴포넌트가 언마운트될 때 정리
   useEffect(() => {
     return () => {
@@ -141,6 +193,8 @@ export default function DiscussionLearnPage() {
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
    };
 
+
+
   return (
     <div className="max-w-lg mx-auto min-h-screen bg-gray-50">
 
@@ -153,11 +207,11 @@ export default function DiscussionLearnPage() {
 
       {/* Chat Messages */}
       <div ref={containerRef} className="p-4 pb-24 overflow-y-auto scrollbar-hide" style={{ height: 'calc(100vh - 40px)' }}>
-        {discussion && chats.map((chat, index) => (
+        {discussion && chats.map((chat) => (
           <ChatMessage
-            key={index}
+            key={chat.id}
             chat={chat}
-            isLoading={isLoading}
+            isLoading={chat.role === 'ai' && chat.content === '' && postChat.isPending}
           />
         ))}
         </div>
@@ -174,10 +228,18 @@ export default function DiscussionLearnPage() {
       )}
 
       {showExitConfirm && (
-        <ExitConfirmModal onClose={() => {
-          setShowExitConfirm(false);
-          setChats([]);
-        } }/> //query clear하는 코드 필요
+        <ExitConfirmModal 
+          onClose={() => {
+            setShowExitConfirm(false);
+          }}
+          onExit={() => {
+            queryClient.removeQueries({
+              queryKey: ["discussion", "learn", id],
+              exact: true
+            });
+            setChats([]);
+            router.replace('/home');
+          }}/> //query clear하는 코드 필요
       )}
   </div>
   );
