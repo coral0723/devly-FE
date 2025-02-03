@@ -12,9 +12,9 @@ export default function DevSelectionArea() {
     gcTime: 300 * 1000,
   }); 
 
-  const handleDevTypeSelect = async () => {
+  const handleDevTypeSelect = async (devType: number) => {
     try {
-      window.location.href = `${process.env.NEXT_PUBLIC_BACKEND_URL}/oauth2/authorization/google`;
+      window.location.href = `${process.env.NEXT_PUBLIC_BACKEND_URL}/oauth2/authorization/google?developerType=${devType}`;
     } catch (error) {
       console.error('Failed to select developer type:', error)
     }
@@ -26,7 +26,7 @@ export default function DevSelectionArea() {
         <button
           key={devType}
           className="w-full py-4 bg-white border border-gray-300 rounded-xl font-medium hover:bg-gray-50 active:scale-[0.98] transition-all"
-          onClick={() => handleDevTypeSelect()}
+          onClick={() => handleDevTypeSelect(devType)}
         >
           {DeveloperType[devType]} Developer
         </button>
