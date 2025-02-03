@@ -32,6 +32,7 @@ export default function DiscussionLearnPage() {
   const recognition = useRef<ISpeechRecognition | null>(null);
   const queryClient = useQueryClient();
   const router = useRouter();
+  const temporaryMessageId = useRef<number | null>(null);
 
   const params = useParams();
   const id = params.id as string;
@@ -42,6 +43,18 @@ export default function DiscussionLearnPage() {
     staleTime: 60 * 1000,
     gcTime: 300 * 1000,
   });
+
+  //쿼리와 채팅 상태를 동시에 업데이트 하는 함수
+  const updateQueryAndChats = (newChats: Chat[]) => {
+    const queryCache = queryClient.getQueryCache();
+    const queryKeys = queryCache.getAll().map(cache => cache.queryKey);
+    queryKeys.forEach((queryKey) => {
+      if (queryKey[0] === "discussion" && queryKey[1] === "learn") {
+        queryClient.setQueryData(queryKey, newChats);
+        setChats(newChats);
+      }
+    });
+  };
 
   // 남은 시간
   useEffect(() => {
@@ -83,7 +96,7 @@ export default function DiscussionLearnPage() {
   const postChat = useMutation({
     mutationFn: () => {
       return api.post(`/study/discussion/recomment/${chats[chats.length-1].id}`, {
-        id: Date.now(),
+        id: temporaryMessageId.current,
         role: 'user',
         content: transcript,
       })
@@ -95,19 +108,18 @@ export default function DiscussionLearnPage() {
         if(queryKey[0] === "discussion" && queryKey[1] === "learn") {
           const value: Chat[] = queryClient.getQueryData(queryKey) ?? []; //undefined라면 빈 배열 추가
           const shallow = [...value];
-          shallow.push({
-            id: Date.now(),
-            role: 'user',
-            content: transcript,
-          });
+          if (temporaryMessageId.current) {
+            const messageIndex = shallow.findIndex(chat => chat.id === temporaryMessageId.current);
+            if (messageIndex !== -1) {
+              shallow[messageIndex].content = transcript;
+            }
+          };
           shallow.push({
             id: Date.now() + 1,
             role: 'ai',
             content: '', // 빈 content로 시작
           });
-          queryClient.setQueryData(queryKey, shallow);
-          setChats(shallow);
-
+          updateQueryAndChats(shallow);
         }
       })
     },
@@ -137,12 +149,32 @@ export default function DiscussionLearnPage() {
   // 음성 인식 코드
   const handleRecord = () => {
     try {
-      if (!isRecording) { //녹음 중
+      if (!isRecording) { // 녹음 시작
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         if (!SpeechRecognition) {
           console.error('이 브라우저에서는 음성 인식을 지원하지 않습니다.');
           return;
         }
+  
+        // 녹음 시작 시 빈 메시지 추가
+        temporaryMessageId.current = Date.now();
+        const newMessage: Chat = {
+          id: temporaryMessageId.current,
+          role: 'user',
+          content: ''
+        };
+  
+        // 새 메시지를 쿼리와 상태에 추가
+        const queryCache = queryClient.getQueryCache();
+        const queryKeys = queryCache.getAll().map(cache => cache.queryKey);
+        queryKeys.forEach((queryKey) => {
+          if (queryKey[0] === "discussion" && queryKey[1] === "learn") {
+            const value: Chat[] = queryClient.getQueryData(queryKey) ?? [];
+            const newChats = [...value, newMessage];
+            queryClient.setQueryData(queryKey, newChats);
+            setChats(newChats);
+          }
+        });
         
         recognition.current = new SpeechRecognition();
         if (!recognition.current) {
@@ -155,16 +187,33 @@ export default function DiscussionLearnPage() {
         recognition.current.interimResults = true;
     
         recognition.current.onresult = (event) => {
-          const transcript = Array.from(event.results)
+          const newTranscript = Array.from(event.results)
             .map(result => result[0].transcript)
             .join('');
           
-          setTranscript(transcript);
-          console.log('변환된 텍스트:', transcript);
+          setTranscript(newTranscript);
+  
+          // 쿼리와 채팅 상태를 직접 업데이트
+          const queryCache = queryClient.getQueryCache();
+          const queryKeys = queryCache.getAll().map(cache => cache.queryKey);
+          queryKeys.forEach((queryKey) => {
+            if (queryKey[0] === "discussion" && queryKey[1] === "learn") {
+              const value: Chat[] = queryClient.getQueryData(queryKey) ?? [];
+              const shallow = [...value];
+              const messageIndex = shallow.findIndex(chat => chat.id === temporaryMessageId.current);
+              if (messageIndex !== -1) {
+                shallow[messageIndex].content = newTranscript;
+                queryClient.setQueryData(queryKey, shallow);
+                setChats(shallow);
+              }
+            }
+          });
+  
+          console.log('Updated transcript:', newTranscript); // 디버깅용
         };
-    
+  
         recognition.current.start();
-      } else { //녹음 중단
+      } else { // 녹음 중단
         if (recognition.current) {
           recognition.current.stop();
           postChat.mutate();
