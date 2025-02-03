@@ -16,20 +16,28 @@ export default function ChatMessage({key, chat, isLoading}: Props) {
   return (
     <div 
       key={key} 
-      className={`mb-4 p-4 rounded-xl ${
+      className={`flex mb-4 ${
         chat.role === 'ai' 
-          ? 'bg-orange-100 border-orange-200 mr-12' 
-          : 'bg-white ml-12'
+          ? 'justify-start' 
+          : 'justify-end'
       }`}
     >
-      <div className="text-sm mb-1">
-        {chat.role === 'ai' && (<Bot size={24} className="text-orange-400"/>)}
-      </div>
-      <div>
-        {isLoading ? (
-          <LoadingSpinner size={"xs"}/>
-        ) : 
-        chat.content}
+      <div 
+        className={`p-4 rounded-xl max-h-96 overflow-y-auto w-fit max-w-[calc(100%-3rem)] ${
+          chat.role === 'ai' 
+            ? 'bg-orange-100 border-orange-200' 
+            : 'bg-white'
+        }`}
+      >
+        <div className="text-sm mb-1">
+          {chat.role === 'ai' && (<Bot size={24} className="text-orange-400"/>)}
+        </div>
+        <div className="whitespace-pre-wrap break-words">
+          {isLoading ? (
+            <LoadingSpinner size={"xs"}/>
+          ) : 
+          chat.content}
+        </div>
       </div>
     </div>
   )
