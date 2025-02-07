@@ -33,15 +33,6 @@ export default function AuthCallback() {
   handleCallback();
 }, [router]);
 
-// useEffect(() => {
-//   const handleCallback = async () => {
-//     // const params = new URLSearchParams(window.location.search);
-//     // const success = params.get('success');
-//     router.replace('/home');
-//   };
-//   setTimeout(handleCallback, 5000);
-// }, [router]);
-
  return (
    <div className='min-h-screen bg-white-50 to-white relative overflow-hidden flex items-center justify-center'>
      {/* Floating Background Icons */}

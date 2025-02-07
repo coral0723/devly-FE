@@ -6,26 +6,26 @@ const delay = (ms: number) => new Promise((res) => {
 });
 
 export const handlers = [
-  http.get('/study/today-tasks', async ({ }) => {
+  http.get('/api/studies/tasks', async ({ }) => {
     return new HttpResponse(
       JSON.stringify({
         word: {
-          groupId: 1,
+          studyId: 1,
           total: 5,
           completed: false
         },
         knowledge: {
-          groupId: 2,
+          studyId: 2,
           total: 3,
           completed: false
         },
         pr: {
-          groupId: 3,
+          studyId: 3,
           total: 1,
           completed: false
         },
         discussion: {
-          groupId: 4,
+          studyId: 4,
           total: 1,
           completed: false
         },

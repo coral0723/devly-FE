@@ -35,7 +35,7 @@ export default function MainFeatures() {
       <div
           className={`bg-white rounded-2xl border border-gray-200 p-5 space-y-3 transition-all
             ${tasks.word.completed === false && "cursor-pointer hover:bg-emerald-50 hover:border-emerald-200 active:scale-95"}`}
-          onClick={tasks.word.completed ? undefined : (() => {router.replace(`/words?groupId=${tasks.word.groupId}`)})}
+          onClick={tasks.word.completed ? undefined : (() => {router.replace(`/words?groupId=${tasks.word.studyId}`)})}
       >
         <div className="flex items-center justify-between">
           <BookOpen size={32} className="text-emerald-500"/>
@@ -57,7 +57,7 @@ export default function MainFeatures() {
       <div
           className={`bg-white rounded-2xl border border-gray-200 p-5 space-y-3 transition-all
             ${tasks.knowledge.completed === false && "cursor-pointer hover:bg-blue-50 hover:border-blue-200 active:scale-95"}`}
-          onClick={tasks.knowledge.completed ? undefined : (() => {router.replace(`/knowledge?groupId=${tasks.knowledge.groupId}`)})}
+          onClick={tasks.knowledge.completed ? undefined : (() => {router.replace(`/knowledge?groupId=${tasks.knowledge.studyId}`)})}
       >
         <div className="flex items-center justify-between">
           <Lightbulb size={32} className="text-blue-500"/>
@@ -79,7 +79,7 @@ export default function MainFeatures() {
       <div
           className={`bg-white rounded-2xl border border-gray-200 p-5 space-y-2 transition-all
             ${tasks.pr.completed === false && "cursor-pointer hover:bg-purple-50 hover:border-purple-200 active:scale-95"}`}
-          onClick={tasks.pr.completed ? undefined : (() => {router.replace(`/pr?groupId=${tasks.pr.groupId}`)})}
+          onClick={tasks.pr.completed ? undefined : (() => {router.replace(`/pr?groupId=${tasks.pr.studyId}`)})}
       >
         <div className="flex items-center justify-between">
           <GitPullRequest size={24} className="text-purple-500"/>
@@ -101,7 +101,7 @@ export default function MainFeatures() {
       <div
           className={`bg-white rounded-2xl border border-gray-200 p-5 space-y-2 transition-all
             ${tasks.discussion.completed === false && "cursor-pointer hover:bg-orange-50 hover:border-orange-200 active:scale-95"}`}
-          onClick={tasks.discussion.completed ? undefined : (() => {router.replace(`/discussion?groupId=${tasks.discussion.groupId}`)})}
+          onClick={tasks.discussion.completed ? undefined : (() => {router.replace(`/discussion?groupId=${tasks.discussion.studyId}`)})}
       >
         <div className="flex items-center justify-between">
           <MessageSquare size={24} className="text-orange-500"/>
