@@ -8,39 +8,39 @@ import LoadingSpinner from "@/app/_component/LoadingSpinner";
 export default function AuthCallback() {
  const router = useRouter();
 
-//  useEffect(() => {
-//   const handleCallback = async () => {
-//     const params = new URLSearchParams(window.location.search);
-//     const accessToken = params.get('access_token');
-//     const refreshToken = params.get('refresh_token');
-
-//     if (accessToken) {
-//       localStorage.setItem('accessToken', accessToken);
-      
-//       // refreshToken이 있는 경우에만 업데이트
-//       if (refreshToken) {
-//         localStorage.setItem('refreshToken', refreshToken);
-//       }
-
-//       router.replace('/home');
-//     } else {
-//       // accessToken이 없는 경우에만 에러 처리
-//       window.alert('로그인에 실패했습니다.');
-//       router.replace('/');
-//     }
-//   };
-
-//   handleCallback();
-// }, [router]);
-
-useEffect(() => {
+ useEffect(() => {
   const handleCallback = async () => {
-    // const params = new URLSearchParams(window.location.search);
-    // const success = params.get('success');
-    router.replace('/home');
+    const params = new URLSearchParams(window.location.search);
+    const accessToken = params.get('accessToken');
+    const refreshToken = params.get('refresh_token');
+
+    if (accessToken) {
+      localStorage.setItem('accessToken', accessToken);
+      
+      // refreshToken이 있는 경우에만 업데이트
+      if (refreshToken) {
+        localStorage.setItem('refreshToken', refreshToken);
+      }
+
+      router.replace('/home');
+    } else {
+      // accessToken이 없는 경우에만 에러 처리
+      window.alert('로그인에 실패했습니다.');
+      router.replace('/');
+    }
   };
-  setTimeout(handleCallback, 5000);
+
+  handleCallback();
 }, [router]);
+
+// useEffect(() => {
+//   const handleCallback = async () => {
+//     // const params = new URLSearchParams(window.location.search);
+//     // const success = params.get('success');
+//     router.replace('/home');
+//   };
+//   setTimeout(handleCallback, 5000);
+// }, [router]);
 
  return (
    <div className='min-h-screen bg-white-50 to-white relative overflow-hidden flex items-center justify-center'>
