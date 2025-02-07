@@ -840,5 +840,67 @@ export const handlers = [
         content: '정말 chill 하군요...'
       })
     )
+  }),
+  http.get(`/review`, async ({  }) => {
+
+    return new HttpResponse(
+      JSON.stringify([
+        {
+          date: new Date("2025-01-20"),
+          logs: [
+            {
+              study: 'words',
+              title: "리액트 훅 사용법 정리",
+              exp: 130
+            },
+            {
+              study: 'knowledge',
+              title: "Next.js 13 새로운 기능 학습",
+              exp: 200
+            },
+            {
+              study: 'pr',
+              title: "로그인 페이지 UI 구현",
+              exp: 150
+            },
+            {
+              study: 'discussion',
+              title: "프로젝트 아키텍처 설계 논의",
+              exp: 200
+            }
+          ]
+        },
+        {
+          date: new Date("2025-01-27"),
+          logs: [
+            {
+              study: 'words',
+              title: "리액트 훅 사용법 정리",
+              exp: 130
+            },
+            {
+              study: 'pr',
+              title: "로그인 페이지 UI 구현",
+              exp: 150
+            },
+          ]
+        },
+        {
+          date: new Date("2025-02-20"),
+          logs: [
+            {
+              study: 'knowledge',
+              title: "Next.js 13 새로운 기능 학습",
+              exp: 200
+            },
+            {
+              study: 'pr',
+              title: "로그인 페이지 UI 구현",
+              exp: 150
+            },
+          ]
+        },
+      ])
+    )
   })
 ];
