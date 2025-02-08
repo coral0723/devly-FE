@@ -1,15 +1,19 @@
+export interface Example {
+  source: string;
+  text: string;
+  translation: string;
+}
+
+export interface Quiz {
+  text: string;
+  distractors: string;
+}
+
 export interface Word {
   id: number;
   word: string;
   pronunciation: string;
   meaning: string;
-  example: {
-    source: string;
-    text: string;
-    translation: string;
-  };
-  quiz: {
-    text: string;
-    distractors: string[];
-  }
+  example: string;
+  quiz: string;
 }

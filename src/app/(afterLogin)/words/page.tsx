@@ -6,14 +6,14 @@ import { getWords } from './_lib/getWords';
 
 type Props = {
   searchParams: {
-    groupId: string;
+    studyId: string;
   }
 }
 
 export default async function WordsPage({searchParams}: Props) {
-  const {groupId} = await searchParams;
+  const {studyId} = await searchParams;
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery({queryKey: ['words', 'learn', groupId], queryFn: getWords});
+  await queryClient.prefetchQuery({queryKey: ['words', 'learn', studyId], queryFn: getWords});
   const dehydratedState = dehydrate(queryClient);
 
   return (
@@ -79,7 +79,7 @@ export default async function WordsPage({searchParams}: Props) {
         </div>
       </div>
       <BottomButton
-        groupId={groupId}
+        groupId={studyId}
       />
       </HydrationBoundary>
     </div>

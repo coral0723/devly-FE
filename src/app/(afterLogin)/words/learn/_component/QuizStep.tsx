@@ -2,7 +2,7 @@
 
 import { BookOpen, Check } from "lucide-react";
 import { Fragment, useEffect, useState } from "react";
-import { Word } from "@/model/Word";
+import { Example, Quiz, Word } from "@/model/Word";
 
 type Props = {
   index: number;
@@ -17,10 +17,13 @@ export default function QuizStep({index, word, wordsLength, handleQuizNext, onSc
   const [showCorect, setShowCorrect] = useState<boolean>(false);
   const [options, setOptions] = useState<string[]>([]);
 
+  const example: Example = JSON.parse(word.example);
+  const quiz: Quiz = JSON.parse(word.quiz);
+
   useEffect(() => {
     if (word) {
       // 새로운 `word` 데이터를 기반으로 options 생성
-      const updatedOptions = [...word.quiz.distractors, word.word];
+      const updatedOptions = [...quiz.distractors, word.word];
       // 배열을 무작위로 섞기
       updatedOptions.sort(() => Math.random() - 0.5);
       // 상태 업데이트
@@ -77,15 +80,15 @@ export default function QuizStep({index, word, wordsLength, handleQuizNext, onSc
       <div className="bg-white rounded-xl p-6 shadow-sm">
           <div className="flex items-center gap-2 mb-4 text-gray-500 text-sm">
               <BookOpen size={16}/>
-              <span>출처: {word.example.source}</span>
+              <span>출처: {example.source}</span>
           </div>
           <div className="text-lg mb-4 font-mono">
-              {word.example.text.split(new RegExp(`(${word.word})`, 'i')).map((part, i) => (
+              {quiz.text.split(/(_{3,})/).map((part, i) => (
                   <Fragment key={i}>
-                    {part.toLowerCase() === word.word.toLowerCase() ? (
+                    {part.match(/_{3,}/) ? (
                       <div className="inline-block border-2 border-gray p-1">
                         <span className="font-bold text-blue-600">
-                          {showCorect ? part : <span className="opacity-0">{part}</span>}
+                          {showCorect ? word.word : <span className="opacity-0">{word.word}</span>}
                         </span>
                       </div>
                     ) : part}
@@ -93,7 +96,7 @@ export default function QuizStep({index, word, wordsLength, handleQuizNext, onSc
               ))}
           </div>
           <div className="text-gray-600 border-t border-gray-100 pt-4">
-              {word.example.translation}
+              {example.translation}
           </div>
       </div>
 
