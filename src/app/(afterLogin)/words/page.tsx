@@ -3,6 +3,7 @@ import BottomButton from './_component/BottomButton';
 import BackButton from '../_component/BackButton';
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
 import { getWords } from './_lib/getWords';
+import { getValidationResult } from './_lib/getValidationResult';
 
 type Props = {
   searchParams: {
@@ -14,6 +15,7 @@ export default async function WordsPage({searchParams}: Props) {
   const {studyId} = await searchParams;
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery({queryKey: ['words', 'learn', studyId], queryFn: getWords});
+  await queryClient.prefetchQuery({queryKey: ['words', 'validation', studyId], queryFn: getValidationResult});
   const dehydratedState = dehydrate(queryClient);
 
   return (

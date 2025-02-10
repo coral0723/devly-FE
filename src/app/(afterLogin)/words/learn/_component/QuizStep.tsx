@@ -3,8 +3,10 @@
 import { BookOpen, Check } from "lucide-react";
 import { Fragment, useEffect, useState } from "react";
 import { Example, Quiz, Word } from "@/model/Word";
+import { ValidationResult } from "@/model/ValidationResult";
 
 type Props = {
+  validationResult: ValidationResult
   index: number;
   word: Word;
   wordsLength: number;
@@ -83,12 +85,12 @@ export default function QuizStep({index, word, wordsLength, handleQuizNext, onSc
               <span>출처: {example.source}</span>
           </div>
           <div className="text-lg mb-4 font-mono">
-              {quiz.text.split(/(_{3,})/).map((part, i) => (
+              {example.text.split(new RegExp(`(${word.word})`, 'i')).map((part, i) => (
                   <Fragment key={i}>
-                    {part.match(/_{3,}/) ? (
+                    {part.toLowerCase() === word.word.toLowerCase() ? (
                       <div className="inline-block border-2 border-gray p-1">
                         <span className="font-bold text-blue-600">
-                          {showCorect ? word.word : <span className="opacity-0">{word.word}</span>}
+                          {showCorect ? part : <span className="opacity-0">{part}</span>}
                         </span>
                       </div>
                     ) : part}

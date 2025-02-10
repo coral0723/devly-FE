@@ -12,6 +12,8 @@ import { Word } from "@/model/Word";
 import { useSearchParams } from "next/navigation";
 import { getWords } from "../_lib/getWords";
 import LoadingSpinner from "@/app/_component/LoadingSpinner";
+import { ValidationResult } from "@/model/ValidationResult";
+import { getValidationResult } from "../_lib/getValidationResult";
 
 export default function WordLearning() {
   const [currentWordIndex, setCurrentWordIndex] = useState<number>(0);
@@ -26,6 +28,13 @@ export default function WordLearning() {
   const {data: words, isLoading} = useQuery<Word[], object, Word[], [_1: string, _2: string, string]>({
     queryKey: ['words', 'learn', groupId!],
     queryFn: getWords,
+    staleTime: 60 * 1000,
+    gcTime: 300 * 1000,
+  });
+
+  const {data: validationResult} = useQuery<ValidationResult, object, ValidationResult, [_1: string, _2: string, string]>({
+    queryKey: ['words', 'validation', groupId!],
+    queryFn: getValidationResult,
     staleTime: 60 * 1000,
     gcTime: 300 * 1000,
   });
@@ -52,7 +61,7 @@ export default function WordLearning() {
     }
   }
 
-  if(isLoading || !words) {
+  if(isLoading || !words || !validationResult) {
     return (
       <div className="flex max-w-lg mx-auto min-h-screen bg-gray-50 items-center justify-center">
         <LoadingSpinner size="md"/>
@@ -107,6 +116,7 @@ export default function WordLearning() {
 
             {step === 'quiz' && (
               <QuizStep
+                validationResult={validationResult}
                 index={currentWordIndex}
                 word={words[currentWordIndex]}
                 wordsLength={words.length}
