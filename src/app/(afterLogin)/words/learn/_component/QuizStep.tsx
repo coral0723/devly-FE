@@ -3,10 +3,9 @@
 import { BookOpen, Check } from "lucide-react";
 import { Fragment, useEffect, useState } from "react";
 import { Example, Quiz, Word } from "@/model/Word";
-import { ValidationResult } from "@/model/ValidationResult";
 
 type Props = {
-  validationResult: ValidationResult;
+  correctIds: number[];
   setCorrectIds: (correctIds: number[] | ((prev: number[]) => number[])) => void;
   setIncorrectIds:(incorrectIds: number[] | ((prev: number[]) => number[])) => void;
   index: number;
@@ -16,7 +15,7 @@ type Props = {
   onScrollUp: () => void;
 }
 
-export default function QuizStep({index, word, wordsLength, handleQuizNext, onScrollUp, setCorrectIds, setIncorrectIds }: Props) {
+export default function QuizStep({index, word, wordsLength, correctIds, handleQuizNext, onScrollUp, setCorrectIds, setIncorrectIds }: Props) {
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [showCorect, setShowCorrect] = useState<boolean>(false);
   const [options, setOptions] = useState<string[]>([]);
@@ -32,8 +31,12 @@ export default function QuizStep({index, word, wordsLength, handleQuizNext, onSc
       updatedOptions.sort(() => Math.random() - 0.5);
       // 상태 업데이트
       setOptions(updatedOptions);
+
+      if(correctIds.includes(word.id)) {
+        setShowCorrect(true);
+      }
     }
-  }, [word]);
+  }, [word, correctIds]);
 
   const onCheck = () => {
     onScrollUp();
@@ -59,10 +62,15 @@ export default function QuizStep({index, word, wordsLength, handleQuizNext, onSc
       return "hover:bg-gray-50";
     }
     
+    // 이미 푼 문제라면 (correctIds에 있다면) 정답만 초록색으로
+    if (correctIds.includes(word.id)) {
+      return option === word.word ? "bg-green-100" : "";
+    }
+    
+    // 아직 안 푼 문제라면 기존 로직대로
     if (option === word.word) {
       return "bg-green-100"; // 정답인 경우 초록색 배경
     }
-    
     if (selectedOption === idx && option !== word.word) {
       return "bg-red-100"; // 선택했지만 오답인 경우 빨간색 배경
     }
@@ -72,6 +80,15 @@ export default function QuizStep({index, word, wordsLength, handleQuizNext, onSc
 
   const getCircleStyle = (option: string, idx: number) => {
     if (showCorect) {
+      // 이미 푼 문제라면 (correctIds에 있다면) 정답에만 체크 표시
+      if (correctIds.includes(word.id)) {
+        if (option === word.word) {
+          return "bg-green-500 border-green-500"; // 정답인 경우 초록색 원
+        }
+        return "border-gray-300";
+      }
+      
+      // 아직 안 푼 문제라면 기존 로직대로
       if (option === word.word) {
         return "bg-green-500 border-green-500"; // 정답인 경우 초록색 원
       }
@@ -104,9 +121,6 @@ export default function QuizStep({index, word, wordsLength, handleQuizNext, onSc
                   </Fragment>
               ))}
           </div>
-          <div className="text-gray-600 border-t border-gray-100 pt-4">
-              {example.translation}
-          </div>
       </div>
 
       <div className="bg-white rounded-xl p-6 shadow-sm">
@@ -136,13 +150,13 @@ export default function QuizStep({index, word, wordsLength, handleQuizNext, onSc
         <button
           onClick={showCorect ? onNext : onCheck}
           className={`w-full py-3 text-white text-lg font-medium rounded-xl transition-all
-            ${selectedOption === null 
+            ${selectedOption === null && !correctIds.includes(word.id)
               ? 'bg-gray-300 cursor-not-allowed' 
-              : showCorect && index === wordsLength - 1
+              : showCorect && (index === wordsLength - 1 || correctIds.includes(word.id))
                   ? 'bg-gradient-to-r from-green-400 to-teal-500 hover:from-green-500 hover:to-teal-600 active:scale-[0.98]'
                   : 'bg-green-500 hover:bg-green-600 active:scale-[0.98]'
             }`}
-          disabled={selectedOption === null}
+          disabled={selectedOption === null && !correctIds.includes(word.id)}
         >
           {showCorect ? (
             index === wordsLength - 1 ? (

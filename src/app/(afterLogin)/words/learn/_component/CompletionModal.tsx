@@ -1,14 +1,12 @@
 "use client"
 
-import { useRouter } from 'next/navigation';
-
 type Props = {
   totalWords: number;
   incorrectIds: number[];
+  onClose: () => void;
 }
 
-export function CompletionModal({ totalWords, incorrectIds }: Props) {
-  const router = useRouter();
+export function CompletionModal({ totalWords, incorrectIds, onClose }: Props) {
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
@@ -34,7 +32,7 @@ export function CompletionModal({ totalWords, incorrectIds }: Props) {
           </div>
           ) : <></>}
         <button
-          onClick={() => router.replace('/home')}
+          onClick={onClose}
           className="w-full py-4 bg-gradient-to-r from-green-400 to-teal-500 hover:from-green-500 hover:to-teal-600 text-white rounded-xl text-lg font-medium"
         >
           완료

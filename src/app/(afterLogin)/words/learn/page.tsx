@@ -7,7 +7,7 @@ import { CompletionModal } from "./_component/CompletionModal";
 import { X } from "lucide-react";
 import { ContextStep } from "./_component/ContextStep";
 import QuizStep from "./_component/QuizStep";
-import { useQuery } from "@tanstack/react-query";
+import { QueryClient, useQuery } from "@tanstack/react-query";
 import { Word } from "@/model/Word";
 import { useSearchParams } from "next/navigation";
 import { getWords } from "../_lib/getWords";
@@ -27,7 +27,8 @@ export default function WordLearning() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const router = useRouter();
-  
+  const queryClient = new QueryClient();
+
   const searchParams = useSearchParams();
   const groupId = searchParams.get('groupId');
   
@@ -135,7 +136,7 @@ export default function WordLearning() {
 
             {step === 'quiz' && (
               <QuizStep
-                validationResult={validationResult}
+                correctIds={validationResult.correctIds}
                 setCorrectIds={setCorrectIds}
                 setIncorrectIds={setIncorrectIds}
                 index={currentWordIndex}
@@ -155,6 +156,10 @@ export default function WordLearning() {
               <CompletionModal 
                 totalWords={words.length} 
                 incorrectIds={incorrectIds}
+                onClose={() => {
+                  queryClient.invalidateQueries({queryKey: ['words', 'validation', groupId]});
+                  router.replace('/home');
+                }}
               />
           )}
       </div>
