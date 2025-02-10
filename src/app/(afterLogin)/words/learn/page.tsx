@@ -14,13 +14,19 @@ import { getWords } from "../_lib/getWords";
 import LoadingSpinner from "@/app/_component/LoadingSpinner";
 import { ValidationResult } from "@/model/ValidationResult";
 import { getValidationResult } from "../_lib/getValidationResult";
+import { authApi } from "@/app/_lib/axios";
+import { useRouter } from "next/navigation";
 
 export default function WordLearning() {
   const [currentWordIndex, setCurrentWordIndex] = useState<number>(0);
   const [step, setStep] = useState<'word' | 'context' | 'quiz'>('word');
   const [showExitConfirm, setShowExitConfirm] = useState<boolean>(false);
   const [showCompletion, setShowCompletion] = useState<boolean>(false);
+  const [correctIds, setCorrectIds] = useState<number[]>([]);
+  const [incorrectIds, setIncorrectIds] = useState<number[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  const router = useRouter();
   
   const searchParams = useSearchParams();
   const groupId = searchParams.get('groupId');
@@ -53,11 +59,24 @@ export default function WordLearning() {
     }
   };
 
-  const handleQuizNext = () => {
+  const handleQuizNext = async () => {
     if(currentWordIndex < words!.length - 1) {
       setCurrentWordIndex(prev => prev + 1);
     } else {
-      setShowCompletion(true);
+      try {
+        const res = await authApi.post(`/api/studies/${groupId}/words/review`, {
+          correctIds: correctIds,
+          incorrectIds: incorrectIds
+        });
+
+        if(res.status === 200) {
+          setShowCompletion(true);
+        }
+      } catch (error) {
+        console.error('Failed to submit review:', error);
+        alert("오류가 발생하였습니다.");
+        router.replace('/home');
+      }
     }
   }
 
@@ -117,6 +136,8 @@ export default function WordLearning() {
             {step === 'quiz' && (
               <QuizStep
                 validationResult={validationResult}
+                setCorrectIds={setCorrectIds}
+                setIncorrectIds={setIncorrectIds}
                 index={currentWordIndex}
                 word={words[currentWordIndex]}
                 wordsLength={words.length}
@@ -131,7 +152,10 @@ export default function WordLearning() {
           )}
 
           {showCompletion && (
-              <CompletionModal totalWords={words.length} />
+              <CompletionModal 
+                totalWords={words.length} 
+                incorrectIds={incorrectIds}
+              />
           )}
       </div>
   );

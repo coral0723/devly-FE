@@ -4,9 +4,10 @@ import { useRouter } from 'next/navigation';
 
 type Props = {
   totalWords: number;
+  incorrectIds: number[];
 }
 
-export function CompletionModal({ totalWords }: Props) {
+export function CompletionModal({ totalWords, incorrectIds }: Props) {
   const router = useRouter();
 
   return (
@@ -18,14 +19,20 @@ export function CompletionModal({ totalWords }: Props) {
           </svg>
 
         </div>
-        <h2 className="text-xl font-bold mb-2">학습 완료! 🎉</h2>
+        <h2 className="text-xl font-bold mb-2">
+          {incorrectIds.length === 0 ? "학습 완료! 🎉" : "다시 한번 도전해보세요! 💪"}</h2>
         <p className="text-gray-600 mb-2">
-          오늘의 {totalWords}개 단어를 모두 학습했어요
+          {incorrectIds.length === 0 ? 
+            `오늘의 ${totalWords}개 단어를 모두 학습했어요` 
+            : `${incorrectIds.length}개 단어만 더 완벽해지면 됩니다`
+          }
         </p>
-        <div className="bg-gray-50 rounded-lg p-4 mb-6">
-          <div className="text-sm text-gray-500 mb-1">획득한 경험치</div>
-          <div className="text-2xl font-bold text-green-600">+100 XP</div>
-        </div>
+        {incorrectIds.length === 0 ? (
+          <div className="bg-gray-50 rounded-lg p-4 mb-6">
+            <div className="text-sm text-gray-500 mb-1">획득한 경험치</div>
+            <div className="text-2xl font-bold text-green-600">+100 XP</div>
+          </div>
+          ) : <></>}
         <button
           onClick={() => router.replace('/home')}
           className="w-full py-4 bg-gradient-to-r from-green-400 to-teal-500 hover:from-green-500 hover:to-teal-600 text-white rounded-xl text-lg font-medium"
