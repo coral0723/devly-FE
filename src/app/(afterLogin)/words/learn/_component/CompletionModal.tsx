@@ -21,7 +21,7 @@ export function CompletionModal({ totalWords, incorrectIds, onClose }: Props) {
           {incorrectIds.length === 0 ? "학습 완료! 🎉" : "다시 한번 도전해보세요! 💪"}</h2>
         <p className="text-gray-600 mb-2">
           {incorrectIds.length === 0 ? 
-            `오늘의 ${totalWords}개 단어를 모두 학습했어요` 
+            `단어를 모두 학습했어요` 
             : `${incorrectIds.length}개 단어만 더 완벽해지면 됩니다`
           }
         </p>

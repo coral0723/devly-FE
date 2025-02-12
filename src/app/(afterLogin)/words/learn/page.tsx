@@ -16,6 +16,7 @@ import { ValidationResult } from "@/model/ValidationResult";
 import { getValidationResult } from "../_lib/getValidationResult";
 import { authApi } from "@/app/_lib/axios";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 export default function WordLearning() {
   const [currentWordIndex, setCurrentWordIndex] = useState<number>(0);
@@ -39,6 +40,7 @@ export default function WordLearning() {
     gcTime: 300 * 1000,
   });
 
+  
   const {data: validationResult} = useQuery<ValidationResult, object, ValidationResult, [_1: string, _2: string, string]>({
     queryKey: ['words', 'validation', groupId!],
     queryFn: getValidationResult,
@@ -46,12 +48,17 @@ export default function WordLearning() {
     gcTime: 300 * 1000,
   });
 
+  // 학습이 필요한 단어만 필터링
+  const filteredWords = words?.filter(word => 
+    validationResult?.incorrectIds.includes(word.id)
+  ) || [];
+
   const onScrollUp = () => {
     containerRef.current?.scrollTo(0, 0);
   };
 
   const handleNext = () => {
-    if (currentWordIndex < words!.length - 1) {
+    if (currentWordIndex < filteredWords!.length - 1) {
       setCurrentWordIndex(prev => prev + 1);
       setStep('word');
     } else {
@@ -61,14 +68,20 @@ export default function WordLearning() {
   };
 
   const handleQuizNext = async () => {
-    if(currentWordIndex < words!.length - 1) {
+    if(currentWordIndex < filteredWords!.length - 1) {
       setCurrentWordIndex(prev => prev + 1);
     } else {
       try {
-        const res = await authApi.post(`/api/studies/${groupId}/words/review`, {
+        //msw용
+        const res = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/studies/${groupId}/words/review`, {
           correctIds: correctIds,
           incorrectIds: incorrectIds
         });
+
+        // const res = await authApi.post(`/api/studies/${groupId}/words/review`, {
+        //   correctIds: correctIds,
+        //   incorrectIds: incorrectIds
+        // });
 
         if(res.status === 200) {
           setShowCompletion(true);
@@ -102,13 +115,13 @@ export default function WordLearning() {
                   <X size={24}/>
                 </button>
                 <span className="text-sm text-gray-500">
-                  {currentWordIndex + 1} / {words.length}
+                  {currentWordIndex + 1} / {filteredWords.length}
                 </span>
               </div>
               <div className="h-1 bg-gray-100 rounded-full overflow-hidden">
                 <div
                   className="h-full bg-green-500 transition-all duration-300"
-                  style={{ width: `${((currentWordIndex + 1) / words.length) * 100}%`}}
+                  style={{ width: `${((currentWordIndex + 1) / filteredWords.length) * 100}%`}}
                 />
               </div>
             </div>
@@ -118,7 +131,7 @@ export default function WordLearning() {
           <div ref={containerRef} className="p-5 h-[calc(100vh-150px)] overflow-y-auto scrollbar-hide">
             {step === 'word' && (
               <WordStep 
-                word={words[currentWordIndex]} 
+                word={filteredWords[currentWordIndex]} 
                 onNext={() => setStep('context')} 
               />
             )}
@@ -126,8 +139,8 @@ export default function WordLearning() {
             {step === 'context' && (
               <ContextStep
                 index={currentWordIndex}
-                word={words[currentWordIndex]}
-                wordsLength={words.length}
+                word={filteredWords[currentWordIndex]}
+                wordsLength={filteredWords.length}
                 onNext={() => {
                   handleNext()
                 }}
@@ -140,8 +153,8 @@ export default function WordLearning() {
                 setCorrectIds={setCorrectIds}
                 setIncorrectIds={setIncorrectIds}
                 index={currentWordIndex}
-                word={words[currentWordIndex]}
-                wordsLength={words.length}
+                word={filteredWords[currentWordIndex]}
+                wordsLength={filteredWords.length}
                 handleQuizNext={handleQuizNext}
                 onScrollUp={onScrollUp}
                 />
@@ -154,11 +167,13 @@ export default function WordLearning() {
 
           {showCompletion && (
               <CompletionModal 
-                totalWords={words.length} 
+                totalWords={filteredWords.length} 
                 incorrectIds={incorrectIds}
                 onClose={() => {
-                  queryClient.invalidateQueries({queryKey: ['words', 'validation', groupId]});
-                  queryClient.invalidateQueries({queryKey: ['words', 'learn', groupId]});
+                  queryClient.removeQueries({queryKey: ['words', 'validation', groupId]});
+                  queryClient.removeQueries({queryKey: ['words', 'learn', groupId]});
+                  queryClient.removeQueries({queryKey: ['weekly-activity']});
+                  queryClient.removeQueries({queryKey: ['today-tasks']});
                   router.replace('/home');
                 }}
               />

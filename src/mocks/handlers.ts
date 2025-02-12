@@ -9,26 +9,30 @@ export const handlers = [
   http.get('/api/studies/tasks', async ({ }) => {
     return new HttpResponse(
       JSON.stringify({
-        word: {
-          studyId: 1,
-          total: 5,
-          completed: false
-        },
-        knowledge: {
-          studyId: 2,
-          total: 3,
-          completed: false
-        },
-        pr: {
-          studyId: 3,
-          total: 1,
-          completed: false
-        },
-        discussion: {
-          studyId: 4,
-          total: 1,
-          completed: false
-        },
+        code: "SUCCESS",
+        message: "성공",
+        result: {
+          word: {
+            studyId: 1,
+            total: 5,
+            completed: false
+          },
+          knowledge: {
+            studyId: 2,
+            total: 3,
+            completed: false
+          },
+          pr: {
+            studyId: 3,
+            total: 1,
+            completed: false
+          },
+          discussion: {
+            studyId: 4,
+            total: 1,
+            completed: false
+          },
+        }
       }),
       { 
         status: 200, 
@@ -36,242 +40,136 @@ export const handlers = [
       }
     );
   }),
-  http.get('/study/words/:groupId', async ({ }) => {
-
+  http.get('/api/studies/:groupId/words/review', async ({ }) => {
     return new HttpResponse(
-      JSON.stringify([
+      JSON.stringify({
+        code: "SUCCESS",
+        message: "성공",
+        result: {
+          correctIds: [1, 2],
+          incorrectIds: [3, 4, 5]
+        }
+      })
+    )
+  }),
+  http.post('/api/studies/:groupId/words/review', async ({ }) => {
+    return new HttpResponse(
+      JSON.stringify({
+        code: "SUCCESS",
+        message: "성공",
+      })
+    )
+  }),
+  http.get('/api/words/:groupId', async ({ }) => {
+    return new HttpResponse(
+      JSON.stringify({
+        code: "SUCCESS",
+        message: "성공",
+        result: {
+          words: [
             {
-              "createdAt": "2025-01-20 15:18:53.752306",
-              "id": 1,
-              "studyId": 1,
-              "updatedAt": "2025-01-20 15:18:53.752306",
-              "example": {
-                "source": "Spring Framework Documentation",
-                "text": "Spring allows for annotation-based configuration of your application.",
-                "translation": "스프링은 애플리케이션의 주석 기반 설정을 허용합니다."
-              },
-              "quiz": {
-                "text": "What does Annotation-based Configuration mean in Spring Framework?",
-                "distractors": [
+              id: 1,
+              word: "Annotation-based Configuration",
+              meaning: "주석 기반 설정",
+              example: JSON.stringify({
+                source: "Spring Framework Documentation",
+                text: "Spring allows for annotation-based configuration of your application.",
+                translation: "스프링은 애플리케이션의 주석 기반 설정을 허용합니다."
+              }),
+              quiz: JSON.stringify({
+                text: "What does Annotation-based Configuration mean in Spring Framework?",
+                distractors: [
                   "Code-based Configuration",
                   "XML-based Configuration",
                   "Java-based Configuration",
                   "HTML-based Configuration"
                 ]
-              },
-              "meaning": "주석 기반 설정",
-              "pronunciation": "/ænəʊˈteɪʃən beɪst kənˈfɪɡəˈreɪʃən/",
-              "word": "Annotation-based Configuration"
+              }),
+              pronunciation: "/ænəʊˈteɪʃən beɪst kənˈfɪɡəˈreɪʃən/"
             },
             {
-              "createdAt": "2025-01-20 15:18:53.754271",
-              "id": 2,
-              "studyId": 1,
-              "updatedAt": "2025-01-20 15:18:53.754271",
-              "example": {
-                "source": "Spring Framework Documentation",
-                "text": "Dependency Injection is a fundamental aspect of the Spring framework.",
-                "translation": "의존성 주입은 스프링 프레임워크의 기본적인 측면입니다."
-              },
-              "quiz": {
-                "text": "What is a fundamental aspect of the Spring framework?",
-                "distractors": [
+              id: 2,
+              word: "Dependency Injection",
+              meaning: "의존성 주입",
+              example: JSON.stringify({
+                source: "Spring Framework Documentation",
+                text: "Dependency Injection is a fundamental aspect of the Spring framework.",
+                translation: "의존성 주입은 스프링 프레임워크의 기본적인 측면입니다."
+              }),
+              quiz: JSON.stringify({
+                text: "What is a fundamental aspect of the Spring framework?",
+                distractors: [
                   "Dependency Extraction",
                   "Dependency Reduction",
                   "Dependency Increase",
                   "Dependency Multiplication"
                 ]
-              },
-              "meaning": "의존성 주입",
-              "pronunciation": "/dɪˈpɛndənsi ɪnˈdʒɛkʃən/",
-              "word": "Dependency Injection"
+              }),
+              pronunciation: "/dɪˈpɛndənsi ɪnˈdʒɛkʃən/"
             },
             {
-              "createdAt": "2025-01-20 15:18:53.754702",
-              "id": 3,
-              "studyId": 1,
-              "updatedAt": "2025-01-20 15:18:53.754702",
-              "example": {
-                "source": "Spring Framework Documentation",
-                "text": "Spring supports Aspect Oriented Programming (AOP) for separation of concerns.",
-                "translation": "스프링은 관심사의 분리를 위해 관점 지향 프로그래밍(AOP)를 지원합니다."
-              },
-              "quiz": {
-                "text": "What does Spring use for separation of concerns?",
-                "distractors": [
+              id: 3,
+              word: "Aspect Oriented Programming (AOP)",
+              meaning: "관점 지향 프로그래밍",
+              example: JSON.stringify({
+                source: "Spring Framework Documentation",
+                text: "Spring supports Aspect Oriented Programming (AOP) for separation of concerns.",
+                translation: "스프링은 관심사의 분리를 위해 관점 지향 프로그래밍(AOP)를 지원합니다."
+              }),
+              quiz: JSON.stringify({
+                text: "What does Spring use for separation of concerns?",
+                distractors: [
                   "Object Oriented Programming",
                   "Functional Programming",
                   "Procedural Programming",
                   "Modular Programming"
                 ]
-              },
-              "meaning": "관점 지향 프로그래밍",
-              "pronunciation": "/ˈæspekt ˈɔːrientid ˈproʊgræmɪŋ/",
-              "word": "Aspect Oriented Programming (AOP)"
+              }),
+              pronunciation: "/ˈæspekt ˈɔːrientid ˈproʊgræmɪŋ/"
             },
             {
-              "createdAt": "2025-01-20 15:18:53.755095",
-              "id": 4,
-              "studyId": 1,
-              "updatedAt": "2025-01-20 15:18:53.755095",
-              "example": {
-                "source": "Spring Framework Documentation",
-                "text": "Inversion of Control (IoC) is a design principle which guides the design of Spring Framework.",
-                "translation": "제어의 역전(IoC)은 스프링 프레임워크의 설계를 안내하는 설계 원칙입니다."
-              },
-              "quiz": {
-                "text": "What is a design principle which guides the design of Spring Framework?",
-                "distractors": [
+              id: 4,
+              word: "Inversion of Control (IoC)",
+              meaning: "제어의 역전",
+              example: JSON.stringify({
+                source: "Spring Framework Documentation",
+                text: "Inversion of Control (IoC) is a design principle which guides the design of Spring Framework.",
+                translation: "제어의 역전(IoC)은 스프링 프레임워크의 설계를 안내하는 설계 원칙입니다."
+              }),
+              quiz: JSON.stringify({
+                text: "What is a design principle which guides the design of Spring Framework?",
+                distractors: [
                   "Control of Inversion",
                   "Inversion of Command",
                   "Control of Command",
                   "Command of Inversion"
                 ]
-              },
-              "meaning": "제어의 역전",
-              "pronunciation": "/ɪnˈvɜːrʒən ɒv kənˈtroʊl/",
-              "word": "Inversion of Control (IoC)"
+              }),
+              pronunciation: "/ɪnˈvɜːrʒən ɒv kənˈtroʊl/"
             },
             {
-              "createdAt": "2025-01-20 15:18:53.755493",
-              "id": 5,
-              "studyId": 1,
-              "updatedAt": "2025-01-20 15:18:53.755493",
-              "example": {
-                "source": "Spring Framework Documentation",
-                "text": "Spring Boot makes it easy to create stand-alone, production-grade Spring based Applications.",
-                "translation": "스프링 부트는 독립 실행형, 생산 수준의 스프링 기반 애플리케이션을 쉽게 만들 수 있습니다."
-              },
-              "quiz": {
-                "text": "What makes it easy to create stand-alone, production-grade Spring based Applications?",
-                "distractors": [
+              id: 5,
+              word: "Spring Boot",
+              meaning: "스프링 부트",
+              example: JSON.stringify({
+                source: "Spring Framework Documentation",
+                text: "Spring Boot makes it easy to create stand-alone, production-grade Spring based Applications.",
+                translation: "스프링 부트는 독립 실행형, 생산 수준의 스프링 기반 애플리케이션을 쉽게 만들 수 있습니다."
+              }),
+              quiz: JSON.stringify({
+                text: "What makes it easy to create stand-alone, production-grade Spring based Applications?",
+                distractors: [
                   "Spring Bean",
                   "Spring Cloud",
                   "Spring MVC",
                   "Spring Batch"
                 ]
-              },
-              "meaning": "스프링 부트",
-              "pronunciation": "/sprɪŋ buːt/",
-              "word": "Spring Boot"
-            },
-            {
-              "createdAt": "2025-01-20 15:18:53.755886",
-              "id": 6,
-              "studyId": 1,
-              "updatedAt": "2025-01-20 15:18:53.755886",
-              "example": {
-                "source": "Spring Framework Documentation",
-                "text": "Spring MVC is a Java framework which is used to build web applications.",
-                "translation": "스프링 MVC는 웹 애플리케이션을 구축하는 데 사용되는 자바 프레임워크입니다."
-              },
-              "quiz": {
-                "text": "What is a Java framework which is used to build web applications?",
-                "distractors": [
-                  "Spring Boot",
-                  "Spring Cloud",
-                  "Spring Batch",
-                  "Spring Security"
-                ]
-              },
-              "meaning": "스프링 MVC",
-              "pronunciation": "/sprɪŋ ɛmviːsiː/",
-              "word": "Spring MVC"
-            },
-            {
-              "createdAt": "2025-01-20 15:18:53.756252",
-              "id": 7,
-              "studyId": 1,
-              "updatedAt": "2025-01-20 15:18:53.756252",
-              "example": {
-                "source": "Spring Framework Documentation",
-                "text": "A bean is an object that is instantiated, assembled, and otherwise managed by a Spring IoC container.",
-                "translation": "빈은 스프링 IoC 컨테이너에 의해 인스턴스화, 조립, 그리고 관리되는 객체입니다."
-              },
-              "quiz": {
-                "text": "What is an object that is instantiated, assembled, and otherwise managed by a Spring IoC container?",
-                "distractors": [
-                  "Module",
-                  "Class",
-                  "Component",
-                  "Package"
-                ]
-              },
-              "meaning": "빈",
-              "pronunciation": "/biːn/",
-              "word": "Bean"
-            },
-            {
-              "createdAt": "2025-01-20 15:18:53.756635",
-              "id": 8,
-              "studyId": 1,
-              "updatedAt": "2025-01-20 15:18:53.756635",
-              "example": {
-                "source": "Spring Framework Documentation",
-                "text": "The DispatcherServlet is the entry point of a Spring MVC application.",
-                "translation": "디스패처 서블릿은 스프링 MVC 애플리케이션의 진입점입니다."
-              },
-              "quiz": {
-                "text": "What is the entry point of a Spring MVC application?",
-                "distractors": [
-                  "Controller",
-                  "Model",
-                  "View",
-                  "Service"
-                ]
-              },
-              "meaning": "디스패처 서블릿",
-              "pronunciation": "/dɪsˈpæʧərsɜːrvlɪt/",
-              "word": "DispatcherServlet"
-            },
-            {
-              "createdAt": "2025-01-20 15:18:53.75699",
-              "id": 9,
-              "studyId": 1,
-              "updatedAt": "2025-01-20 15:18:53.75699",
-              "example": {
-                "source": "Spring Framework Documentation",
-                "text": "The ApplicationContext is the central interface within a Spring application for providing configuration.",
-                "translation": "ApplicationContext는 스프링 애플리케이션에서 구성을 제공하는 중앙 인터페이스입니다."
-              },
-              "quiz": {
-                "text": "What is the central interface within a Spring application for providing configuration?",
-                "distractors": [
-                  "BeanFactory",
-                  "ConfigurableApplicationContext",
-                  "WebApplicationContext",
-                  "AnnotationConfigApplicationContext"
-                ]
-              },
-              "meaning": "애플리케이션 컨텍스트",
-              "pronunciation": "/ˈæplɪkeɪʃən kɒnˈtekst/",
-              "word": "ApplicationContext"
-            },
-            {
-              "createdAt": "2025-01-20 15:18:53.757475",
-              "id": 10,
-              "studyId": 1,
-              "updatedAt": "2025-01-20 15:18:53.757475",
-              "example": {
-                "source": "Spring Framework Documentation",
-                "text": "Spring Data’s mission is to provide a familiar and consistent, Spring-based programming model for data access.",
-                "translation": "스프링 데이터의 목표는 데이터 접근을 위한 친숙하고 일관된 스프링 기반 프로그래밍 모델을 제공하는 것입니다."
-              },
-              "quiz": {
-                "text": "What is the mission of Spring Data?",
-                "distractors": [
-                  "To provide a difficult and inconsistent, Spring-based programming model for data access",
-                  "To provide a familiar and consistent, Java-based programming model for data access",
-                  "To provide a familiar and inconsistent, Spring-based programming model for data access",
-                  "To provide a difficult and consistent, Spring-based programming model for data access"
-                ]
-              },
-              "meaning": "스프링 데이터",
-              "pronunciation": "/sprɪŋ deɪtə/",
-              "word": "Spring Data"
+              }),
+              pronunciation: "/sprɪŋ buːt/"
             }
           ]
-      )
+        }
+      })
     )
   }),
   http.get('/study/knowledges/:groupId', async ({ }) => {
