@@ -158,6 +158,7 @@ export default function WordLearning() {
                 incorrectIds={incorrectIds}
                 onClose={() => {
                   queryClient.invalidateQueries({queryKey: ['words', 'validation', groupId]});
+                  queryClient.invalidateQueries({queryKey: ['words', 'learn', groupId]});
                   router.replace('/home');
                 }}
               />
