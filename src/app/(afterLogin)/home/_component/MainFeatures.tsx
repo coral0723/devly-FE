@@ -35,12 +35,12 @@ export default function MainFeatures() {
       <div
           className={`bg-white rounded-2xl border border-gray-200 p-5 space-y-3 transition-all
             ${tasks.word.completed === false && "cursor-pointer hover:bg-emerald-50 hover:border-emerald-200 active:scale-95"}`}
-          onClick={tasks.word.completed ? undefined : (() => {router.replace(`/words?studyId=${tasks.word.studyId}`)})}
+          onClick={tasks.word.completed ? undefined : (() => {router.replace(`/words?studyId=${tasks.word.studyId}&wordTotal=${tasks.word.total}`)})}
       >
         <div className="flex items-center justify-between">
           <BookOpen size={32} className="text-emerald-500"/>
           {tasks.word.completed === false ? (
-            <span className={`text-sm px-3 py-1.5 rounded-full animate-pulse ${tasks.word.total === 5 ? "bg-emerald-100 text-emerald-600" : "bg-red-100 text-red-600"} `}>
+            <span className={`text-sm px-3 py-1.5 rounded-full animate-pulse ${tasks.word.total === 5 ? "bg-emerald-100 text-emerald-600" : "bg-rose-100 text-rose-600"} `}>
               {tasks.word.total === 5 ? "단어 5개" : `오답 ${tasks.word.total}개`}
             </span>
           ) : (
