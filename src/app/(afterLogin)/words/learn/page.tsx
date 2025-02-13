@@ -26,15 +26,13 @@ export default function WordLearning() {
   const [correctIds, setCorrectIds] = useState<number[]>([]);
   const [incorrectIds, setIncorrectIds] = useState<number[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
-
   const router = useRouter();
   const queryClient = new QueryClient();
-
   const searchParams = useSearchParams();
-  const groupId = searchParams.get('groupId');
+  const studyId = searchParams.get('studyId');
   
   const {data: words, isLoading} = useQuery<Word[], object, Word[], [_1: string, _2: string, string]>({
-    queryKey: ['words', 'learn', groupId!],
+    queryKey: ['words', 'learn', studyId!],
     queryFn: getWords,
     staleTime: 60 * 1000,
     gcTime: 300 * 1000,
@@ -42,7 +40,7 @@ export default function WordLearning() {
 
   
   const {data: validationResult} = useQuery<ValidationResult, object, ValidationResult, [_1: string, _2: string, string]>({
-    queryKey: ['words', 'validation', groupId!],
+    queryKey: ['words', 'validation', studyId!],
     queryFn: getValidationResult,
     staleTime: 60 * 1000,
     gcTime: 300 * 1000,
@@ -73,12 +71,12 @@ export default function WordLearning() {
     } else {
       try {
         //msw용
-        const res = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/studies/${groupId}/words/review`, {
+        const res = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/studies/${studyId}/words/review`, {
           correctIds: correctIds,
           incorrectIds: incorrectIds
         });
 
-        // const res = await authApi.post(`/api/studies/${groupId}/words/review`, {
+        // const res = await authApi.post(`/api/studies/${studyId}/words/review`, {
         //   correctIds: correctIds,
         //   incorrectIds: incorrectIds
         // });
@@ -169,8 +167,8 @@ export default function WordLearning() {
               <CompletionModal 
                 incorrectIds={incorrectIds}
                 onClose={() => {
-                  queryClient.removeQueries({queryKey: ['words', 'validation', groupId]});
-                  queryClient.removeQueries({queryKey: ['words', 'learn', groupId]});
+                  queryClient.removeQueries({queryKey: ['words', 'validation', studyId]});
+                  queryClient.removeQueries({queryKey: ['words', 'learn', studyId]});
                   queryClient.removeQueries({queryKey: ['weekly-activity']});
                   queryClient.removeQueries({queryKey: ['today-tasks']});
                   router.replace('/home');

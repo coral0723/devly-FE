@@ -36,7 +36,7 @@ export default async function WordsPage({searchParams}: Props) {
           />}
       </div>
       <BottomButton
-        groupId={studyId}
+        studyId={studyId}
         wordTotal={wordTotal}
       />
       </HydrationBoundary>
