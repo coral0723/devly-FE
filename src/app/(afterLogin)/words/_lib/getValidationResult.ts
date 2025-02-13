@@ -4,10 +4,8 @@ import { ValidationResult } from "@/model/ValidationResult";
 import axios from "axios";
 
 export const getValidationResult: QueryFunction<ValidationResult, [_1: string, _2: string, string]>
- = async ({ queryKey }) => {
+ = async ({ queryKey: [, , studyId] }) => {
   try {
-    const [_1, _2, studyId] = queryKey;
-
     if (!studyId) { // groupId가 없다면 예외 처리
       throw new Error("studyId is required");
     };
@@ -30,7 +28,7 @@ export const getValidationResult: QueryFunction<ValidationResult, [_1: string, _
     // return res.data.result;
     
   } catch(err) {
-    throw new Error('Failed to fetch data');
+    throw new Error('Failed to fetch data', { cause: err});
   }
 
  }

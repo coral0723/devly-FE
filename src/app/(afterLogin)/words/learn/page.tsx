@@ -24,7 +24,6 @@ export default function WordLearning() {
   const [showExitConfirm, setShowExitConfirm] = useState<boolean>(false);
   const [showCompletion, setShowCompletion] = useState<boolean>(false);
   const [correctIds, setCorrectIds] = useState<number[]>([]);
-  const [incorrectIds, setIncorrectIds] = useState<number[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const queryClient = new QueryClient();
@@ -37,7 +36,6 @@ export default function WordLearning() {
     staleTime: 60 * 1000,
     gcTime: 300 * 1000,
   });
-
   
   const {data: validationResult} = useQuery<ValidationResult, object, ValidationResult, [_1: string, _2: string, string]>({
     queryKey: ['words', 'validation', studyId!],
@@ -72,13 +70,11 @@ export default function WordLearning() {
       try {
         //msw용
         const res = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/studies/${studyId}/words/review`, {
-          correctIds: correctIds,
-          incorrectIds: incorrectIds
+          correctIds: correctIds
         });
 
         // const res = await authApi.post(`/api/studies/${studyId}/words/review`, {
-        //   correctIds: correctIds,
-        //   incorrectIds: incorrectIds
+        //   correctIds: correctIds
         // });
 
         if(res.status === 200) {
@@ -101,80 +97,79 @@ export default function WordLearning() {
   }
 
   return (
-      <div className="relative max-w-lg mx-auto min-h-screen bg-gray-50">
-          {/* Progress Header */}
-          <div className="sticky top-0 z-20 bg-white border-b border-gray-200">
-            <div className="px-4 py-2">
-              <div className="flex items-center justify-between mb-2">
-                <button
-                    onClick={() => setShowExitConfirm(true)}
-                    className="p-2 -ml-2 hover:bg-gray-100 rounded-full"
-                >
-                  <X size={24}/>
-                </button>
-                <span className="text-sm text-gray-500">
-                  {currentWordIndex + 1} / {filteredWords.length}
-                </span>
-              </div>
-              <div className="h-1 bg-gray-100 rounded-full overflow-hidden">
-                <div
-                  className="h-full bg-green-500 transition-all duration-300"
-                  style={{ width: `${((currentWordIndex + 1) / filteredWords.length) * 100}%`}}
-                />
-              </div>
-            </div>
+    <div className="relative max-w-lg mx-auto min-h-screen bg-gray-50">
+      {/* Progress Header */}
+      <div className="sticky top-0 z-20 bg-white border-b border-gray-200">
+        <div className="px-4 py-2">
+          <div className="flex items-center justify-between mb-2">
+            <button
+                onClick={() => setShowExitConfirm(true)}
+                className="p-2 -ml-2 hover:bg-gray-100 rounded-full"
+            >
+              <X size={24}/>
+            </button>
+            <span className="text-sm text-gray-500">
+              {currentWordIndex + 1} / {filteredWords.length}
+            </span>
           </div>
-
-          {/* Main Content */}
-          <div ref={containerRef} className="p-5 h-[calc(100vh-150px)] overflow-y-auto scrollbar-hide">
-            {step === 'word' && (
-              <WordStep 
-                word={filteredWords[currentWordIndex]} 
-                onNext={() => setStep('context')} 
-              />
-            )}
-
-            {step === 'context' && (
-              <ContextStep
-                index={currentWordIndex}
-                word={filteredWords[currentWordIndex]}
-                wordsLength={filteredWords.length}
-                onNext={() => {
-                  handleNext()
-                }}
-              />
-            )}
-
-            {step === 'quiz' && (
-              <QuizStep
-                correctIds={validationResult.correctIds}
-                setCorrectIds={setCorrectIds}
-                setIncorrectIds={setIncorrectIds}
-                index={currentWordIndex}
-                word={filteredWords[currentWordIndex]}
-                wordsLength={filteredWords.length}
-                handleQuizNext={handleQuizNext}
-                onScrollUp={onScrollUp}
-                />
-            )}
+          <div className="h-1 bg-gray-100 rounded-full overflow-hidden">
+            <div
+              className="h-full bg-green-500 transition-all duration-300"
+              style={{ width: `${((currentWordIndex + 1) / filteredWords.length) * 100}%`}}
+            />
           </div>
-
-          {showExitConfirm && (
-              <ExitConfirmModal onClose={() => setShowExitConfirm(false)} />
-          )}
-
-          {showCompletion && (
-              <CompletionModal 
-                incorrectIds={incorrectIds}
-                onClose={() => {
-                  queryClient.removeQueries({queryKey: ['words', 'validation', studyId]});
-                  queryClient.removeQueries({queryKey: ['words', 'learn', studyId]});
-                  queryClient.removeQueries({queryKey: ['weekly-activity']});
-                  queryClient.removeQueries({queryKey: ['today-tasks']});
-                  router.replace('/home');
-                }}
-              />
-          )}
+        </div>
       </div>
+
+      {/* Main Content */}
+      <div ref={containerRef} className="p-5 h-[calc(100vh-150px)] overflow-y-auto scrollbar-hide">
+        {step === 'word' && (
+          <WordStep 
+            word={filteredWords[currentWordIndex]} 
+            onNext={() => setStep('context')} 
+          />
+        )}
+
+        {step === 'context' && (
+          <ContextStep
+            index={currentWordIndex}
+            word={filteredWords[currentWordIndex]}
+            wordsLength={filteredWords.length}
+            onNext={() => {
+              handleNext()
+            }}
+          />
+        )}
+
+        {step === 'quiz' && (
+          <QuizStep
+            correctIds={validationResult.correctIds}
+            setCorrectIds={setCorrectIds}
+            index={currentWordIndex}
+            word={filteredWords[currentWordIndex]}
+            wordsLength={filteredWords.length}
+            handleQuizNext={handleQuizNext}
+            onScrollUp={onScrollUp}
+            />
+        )}
+      </div>
+
+      {showExitConfirm && (
+          <ExitConfirmModal onClose={() => setShowExitConfirm(false)} />
+      )}
+
+      {showCompletion && (
+          <CompletionModal 
+            incorrectIds={validationResult.incorrectIds}
+            onClose={() => {
+              queryClient.removeQueries({queryKey: ['words', 'validation', studyId]});
+              queryClient.removeQueries({queryKey: ['words', 'learn', studyId]});
+              queryClient.removeQueries({queryKey: ['weekly-activity']});
+              queryClient.removeQueries({queryKey: ['today-tasks']});
+              router.replace('/home');
+            }}
+          />
+      )}
+    </div>
   );
 }

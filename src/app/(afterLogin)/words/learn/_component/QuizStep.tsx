@@ -7,7 +7,6 @@ import { Example, Quiz, Word } from "@/model/Word";
 type Props = {
   correctIds: number[];
   setCorrectIds: (correctIds: number[] | ((prev: number[]) => number[])) => void;
-  setIncorrectIds:(incorrectIds: number[] | ((prev: number[]) => number[])) => void;
   index: number;
   word: Word;
   wordsLength: number;
@@ -15,7 +14,7 @@ type Props = {
   onScrollUp: () => void;
 }
 
-export default function QuizStep({index, word, wordsLength, correctIds, handleQuizNext, onScrollUp, setCorrectIds, setIncorrectIds }: Props) {
+export default function QuizStep({index, word, wordsLength, correctIds, handleQuizNext, onScrollUp, setCorrectIds }: Props) {
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [showCorect, setShowCorrect] = useState<boolean>(false);
   const [options, setOptions] = useState<string[]>([]);
@@ -43,8 +42,6 @@ export default function QuizStep({index, word, wordsLength, correctIds, handleQu
     setShowCorrect(true);
     if(word.word === options[selectedOption!]) { //정답을 선택했다면
       setCorrectIds(prev => [...prev, word.id]);
-    } else { //오답을 선택했다면
-      setIncorrectIds(prev => [...prev, word.id]);
     }
   }
 
