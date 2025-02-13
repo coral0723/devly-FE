@@ -167,7 +167,6 @@ export default function WordLearning() {
 
           {showCompletion && (
               <CompletionModal 
-                totalWords={filteredWords.length} 
                 incorrectIds={incorrectIds}
                 onClose={() => {
                   queryClient.removeQueries({queryKey: ['words', 'validation', groupId]});

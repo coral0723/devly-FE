@@ -14,7 +14,7 @@ export const handlers = [
         result: {
           word: {
             studyId: 1,
-            total: 5,
+            total: 3,
             completed: false
           },
           knowledge: {

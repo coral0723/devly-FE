@@ -1,12 +1,11 @@
 "use client"
 
 type Props = {
-  totalWords: number;
   incorrectIds: number[];
   onClose: () => void;
 }
 
-export function CompletionModal({ totalWords, incorrectIds, onClose }: Props) {
+export function CompletionModal({ incorrectIds, onClose }: Props) {
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
