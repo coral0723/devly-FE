@@ -8,8 +8,8 @@ import { getWeeklyActivity } from "./_lib/getWeeklyActivity";
 
 export default async function Home() {
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery({ queryKey: ['today-tasks'], queryFn: getTodayTasks});
-  await queryClient.prefetchQuery({ queryKey: ['weekly-activity'], queryFn: getWeeklyActivity});
+  await queryClient.prefetchQuery({ queryKey: ['todayTasks'], queryFn: getTodayTasks});
+  await queryClient.prefetchQuery({ queryKey: ['weeklyActivity'], queryFn: getWeeklyActivity});
   const dehydratedState = dehydrate(queryClient);
 
   return (

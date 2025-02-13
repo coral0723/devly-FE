@@ -2,12 +2,7 @@
 
 import { Tasks } from '@/model/Tasks';
 import { useQuery } from '@tanstack/react-query';
-import {
-  BookOpen,
-  Lightbulb,
-  GitPullRequest,
-  MessageSquare,
-} from 'lucide-react';
+import { BookOpen, Lightbulb, GitPullRequest, MessageSquare } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { getTodayTasks } from '../_lib/getTodayTasks';
 import MainFeaturesSkeleton from './skeleton/MainFeaturesSkeleton';
@@ -16,7 +11,7 @@ export default function MainFeatures() {
   const router = useRouter();
 
   const {data: tasks, isLoading} = useQuery<Tasks, object, Tasks, [_1: string]>({
-    queryKey: ['today-tasks'],
+    queryKey: ['todayTasks'],
     queryFn: getTodayTasks,
     staleTime: 60 * 1000,
     gcTime: 300 * 1000,
@@ -57,7 +52,7 @@ export default function MainFeatures() {
       <div
           className={`bg-white rounded-2xl border border-gray-200 p-5 space-y-3 transition-all
             ${tasks.knowledge.completed === false && "cursor-pointer hover:bg-blue-50 hover:border-blue-200 active:scale-95"}`}
-          onClick={tasks.knowledge.completed ? undefined : (() => {router.replace(`/knowledge?groupId=${tasks.knowledge.studyId}`)})}
+          onClick={tasks.knowledge.completed ? undefined : (() => {router.replace(`/knowledge?studyId=${tasks.knowledge.studyId}`)})}
       >
         <div className="flex items-center justify-between">
           <Lightbulb size={32} className="text-blue-500"/>
@@ -79,7 +74,7 @@ export default function MainFeatures() {
       <div
           className={`bg-white rounded-2xl border border-gray-200 p-5 space-y-2 transition-all
             ${tasks.pr.completed === false && "cursor-pointer hover:bg-purple-50 hover:border-purple-200 active:scale-95"}`}
-          onClick={tasks.pr.completed ? undefined : (() => {router.replace(`/pr?groupId=${tasks.pr.studyId}`)})}
+          onClick={tasks.pr.completed ? undefined : (() => {router.replace(`/pr?studyId=${tasks.pr.studyId}`)})}
       >
         <div className="flex items-center justify-between">
           <GitPullRequest size={24} className="text-purple-500"/>
@@ -118,6 +113,6 @@ export default function MainFeatures() {
         <h3 className="font-medium">모의 면접</h3>
         <p className="text-base text-gray-500">실제 개발 면접 스피킹</p>
       </div>
-  </div>
+    </div>
   )
 }

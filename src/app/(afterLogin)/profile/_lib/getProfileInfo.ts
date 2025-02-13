@@ -13,7 +13,7 @@ export const getProfileInfo: QueryFunction<User, [_1: string, _2: string]>
 
     return res.data;
   } catch(err) {
-    throw new Error('Failed to fetch data');
+    throw new Error('Failed to fetch data', { cause: err});
   }
 
  }

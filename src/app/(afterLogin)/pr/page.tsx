@@ -5,14 +5,14 @@ import PrCardsArea from "./_component/PrCardsArea";
 
 type Props = {
   searchParams: {
-    groupId: string;
+    studyId: string;
   }
 }
 
 export default async function PRPage({searchParams}: Props) {
-  const {groupId} = await searchParams;
+  const {studyId} = await searchParams;
   const queryClient = new QueryClient();
-  queryClient.prefetchQuery({queryKey: ['pr', 'cards', groupId], queryFn: getPrCards});
+  queryClient.prefetchQuery({queryKey: ['pr', 'cards', studyId], queryFn: getPrCards});
   const dehydratedState = dehydrate(queryClient);
   
   return (
@@ -34,7 +34,7 @@ export default async function PRPage({searchParams}: Props) {
             매일 새로운 PR이 업데이트됩니다
           </div>
         </div>
-        <PrCardsArea groupId={groupId}/>
+        <PrCardsArea studyId={studyId}/>
       </div>
       <BottomNavigation />
       </HydrationBoundary>

@@ -5,14 +5,14 @@ import { getKnowledges } from './_lib/getKnowledges'
 
 type Props = {
   searchParams: {
-    groupId: string;
+    studyId: string;
   }
 }
 
 export default async function KnowledgePage({searchParams}: Props) {
-  const {groupId} = await searchParams;
+  const {studyId} = await searchParams;
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery({queryKey: ['knowledge', 'learn', groupId], queryFn: getKnowledges});
+  await queryClient.prefetchQuery({queryKey: ['knowledge', 'learn', studyId], queryFn: getKnowledges});
   const dehydratedState = dehydrate(queryClient);
 
     return (
@@ -100,7 +100,7 @@ export default async function KnowledgePage({searchParams}: Props) {
                     </div>
                 </div>
             </div>
-            <BottomButton groupId={groupId}/>
+            <BottomButton studyId={studyId}/>
             </HydrationBoundary>
         </div>
     );

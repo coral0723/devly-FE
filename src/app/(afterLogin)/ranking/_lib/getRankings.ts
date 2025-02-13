@@ -13,7 +13,7 @@ export const getRankings: QueryFunction<Rankings, [_1: string]>
 
     return res.data;
   } catch(err) {
-    throw new Error('Failed to fetch data');
+    throw new Error('Failed to fetch data', { cause: err});
   }
 
  }

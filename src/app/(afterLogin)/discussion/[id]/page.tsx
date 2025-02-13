@@ -11,8 +11,8 @@ import { Chat } from '@/model/Chat';
 import { useParams } from 'next/navigation';
 import { getDiscussion } from './_lib/getDiscussion';
 import { SpeechRecognition as ISpeechRecognition } from '@/model/Speech';
-import { api } from '@/app/_lib/axios';
 import { useRouter } from 'next/navigation';
+import axios from 'axios';
 
 declare global {
   interface Window {
@@ -95,7 +95,7 @@ export default function DiscussionLearnPage() {
 
   const postChat = useMutation({
     mutationFn: () => {
-      return api.post(`/study/discussion/recomment/${chats[chats.length-1].id}`, {
+      return axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/study/discussion/recomment/${chats[chats.length-1].id}`, {
         id: temporaryMessageId.current,
         role: 'user',
         content: transcript,
@@ -242,8 +242,6 @@ export default function DiscussionLearnPage() {
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
    };
 
-
-
   return (
     <div className="max-w-lg mx-auto min-h-screen bg-gray-50">
 
@@ -298,6 +296,6 @@ export default function DiscussionLearnPage() {
             router.replace('/home');
           }}/> //query clear하는 코드 필요
       )}
-  </div>
+    </div>
   );
 }

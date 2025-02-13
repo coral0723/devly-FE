@@ -11,9 +11,9 @@ import LoadingSpinner from '@/app/_component/LoadingSpinner';
 import ChangedFilesModal from './_component/ChangedFilesModal';
 import FinalScoreModal from './_component/FinalScoreModal';
 import { FinalFeedback } from '@/model/FinalFeedback';
-import { api } from '@/app/_lib/axios';
 import { Feedback } from '@/model/Feedback';
 import ReviewAssessment from './_component/ReviewAssessment';
+import axios from 'axios';
 
 export default function PRLearnPage() {
   const [currentStep, setCurrentStep] = useState<number>(1);
@@ -38,7 +38,7 @@ export default function PRLearnPage() {
 
 	const { mutate: firstLearning, isPending: isFirstLoading } = useMutation({
 		mutationFn: async () => {
-			return await api.post(`/study/pr/${id}/feedback`, {
+			return await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/study/pr/${id}/feedback`, {
 				prDescription: prDescription
 			});
 		},
@@ -52,7 +52,7 @@ export default function PRLearnPage() {
 
   const { mutate: secondLearning, isPending: isSecondLoading } = useMutation({
 		mutationFn: async () => {
-			return await api.post(`/study/pr/${id}/feedback`, {
+			return await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/study/pr/${id}/feedback`, {
 				prDescription: prDescription
 			});
 		},
@@ -66,7 +66,7 @@ export default function PRLearnPage() {
 
   const { mutate: finishLearning, isPending: isFinalLoading } = useMutation({
     mutationFn: async () => {
-			return await api.get(`/study/pr/${id}/finalFeedback`);
+			return await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/study/pr/${id}/finalFeedback`);
     },
     onSuccess: (response) => {
 			setFinalFeedback(response.data);

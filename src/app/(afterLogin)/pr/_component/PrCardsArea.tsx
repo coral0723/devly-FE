@@ -7,13 +7,13 @@ import PrCard from "./PrCard";
 import LoadingSpinner from "@/app/_component/LoadingSpinner";
 
 type Props = {
-  groupId: string;
+  studyId: string;
 }
 
-export default function PrCardsArea({groupId}: Props) {
+export default function PrCardsArea({studyId}: Props) {
 
   const {data: prCards, isLoading} = useQuery<IPRCard[], object, IPRCard[], [_1: string, _2: string, string]>({
-    queryKey: ['pr', 'cards', groupId],
+    queryKey: ['pr', 'cards', studyId],
     queryFn: getPrCards,
     staleTime: 60 * 1000,
     gcTime: 300 * 1000

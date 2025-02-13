@@ -22,7 +22,7 @@ export default function WeeklyActivity() {
   }, []);
 
   const {data: weeklyActivity, isLoading} = useQuery<DailyActivity[], object, DailyActivity[], [_1: string]>({
-    queryKey: ['weekly-activity'],
+    queryKey: ['weeklyActivity'],
     queryFn: getWeeklyActivity,
     staleTime: 60 * 1000,
     gcTime: 300 * 1000,
