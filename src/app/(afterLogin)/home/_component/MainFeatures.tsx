@@ -36,7 +36,7 @@ export default function MainFeatures() {
           <BookOpen size={32} className="text-emerald-500"/>
           {tasks.word.completed === false ? (
             <span className={`text-sm px-3 py-1.5 rounded-full animate-pulse ${tasks.word.total === 5 ? "bg-emerald-100 text-emerald-600" : "bg-rose-100 text-rose-600"} `}>
-              {tasks.word.total === 5 ? "단어 5개" : `오답 ${tasks.word.total}개`}
+              {tasks.word.total === 5 ? "단어 5개" : `오답 ${5 - tasks.word.total}개`}
             </span>
           ) : (
             <span className="text-sm font-semibold px-3 py-1.5 bg-slate-100 text-slate-600 rounded-full">

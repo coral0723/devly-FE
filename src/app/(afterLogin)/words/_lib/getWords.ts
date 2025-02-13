@@ -11,23 +11,23 @@ export const getWords: QueryFunction<Word[], [_1: string, _2: string, string]>
     };
 
     // msw용
-    const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/words/${studyId}`, {
-      headers: {
-        'Cache-Control': 'no-store',
-      },
-    });
-
-    return res.data.result.words;
-
-    // const res = await authApi.get(`/api/words/${studyId}`, {
+    // const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/words/${studyId}`, {
     //   headers: {
     //     'Cache-Control': 'no-store',
     //   },
     // });
 
-    // console.log('words 데이터: ',res.data.result.words);
-
     // return res.data.result.words;
+
+    const res = await authApi.get(`/api/words/${studyId}`, {
+      headers: {
+        'Cache-Control': 'no-store',
+      },
+    });
+
+    console.log('words 데이터: ',res.data.result.words);
+
+    return res.data.result.words;
     
   } catch(err) {
     throw new Error('Failed to fetch data', { cause: err});

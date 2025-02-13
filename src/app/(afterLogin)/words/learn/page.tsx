@@ -24,6 +24,7 @@ export default function WordLearning() {
   const [showExitConfirm, setShowExitConfirm] = useState<boolean>(false);
   const [showCompletion, setShowCompletion] = useState<boolean>(false);
   const [correctIds, setCorrectIds] = useState<number[]>([]);
+  const [incorrectIds, setIncorrectIds] = useState<number[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const queryClient = new QueryClient();
@@ -45,9 +46,9 @@ export default function WordLearning() {
   });
 
   // 학습이 필요한 단어만 필터링
-  const filteredWords = words?.filter(word => 
-    validationResult?.incorrectIds.includes(word.id)
-  ) || [];
+  const filteredWords = validationResult?.incorrectIds.length === 0
+  ? words || []
+  : words?.filter(word => validationResult?.incorrectIds.includes(word.id)) || [];
 
   const onScrollUp = () => {
     containerRef.current?.scrollTo(0, 0);
@@ -69,13 +70,17 @@ export default function WordLearning() {
     } else {
       try {
         //msw용
-        const res = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/studies/${studyId}/words/review`, {
-          correctIds: correctIds
-        });
-
-        // const res = await authApi.post(`/api/studies/${studyId}/words/review`, {
+        // const res = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/studies/${studyId}/words/review`, {
         //   correctIds: correctIds
         // });
+
+        const endPoint = `/api/studies/${studyId}/words/review`;
+        const method = validationResult?.correctIds.length === 0 ? 'post' : 'put';
+        const payload = validationResult?.correctIds.length === 0 
+          ? {correctIds, incorrectIds}
+          : {correctIds}; 
+
+        const res = await authApi[method](endPoint, payload);
 
         if(res.status === 200) {
           setShowCompletion(true);
@@ -145,6 +150,7 @@ export default function WordLearning() {
           <QuizStep
             correctIds={validationResult.correctIds}
             setCorrectIds={setCorrectIds}
+            setIncorrectIds={setIncorrectIds}
             index={currentWordIndex}
             word={filteredWords[currentWordIndex]}
             wordsLength={filteredWords.length}
@@ -160,12 +166,12 @@ export default function WordLearning() {
 
       {showCompletion && (
           <CompletionModal 
-            incorrectIds={validationResult.incorrectIds}
+            incorrectIds={incorrectIds}
             onClose={() => {
               queryClient.removeQueries({queryKey: ['words', 'validation', studyId]});
               queryClient.removeQueries({queryKey: ['words', 'learn', studyId]});
-              queryClient.removeQueries({queryKey: ['weekly-activity']});
-              queryClient.removeQueries({queryKey: ['today-tasks']});
+              queryClient.removeQueries({queryKey: ['weeklyActivity']});
+              queryClient.removeQueries({queryKey: ['todayTasks']});
               router.replace('/home');
             }}
           />
