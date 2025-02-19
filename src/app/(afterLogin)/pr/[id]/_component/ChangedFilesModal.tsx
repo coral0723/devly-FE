@@ -1,6 +1,8 @@
 "use client";
 
 import { Pr } from "@/model/Pr";
+import { JAVA_RULES } from "../_data/JAVA_RULES";
+import { JS_RULES } from "../_data/JS_RULES";
 
 type Props = {
   pr: Pr;
@@ -8,6 +10,32 @@ type Props = {
 };
 
 export default function ChangedFilesModal({ pr, onClose }: Props) {
+  const colorizeCode = (line: string, language: 'java' | 'javascript') => {
+    const rules = language === 'java' ? JAVA_RULES : JS_RULES;
+    
+    // 단어 단위로 분리하되, 특수문자도 보존
+    const tokens = line.split(/(\s+|[.,(){}[\];])/);
+    
+    return tokens.map((token, index) => {
+      // 공백은 그대로 반환
+      if (!token.trim()) {
+        return token;
+      }
+  
+      // 토큰에 맞는 규칙 찾기
+      const matchedRule = rules.find(rule => rule.pattern.includes(token));
+      
+      return (
+        <span 
+          key={index} 
+          className={matchedRule ? matchedRule.className : 'text-gray-800'}
+        >
+          {token}
+        </span>
+      );
+    });
+  };
+  
   return (
     <div className="fixed inset-0 bg-black bg-opacity-30 z-50">
       <div className="h-[calc(100vh-4rem)] mt-8 flex flex-col bg-gray-50 max-w-3xl mx-auto rounded-lg overflow-hidden">
@@ -37,28 +65,8 @@ export default function ChangedFilesModal({ pr, onClose }: Props) {
                         <td className="select-none w-12 pl-4 pr-2 text-right text-gray-400 border-r border-gray-100">
                           {i + 1}
                         </td>
-                        <td className="w-12 px-2 text-green-600">+</td>
                         <td className="px-2 font-mono whitespace-pre">
-                          <span
-                            className={
-                              line.includes("import ") ||
-                              line.includes("package ")
-                                ? "text-[#7A3E9D]"
-                                : line.includes("class ") ||
-                                  line.includes("public ") ||
-                                  line.includes("private ") ||
-                                  line.includes("protected ")
-                                ? "text-[#00627A]"
-                                : line.includes("@")
-                                ? "text-[#87939A]"
-                                : line.includes("return ") ||
-                                  line.includes("new ")
-                                ? "text-[#0033B3]"
-                                : "text-[#080808]"
-                            }
-                          >
-                            {line}
-                          </span>
+                          {colorizeCode(line, file.language)}
                         </td>
                       </tr>
                     ))}

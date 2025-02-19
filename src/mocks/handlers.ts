@@ -314,9 +314,9 @@ export const handlers = [
         reviewComment: {
           comment: "The singleton implementation looks good, but have you considered using double-checked locking for better thread safety? Also, what happens if the connection pool exhausts all available connections?"
         }
-      }
-    ))}
-  ),
+      })
+    )
+  }),
   http.post('/study/pr/:id/feedback', async ({ }) => {
     return new HttpResponse(
       JSON.stringify({
