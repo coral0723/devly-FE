@@ -6,7 +6,6 @@ import Header from './_component/Header';
 import { Pr } from '@/model/Pr';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { getPr } from './_lib/getPr';
-import CommitModal from './_component/CommitModal';
 import LoadingSpinner from '@/app/_component/LoadingSpinner';
 import ChangedFilesModal from './_component/ChangedFilesModal';
 import FinalScoreModal from './_component/FinalScoreModal';
@@ -23,7 +22,6 @@ export default function PRLearnPage() {
   const [secondFeedback, setSecondFeedback] = useState<Feedback>();
   const [finalFeedback, setFinalFeedback] = useState<FinalFeedback>(); 
   const [showFiles, setShowFiles] = useState<boolean>(false); //"커밋 내역" Modal
-  const [showCommits, setShowCommits] = useState<boolean>(false); //"변경된 파일" Modal
   const [showFinalScore, setShowFinalScore] = useState<boolean>(false); //"최종 결과" Modal
 
   const params = useParams();
@@ -91,7 +89,6 @@ export default function PRLearnPage() {
         title={pr.title}
         currentStep={currentStep}
         setCurrentStep={setCurrentStep}
-        setShowCommits={setShowCommits}
         setShowFiles={setShowFiles}/>
 
       {/* Main Content */}
@@ -181,13 +178,6 @@ export default function PRLearnPage() {
 			)}
 
 			{/* Modals */}
-			{showCommits ? (
-				<CommitModal
-					pr={pr}
-					onClose={() => setShowCommits(false)}
-				/>
-			): <></>}
-			
 			{showFiles ? (
 				<ChangedFilesModal
 					pr={pr}

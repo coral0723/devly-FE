@@ -4,11 +4,10 @@ type Props = {
   title: string;
   currentStep: number;
   setCurrentStep: (currentStep: number) => void; 
-  setShowCommits: (value: boolean) => void;
   setShowFiles: (value: boolean) => void;
 }
 
-export default function Header({title, currentStep, setCurrentStep, setShowCommits, setShowFiles}: Props) {
+export default function Header({title, currentStep, setCurrentStep, setShowFiles}: Props) {
   return (
     <div className="sticky top-0 z-10 bg-white p-4 border-b border-gray-200 shadow-sm">
       <div className="flex flex-col gap-3">
@@ -27,12 +26,6 @@ export default function Header({title, currentStep, setCurrentStep, setShowCommi
             </span>
           </div>
           <div className="flex gap-2">
-            <button
-              onClick={() => setShowCommits(true)}
-              className="py-2 px-3 text-sm border border-gray-300 rounded hover:bg-gray-50"
-            >
-              커밋 내역
-            </button>
             <button
               onClick={() => setShowFiles(true)}
               className="py-2 px-3 text-sm border border-gray-300 rounded hover:bg-gray-50"
