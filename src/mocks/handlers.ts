@@ -292,27 +292,50 @@ export const handlers = [
   }),
   http.get('/study/pr/:id', async ({ }) => {
     return new HttpResponse(
+      // JSON.stringify({
+      //   title: 'Database Connector 싱글톤 패턴 구현',
+      //   commits: [
+      //     { hash: 'a1b2c3d', message: 'Add DatabaseConnector singleton class' },
+      //     { hash: 'e4f5g6h', message: 'Implement connection pool' },
+      //     { hash: 'i7j8k9l', message: 'Add configuration loader' }
+      //   ],
+      //   changedFiles: [
+      //     {
+      //       name: 'src/main/java/com/example/database/DatabaseConnector.java',
+      //       language: 'java',     
+      //       content: 'package com.example.database;\n\nimport java.sql.Connection;\nimport java.sql.SQLException;\nimport com.zaxxer.hikari.HikariConfig;\nimport com.zaxxer.hikari.HikariDataSource;\n\n@ThreadSafe\npublic final class DatabaseConnector {\n    private static volatile DatabaseConnector instance;\n    private final HikariDataSource dataSource;\n\n    private DatabaseConnector() {\n        HikariConfig config = loadConfiguration();\n        this.dataSource = new HikariDataSource(config);\n    }\n}'
+      //     },
+      //     {
+      //       name: 'src/main/java/com/example/database/DatabaseConfig.java',
+      //       language: 'java',
+      //       content: 'package com.example.database;\n\nimport java.io.IOException;\nimport java.util.Properties;\n\npublic class DatabaseConfig {\n    private static final String CONFIG_FILE = "database.properties";\n\n    public static Properties loadProperties() throws IOException {\n        Properties props = new Properties();\n        ClassLoader loader = Thread.currentThread().getContextClassLoader();\n        props.load(loader.getResourceAsStream(CONFIG_FILE));\n        return props;\n    }\n}'
+      //     }
+      //   ],
+      //   reviewComment: {
+      //     comment: "The singleton implementation looks good, but have you considered using double-checked locking for better thread safety? Also, what happens if the connection pool exhausts all available connections?"
+      //   }
+      // })
       JSON.stringify({
-        title: 'Database Connector 싱글톤 패턴 구현',
+        title: 'Todo 리스트 컴포넌트 상태관리 리팩토링',
         commits: [
-          { hash: 'a1b2c3d', message: 'Add DatabaseConnector singleton class' },
-          { hash: 'e4f5g6h', message: 'Implement connection pool' },
-          { hash: 'i7j8k9l', message: 'Add configuration loader' }
+          { hash: 'a1b2c3d', message: 'Add TodoStore class using singleton pattern' },
+          { hash: 'e4f5g6h', message: 'Implement observer pattern for state updates' },
+          { hash: 'i7j8k9l', message: 'Add local storage persistence' }
         ],
         changedFiles: [
           {
-            name: 'src/main/java/com/example/database/DatabaseConnector.java',
-            language: 'java',     
-            content: 'package com.example.database;\n\nimport java.sql.Connection;\nimport java.sql.SQLException;\nimport com.zaxxer.hikari.HikariConfig;\nimport com.zaxxer.hikari.HikariDataSource;\n\n@ThreadSafe\npublic final class DatabaseConnector {\n    private static volatile DatabaseConnector instance;\n    private final HikariDataSource dataSource;\n\n    private DatabaseConnector() {\n        HikariConfig config = loadConfiguration();\n        this.dataSource = new HikariDataSource(config);\n    }\n}'
+            name: 'src/store/TodoStore.js',
+            language: 'java',
+            content: 'import { makeAutoObservable } from "mobx";\n\nclass TodoStore {\n    static #instance = null;\n    todos = [];\n    filter = "all";\n\n    constructor() {\n        makeAutoObservable(this);\n        this.#loadFromStorage();\n    }\n\n    static getInstance() {\n        if (!TodoStore.#instance) {\n            TodoStore.#instance = new TodoStore();\n        }\n        return TodoStore.#instance;\n    }\n\n    addTodo = (text) => {\n        const todo = {\n            id: Date.now(),\n            text,\n            completed: false\n        };\n        this.todos.push(todo);\n        this.#saveToStorage();\n    }\n\n    toggleTodo = (id) => {\n        const todo = this.todos.find(todo => todo.id === id);\n        if (todo) {\n            todo.completed = !todo.completed;\n            this.#saveToStorage();\n        }\n    }\n\n    setFilter = (filter) => {\n        this.filter = filter;\n    }\n\n    get filteredTodos() {\n        switch (this.filter) {\n            case "completed":\n                return this.todos.filter(todo => todo.completed);\n            case "active":\n                return this.todos.filter(todo => !todo.completed);\n            default:\n                return this.todos;\n        }\n    }\n\n    #loadFromStorage() {\n        const stored = localStorage.getItem("todos");\n        if (stored) {\n            this.todos = JSON.parse(stored);\n        }\n    }\n\n    #saveToStorage() {\n        localStorage.setItem("todos", JSON.stringify(this.todos));\n    }\n}'
           },
           {
-            name: 'src/main/java/com/example/database/DatabaseConfig.java',
-            language: 'java',
-            content: 'package com.example.database;\n\nimport java.io.IOException;\nimport java.util.Properties;\n\npublic class DatabaseConfig {\n    private static final String CONFIG_FILE = "database.properties";\n\n    public static Properties loadProperties() throws IOException {\n        Properties props = new Properties();\n        ClassLoader loader = Thread.currentThread().getContextClassLoader();\n        props.load(loader.getResourceAsStream(CONFIG_FILE));\n        return props;\n    }\n}'
+            name: 'src/components/TodoList.js',
+            language: 'javascript',
+            content: 'import React from "react";\nimport { observer } from "mobx-react-lite";\nimport TodoStore from "../store/TodoStore";\n\nconst TodoList = observer(() => {\n    const todoStore = TodoStore.getInstance();\n\n    const handleToggle = (id) => {\n        todoStore.toggleTodo(id);\n    };\n\n    const handleFilterChange = (filter) => {\n        todoStore.setFilter(filter);\n    };\n\n    return (\n        <div className="todo-container">\n            <div className="filters">\n                <button onClick={() => handleFilterChange("all")}>All</button>\n                <button onClick={() => handleFilterChange("active")}>Active</button>\n                <button onClick={() => handleFilterChange("completed")}>Completed</button>\n            </div>\n            <ul className="todo-list">\n                {todoStore.filteredTodos.map(todo => (\n                    <li\n                        key={todo.id}\n                        className={todo.completed ? "completed" : ""}\n                        onClick={() => handleToggle(todo.id)}\n                    >\n                        {todo.text}\n                    </li>\n                ))}\n            </ul>\n        </div>\n    );\n});\n\nexport default TodoList;'
           }
         ],
         reviewComment: {
-          comment: "The singleton implementation looks good, but have you considered using double-checked locking for better thread safety? Also, what happens if the connection pool exhausts all available connections?"
+          comment: "MobX를 사용한 상태관리 구현이 잘 되었네요. 하지만 싱글톤 패턴 대신 React Context를 사용하는 것이 더 React스러운 방식이 아닐까요? 또한 localStorage 작업을 effect로 분리하는 것을 고려해보세요."
         }
       })
     )

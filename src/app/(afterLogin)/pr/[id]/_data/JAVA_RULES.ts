@@ -3,7 +3,7 @@ import { TokenRule } from "@/model/TokenRule";
 export const JAVA_RULES: TokenRule[] = [
   {
     // 패키지, 임포트 선언
-    pattern: ['package', 'import'],
+    pattern: ['package', 'import', 'from'],
     className: 'text-[#7A3E9D]'  // 보라색
   },
   {
@@ -24,7 +24,7 @@ export const JAVA_RULES: TokenRule[] = [
   {
     // 제어 키워드
     pattern: ['if', 'else', 'switch', 'case', 'default', 'for', 'do', 'while', 'break', 'continue', 'return', 'throw', 'try', 'catch', 'finally'],
-    className: 'text-[#00627A]'  // 진한 청록색
+    className:'text-[#7A3E9D]'  // 보라색
   },
   {
     // 기본 타입
