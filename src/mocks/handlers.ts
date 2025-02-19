@@ -294,11 +294,6 @@ export const handlers = [
     return new HttpResponse(
       JSON.stringify({
         title: 'Database Connector 싱글톤 패턴 구현',
-        commits: [
-            { hash: 'a1b2c3d', message: 'Add DatabaseConnector singleton class' },
-            { hash: 'e4f5g6h', message: 'Implement connection pool' },
-            { hash: 'i7j8k9l', message: 'Add configuration loader' }
-        ],
         changedFiles: [
           {
             name: 'src/main/java/com/example/database/DatabaseConnector.java',
