@@ -473,6 +473,71 @@ export const handlers = [
       })
     )
   }),
+  // {
+  //   title: 'Database Connector 싱글톤 패턴 구현',
+  //   commits: [
+  //     { hash: 'a1b2c3d', message: 'Add DatabaseConnector singleton class' },
+  //     { hash: 'e4f5g6h', message: 'Implement connection pool' },
+  //     { hash: 'i7j8k9l', message: 'Add configuration loader' }
+  //   ],
+  //   changedFiles: [
+  //     {
+  //       name: 'src/main/java/com/example/database/DatabaseConnector.java',
+  //       language: 'java',
+  //       changes: [
+  //         {
+  //           content: [
+  //             'package com.example.database;',
+  //             '',
+  //             'import java.sql.Connection;',
+  //             'import java.sql.SQLException;',
+  //             'import com.zaxxer.hikari.HikariConfig;',
+  //             'import com.zaxxer.hikari.HikariDataSource;',
+  //             '',
+  //             '@ThreadSafe',
+  //             'public final class DatabaseConnector {',
+  //             '    private static volatile DatabaseConnector instance;',
+  //             '    private final HikariDataSource dataSource;',
+  //             '',
+  //             '    private DatabaseConnector() {',
+  //             '        HikariConfig config = loadConfiguration();',
+  //             '        this.dataSource = new HikariDataSource(config);',
+  //             '    }',
+  //             '}'
+  //           ].join('\n')
+  //         }
+  //       ]
+  //     },
+  //     {
+  //       name: 'src/main/java/com/example/database/DatabaseConfig.java',
+  //       language: 'java',
+  //       changes: [
+  //         {
+  //           content: [
+  //             'package com.example.database;',
+  //             '',
+  //             'import java.io.IOException;',
+  //             'import java.util.Properties;',
+  //             '',
+  //             'public class DatabaseConfig {',
+  //             '    private static final String CONFIG_FILE = "database.properties";',
+  //             '',
+  //             '    public static Properties loadProperties() throws IOException {',
+  //             '        Properties props = new Properties();',
+  //             '        ClassLoader loader = Thread.currentThread().getContextClassLoader();',
+  //             '        props.load(loader.getResourceAsStream(CONFIG_FILE));',
+  //             '        return props;',
+  //             '    }',
+  //             '}'
+  //           ].join('\n')
+  //         }
+  //       ]
+  //     }
+  //   ],
+  //   reviewComment: {
+  //     comment: "The singleton implementation looks good, but have you considered using double-checked locking for better thread safety? Also, what happens if the connection pool exhausts all available connections?"
+  //   }
+  // };
   http.post('/study/pr/:id/feedback', async ({ }) => {
     return new HttpResponse(
       JSON.stringify({
