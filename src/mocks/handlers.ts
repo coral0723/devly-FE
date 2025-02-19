@@ -294,245 +294,29 @@ export const handlers = [
     return new HttpResponse(
       JSON.stringify({
         title: 'Database Connector 싱글톤 패턴 구현',
+        commits: [
+          { hash: 'a1b2c3d', message: 'Add DatabaseConnector singleton class' },
+          { hash: 'e4f5g6h', message: 'Implement connection pool' },
+          { hash: 'i7j8k9l', message: 'Add configuration loader' }
+        ],
         changedFiles: [
           {
             name: 'src/main/java/com/example/database/DatabaseConnector.java',
-            language: 'java',
-            changes: [
-              {
-                  type: 'addition',
-                  content: 'package com.example.database;',
-                  highlight: { color: 'text-purple-600' }
-              },
-              {
-                  type: 'addition',
-                  content: '',
-              },
-              {
-                  type: 'addition',
-                  content: 'import java.sql.Connection;',
-                  highlight: { color: 'text-purple-600' }
-              },
-              {
-                  type: 'addition',
-                  content: 'import java.sql.SQLException;',
-                  highlight: { color: 'text-purple-600' }
-              },
-              {
-                  type: 'addition',
-                  content: 'import com.zaxxer.hikari.HikariConfig;',
-                  highlight: { color: 'text-purple-600' }
-              },
-              {
-                  type: 'addition',
-                  content: 'import com.zaxxer.hikari.HikariDataSource;',
-                  highlight: { color: 'text-purple-600' }
-              },
-              {
-                  type: 'addition',
-                  content: '',
-              },
-              {
-                  type: 'addition',
-                  content: '@ThreadSafe',
-                  highlight: { color: 'text-blue-600' }
-              },
-              {
-                  type: 'addition',
-                  content: 'public final class DatabaseConnector {',
-                  highlight: { color: 'text-blue-600' }
-              },
-              {
-                  type: 'addition',
-                  content: '    private static volatile DatabaseConnector instance;',
-                  highlight: { color: 'text-purple-600' }
-              },
-              {
-                  type: 'addition',
-                  content: '    private final HikariDataSource dataSource;',
-                  highlight: { color: 'text-purple-600' }
-              },
-              {
-                  type: 'addition',
-                  content: '',
-              },
-              {
-                  type: 'addition',
-                  content: '    private DatabaseConnector() {',
-                  highlight: { color: 'text-blue-600' }
-              },
-              {
-                  type: 'addition',
-                  content: '        HikariConfig config = loadConfiguration();',
-                  highlight: { color: 'text-black' }
-              },
-              {
-                  type: 'addition',
-                  content: '        this.dataSource = new HikariDataSource(config);',
-                  highlight: { color: 'text-black' }
-              },
-              {
-                  type: 'addition',
-                  content: '    }',
-                  highlight: { color: 'text-black' }
-              },
-              {
-                  type: 'addition',
-                  content: '}',
-                  highlight: { color: 'text-black' }
-              }
-            ]
+            language: 'java',     
+            content: 'package com.example.database;\n\nimport java.sql.Connection;\nimport java.sql.SQLException;\nimport com.zaxxer.hikari.HikariConfig;\nimport com.zaxxer.hikari.HikariDataSource;\n\n@ThreadSafe\npublic final class DatabaseConnector {\n    private static volatile DatabaseConnector instance;\n    private final HikariDataSource dataSource;\n\n    private DatabaseConnector() {\n        HikariConfig config = loadConfiguration();\n        this.dataSource = new HikariDataSource(config);\n    }\n}'
           },
           {
             name: 'src/main/java/com/example/database/DatabaseConfig.java',
             language: 'java',
-            changes: [
-              {
-                  type: 'addition',
-                  content: 'package com.example.database;',
-                  highlight: { color: 'text-purple-600' }
-              },
-              {
-                  type: 'addition',
-                  content: '',
-              },
-              {
-                  type: 'addition',
-                  content: 'import java.io.IOException;',
-                  highlight: { color: 'text-purple-600' }
-              },
-              {
-                  type: 'addition',
-                  content: 'import java.util.Properties;',
-                  highlight: { color: 'text-purple-600' }
-              },
-              {
-                  type: 'addition',
-                  content: '',
-              },
-              {
-                  type: 'addition',
-                  content: 'public class DatabaseConfig {',
-                  highlight: { color: 'text-blue-600' }
-              },
-              {
-                  type: 'addition',
-                  content: '    private static final String CONFIG_FILE = "database.properties";',
-                  highlight: { color: 'text-purple-600' }
-              },
-              {
-                  type: 'addition',
-                  content: '',
-              },
-              {
-                  type: 'addition',
-                  content: '    public static Properties loadProperties() throws IOException {',
-                  highlight: { color: 'text-blue-600' }
-              },
-              {
-                  type: 'addition',
-                  content: '        Properties props = new Properties();',
-                  highlight: { color: 'text-black' }
-              },
-              {
-                  type: 'addition',
-                  content: '        ClassLoader loader = Thread.currentThread().getContextClassLoader();',
-                  highlight: { color: 'text-black' }
-              },
-              {
-                  type: 'addition',
-                  content: '        props.load(loader.getResourceAsStream(CONFIG_FILE));',
-                  highlight: { color: 'text-black' }
-              },
-              {
-                  type: 'addition',
-                  content: '        return props;',
-                  highlight: { color: 'text-black' }
-              },
-              {
-                  type: 'addition',
-                  content: '    }',
-                  highlight: { color: 'text-black' }
-              },
-              {
-                  type: 'addition',
-                  content: '}',
-                  highlight: { color: 'text-black' }
-              }
-            ]
+            content: 'package com.example.database;\n\nimport java.io.IOException;\nimport java.util.Properties;\n\npublic class DatabaseConfig {\n    private static final String CONFIG_FILE = "database.properties";\n\n    public static Properties loadProperties() throws IOException {\n        Properties props = new Properties();\n        ClassLoader loader = Thread.currentThread().getContextClassLoader();\n        props.load(loader.getResourceAsStream(CONFIG_FILE));\n        return props;\n    }\n}'
           }
         ],
         reviewComment: {
           comment: "The singleton implementation looks good, but have you considered using double-checked locking for better thread safety? Also, what happens if the connection pool exhausts all available connections?"
-        },
-      })
-    )
-  }),
-  // {
-  //   title: 'Database Connector 싱글톤 패턴 구현',
-  //   commits: [
-  //     { hash: 'a1b2c3d', message: 'Add DatabaseConnector singleton class' },
-  //     { hash: 'e4f5g6h', message: 'Implement connection pool' },
-  //     { hash: 'i7j8k9l', message: 'Add configuration loader' }
-  //   ],
-  //   changedFiles: [
-  //     {
-  //       name: 'src/main/java/com/example/database/DatabaseConnector.java',
-  //       language: 'java',
-  //       changes: [
-  //         {
-  //           content: [
-  //             'package com.example.database;',
-  //             '',
-  //             'import java.sql.Connection;',
-  //             'import java.sql.SQLException;',
-  //             'import com.zaxxer.hikari.HikariConfig;',
-  //             'import com.zaxxer.hikari.HikariDataSource;',
-  //             '',
-  //             '@ThreadSafe',
-  //             'public final class DatabaseConnector {',
-  //             '    private static volatile DatabaseConnector instance;',
-  //             '    private final HikariDataSource dataSource;',
-  //             '',
-  //             '    private DatabaseConnector() {',
-  //             '        HikariConfig config = loadConfiguration();',
-  //             '        this.dataSource = new HikariDataSource(config);',
-  //             '    }',
-  //             '}'
-  //           ].join('\n')
-  //         }
-  //       ]
-  //     },
-  //     {
-  //       name: 'src/main/java/com/example/database/DatabaseConfig.java',
-  //       language: 'java',
-  //       changes: [
-  //         {
-  //           content: [
-  //             'package com.example.database;',
-  //             '',
-  //             'import java.io.IOException;',
-  //             'import java.util.Properties;',
-  //             '',
-  //             'public class DatabaseConfig {',
-  //             '    private static final String CONFIG_FILE = "database.properties";',
-  //             '',
-  //             '    public static Properties loadProperties() throws IOException {',
-  //             '        Properties props = new Properties();',
-  //             '        ClassLoader loader = Thread.currentThread().getContextClassLoader();',
-  //             '        props.load(loader.getResourceAsStream(CONFIG_FILE));',
-  //             '        return props;',
-  //             '    }',
-  //             '}'
-  //           ].join('\n')
-  //         }
-  //       ]
-  //     }
-  //   ],
-  //   reviewComment: {
-  //     comment: "The singleton implementation looks good, but have you considered using double-checked locking for better thread safety? Also, what happens if the connection pool exhausts all available connections?"
-  //   }
-  // };
+        }
+      }
+    ))}
+  ),
   http.post('/study/pr/:id/feedback', async ({ }) => {
     return new HttpResponse(
       JSON.stringify({

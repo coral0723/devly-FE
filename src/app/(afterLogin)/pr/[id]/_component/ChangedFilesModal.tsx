@@ -31,38 +31,38 @@ export default function ChangedFilesModal({ pr, onClose }: Props) {
                 </div>
                 <div className="overflow-x-auto">
                   <table className="w-full">
-                    <tbody>
-                      {file.changes.map((line, i) => (
-                        <tr key={i} className="hover:bg-gray-50">
-                          <td className="select-none w-12 pl-4 pr-2 text-right text-gray-400 border-r border-gray-100">
-                            {i + 1}
-                          </td>
-                          <td className="w-12 px-2 text-green-600">+</td>
-                          <td className="px-2 font-mono whitespace-pre">
-                            <span
-                              className={
-                                line.content.includes("import ") ||
-                                line.content.includes("package ")
-                                  ? "text-[#7A3E9D]"
-                                  : line.content.includes("class ") ||
-                                    line.content.includes("public ") ||
-                                    line.content.includes("private ") ||
-                                    line.content.includes("protected ")
-                                  ? "text-[#00627A]"
-                                  : line.content.includes("@")
-                                  ? "text-[#87939A]"
-                                  : line.content.includes("return ") ||
-                                    line.content.includes("new ")
-                                  ? "text-[#0033B3]"
-                                  : "text-[#080808]"
-                              }
-                            >
-                              {line.content}
-                            </span>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
+                  <tbody>
+                    {file.content.split('\n').map((line, i) => (
+                      <tr key={i} className="hover:bg-gray-50">
+                        <td className="select-none w-12 pl-4 pr-2 text-right text-gray-400 border-r border-gray-100">
+                          {i + 1}
+                        </td>
+                        <td className="w-12 px-2 text-green-600">+</td>
+                        <td className="px-2 font-mono whitespace-pre">
+                          <span
+                            className={
+                              line.includes("import ") ||
+                              line.includes("package ")
+                                ? "text-[#7A3E9D]"
+                                : line.includes("class ") ||
+                                  line.includes("public ") ||
+                                  line.includes("private ") ||
+                                  line.includes("protected ")
+                                ? "text-[#00627A]"
+                                : line.includes("@")
+                                ? "text-[#87939A]"
+                                : line.includes("return ") ||
+                                  line.includes("new ")
+                                ? "text-[#0033B3]"
+                                : "text-[#080808]"
+                            }
+                          >
+                            {line}
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
                   </table>
                 </div>
               </div>
