@@ -8,11 +8,11 @@
   import LogContainer from "./_component/LogContainer";
 
   const categories = [
-    { id: 'all', name: '전체', style: 'bg-black text-white' },
-    { id: 'words', name: '단어', style: 'bg-emerald-100 border border-emerald-600 text-emerald-600' },
-    { id: 'knowledge', name: '지식', style: 'bg-blue-100 border border-blue-600 text-blue-600' },
-    { id: 'pr', name: 'PR', style: 'bg-purple-100 border border-purple-600 text-purple-600' },
-    { id: 'interview', name: '면접', style: 'bg-orange-100 border border-orange-600 text-orange-600' },
+    { study: 'all', name: '전체', style: 'bg-black text-white' },
+    { study: 'words', name: '단어', style: 'bg-emerald-100 border border-emerald-600 text-emerald-600' },
+    { study: 'knowledge', name: '지식', style: 'bg-blue-100 border border-blue-600 text-blue-600' },
+    { study: 'pr', name: 'PR', style: 'bg-purple-100 border border-purple-600 text-purple-600' },
+    { study: 'discussion', name: '면접', style: 'bg-orange-100 border border-orange-600 text-orange-600' },
   ];
 
   export default function ReviewPage() {
@@ -34,6 +34,21 @@
         gcTime: 300 * 1000,
       }) ;
 
+    // 선택된 카테고리에 따라 데이터 필터링
+    const filteredLogs = data.pages.flatMap(page => page).map(dateGroup => {
+      // 각 날짜 그룹에 대해 필터링된 로그 생성
+      if (selectedCategory === 'all') {
+        return dateGroup; // 전체 카테고리 선택 시 모든 데이터 반환
+      } else {
+        // 선택된 카테고리에 맞는 로그만 필터링
+        const filteredDateLogs = {
+          ...dateGroup,
+          logs: dateGroup.logs.filter(log => log.study === selectedCategory)
+        };
+        return filteredDateLogs;
+      }
+    }).filter(dateGroup => dateGroup.logs.length > 0); // 필터링 후 로그가 없는 날짜는 제외
+
     return (
       <div className="max-w-lg mx-auto h-[100dvh] bg-gray-100 flex flex-col">
         <div className="bg-white border-b border-gray-200">
@@ -51,10 +66,10 @@
           <div className="flex gap-2 overflow-x-auto scrollbar-hide">
             {categories.map((category) => (
               <button
-                key={category.id}
-                onClick={() => setSelectedCategory(category.id)}
+                key={category.study}
+                onClick={() => setSelectedCategory(category.study)}
                 className={`px-7 py-2 rounded-full text-sm whitespace-nowrap transition-color
-                  ${selectedCategory === category.id
+                  ${selectedCategory === category.study
                     ? category.style
                     : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-200'
                   }`}
@@ -67,7 +82,7 @@
 
         {/* Main */}
         <LogContainer
-          studyLogs={data.pages.flatMap(page => page)}
+          studyLogs={filteredLogs}
           hasNextPage={hasNextPage}
           onLoadMore={() => {
             fetchNextPage();
