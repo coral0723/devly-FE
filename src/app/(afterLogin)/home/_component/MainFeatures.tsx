@@ -13,8 +13,8 @@ export default function MainFeatures() {
   const {data: tasks, isLoading} = useQuery<Tasks, object, Tasks, [_1: string]>({
     queryKey: ['todayTasks'],
     queryFn: getTodayTasks,
-    staleTime: 60 * 1000,
-    gcTime: 300 * 1000,
+    staleTime: 0,
+    refetchOnMount: 'always',
   });
 
   //로딩 중이거나 데이터가 없다면 Skeleton을 보여줌
