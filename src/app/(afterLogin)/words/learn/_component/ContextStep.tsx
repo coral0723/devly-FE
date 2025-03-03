@@ -4,14 +4,14 @@ import { Fragment } from 'react';
 import { BookOpen } from 'lucide-react';
 import { Example, Word } from '@/model/Word';
 
-interface ContextStepProps {
+type Props = {
   index: number;
   word: Word;
   wordsLength: number;
   onNext: () => void;
 }
 
-export function ContextStep({ index, word, wordsLength, onNext }: ContextStepProps) {
+export function ContextStep({ index, word, wordsLength, onNext }: Props) {
   const example: Example = JSON.parse(word.example);
 
   return (

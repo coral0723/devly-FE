@@ -3,12 +3,12 @@
 import { Word } from '@/model/Word';
 import { useCallback, useState } from 'react';
 
-interface WordStepProps {
+type Props = {
     word: Word;
     onNext: () => void;
 }
 
-export function WordStep({ word, onNext }: WordStepProps) {
+export function WordStep({ word, onNext }: Props) {
   const [isPlaying, setIsPlaying] = useState(false);
   
   const speak = useCallback(() => {

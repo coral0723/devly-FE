@@ -17,8 +17,13 @@ import { getValidationResult } from "../_lib/getValidationResult";
 import { authApi } from "@/app/_lib/axios";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { getReviewWords } from "../_lib/getReviewWords";
 
-export default function WordLearning() {
+type Props = {
+  isReview?: boolean;
+}
+
+export default function WordLearning({isReview = false}: Props) {
   const [currentWordIndex, setCurrentWordIndex] = useState<number>(0);
   const [step, setStep] = useState<'word' | 'context' | 'quiz'>('word');
   const [showExitConfirm, setShowExitConfirm] = useState<boolean>(false);
@@ -32,8 +37,8 @@ export default function WordLearning() {
   const studyId = searchParams.get('studyId');
   
   const {data: words, isLoading} = useQuery<Word[], object, Word[], [_1: string, _2: string, string]>({
-    queryKey: ['words', 'learn', studyId!],
-    queryFn: getWords,
+    queryKey: ['words', isReview ? 'review' : 'learn', studyId!],
+    queryFn: isReview ? getReviewWords : getWords,
     staleTime: 60 * 1000,
     gcTime: 300 * 1000,
   });
@@ -43,12 +48,15 @@ export default function WordLearning() {
     queryFn: getValidationResult,
     staleTime: 60 * 1000,
     gcTime: 300 * 1000,
+    enabled: !isReview,
   });
 
   // 학습이 필요한 단어만 필터링
-  const filteredWords = validationResult?.incorrectIds.length === 0
-  ? words || []
-  : words?.filter(word => validationResult?.incorrectIds.includes(word.id)) || [];
+  const filteredWords = isReview
+    ? words || []
+    : validationResult?.incorrectIds.length === 0
+      ? words || []
+      : words?.filter(word => validationResult?.incorrectIds.includes(word.id)) || [];
 
   const onScrollUp = () => {
     containerRef.current?.scrollTo(0, 0);
@@ -67,6 +75,8 @@ export default function WordLearning() {
   const handleQuizNext = async () => {
     if(currentWordIndex < filteredWords!.length - 1) {
       setCurrentWordIndex(prev => prev + 1);
+    } else if(isReview) { //복습 페이지인 경우 다 풀었을 때 api 요청 보내지 않음
+      setShowCompletion(true);
     } else {
       try {
         //msw용
@@ -93,7 +103,7 @@ export default function WordLearning() {
     }
   }
 
-  if(isLoading || !words || !validationResult) {
+  if(isLoading || !words || (!isReview && !validationResult)) {
     return (
       <div className="flex max-w-lg mx-auto min-h-screen bg-gray-50 items-center justify-center">
         <LoadingSpinner size="md"/>
@@ -148,7 +158,6 @@ export default function WordLearning() {
 
         {step === 'quiz' && (
           <QuizStep
-            correctIds={validationResult.correctIds}
             setCorrectIds={setCorrectIds}
             setIncorrectIds={setIncorrectIds}
             index={currentWordIndex}
@@ -165,14 +174,15 @@ export default function WordLearning() {
       )}
 
       {showCompletion && (
-          <CompletionModal 
+          <CompletionModal
+            isReview={isReview} 
             incorrectIds={incorrectIds}
             onClose={() => {
               queryClient.removeQueries({queryKey: ['words', 'validation', studyId]});
               queryClient.removeQueries({queryKey: ['words', 'learn', studyId]});
               queryClient.removeQueries({queryKey: ['weeklyActivity']});
               queryClient.removeQueries({queryKey: ['todayTasks']});
-              router.replace('/home');
+              router.replace(isReview ? '/review' : '/home');
             }}
           />
       )}

@@ -614,21 +614,25 @@ export const handlers = [
           date: new Date("2025-01-20"),
           logs: [
             {
+              id: 1,
               study: 'words',
               title: "리액트 훅 사용법 정리",
               exp: 130
             },
             {
+              id: 2,
               study: 'knowledge',
               title: "Next.js 13 새로운 기능 학습",
               exp: 200
             },
             {
+              id: 3,
               study: 'pr',
               title: "로그인 페이지 UI 구현",
               exp: 150
             },
             {
+              id: 4,
               study: 'discussion',
               title: "프로젝트 아키텍처 설계 논의",
               exp: 200
@@ -639,11 +643,13 @@ export const handlers = [
           date: new Date("2025-01-27"),
           logs: [
             {
+              id: 1,
               study: 'words',
               title: "리액트 훅 사용법 정리",
               exp: 130
             },
             {
+              id: 3,
               study: 'pr',
               title: "로그인 페이지 UI 구현",
               exp: 150
@@ -654,11 +660,13 @@ export const handlers = [
           date: new Date("2025-02-20"),
           logs: [
             {
+              id: 2,
               study: 'knowledge',
               title: "Next.js 13 새로운 기능 학습",
               exp: 200
             },
             {
+              id: 3,
               study: 'pr',
               title: "로그인 페이지 UI 구현",
               exp: 150
@@ -667,5 +675,55 @@ export const handlers = [
         },
       ])
     )
-  })
+  }),
+  http.get('/api/words/:studyId/review', () => {
+    return HttpResponse.json({
+      code: "SUCCESS",
+      message: "성공",
+      result: {
+        words: [
+          {
+            "id": 1,
+            "word": "Middleware",
+            "meaning": "     ",
+            "example": "{\"source\": \"Express.js documentation\", \"text\": \"Middleware functions are functions that have access to the request object (req), the response object (res), and the next middleware function in the application's request-response cycle.\", \"translation\": \"   (req),  (res),   -        .\"}",
+            "quiz": "{\"text\": \"Middleware is a software that provides an interface between _______.\", \"distractors\": [\"Client and server\", \"User and application\", \"Database and server\", \"Server and application\"]}",
+            "pronunciation": "/mdlwer/"
+          },
+          {
+            "id": 2,
+            "word": "RESTful",
+            "meaning": "     , HTTP (GET, POST, PUT, DELETE)    ",
+            "example": "{\"source\": \"RESTful Web Services\", \"text\": \"A RESTful web service exposes a set of resources that identify the targets of the interaction with its clients.\", \"translation\": \"RESTful          .\"}",
+            "quiz": "{\"text\": \"RESTful web service is a way to implement web services that process resources through _____.\", \"distractors\": [\"XML\", \"JSON\", \"SOAP\", \"HTTP methods\"]}",
+            "pronunciation": "/restfl/"
+          },
+          {
+            "id": 3,
+            "word": "Endpoint",
+            "meaning": "     URL  ",
+            "example": "{\"source\": \"Amazon Web Services\", \"text\": \"Each API is deployed at one or many HTTP endpoints.\", \"translation\": \" API    HTTP  .\"}",
+            "quiz": "{\"text\": \"Endpoint refers to a specific location of a URL where you can access _____\", \"distractors\": [\"Web browser\", \"Operating system\", \"Network service\", \"Database\"]}",
+            "pronunciation": "/ndpont/"
+          },
+          {
+            "id": 4,
+            "word": "Payload",
+            "meaning": "       .",
+            "example": "{\"source\": \"Node.js API documentation\", \"text\": \"The payload of a packet is the actual data that is sent over the network.\", \"translation\": \"      .\"}",
+            "quiz": "{\"text\": \"What is the term for the actual data that is sent over the network?\", \"distractors\": [\"Protocol\", \"Port\", \"Socket\", \"API\"]}",
+            "pronunciation": "/pe.lod/"
+          },
+          {
+            "id": 5,
+            "word": "Query",
+            "meaning": "     .",
+            "example": "{\"source\": \"MySQL documentation\", \"text\": \"A query is a request for data from a database.\", \"translation\": \"    .\"}",
+            "quiz": "{\"text\": \"What is a request for data from a database called?\", \"distractors\": [\"Payload\", \"Schema\", \"Entity\", \"API\"]}",
+            "pronunciation": "/kwr.i/"
+          }
+        ]
+      }
+    });
+  }),
 ];
