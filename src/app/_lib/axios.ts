@@ -23,7 +23,7 @@ authApi.interceptors.response.use(
   },
   (error) => {
     // 토큰 만료 오류 처리
-    if (error.response && error.response.status === 403) {
+    if (error.response && error.response.status === 401) {
       alert("토큰이 만료되었습니다. 다시 로그인해주세요.");
       localStorage.removeItem('accessToken');
       
