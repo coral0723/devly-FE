@@ -7,7 +7,7 @@ import { CompletionModal } from "./_component/CompletionModal";
 import { X } from "lucide-react";
 import { ContextStep } from "./_component/ContextStep";
 import QuizStep from "./_component/QuizStep";
-import { QueryClient, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { Word } from "@/model/Word";
 import { useSearchParams } from "next/navigation";
 import { getWords } from "../_lib/getWords";
@@ -32,18 +32,17 @@ export default function WordLearning({isReview = false}: Props) {
   const [incorrectIds, setIncorrectIds] = useState<number[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
-  const queryClient = new QueryClient();
   const searchParams = useSearchParams();
   const studyId = searchParams.get('studyId');
   
-  const {data: words, isLoading} = useQuery<Word[], object, Word[], [_1: string, _2: string, string]>({
+  const {data: words, isLoading, refetch: wordsRefetch} = useQuery<Word[], object, Word[], [_1: string, _2: string, string]>({
     queryKey: ['words', isReview ? 'review' : 'learn', studyId!],
     queryFn: isReview ? getReviewWords : getWords,
     staleTime: 0,
     refetchOnMount: 'always',
   });
   
-  const {data: validationResult} = useQuery<ValidationResult, object, ValidationResult, [_1: string, _2: string, string]>({
+  const {data: validationResult, refetch: validationRefetch} = useQuery<ValidationResult, object, ValidationResult, [_1: string, _2: string, string]>({
     queryKey: ['words', 'validation', studyId!],
     queryFn: getValidationResult,
     staleTime: 0,
@@ -178,10 +177,8 @@ export default function WordLearning({isReview = false}: Props) {
             isReview={isReview} 
             incorrectIds={incorrectIds}
             onClose={() => {
-              queryClient.removeQueries({queryKey: ['words', 'validation', studyId]});
-              queryClient.removeQueries({queryKey: ['words', 'learn', studyId]});
-              queryClient.removeQueries({queryKey: ['weeklyActivity']});
-              queryClient.removeQueries({queryKey: ['todayTasks']});
+              validationRefetch();
+              wordsRefetch();
               router.replace(isReview ? '/review' : '/home');
             }}
           />
