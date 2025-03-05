@@ -39,15 +39,15 @@ export default function WordLearning({isReview = false}: Props) {
   const {data: words, isLoading} = useQuery<Word[], object, Word[], [_1: string, _2: string, string]>({
     queryKey: ['words', isReview ? 'review' : 'learn', studyId!],
     queryFn: isReview ? getReviewWords : getWords,
-    staleTime: 60 * 1000,
-    gcTime: 300 * 1000,
+    staleTime: 0,
+    refetchOnMount: 'always',
   });
   
   const {data: validationResult} = useQuery<ValidationResult, object, ValidationResult, [_1: string, _2: string, string]>({
     queryKey: ['words', 'validation', studyId!],
     queryFn: getValidationResult,
-    staleTime: 60 * 1000,
-    gcTime: 300 * 1000,
+    staleTime: 0,
+    refetchOnMount: 'always',
     enabled: !isReview,
   });
 
