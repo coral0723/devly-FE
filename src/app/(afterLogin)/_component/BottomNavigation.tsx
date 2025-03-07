@@ -27,11 +27,12 @@ export default function BottomNavigation() {
             >
             <Icon
               size={20}
-              className={pathname === path ? "text-purple-600" : "text-gray-400"}
+              className={pathname === path ? "text-black" : "text-gray-400"}
+              strokeWidth={pathname === path ? 2.5 : 1}
             />
             <span
               className={`text-sm ${
-                pathname === path ? "text-purple-600" : "text-gray-400"
+                pathname === path ? "text-black" : "text-gray-400"
               }`}
             >
               {label}
