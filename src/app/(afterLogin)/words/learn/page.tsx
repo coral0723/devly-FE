@@ -23,7 +23,7 @@ type Props = {
   isReview?: boolean;
 }
 
-export default function WordLearning({isReview = false}: Props) {
+export default function WordLearnPage({isReview = false}: Props) {
   const [currentWordIndex, setCurrentWordIndex] = useState<number>(0);
   const [step, setStep] = useState<'word' | 'context' | 'quiz'>('word');
   const [showExitConfirm, setShowExitConfirm] = useState<boolean>(false);

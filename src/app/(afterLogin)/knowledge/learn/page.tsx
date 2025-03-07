@@ -10,19 +10,26 @@ import { useQuery } from '@tanstack/react-query';
 import { Knowledge } from '@/model/Knowledge';
 import { getKnowledges } from '../_lib/getKnowledges';
 import LoadingSpinner from '@/app/_component/LoadingSpinner';
+import { getReviewKnowledges } from '../_lib/getReviewKnowledge';
+import { useRouter } from "next/navigation";
 
-export default function KnowledgeLearnPage() {
+type Props = {
+  isReview?: boolean;
+}
+
+export default function KnowledgeLearnPage({isReview = false}: Props) {
   const [currentKnowledgeIndex, setCurrentKnowledgeIndex] = useState<number>(0);
   const [showExitConfirm, setShowExitConfirm] = useState<boolean>(false);
   const [showCompletion, setShowCompletion] = useState<boolean>(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   const searchParams = useSearchParams();
   const studyId = searchParams.get('studyId');
 
   const {data: knowledges, isLoading} = useQuery<Knowledge[], object, Knowledge[], [_1: string, _2: string, string]>({
-    queryKey: ['knowledge', 'learn', studyId!],
-    queryFn: getKnowledges,
+    queryKey: ['knowledge', isReview ? 'review' : 'learn', studyId!],
+    queryFn: isReview ? getReviewKnowledges : getKnowledges,
     staleTime: 60 * 1000,
     gcTime: 300 * 1000,
   });
@@ -83,7 +90,12 @@ export default function KnowledgeLearnPage() {
       )}
 
       {showCompletion && (
-        <CompletionModal/>
+        <CompletionModal
+          isReview={isReview}
+          onClose={() => {
+            router.replace(isReview ? '/review' : '/home');
+          }}
+        />
       )}
     </div>
   );

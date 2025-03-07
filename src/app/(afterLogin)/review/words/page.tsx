@@ -1,7 +1,7 @@
 "use client"
 
-import WordLearning from "../../words/learn/page"
+import WordLearnPage from "../../words/learn/page"
 
 export default function WordReviewPage() {
-  return <WordLearning isReview={true}/>
+  return <WordLearnPage isReview={true}/>
 }
