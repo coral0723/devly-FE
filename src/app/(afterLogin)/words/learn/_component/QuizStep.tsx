@@ -15,28 +15,28 @@ type Props = {
 }
 
 export default function QuizStep({ index, word, wordsLength, handleQuizNext, onScrollUp, setCorrectIds, setIncorrectIds }: Props) {
-  const [selectedOption, setSelectedOption] = useState<number | null>(null);
+  const [selectedDistractor, setSelectedDistractor] = useState<number | null>(null);
   const [showCorrect, setShowCorrect] = useState<boolean>(false);
-  const [options, setOptions] = useState<string[]>([]);
+  const [distractors, setDistractors] = useState<string[]>([]);
 
   const example: Example = JSON.parse(word.example);
   const quiz: Quiz = JSON.parse(word.quiz);
 
   useEffect(() => {
     if (word) {
-      // 새로운 `word` 데이터를 기반으로 options 생성
-      const updatedOptions = [...quiz.distractors, word.word];
+      // 새로운 `word` 데이터를 기반으로 distractors 생성
+      const updatedDistractors = [...quiz.distractors, word.word];
       // 배열을 무작위로 섞기
-      updatedOptions.sort(() => Math.random() - 0.5);
+      updatedDistractors.sort(() => Math.random() - 0.5);
 
-      setOptions(updatedOptions);
+      setDistractors(updatedDistractors);
     }
   }, [word]);
 
   const onCheck = () => {
     onScrollUp();
     setShowCorrect(true);
-    if(word.word === options[selectedOption!]) { //정답을 선택했다면
+    if(word.word === distractors[selectedDistractor!]) { //정답을 선택했다면
       setCorrectIds(prev => [...prev, word.id]);
     } else { //오답을 선택했다면
       setIncorrectIds(prev => [...prev, word.id]);
@@ -47,40 +47,40 @@ export default function QuizStep({ index, word, wordsLength, handleQuizNext, onS
     onScrollUp();
     if(index < wordsLength - 1) {
       setShowCorrect(false);
-      setSelectedOption(null);
+      setSelectedDistractor(null);
     }
     handleQuizNext();
   }
 
-  const getButtonStyle = (option: string, idx: number) => {
+  const getButtonStyle = (distractor: string, idx: number) => {
     if (!showCorrect) {
       return "hover:bg-gray-50";
     }
     
     //정답 여부 체크
-    if (option === word.word) {
+    if (distractor === word.word) {
       return "bg-green-100"; // 정답인 경우
     }
-    if (selectedOption === idx && option !== word.word) {
+    if (selectedDistractor === idx && distractor !== word.word) {
       return "bg-red-100"; // 오답인 경우
     }
     
     return "";
   };
 
-  const getCircleStyle = (option: string, idx: number) => {
+  const getCircleStyle = (distractor: string, idx: number) => {
     if (showCorrect) {
       //정답 여부 체크
-      if (option === word.word) {
+      if (distractor === word.word) {
         return "bg-green-500 border-green-500"; // 정답인 경우 초록색 원
       }
-      if (selectedOption === idx && option !== word.word) {
+      if (selectedDistractor === idx && distractor !== word.word) {
         return "bg-red-500 border-red-500"; // 오답인 경우 빨간색 원
       }
       return "border-gray-300";
     }
     
-    return selectedOption === idx ? "bg-blue-500 border-blue-500" : "border-gray-300";
+    return selectedDistractor === idx ? "bg-blue-500 border-blue-500" : "border-gray-300";
   };
 
   return (
@@ -107,22 +107,22 @@ export default function QuizStep({ index, word, wordsLength, handleQuizNext, onS
 
       <div className="bg-white rounded-xl p-6 shadow-sm">
         <div className="space-y-4">
-          {options.map((option, idx) => (
+          {distractors.map((distractor, idx) => (
             <button
               key={idx}
-              onClick={() => !showCorrect && setSelectedOption(idx)}
-              className={`w-full flex items-center gap-4 p-4 text-left border rounded-lg transition-all ${getButtonStyle(option, idx)}`}
+              onClick={() => !showCorrect && setSelectedDistractor(idx)}
+              className={`w-full flex items-center gap-4 p-4 text-left border rounded-lg transition-all ${getButtonStyle(distractor, idx)}`}
               disabled={showCorrect}
             >
-              <div className={`w-8 h-8 flex items-center justify-center rounded-full border-2 ${getCircleStyle(option, idx)}`}>
-                {(selectedOption === idx || (showCorrect && option === word.word)) && 
+              <div className={`w-8 h-8 flex items-center justify-center rounded-full border-2 ${getCircleStyle(distractor, idx)}`}>
+                {(selectedDistractor === idx || (showCorrect && distractor === word.word)) && 
                   <Check size={16} className="text-white" />
                 }
-                {selectedOption !== idx && !showCorrect && 
+                {selectedDistractor !== idx && !showCorrect && 
                   <span className="text-gray-500">{idx + 1}</span>
                 }
               </div>
-              <span className="text-lg">{option}</span>
+              <span className="text-lg">{distractor}</span>
             </button>
           ))}
         </div>
@@ -132,13 +132,13 @@ export default function QuizStep({ index, word, wordsLength, handleQuizNext, onS
         <button
           onClick={showCorrect ? onNext : onCheck}
           className={`w-full py-3 text-white text-lg font-medium rounded-xl transition-all
-            ${selectedOption === null 
+            ${selectedDistractor === null 
               ? 'bg-gray-300 cursor-not-allowed' 
               : showCorrect && index === wordsLength - 1
                   ? 'bg-gradient-to-r from-green-400 to-teal-500 hover:from-green-500 hover:to-teal-600 active:scale-[0.98]'
                   : 'bg-green-500 hover:bg-green-600 active:scale-[0.98]'
             }`}
-          disabled={selectedOption === null}
+          disabled={selectedDistractor === null}
         >
           {showCorrect ? (
             index === wordsLength - 1 ? (

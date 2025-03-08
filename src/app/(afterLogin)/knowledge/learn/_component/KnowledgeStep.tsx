@@ -1,67 +1,78 @@
-import { Knowledge } from "@/model/Knowledge";
+import { Distractor, Knowledge } from "@/model/Knowledge";
 import { Check, Code, Lightbulb, BookOpen, FileCode2 } from "lucide-react";
 import { useEffect, useState } from "react";
 
 type Props = {
+  setCorrectIds: (correctIds: number[] | ((prev: number[]) => number[])) => void;
+  setIncorrectIds: (incorrectIds: number[] | ((prev: number[]) => number[])) => void;
   knowledge: Knowledge;
   knowledgesLength: number;
   currentStep: number;
   handleNext: () => void;
+  onScrollUp: () => void;
 }
 
-export default function KnowledgeStep({knowledge, knowledgesLength, currentStep, handleNext}: Props) {
-  const [selectedOption, setSelectedOption] = useState<number | null>(null);
+export default function KnowledgeStep({knowledge, knowledgesLength, currentStep, handleNext, setCorrectIds, setIncorrectIds, onScrollUp}: Props) {
+  const [selectedDistractor, setSelectedDistractor] = useState<Distractor | null>(null);
   const [showCorect, setShowCorrect] = useState<boolean>(false);
-  const [options, setOptions] = useState<string[]>([]);
+  const [distractors, setDistractors] = useState<Distractor[]>([]);
   const [activeTab, setActiveTab] = useState('concept');
 
   useEffect(() => {
     if (knowledge) {
       setActiveTab('concept');
-      setOptions(knowledge.practice.options);
+      const updatedDistractors = [...knowledge.quiz.distractors];
+      updatedDistractors.sort(() => Math.random() - 0.5);
+      setDistractors(updatedDistractors);
     }
   }, [knowledge]);
 
   const onCheck = () => {
+    onScrollUp();
     setShowCorrect(true);
+    if(selectedDistractor && knowledge.quiz.answer === selectedDistractor.id) { //정답을 선택했다면
+      setCorrectIds(prev => [...prev, knowledge.id]);
+    } else { //오답을 선택했다면
+      setIncorrectIds(prev => [...prev, knowledge.id]);
+    }
   }
 
   const onNext = () => {
     if(currentStep < knowledgesLength - 1) {
       setShowCorrect(false);
-      setSelectedOption(null);
+      setSelectedDistractor(null);
     }
     handleNext();
   }
 
-  const getButtonStyle = (option: string, idx: number) => {
+  const getButtonStyle = (distractor: Distractor) => {
     if (!showCorect) {
       return "hover:bg-gray-50";
     }
     
-    if (option === knowledge.practice.options[knowledge.practice.answer-1]) {
+    if (distractor.id === knowledge.quiz.answer) {
       return "bg-green-100";
     }
     
-    if (selectedOption === idx && option !== knowledge.practice.options[knowledge.practice.answer-1]) {
+    if (selectedDistractor!.id === distractor.id && selectedDistractor!.id !== knowledge.quiz.answer) {
       return "bg-red-100";
     }
     
     return "";
   };
 
-  const getCircleStyle = (option: string, idx: number) => {
+  const getCircleStyle = (distractor: Distractor) => {
     if (showCorect) {
-      if (option === knowledge.practice.options[knowledge.practice.answer-1]) {
+      if (distractor.id === knowledge.quiz.answer) {
         return "bg-green-500 border-green-500";
       }
-      if (selectedOption === idx && option !== knowledge.practice.options[knowledge.practice.answer-1]) {
+      if (selectedDistractor && selectedDistractor.id === distractor.id && distractor.id !== knowledge.quiz.answer) {
         return "bg-red-500 border-red-500";
       }
       return "border-gray-300";
     }
     
-    return selectedOption === idx ? "bg-blue-500 border-blue-500" : "border-gray-300";
+    return selectedDistractor && selectedDistractor.id === distractor.id ? "bg-blue-500 border-blue-500" : "border-gray-300";
   };
   
   return (
@@ -134,26 +145,32 @@ export default function KnowledgeStep({knowledge, knowledgesLength, currentStep,
             <div className="space-y-4">
               <div className="bg-blue-50 border border-blue-100 rounded-lg p-4 mb-4">
                 <h2 className="text-lg font-semibold text-blue-800 mb-2">문제</h2>
-                <p className="text-blue-900">{knowledge.practice.question || "주어진 코드를 보고 알맞은 답을 선택하세요."}</p>
+                <p className="text-blue-900">{knowledge.quiz.text || "주어진 코드를 보고 알맞은 답을 선택하세요."}</p>
               </div>
 
               <div className="space-y-4">
-                {knowledge.practice.options.map((option, idx) => (
+                {distractors.map((distractor, idx) => (
                   <button
-                    key={idx}
-                    onClick={() =>!showCorect && setSelectedOption(idx)}
-                    className={`w-full flex items-center gap-4 p-4 text-left border rounded-lg transition-all ${getButtonStyle(option, idx)}`}
+                    key={distractor.id}
+                    onClick={() => !showCorect && setSelectedDistractor(distractor)}
+                    className={`w-full flex items-center gap-4 p-4 text-left border rounded-lg transition-all ${getButtonStyle(distractor)}`}
                     disabled={showCorect}
                   >
-                    <div className={`w-8 h-8 flex items-center justify-center rounded-full border-2 ${getCircleStyle(option, idx)}`}>
-                      {(selectedOption === idx || (showCorect && option === options[knowledge.practice.answer-1])) && 
+                    <div className={`w-8 h-8 flex items-center justify-center rounded-full border-2 ${getCircleStyle(distractor)}`}>
+                      {(showCorect && distractor.id === knowledge.quiz.answer) && 
                         <Check size={16} className="text-white" />
                       }
-                      {selectedOption !== idx && !showCorect && 
+                      {(showCorect && selectedDistractor && selectedDistractor.id === distractor.id && distractor.id !== knowledge.quiz.answer) && 
+                        <Check size={16} className="text-white" />
+                      }
+                      {(selectedDistractor && selectedDistractor.id === distractor.id && !showCorect) && 
+                        <Check size={16} className="text-white" />
+                      }
+                      {(!selectedDistractor || selectedDistractor.id !== distractor.id) && !showCorect && 
                         <span className="text-gray-500">{idx + 1}</span>
                       }
                     </div>
-                    <span className="text-base">{option}</span>
+                    <span className="text-base">{distractor.distractor}</span>
                   </button>
                 ))}
               </div>
@@ -162,13 +179,13 @@ export default function KnowledgeStep({knowledge, knowledgesLength, currentStep,
                 <button
                   onClick={showCorect ? onNext : onCheck}
                   className={`w-full py-3 text-white rounded-xl text-lg font-medium transition-all
-                    ${selectedOption === null 
+                    ${selectedDistractor === null 
                       ? 'bg-gray-300 cursor-not-allowed' 
                       : showCorect && currentStep === knowledgesLength - 1
                           ? 'bg-gradient-to-r from-sky-400 to-blue-600 hover:from-sky-500 hover:to-blue-700 active:scale-[0.98]'
                           : 'bg-blue-500 hover:bg-blue-600 active:scale-[0.98]'
                     }`}
-                  disabled={selectedOption === null}
+                  disabled={selectedDistractor === null}
                 >
                   {showCorect ? (
                     currentStep === knowledgesLength - 1 ? (
@@ -183,7 +200,6 @@ export default function KnowledgeStep({knowledge, knowledgesLength, currentStep,
                   )}
                 </button>
               </div>
-
             </div>
           )}
         </div>

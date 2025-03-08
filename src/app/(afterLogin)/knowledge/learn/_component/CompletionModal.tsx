@@ -4,10 +4,11 @@ import { CheckCircle } from 'lucide-react';
 
 type Props = {
   isReview: boolean;
+  incorrectIds: number[];
   onClose: () => void;
 }
 
-export default function CompletionModal({isReview, onClose}: Props) {
+export default function CompletionModal({isReview, incorrectIds, onClose}: Props) {
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
@@ -18,14 +19,20 @@ export default function CompletionModal({isReview, onClose}: Props) {
         <h2 className="text-xl font-bold mb-2">
           {isReview
             ? "복습 완료!"
-            : "학습 완료! 🎉"}
+            : incorrectIds.length === 0
+              ? "학습 완료! 🎉"
+              : "다시 한번 도전해보세요! 💪"
+          }
         </h2>
         <p className="text-gray-600 mb-2">
           {isReview
             ? "CS/개발 지식을 모두 복습했어요"
-            : "CS/개발 지식을 모두 학습했어요"}
+            : incorrectIds.length === 0
+              ? "CS/개발 지식을 모두 학습했어요"
+              : `${incorrectIds.length}개 CS/개발 지식만 더 완벽해지면 됩니다`
+          }
         </p>
-        {!isReview ? (
+        {!isReview && incorrectIds.length === 0 ? (
           <div className="bg-gray-50 rounded-lg p-4 mb-6">
             <div className="text-sm text-gray-500 mb-1">획득한 경험치</div>
             <div className="text-2xl font-bold text-blue-600">+150 XP</div>
