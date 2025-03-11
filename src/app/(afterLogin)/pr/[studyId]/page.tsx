@@ -3,14 +3,8 @@ import BottomNavigation from "../../_component/BottomNavigation";
 import { getPrCards } from "./_lib/getPrCards";
 import PrCardsArea from "./_component/PrCardsArea";
 
-type Props = {
-  searchParams: {
-    studyId: string;
-  }
-}
-
-export default async function PRPage({searchParams}: Props) {
-  const {studyId} = await searchParams;
+export default async function PRPage({params}: {params: { studyId: string}}) {
+  const {studyId} = await params;
   const queryClient = new QueryClient();
   queryClient.prefetchQuery({queryKey: ['pr', 'cards', studyId], queryFn: getPrCards});
   const dehydratedState = dehydrate(queryClient);

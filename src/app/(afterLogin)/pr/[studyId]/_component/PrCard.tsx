@@ -1,7 +1,7 @@
 "use client"
 
 import { PrCard as IPrCard } from "@/model/pr/PrCard";
-import { useRouter } from "next/navigation"
+import { useRouter, useParams } from "next/navigation"
 import { ChevronRight } from "lucide-react";
 
 type Props = {
@@ -10,11 +10,12 @@ type Props = {
 
 export default function PrCard({pr}: Props) {
   const router = useRouter();
+  const studyId = useParams().studyId;
 
   return (
     <div
       key={pr.id}
-      onClick={() => router.replace(`/pr/${pr.id}`)}
+      onClick={() => router.replace(`/pr/${studyId}/${pr.id}`)}
       className="bg-white rounded-xl border border-gray-200 p-4 space-y-3 hover:border-purple-200 cursor-pointer"
     >
       <div className="flex items-start justify-between">
