@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useParams } from 'next/navigation';
 import Header from './_component/Header';
-import { Pr } from '@/model/Pr';
+import { Pr } from '@/model/pr/Pr';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { getPr } from './_lib/getPr';
 import LoadingSpinner from '@/app/_component/LoadingSpinner';

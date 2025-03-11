@@ -1,6 +1,6 @@
 "use client"
 
-import { PrCard as IPRCard } from "@/model/PrCard";
+import { PrCard as IPRCard } from "@/model/pr/PrCard";
 import { useQuery } from "@tanstack/react-query";
 import { getPrCards } from "../_lib/getPrCards";
 import PrCard from "./PrCard";
@@ -29,6 +29,7 @@ export default function PrCardsArea({studyId}: Props) {
 
   return (
     <>
+      {/* 추후 PR 데이터가 배열로 변경되면 아래 코드를 map으로 변경할 예정 */}
       <PrCard pr={prCards}/>
     </>
   )

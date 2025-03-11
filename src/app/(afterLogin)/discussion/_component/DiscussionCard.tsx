@@ -1,6 +1,6 @@
 "use client"
 
-import { PrCard as IPrCard } from "@/model/PrCard";
+import { PrCard as IPrCard } from "@/model/pr/PrCard";
 import { useRouter } from "next/navigation"
 import { ChevronRight, Clock } from "lucide-react";
 

@@ -1,5 +1,5 @@
 import { QueryFunction } from "@tanstack/react-query";
-import { PrCard } from "@/model/PrCard";
+import { PrCard } from "@/model/pr/PrCard";
 import axios from "axios";
 import { authApi } from "@/app/_lib/axios";
 

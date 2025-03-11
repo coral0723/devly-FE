@@ -1,6 +1,6 @@
 "use client"
 
-import { PrCard as IPrCard } from "@/model/PrCard";
+import { PrCard as IPrCard } from "@/model/pr/PrCard";
 import { useRouter } from "next/navigation"
 import { ChevronRight } from "lucide-react";
 
@@ -24,16 +24,6 @@ export default function PrCard({pr}: Props) {
         </div>
         <ChevronRight className="text-gray-400" />
       </div>
-
-      {/* <div className="flex items-center gap-3 text-sm">
-        <span className="px-2 py-1 bg-purple-100 text-purple-600 rounded-full">
-          {pr.difficulty}
-        </span>
-        <div className="flex items-center gap-1 text-gray-500">
-          <Clock size={14} />
-          <span>{pr.estimatedTime}</span>
-        </div>
-      </div> */}
 
       <div className="flex flex-wrap gap-2">
         {pr.labels.map((label) => (

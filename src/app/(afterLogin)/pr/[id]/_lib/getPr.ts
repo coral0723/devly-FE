@@ -1,6 +1,6 @@
 import { QueryFunction } from "@tanstack/react-query";
 import axios from "axios";
-import { Pr } from "@/model/Pr";
+import { Pr } from "@/model/pr/Pr";
 
 export const getPr: QueryFunction<Pr, [_1: string, _2: string, string]>
  = async ({ queryKey: [, , id] }) => {
