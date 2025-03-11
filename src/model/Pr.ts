@@ -10,3 +10,13 @@ export interface Pr {
     comment: string;
   };
 }
+
+export interface PrFiles {
+  files: {
+    id: number;
+    prId: number; 
+    fileName: string;
+    language: 'Java | Javascript';
+    content: string;
+  }[];
+}

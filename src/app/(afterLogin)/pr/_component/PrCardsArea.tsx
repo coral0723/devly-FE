@@ -12,7 +12,7 @@ type Props = {
 
 export default function PrCardsArea({studyId}: Props) {
 
-  const {data: prCards, isLoading} = useQuery<IPRCard[], object, IPRCard[], [_1: string, _2: string, string]>({
+  const {data: prCards, isLoading} = useQuery<IPRCard, object, IPRCard, [_1: string, _2: string, string]>({
     queryKey: ['pr', 'cards', studyId],
     queryFn: getPrCards,
     staleTime: 60 * 1000,
@@ -29,9 +29,7 @@ export default function PrCardsArea({studyId}: Props) {
 
   return (
     <>
-      {prCards.map((pr) => (
-        <PrCard key={pr.id} pr={pr}/>
-      ))}
+      <PrCard pr={prCards}/>
     </>
   )
 }

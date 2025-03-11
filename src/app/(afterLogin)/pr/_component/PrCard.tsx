@@ -2,7 +2,7 @@
 
 import { PrCard as IPrCard } from "@/model/PrCard";
 import { useRouter } from "next/navigation"
-import { ChevronRight, Clock } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 
 type Props = {
   pr: IPrCard;
@@ -25,7 +25,7 @@ export default function PrCard({pr}: Props) {
         <ChevronRight className="text-gray-400" />
       </div>
 
-      <div className="flex items-center gap-3 text-sm">
+      {/* <div className="flex items-center gap-3 text-sm">
         <span className="px-2 py-1 bg-purple-100 text-purple-600 rounded-full">
           {pr.difficulty}
         </span>
@@ -33,15 +33,15 @@ export default function PrCard({pr}: Props) {
           <Clock size={14} />
           <span>{pr.estimatedTime}</span>
         </div>
-      </div>
+      </div> */}
 
       <div className="flex flex-wrap gap-2">
-        {pr.tags.map((tag) => (
+        {pr.labels.map((label) => (
           <span
-            key={tag}
+            key={label}
             className="px-2 py-1 bg-gray-100 text-gray-600 rounded-full text-xs"
           >
-            {tag}
+            {label}
           </span>
         ))}
       </div>
