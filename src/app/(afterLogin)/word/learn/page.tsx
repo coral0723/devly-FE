@@ -12,7 +12,7 @@ import { useSearchParams } from "next/navigation";
 import { getWords } from "../_lib/getWords";
 import LoadingSpinner from "@/app/_component/LoadingSpinner";
 import { ValidationResult } from "@/model/ValidationResult";
-import { getValidationWordsResult } from "../_lib/getValidationWordsResult";
+import { getValidationWordResult } from "../_lib/getValidationWordResult";
 import { authApi } from "@/app/_lib/axios";
 import { useRouter } from "next/navigation";
 import axios from "axios";
@@ -43,7 +43,7 @@ export default function WordLearnPage({isReview = false}: Props) {
   
   const {data: validationResult, refetch: validationRefetch} = useQuery<ValidationResult, object, ValidationResult, [_1: string, _2: string, string]>({
     queryKey: ['word', 'validation', studyId!],
-    queryFn: getValidationWordsResult,
+    queryFn: getValidationWordResult,
     staleTime: 0,
     refetchOnMount: 'always',
     enabled: !isReview,

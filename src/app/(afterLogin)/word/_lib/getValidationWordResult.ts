@@ -3,7 +3,7 @@ import { authApi } from "@/app/_lib/axios";
 import { ValidationResult } from "@/model/ValidationResult";
 import axios from "axios";
 
-export const getValidationWordsResult: QueryFunction<ValidationResult, [_1: string, _2: string, string]>
+export const getValidationWordResult: QueryFunction<ValidationResult, [_1: string, _2: string, string]>
  = async ({ queryKey: [, , studyId] }) => {
   try {
     if (!studyId) { // groupId가 없다면 예외 처리
