@@ -1,6 +1,6 @@
 'use client'
 
-import { Feedback } from "@/model/Feedback"
+import { Feedback } from "@/model/pr/Feedback"
 import { Fragment } from "react"
 
 type Props = {

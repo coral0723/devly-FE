@@ -1,6 +1,6 @@
 "use client";
 
-import { FinalFeedback } from "@/model/FinalFeedback";
+import { FinalFeedback } from "@/model/pr/FinalFeedback";
 import { useRouter } from "next/navigation";
 
 type Props = {

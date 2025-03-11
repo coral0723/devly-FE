@@ -1,17 +1,17 @@
 import { QueryFunction } from "@tanstack/react-query";
 import axios from "axios";
-import { PrChangedFiles } from "@/model/pr/PrChangedFiles";
 import { authApi } from "@/app/_lib/axios";
+import { PrComments } from "@/model/pr/PrComments";
 
-export const getPr: QueryFunction<PrChangedFiles, [_1: string, _2: string, string]>
- = async ({ queryKey: [, , id] }) => {
+export const getPrComments: QueryFunction<PrComments, [_1: string, _2: string, string]>
+ = async ({ queryKey: [, , prId] }) => {
   try {
-    if (!id) { // id가 없다면 예외 처리
+    if (!prId) { // id가 없다면 예외 처리
       throw new Error("id is required");
     };
 
     // msw 용
-    // const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/study/pr/${id}`, {
+    // const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/study/pr/${prId}`, {
     //   headers: {
     //     'Cache-Control': 'no-store',
     //   },
@@ -19,7 +19,7 @@ export const getPr: QueryFunction<PrChangedFiles, [_1: string, _2: string, strin
 
     // return res.data;
 
-    const res = await authApi.get(`/api/pr/changed-files/${id}`, {
+    const res = await authApi.get(`/api/pr/comments/${prId}`, {
       headers: {
         'Cache-Control': 'no-store',
       }
