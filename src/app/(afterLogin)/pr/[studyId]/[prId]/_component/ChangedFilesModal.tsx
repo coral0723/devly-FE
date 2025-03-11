@@ -1,14 +1,14 @@
 "use client";
 
-import { Pr } from "@/model/pr/PrChangedFiles";
+import { PrChangedFiles } from "@/model/pr/PrChangedFiles";
 import { colorizeCode } from "../_lib/colorizeCode";
 
 type Props = {
-  pr: Pr;
+  prChangedFiles: PrChangedFiles;
   onClose: () => void;
 };
 
-export default function ChangedFilesModal({ pr, onClose }: Props) {
+export default function ChangedFilesModal({ prChangedFiles, onClose }: Props) {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-30 z-50">
       <div className="h-[calc(100vh-4rem)] mt-8 flex flex-col bg-gray-50 max-w-3xl mx-auto rounded-lg overflow-hidden">
@@ -24,10 +24,10 @@ export default function ChangedFilesModal({ pr, onClose }: Props) {
         <div className="flex-1 overflow-hidden p-4">
           {/* Code Area */}
           <div className="space-y-4 max-h-[calc(100vh-12rem)] overflow-y-auto">
-            {pr.changedFiles.map((file, idx) => (
+            {prChangedFiles.files.map((file, idx) => (
               <div key={idx} className="bg-white border border-gray-200 rounded-lg overflow-hidden">
                 <div className="px-4 py-2 border-b border-gray-200 flex justify-between items-center">
-                  <span className="font-medium text-gray-800">{file.name}</span>
+                  <span className="font-medium text-gray-800">{file.fileName}</span>
                   <span className="text-xs text-gray-500">{file.language}</span>
                 </div>
                 <div className="overflow-x-auto">

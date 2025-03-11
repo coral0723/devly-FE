@@ -1,8 +1,8 @@
 import { JAVA_RULES } from "../_data/JAVA_RULES";
 import { JS_RULES } from "../_data/JS_RULES";
 
-export const colorizeCode = (line: string, language: 'java' | 'javascript') => {
-  const rules = language === 'java' ? JAVA_RULES : JS_RULES;
+export const colorizeCode = (line: string, language: 'Java' | 'Javascript') => {
+  const rules = language === 'Java' ? JAVA_RULES : JS_RULES;
   
   // 속성 이름만 매칭하는 정규식
   const attributeNameRegex = /^([a-zA-Z][a-zA-Z0-9]*)(=|$|\s)/;

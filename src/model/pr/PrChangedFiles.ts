@@ -16,7 +16,7 @@ export interface PrChangedFiles {
     id: number;
     prId: number; 
     fileName: string;
-    language: 'Java | Javascript';
+    language: 'Java' | 'Javascript';
     content: string;
   }[];
 }

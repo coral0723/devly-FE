@@ -3,6 +3,6 @@ export interface PrComments {
     id: number;
     idx: number;
     prId: number;
-    
+    content: string;
   }[]
 }

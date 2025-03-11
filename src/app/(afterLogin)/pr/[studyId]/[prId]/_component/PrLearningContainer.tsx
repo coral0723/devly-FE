@@ -9,28 +9,50 @@ import { useState } from "react"
 import { Feedback } from "@/model/pr/Feedback"
 import { FinalFeedback } from "@/model/pr/FinalFeedback"
 import { PrChangedFiles } from "@/model/pr/PrChangedFiles"
-import { useQuery } from "@tanstack/react-query"
+import { useMutation, useQuery } from "@tanstack/react-query"
+import { useParams } from "next/navigation"
+import axios from "axios"
+import { getPrCards } from "../../_lib/getPrCards"
+import { PrCard } from "@/model/pr/PrCard"
+import { getPrChangedFiles } from "../_lib/getPrChangedFiles"
+import { PrComments } from "@/model/pr/PrComments"
+import { getPrComments } from "../_lib/getPrComments"
 
 export default function PrLearningContainer() {
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [prDescription, setPrDescription] = useState<string>(''); //첫 번째 답안 저장용
   const [firstFeedback, setFirstFeedback] = useState<Feedback>(); 
-  const [replies, setReplies] = useState<string>(''); //두 번째 답안 저장용용
+  const [replies, setReplies] = useState<string>(''); //두 번째 답안 저장용
   const [secondFeedback, setSecondFeedback] = useState<Feedback>();
   const [finalFeedback, setFinalFeedback] = useState<FinalFeedback>(); 
   const [showFiles, setShowFiles] = useState<boolean>(false); //"커밋 내역" Modal
   const [showFinalScore, setShowFinalScore] = useState<boolean>(false); //"최종 결과" Modal
+  const {studyId, prId} = useParams();
 
-  const {data: prChangedFiles, isLoading} = useQuery<PrChangedFiles, object, PrChangedFiles, [_1: string, _2: string, string]>({
-    queryKey: ['pr', 'learn', prId],
-    queryFn: getPr,
+  const {data: prCards, isLoading: isCardsLoading} = useQuery<PrCard, object, PrCard, [_1: string, _2: string, string]>({
+    queryKey: ['pr', 'cards', studyId as string],
+    queryFn: getPrCards,
+    staleTime: 60 * 1000,
+    gcTime: 300 * 1000,
+  });
+
+  const {data: prChangedFiles, isLoading: isChangedFilesLoading} = useQuery<PrChangedFiles, object, PrChangedFiles, [_1: string, _2: string, string]>({
+    queryKey: ['pr', 'changedFiles', prId as string],
+    queryFn: getPrChangedFiles,
+    staleTime: 60 * 1000,
+    gcTime: 300 * 1000,
+  });
+
+  const {data: prComments, isLoading: isCommentsLoading} = useQuery<PrComments, object, PrComments, [_1: string, _2: string, string]>({
+    queryKey: ['pr', 'comments', prId as string],
+    queryFn: getPrComments,
     staleTime: 60 * 1000,
     gcTime: 300 * 1000,
   });
 
   const { mutate: firstLearning, isPending: isFirstLoading } = useMutation({
 		mutationFn: async () => {
-			return await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/study/pr/${id}/feedback`, {
+			return await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/study/pr/${prId}/feedback`, {
 				prDescription: prDescription
 			});
 		},
@@ -44,7 +66,7 @@ export default function PrLearningContainer() {
 
   const { mutate: secondLearning, isPending: isSecondLoading } = useMutation({
 		mutationFn: async () => {
-			return await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/study/pr/${id}/feedback`, {
+			return await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/study/pr/${prId}/feedback`, {
 				prDescription: prDescription
 			});
 		},
@@ -58,7 +80,7 @@ export default function PrLearningContainer() {
 
   const { mutate: getFinalFeedback, isPending: isFinalLoading } = useMutation({
     mutationFn: async () => {
-			return await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/study/pr/${id}/finalFeedback`);
+			return await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/study/pr/${prId}/finalFeedback`);
     },
     onSuccess: (response) => {
 			setFinalFeedback(response.data);
@@ -69,7 +91,7 @@ export default function PrLearningContainer() {
     }
   });
 
-  if(isLoading || !prChangedFiles) {
+  if(isCardsLoading || isChangedFilesLoading || isCommentsLoading || !prCards || !prChangedFiles || !prComments) {
     return (
 			<div className='flex max-w-lg mx-auto min-h-screen bg-gray-50 items-center justify-center'>
 				<LoadingSpinner size={"md"} />
@@ -80,7 +102,7 @@ export default function PrLearningContainer() {
   return (
     <>
       <Header
-        title={pr.title}
+        title={prCards.title}
         currentStep={currentStep}
         setCurrentStep={setCurrentStep}
         setShowFiles={setShowFiles}
@@ -93,7 +115,7 @@ export default function PrLearningContainer() {
 						<div className="bg-white p-4 rounded-lg border border-gray-200">
 							<h3 className="font-medium mb-2">PR 설명 작성</h3>
 							<p className="text-sm text-gray-600">
-								커밋 로그와 변경된 파일을 확인해 어떤 부분을 반영하고 개선한 PR인지 설명해주세요!
+								{prComments.comments[0].content}
 							</p>
 						</div>
 						<textarea
@@ -126,12 +148,14 @@ export default function PrLearningContainer() {
                   <div className="bg-white p-4 rounded-lg border border-gray-200">
                     <h3 className="font-medium mb-2">리뷰어 답변</h3>
                     <p className="text-sm text-gray-600">
-                        리뷰어의 코멘트에 영어로 답변해주세요.
+                        리뷰어의 코멘트에 답변해주세요.
                     </p>
                   </div>
                   <div className="bg-white border border-gray-200 rounded-lg p-4">
                     <div className="bg-gray-50 p-3 rounded-lg mb-3">
-                      <p className="text-sm text-gray-700">{pr.reviewComment.comment}</p>
+                      <p className="text-sm text-gray-700">
+                        {prComments.comments[1].content}
+                      </p>
                     </div>
                     <textarea
                       className="w-full h-32 p-3 border border-gray-300 rounded-lg text-sm bg-white"
@@ -175,9 +199,10 @@ export default function PrLearningContainer() {
 			{/* Modals */}
 			{showFiles ? (
 				<ChangedFilesModal
-					pr={pr}
+					prChangedFiles={prChangedFiles}
 					onClose={() => setShowFiles(false)}
 				/>
+
 			): <></>}
 
 			{showFinalScore && finalFeedback ? (
