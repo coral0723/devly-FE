@@ -3,18 +3,18 @@ export default function LearningSection() {
     <>
       <div className="text-center mb-8">
         <div className="inline-block p-3 bg-blue-100 rounded-2xl mb-4">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/>
-            </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/>
+          </svg>
         </div>
         <h1 className="text-2xl font-bold mb-3">
-            오늘의 CS/개발 지식
+          오늘의 CS/개발 지식
         </h1>
         <p className="text-gray-600 mb-2">
-            실무에 필요한 CS/개발 지식을
+          실무에 필요한 CS/개발 지식을
         </p>
         <p className="text-gray-600">
-            쉽게 이해하고 학습하세요
+          쉽게 이해하고 학습하세요
         </p>
       </div>
 

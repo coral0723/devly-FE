@@ -9,10 +9,10 @@ export default function BackButton() {
   return (
     <div className="py-4">
       <button
-          onClick={() => router.push('/home')}
-          className="p-2 -ml-2 hover:bg-gray-100 rounded-full flex items-center"
+        onClick={() => router.push('/home')}
+        className="p-2 -ml-2 hover:bg-gray-100 rounded-full flex items-center"
       >
-          <ChevronLeft size={24} className="text-gray-600" />
+        <ChevronLeft size={24} className="text-gray-600" />
       </button>
     </div>
   )

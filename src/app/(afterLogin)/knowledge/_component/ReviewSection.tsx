@@ -2,7 +2,7 @@ type Props = {
   KnowledgeTotal: string;
 }
 
-export default function ReviewSection({KnowledgeTotal}: Props) {
+export default function ReviewSection({ KnowledgeTotal }: Props) {
   return (
     <>
       <div className="text-center mb-8">

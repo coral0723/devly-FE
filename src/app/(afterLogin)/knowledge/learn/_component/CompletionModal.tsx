@@ -8,7 +8,7 @@ type Props = {
   onClose: () => void;
 }
 
-export default function CompletionModal({isReview, incorrectIds, onClose}: Props) {
+export default function CompletionModal({ isReview, incorrectIds, onClose }: Props) {
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">

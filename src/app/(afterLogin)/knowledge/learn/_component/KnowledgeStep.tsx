@@ -1,4 +1,7 @@
-import { Distractor, Knowledge } from "@/model/Knowledge";
+"use client"
+
+import { Distractor } from "@/model/knowledge/Distractor";
+import { Knowledge } from "@/model/knowledge/Knowledge";
 import { Check, Code, Lightbulb, BookOpen, FileCode2 } from "lucide-react";
 import { useEffect, useState } from "react";
 

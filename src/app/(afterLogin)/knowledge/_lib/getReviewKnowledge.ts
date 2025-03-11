@@ -1,5 +1,5 @@
 import { QueryFunction } from "@tanstack/react-query";
-import { Knowledge } from "@/model/Knowledge";
+import { Knowledge } from "@/model/knowledge/Knowledge";
 import axios from "axios";
 
 export const getReviewKnowledges: QueryFunction<Knowledge[], [_1: string, _2: string, string]>
