@@ -74,7 +74,7 @@ export default function MainFeatures() {
       <div
           className={`bg-white rounded-2xl border border-gray-200 p-5 space-y-2 transition-all
             ${tasks.pr.completed === false && "cursor-pointer hover:bg-purple-50 hover:border-purple-200 active:scale-95"}`}
-          onClick={tasks.pr.completed ? undefined : (() => {router.replace(`/pr?studyId=${tasks.pr.studyId}`)})}
+          onClick={tasks.pr.completed ? undefined : (() => {router.replace(`/pr/${tasks.pr.studyId}`)})}
       >
         <div className="flex items-center justify-between">
           <GitPullRequest size={24} className="text-purple-500"/>

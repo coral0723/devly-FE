@@ -1,5 +1,5 @@
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
-import BottomNavigation from "../_component/BottomNavigation";
+import BottomNavigation from "../../_component/BottomNavigation";
 import { getPrCards } from "./_lib/getPrCards";
 import PrCardsArea from "./_component/PrCardsArea";
 

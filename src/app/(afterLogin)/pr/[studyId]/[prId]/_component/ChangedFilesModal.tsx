@@ -1,6 +1,6 @@
 "use client";
 
-import { Pr } from "@/model/pr/Pr";
+import { Pr } from "@/model/pr/PrChangedFiles";
 import { colorizeCode } from "../_lib/colorizeCode";
 
 type Props = {

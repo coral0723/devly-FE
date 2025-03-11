@@ -1,9 +1,7 @@
-'use client'
-
 import React, { useState } from 'react';
 import { useParams } from 'next/navigation';
 import Header from './_component/Header';
-import { Pr } from '@/model/pr/Pr';
+import { PrChangedFiles } from '@/model/pr/PrChangedFiles';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { getPr } from './_lib/getPr';
 import LoadingSpinner from '@/app/_component/LoadingSpinner';
@@ -27,7 +25,7 @@ export default function PRLearnPage() {
   const params = useParams();
   const id = params.id as string;
 
-  const {data: pr, isLoading} = useQuery<Pr, object, Pr, [_1: string, _2: string, string]>({
+  const {data: prChangedFiles, isLoading} = useQuery<PrChangedFiles, object, PrChangedFiles, [_1: string, _2: string, string]>({
     queryKey: ['pr', 'learn', id],
     queryFn: getPr,
     staleTime: 60 * 1000,
@@ -75,7 +73,7 @@ export default function PRLearnPage() {
     }
   });
 
-  if(isLoading || !pr) {
+  if(isLoading || !prChangedFiles) {
     return (
 			<div className='flex max-w-lg mx-auto min-h-screen bg-gray-50 items-center justify-center'>
 				<LoadingSpinner size={"md"} />
