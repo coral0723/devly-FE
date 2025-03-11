@@ -3,10 +3,11 @@
 import { useRouter } from 'next/navigation';
 
 type Props = {
+  isReview: boolean;
   onClose: () => void;
 }
 
-export function ExitConfirmModal({ onClose }: Props) {
+export function ExitConfirmModal({ isReview, onClose }: Props) {
   const router = useRouter();
 
   return (
@@ -24,7 +25,7 @@ export function ExitConfirmModal({ onClose }: Props) {
             계속 학습하기
           </button>
           <button
-            onClick={() => router.replace('/home')}
+            onClick={() => router.replace(isReview ? '/review' : '/home')}
             className="flex-1 py-3 bg-red-500 text-white rounded-xl font-medium hover:bg-red-600"
           >
             나가기

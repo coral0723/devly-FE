@@ -14,11 +14,11 @@ type Props = {
   }
 }
 
-export default async function WordsPage({searchParams}: Props) {
+export default async function WordPage({searchParams}: Props) {
   const {studyId, wordTotal} = await searchParams;
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery({queryKey: ['words', 'learn', studyId], queryFn: getWords});
-  await queryClient.prefetchQuery({queryKey: ['words', 'validation', studyId], queryFn: getValidationWordsResult});
+  await queryClient.prefetchQuery({queryKey: ['word', 'learn', studyId], queryFn: getWords});
+  await queryClient.prefetchQuery({queryKey: ['word', 'validation', studyId], queryFn: getValidationWordsResult});
   const dehydratedState = dehydrate(queryClient);
 
   return (

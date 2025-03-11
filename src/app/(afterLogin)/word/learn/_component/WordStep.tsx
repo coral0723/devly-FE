@@ -1,6 +1,6 @@
 "use client"
 
-import { Word } from '@/model/Word';
+import { Word } from '@/model/word/Word';
 import { useCallback, useState } from 'react';
 
 type Props = {
@@ -33,10 +33,10 @@ export function WordStep({ word, onNext }: Props) {
       // 음성 목소리 설정 (가능한 경우 여성 음성 선택)
       const voices = window.speechSynthesis.getVoices();
       const englishVoice = voices.find(voice => 
-          voice.lang.includes('en') && voice.name.includes('Female')
+        voice.lang.includes('en') && voice.name.includes('Female')
       );
       if (englishVoice) {
-          utterance.voice = englishVoice;
+        utterance.voice = englishVoice;
       }
 
       // 발음 재생

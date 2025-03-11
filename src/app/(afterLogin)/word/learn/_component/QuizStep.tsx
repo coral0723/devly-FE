@@ -2,14 +2,16 @@
 
 import { BookOpen, Check } from "lucide-react";
 import { Fragment, useEffect, useState } from "react";
-import { Example, Quiz, Word } from "@/model/Word";
+import { Word } from "@/model/word/Word";
+import { Example } from "@/model/word/Example";
+import { Quiz } from "@/model/word/Quiz";
 
 type Props = {
-  setCorrectIds: (correctIds: number[] | ((prev: number[]) => number[])) => void;
-  setIncorrectIds: (incorrectIds: number[] | ((prev: number[]) => number[])) => void;
   index: number;
   word: Word;
   wordsLength: number;
+  setCorrectIds: (correctIds: number[] | ((prev: number[]) => number[])) => void;
+  setIncorrectIds: (incorrectIds: number[] | ((prev: number[]) => number[])) => void;
   handleQuizNext: () => void;
   onScrollUp: () => void;
 }

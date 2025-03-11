@@ -671,7 +671,7 @@ export const handlers = [
           logs: [
             {
               id: 1,
-              study: 'words',
+              study: 'word',
               title: "리액트 훅 사용법 정리",
               exp: 130
             },
@@ -700,7 +700,7 @@ export const handlers = [
           logs: [
             {
               id: 1,
-              study: 'words',
+              study: 'word',
               title: "리액트 훅 사용법 정리",
               exp: 130
             },

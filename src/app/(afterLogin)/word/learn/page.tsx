@@ -4,11 +4,10 @@ import { useState, useRef } from "react";
 import { WordStep } from "./_component/WordStep";
 import { ExitConfirmModal } from "./_component/ExitConfirmModal";
 import { CompletionModal } from "./_component/CompletionModal";
-import { X } from "lucide-react";
 import { ContextStep } from "./_component/ContextStep";
 import QuizStep from "./_component/QuizStep";
 import { useQuery } from "@tanstack/react-query";
-import { Word } from "@/model/Word";
+import { Word } from "@/model/word/Word";
 import { useSearchParams } from "next/navigation";
 import { getWords } from "../_lib/getWords";
 import LoadingSpinner from "@/app/_component/LoadingSpinner";
@@ -18,6 +17,7 @@ import { authApi } from "@/app/_lib/axios";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { getReviewWords } from "../_lib/getReviewWords";
+import Header from "./_component/Header";
 
 type Props = {
   isReview?: boolean;
@@ -32,18 +32,17 @@ export default function WordLearnPage({isReview = false}: Props) {
   const [incorrectIds, setIncorrectIds] = useState<number[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const studyId = searchParams.get('studyId');
+  const studyId = useSearchParams().get('studyId');
   
   const {data: words, isLoading, refetch: wordsRefetch} = useQuery<Word[], object, Word[], [_1: string, _2: string, string]>({
-    queryKey: ['words', isReview ? 'review' : 'learn', studyId!],
+    queryKey: ['word', isReview ? 'review' : 'learn', studyId!],
     queryFn: isReview ? getReviewWords : getWords,
     staleTime: 0,
     refetchOnMount: 'always',
   });
   
   const {data: validationResult, refetch: validationRefetch} = useQuery<ValidationResult, object, ValidationResult, [_1: string, _2: string, string]>({
-    queryKey: ['words', 'validation', studyId!],
+    queryKey: ['word', 'validation', studyId!],
     queryFn: getValidationWordsResult,
     staleTime: 0,
     refetchOnMount: 'always',
@@ -112,28 +111,11 @@ export default function WordLearnPage({isReview = false}: Props) {
 
   return (
     <div className="relative max-w-lg mx-auto min-h-screen bg-gray-50">
-      {/* Progress Header */}
-      <div className="sticky top-0 z-20 bg-white border-b border-gray-200">
-        <div className="px-4 py-2">
-          <div className="flex items-center justify-between mb-2">
-            <button
-                onClick={() => setShowExitConfirm(true)}
-                className="p-2 -ml-2 hover:bg-gray-100 rounded-full"
-            >
-              <X size={24}/>
-            </button>
-            <span className="text-sm text-gray-500">
-              {currentWordIndex + 1} / {filteredWords.length}
-            </span>
-          </div>
-          <div className="h-1 bg-gray-100 rounded-full overflow-hidden">
-            <div
-              className="h-full bg-green-500 transition-all duration-300"
-              style={{ width: `${((currentWordIndex + 1) / filteredWords.length) * 100}%`}}
-            />
-          </div>
-        </div>
-      </div>
+      <Header
+        currentWordIndex={currentWordIndex}
+        wordsLength={filteredWords.length}
+        onExit={() => setShowExitConfirm(true)}
+      />
 
       {/* Main Content */}
       <div ref={containerRef} className="p-5 h-[calc(100vh-150px)] overflow-y-auto scrollbar-hide">
@@ -157,11 +139,11 @@ export default function WordLearnPage({isReview = false}: Props) {
 
         {step === 'quiz' && (
           <QuizStep
-            setCorrectIds={setCorrectIds}
-            setIncorrectIds={setIncorrectIds}
             index={currentWordIndex}
             word={filteredWords[currentWordIndex]}
             wordsLength={filteredWords.length}
+            setCorrectIds={setCorrectIds}
+            setIncorrectIds={setIncorrectIds}
             handleQuizNext={handleQuizNext}
             onScrollUp={onScrollUp}
           />
@@ -169,7 +151,10 @@ export default function WordLearnPage({isReview = false}: Props) {
       </div>
 
       {showExitConfirm && (
-          <ExitConfirmModal onClose={() => setShowExitConfirm(false)} />
+          <ExitConfirmModal 
+            isReview={isReview}
+            onClose={() => setShowExitConfirm(false)} 
+          />
       )}
 
       {showCompletion && (

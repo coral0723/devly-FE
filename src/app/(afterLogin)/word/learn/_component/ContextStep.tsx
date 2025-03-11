@@ -2,7 +2,8 @@
 
 import { Fragment } from 'react';
 import { BookOpen } from 'lucide-react';
-import { Example, Word } from '@/model/Word';
+import { Word } from '@/model/word/Word';
+import { Example } from '@/model/word/Example';
 
 type Props = {
   index: number;

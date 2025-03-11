@@ -33,13 +33,13 @@ export default function Log({studyLog}: Props) {
           >
             <div
               className={`w-10 h-10 rounded-full bg-${
-                log.study === 'words' ? 'emerald' :
+                log.study === 'word' ? 'emerald' :
                 log.study === 'knowledge' ? 'blue' :
                 log.study === 'pr' ? 'purple' :
                 'orange'
               }-100 flex items-center justify-center`}
             >
-              {log.study === 'words' && <BookOpen size={20} className={`text-emerald-600`} />}
+              {log.study === 'word' && <BookOpen size={20} className={`text-emerald-600`} />}
               {log.study === 'knowledge' && <Lightbulb size={20} className={`text-blue-600`} />}
               {log.study === 'pr' && <GitPullRequest size={20} className={`text-purple-600`} />}
               {log.study === 'discussion' && <MessageSquare size={20} className={`text-orange-600`} />}
