@@ -685,8 +685,8 @@ export const handlers = [
               exp: 200
             },
             {
-              id: 3,
-              prId: 3,
+              id: 58,
+              prId: 27,
               study: 'pr',
               title: "로그인 페이지 UI 구현",
               exp: 150
@@ -709,8 +709,8 @@ export const handlers = [
               exp: 130
             },
             {
-              id: 3,
-              prId: 3,
+              id: 58,
+              prId: 27,
               study: 'pr',
               title: "로그인 페이지 UI 구현",
               exp: 150
@@ -727,8 +727,8 @@ export const handlers = [
               exp: 200
             },
             {
-              id: 3,
-              prId: 3,
+              id: 58,
+              prId: 27,
               study: 'pr',
               title: "로그인 페이지 UI 구현",
               exp: 150

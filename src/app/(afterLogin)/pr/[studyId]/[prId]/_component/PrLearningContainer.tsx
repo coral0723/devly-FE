@@ -22,7 +22,7 @@ type Props = {
   isReview?: boolean;
 }
 
-export default function PrLearningContainer({isReview=false}: Props) {
+export default function PrLearningContainer({ isReview = false }: Props) {
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [prDescription, setPrDescription] = useState<string>(''); //첫 번째 답안 저장용
   const [firstFeedback, setFirstFeedback] = useState<Feedback>(); 
@@ -217,6 +217,8 @@ export default function PrLearningContainer({isReview=false}: Props) {
 			{showFinalScore && finalFeedback ? (
 				<FinalScoreModal
           isReview={isReview}
+          studyId={studyId as string}
+          prId={prId as string}
 					finalFeedback={finalFeedback}
 				/>
 			): <></>}

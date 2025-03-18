@@ -50,13 +50,13 @@
 
     return (
       <div className="max-w-lg mx-auto h-[100dvh] bg-gray-100 flex flex-col">
+        {/* Header */}
         <div className="bg-white border-b border-gray-200">
-          {/* Header */}
           <div className="p-4">
             <h1 className="text-xl font-semibold text-gray-900">복습</h1>
-              <p className="text-sm text-gray-500 mt-1">
-                매일 배운 내용을 복습하며 실력을 쌓아보세요!
-              </p>
+            <p className="text-sm text-gray-500 mt-1">
+              매일 배운 내용을 복습하며 실력을 쌓아보세요!
+            </p>
           </div>
         </div>
 

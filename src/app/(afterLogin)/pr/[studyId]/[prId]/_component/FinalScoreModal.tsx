@@ -5,11 +5,12 @@ import { useRouter } from "next/navigation";
 
 type Props = {
   isReview: boolean;
+  studyId: string;
+  prId: string;
   finalFeedback: FinalFeedback;
 }
 
-
-export default function FinalScoreModal({isReview, finalFeedback}: Props) {
+export default function FinalScoreModal({isReview, studyId, prId, finalFeedback}: Props) {
   const router = useRouter();
 
   return (
@@ -71,14 +72,29 @@ export default function FinalScoreModal({isReview, finalFeedback}: Props) {
 
         {/* Bottom Button */}
         <div className="p-4 bg-white border-t border-gray-200">
-          <button
-            onClick={() => {
-              router.replace(isReview ? '/review' : '/home');
-            }}
-            className="w-full py-3 bg-gradient-to-r from-purple-400 to-pink-500 hover:from-purple-500 hover:to-pink-600 rounded-lg text-white text-lg font-medium"
-          >
-            {isReview ? "복습 끝내기" : "학습 끝내기"}
-          </button>
+          <div className="flex space-x-3">
+            <button
+              onClick={() => {
+                router.replace(isReview ? '/review' : '/home');
+              }}
+              className="flex-1 py-3 bg-gradient-to-r from-purple-400 to-pink-500 hover:from-purple-500 hover:to-pink-600 rounded-lg text-white text-lg font-medium"
+            >
+              {isReview ? "복습 끝내기" : "학습 끝내기"}
+            </button>
+            <button
+              onClick={() => {
+                router.push(`/pr/${studyId}/${prId}/solutions`);
+              }}
+              className="flex-1 py-3 bg-white hover:bg-gray-100 rounded-lg text-indigo-600 text-lg font-medium border border-indigo-300 flex items-center justify-center"
+            >
+              <span>다른 사람 풀이</span>
+              <span className="ml-1 inline-block animate-bounce">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </span>
+            </button>
+          </div>
         </div>
         
       </div>
