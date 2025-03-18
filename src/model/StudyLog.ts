@@ -1,5 +1,6 @@
 export interface Log {
   id: number;
+  prId?: number;
   study: string;
   title: string;
   exp: number;

@@ -12,7 +12,11 @@ export default function Log({studyLog}: Props) {
   const router = useRouter();
 
   const handleLogClick = (log: ILog) => {
-    router.push(`/review/${log.study}?studyId=${log.id}`);
+    if(log.study === 'pr') {
+      router.push(`/review/${log.study}/${log.id}/${log.prId}`);
+    } else {
+      router.push(`/review/${log.study}?studyId=${log.id}`);
+    }
   }
 
   return (

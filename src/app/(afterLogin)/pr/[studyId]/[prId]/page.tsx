@@ -13,10 +13,8 @@ export default async function PRLearnPage({params}: {params: {studyId: string, p
   const dehydratedState = dehydrate(queryClient);
 
   return (
-    <div className="max-w-lg mx-auto min-h-screen bg-gray-50">
-      <HydrationBoundary state={dehydratedState}>
-        <PrLearningContainer />
-      </HydrationBoundary>
-    </div>
+    <HydrationBoundary state={dehydratedState}>
+      <PrLearningContainer/>
+    </HydrationBoundary>
   );
 };

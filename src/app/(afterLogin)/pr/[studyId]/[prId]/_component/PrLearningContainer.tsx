@@ -18,7 +18,11 @@ import { getPrChangedFiles } from "../_lib/getPrChangedFiles"
 import { PrComments } from "@/model/pr/PrComments"
 import { getPrComments } from "../_lib/getPrComments"
 
-export default function PrLearningContainer() {
+type Props = {
+  isReview?: boolean;
+}
+
+export default function PrLearningContainer({isReview=false}: Props) {
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [prDescription, setPrDescription] = useState<string>(''); //첫 번째 답안 저장용
   const [firstFeedback, setFirstFeedback] = useState<Feedback>(); 
@@ -100,7 +104,7 @@ export default function PrLearningContainer() {
   }
   
   return (
-    <>
+    <div className="max-w-lg mx-auto min-h-screen bg-gray-50">
       <Header
         title={prCards.title}
         currentStep={currentStep}
@@ -190,7 +194,12 @@ export default function PrLearningContainer() {
 							className="w-full py-3 bg-gradient-to-r from-purple-400 to-pink-500 hover:from-purple-500 hover:to-pink-600 text-white text-lg font-medium rounded-lg"
 							onClick={() => getFinalFeedback()}
 						>
-							{isFinalLoading ? (<LoadingSpinner size={'xs'}/>): "학습 마무리하기"}
+							{isFinalLoading 
+                ? (<LoadingSpinner size={'xs'}/>)
+                : isReview 
+                  ? "복습 마무리하기"
+                  : "학습 마무리하기"
+                }
 						</button>
 					</div>
 				</div>
@@ -207,9 +216,10 @@ export default function PrLearningContainer() {
 
 			{showFinalScore && finalFeedback ? (
 				<FinalScoreModal
+          isReview={isReview}
 					finalFeedback={finalFeedback}
 				/>
 			): <></>}
-    </>
+    </div>
   )
 }
