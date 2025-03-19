@@ -20,9 +20,10 @@ import { getPrComments } from "../_lib/getPrComments"
 
 type Props = {
   isReview?: boolean;
+  userId?: string;
 }
 
-export default function PrLearningContainer({ isReview = false }: Props) {
+export default function PrLearningContainer({ isReview = false, userId = undefined }: Props) {
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [prDescription, setPrDescription] = useState<string>(''); //첫 번째 답안 저장용
   const [firstFeedback, setFirstFeedback] = useState<Feedback>(); 
