@@ -1,11 +1,11 @@
 "use client"
 
 import { useState, useRef } from "react";
-import { WordStep } from "./_component/WordStep";
-import { ExitConfirmModal } from "./_component/ExitConfirmModal";
-import { CompletionModal } from "./_component/CompletionModal";
-import { ContextStep } from "./_component/ContextStep";
-import QuizStep from "./_component/QuizStep";
+import { WordStep } from "../_component/WordStep";
+import { ExitConfirmModal } from "../_component/ExitConfirmModal";
+import { CompletionModal } from "../_component/CompletionModal";
+import { ContextStep } from "../_component/ContextStep";
+import QuizStep from "../_component/QuizStep";
 import { useQuery } from "@tanstack/react-query";
 import { Word } from "@/model/word/Word";
 import { useSearchParams } from "next/navigation";
@@ -17,7 +17,7 @@ import { authApi } from "@/app/_lib/axios";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { getReviewWords } from "../_lib/getReviewWords";
-import Header from "./_component/Header";
+import Header from "../_component/Header";
 
 type Props = {
   isReview?: boolean;
