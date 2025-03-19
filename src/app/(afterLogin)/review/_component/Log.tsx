@@ -13,7 +13,7 @@ export default function Log({studyLog}: Props) {
 
   const handleLogClick = (log: ILog) => {
     if(log.study === 'pr') {
-      router.push(`/review/${log.study}/${log.id}/${log.prId}`);
+      router.push(`/${log.study}/${log.id}/${log.prId}/review`);
     } else {
       router.push(`/${log.study}/review?studyId=${log.id}`);
     }
