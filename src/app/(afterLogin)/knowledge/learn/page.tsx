@@ -1,9 +1,9 @@
 'use client';
 
 import { useState, useRef } from 'react';
-import ExitConfirmModal from './_component/ExitConfirmModal';
-import CompletionModal from './_component/CompletionModal';
-import KnowledgeStep from './_component/KnowledgeStep';
+import ExitConfirmModal from '../_component/ExitConfirmModal';
+import CompletionModal from '../_component/CompletionModal';
+import KnowledgeStep from '../_component/KnowledgeStep';
 import { useSearchParams } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { Knowledge } from '@/model/knowledge/Knowledge';
@@ -15,7 +15,7 @@ import { getValidationKnowledgeResult } from '../_lib/getValidationKnowledgeResu
 import { ValidationResult } from '@/model/ValidationResult';
 import axios from 'axios';
 import { authApi } from '@/app/_lib/axios';
-import Header from './_component/Header';
+import Header from '../_component/Header';
 
 type Props = {
   isReview?: boolean;
