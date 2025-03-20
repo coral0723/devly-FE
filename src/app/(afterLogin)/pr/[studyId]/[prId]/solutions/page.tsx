@@ -24,10 +24,7 @@ export default function PrSolutionsPage() {
   return (
     <div className="max-w-lg mx-auto h-screen bg-gray-100 flex flex-col overflow-hidden">
       <Header/>
-
-      {/* Scrollable Container */}
-      <div className="flex-1 overflow-y-auto scrollbar-hidden">
-        <div className="p-4">
+      <div className="flex-1 p-4 overflow-y-auto scrollbar-hidden">
           {/* PR Card */}
           <div className="bg-white rounded-xl w-full mb-4 overflow-hidden">
             {/* Profile Section */}
@@ -85,7 +82,6 @@ export default function PrSolutionsPage() {
               <CommentsContainer/>
             )}
           </div>
-        </div>
       </div>
     </div>
   );
