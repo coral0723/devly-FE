@@ -1,3 +1,4 @@
+import { DeveloperType } from '@/model/User';
 import { faker } from '@faker-js/faker';
 import { http, HttpResponse } from 'msw';
 
@@ -469,6 +470,88 @@ export const handlers = [
           "Effective Java - Chapter 2: Singleton Pattern",
           "Thread Safety in Java - Best Practices"
         ]
+      })
+    )
+  }),
+  http.get(`/api/pr/solutions/:prId`, async ({ }) => {
+    return new HttpResponse(
+      JSON.stringify({
+        code: "Success",
+        message: "성공",
+        result: {
+          solutions: [
+            {
+              id: 1,
+              text: "이 문제는 useCallback을 활용하여 메모이제이션을 구현하면 해결할 수 있습니다. 렌더링 최적화에 도움이 됩니다.",
+              user: {
+                id: "user123",
+                email: "frontend_dev@example.com",
+                nickname: "리액트마스터",
+                profile: "https://randomuser.me/api/portraits/men/1.jpg",
+                developerType: DeveloperType.Frontend,
+                level: 4
+              },
+              likeCount: 42,
+              commentCount: 7
+            },
+            {
+              id: 2,
+              text: "JPA의 지연 로딩(Lazy Loading)을 사용하면 N+1 문제를 효과적으로 해결할 수 있습니다. 예제 코드를 첨부합니다.",
+              user: {
+                id: "user456",
+                email: "backend_guru@example.com",
+                nickname: "스프링마스터",
+                profile: "https://randomuser.me/api/portraits/women/2.jpg",
+                developerType: DeveloperType.Backend,
+                level: 5
+              },
+              likeCount: 65,
+              commentCount: 12
+            },
+            {
+              id: 3,
+              text: "이 이슈는 서비스 레이어에서 트랜잭션 관리를 제대로 하지 않아서 발생했습니다. @Transactional 애노테이션을 추가하면 해결됩니다.",
+              user: {
+                id: "user789",
+                email: "java_expert@example.com",
+                nickname: "자바개발왕",
+                profile: "https://randomuser.me/api/portraits/men/3.jpg",
+                developerType: DeveloperType.Backend,
+                level: 3
+              },
+              likeCount: 28,
+              commentCount: 4
+            },
+            {
+              id: 4,
+              text: "CSS Grid를 사용하면 이 레이아웃 문제를 더 간단하게 해결할 수 있습니다. flexbox보다 이 경우에 더 적합합니다.",
+              user: {
+                id: "user101",
+                email: "css_wizard@example.com",
+                nickname: "디자인코더",
+                profile: "https://randomuser.me/api/portraits/women/4.jpg",
+                developerType: DeveloperType.Frontend,
+                level: 4
+              },
+              likeCount: 33,
+              commentCount: 8
+            },
+            {
+              id: 5,
+              text: "이 PR에서는 코드 중복이 많이 보입니다. 공통 로직을 유틸리티 함수로 추출하는 것이 좋을 것 같습니다.",
+              user: {
+                id: "user202",
+                email: "code_reviewer@example.com",
+                nickname: "클린코더",
+                profile: "https://randomuser.me/api/portraits/men/5.jpg",
+                developerType: DeveloperType.Backend,
+                level: 5
+              },
+              likeCount: 51,
+              commentCount: 9
+            }
+          ]
+        }
       })
     )
   }),

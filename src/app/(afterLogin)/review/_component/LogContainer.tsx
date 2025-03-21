@@ -1,6 +1,6 @@
 "use client"
 
-import { StudyLog } from "@/model/StudyLog"
+import { StudyLog } from "@/model/StudyLog";
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import Log from "./Log";
@@ -8,7 +8,7 @@ import Log from "./Log";
 type Props = {
   studyLogs: StudyLog[],
   hasNextPage: boolean | undefined,
-  onLoadMore: () => Promise<void>;
+  onLoadMore: () => Promise<void>,
 }
 
 export default function LogContainer({studyLogs, hasNextPage, onLoadMore}: Props) {

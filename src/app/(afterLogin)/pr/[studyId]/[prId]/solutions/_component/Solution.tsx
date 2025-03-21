@@ -1,6 +1,28 @@
 "use client"
 
-export default function Solution() {
+import { Solution as ISolution } from "@/model/pr/solutions/Solution"
+import { Avatar } from "antd";
+import { Heart, MessageCircle } from "lucide-react";
+import { useState } from "react";
+import CommentsContainer from "./CommentsContainer";
+
+type Props = {
+  solution: ISolution;
+}
+
+export default function Solution({ solution }: Props) {
+  const [liked, setLiked] = useState<boolean>(false);
+  const [likeCount, setLikeCount] = useState(5);
+  const [showComments, setShowComments] = useState<boolean>(false);
+
+  const handleLike = () => {
+    if (liked) {
+      setLikeCount(likeCount - 1);
+    } else {
+      setLikeCount(likeCount + 1);
+    }
+    setLiked(!liked);
+  };
   return (
     <div className="bg-white rounded-xl w-full mb-4 overflow-hidden">
       {/* Profile Section */}
@@ -8,11 +30,11 @@ export default function Solution() {
         <div className="flex space-x-2 items-center">
           <Avatar
             className="w-10 h-10"
-            src={faker.image.avatar()}
+            src={solution.user.profile}
           />
-          <p className="text-lg">김산호</p>
+          <p className="text-lg">{solution.user.nickname}</p>
           <span className="text-purple-600 text-sm">
-          Lv. 6
+          Lv. {solution.user.level}
           </span>
         </div>
       </div>
@@ -20,9 +42,7 @@ export default function Solution() {
       {/* PR Content */}
       <div className="px-4 py-4">
         <p className="text-sm text-gray-500 line-clamp-4">
-          ㅇ넘라ㅓ린멍리너ㅣasdfjsdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddfadsjkofjodsa
-          fffffffffffffffffffffffffffffffffddddddddddddddddddd
-          dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+          {solution.text}
         </p>
       </div>
       
