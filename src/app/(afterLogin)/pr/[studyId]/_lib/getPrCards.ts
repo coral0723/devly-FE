@@ -11,21 +11,21 @@ export const getPrCards: QueryFunction<PrCard, [_1: string, _2: string, string]>
     };
 
     //msw 용
-    // const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/study/prs/${studyId}`, {
-    //   headers: {
-    //     'Cache-Control': 'no-store',
-    //   },
-    // });
-
-    // return res.data.result;
-
-    const res = await authApi.get(`/api/pr/${studyId}`, {
+    const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/study/prs/${studyId}`, {
       headers: {
         'Cache-Control': 'no-store',
-      }
+      },
     });
 
     return res.data.result;
+
+    // const res = await authApi.get(`/api/pr/${studyId}`, {
+    //   headers: {
+    //     'Cache-Control': 'no-store',
+    //   }
+    // });
+
+    // return res.data.result;
 
   } catch(err) {
     throw new Error('Failed to fetch data', { cause: err});

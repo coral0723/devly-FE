@@ -17,6 +17,9 @@ import { PrCard } from "@/model/pr/PrCard"
 import { getPrChangedFiles } from "../_lib/getPrChangedFiles"
 import { PrComments } from "@/model/pr/PrComments"
 import { getPrComments } from "../_lib/getPrComments"
+import { PrHistory } from "@/model/pr/prHistory"
+import { getPrHistory } from "../_lib/getPrHistory"
+import { useRouter } from "next/navigation"
 
 type Props = {
   isReview?: boolean;
@@ -33,6 +36,7 @@ export default function PrLearningContainer({ isReview = false, userId = undefin
   const [showFiles, setShowFiles] = useState<boolean>(false); //"커밋 내역" Modal
   const [showFinalScore, setShowFinalScore] = useState<boolean>(false); //"최종 결과" Modal
   const {studyId, prId} = useParams();
+  const router = useRouter();
 
   const {data: prCards, isLoading: isCardsLoading} = useQuery<PrCard, object, PrCard, [_1: string, _2: string, string]>({
     queryKey: ['pr', 'cards', studyId as string],
@@ -53,6 +57,14 @@ export default function PrLearningContainer({ isReview = false, userId = undefin
     queryFn: getPrComments,
     staleTime: 60 * 1000,
     gcTime: 300 * 1000,
+  });
+
+  const {data: prHistory, isLoading: isPrHistoryLoading} = useQuery<PrHistory, object, PrHistory, [_1: string, _2: string, string, string]>({
+    queryKey: ['pr', 'history', prId as string, userId as string],
+    queryFn: getPrHistory,
+    staleTime: 60 * 1000,
+    gcTime: 300 * 1000,
+    enabled: !!userId,
   });
 
   const { mutate: firstLearning, isPending: isFirstLoading } = useMutation({
@@ -96,7 +108,7 @@ export default function PrLearningContainer({ isReview = false, userId = undefin
     }
   });
 
-  if(isCardsLoading || isChangedFilesLoading || isCommentsLoading || !prCards || !prChangedFiles || !prComments) {
+  if(isCardsLoading || isChangedFilesLoading || isCommentsLoading || isPrHistoryLoading || !prCards || !prChangedFiles || !prComments || (userId && !prHistory)) {
     return (
 			<div className='flex max-w-lg mx-auto min-h-screen bg-gray-50 items-center justify-center'>
 				<LoadingSpinner size={"md"} />
@@ -126,12 +138,16 @@ export default function PrLearningContainer({ isReview = false, userId = undefin
 						<textarea
 							className="w-full h-32 p-3 border border-gray-300 rounded-lg text-sm bg-white"
 							placeholder="PR 설명을 작성해주세요..."
-							value={prDescription}
+							value={prHistory ? prHistory.firstAnswer : prDescription}
 							onChange={(e) => setPrDescription(e.target.value)}
 						/>
-						{firstFeedback && <ReviewAssessment feedback={firstFeedback}/>}
+						{firstFeedback 
+              ? <ReviewAssessment feedback={firstFeedback}/>
+              : prHistory
+                && <ReviewAssessment feedback={prHistory.firstFeedback}/>
+            }
 						<div className="fixed w-full max-w-lg bottom-0 left-1/2 transform -translate-x-1/2 p-2 bg-white border border-gray-200 z-10">
-							{firstFeedback ? (
+							{firstFeedback || prHistory ? (
 								<button
 									className="w-full py-3 bg-purple-600 text-white rounded-lg text-lg font-medium hover:bg-purple-700"
 									onClick={() => setCurrentStep(2)}
@@ -165,22 +181,34 @@ export default function PrLearningContainer({ isReview = false, userId = undefin
                     <textarea
                       className="w-full h-32 p-3 border border-gray-300 rounded-lg text-sm bg-white"
                       placeholder="답변을 영어로 작성해주세요..."
-                      value={replies}
+                      value={prHistory ? prHistory.secondAnswer : replies}
                       onChange={(e) => setReplies(e.target.value)}
                     />
                   </div>
-                  {secondFeedback && <ReviewAssessment feedback={secondFeedback}/>}
+                  {secondFeedback 
+                    ? <ReviewAssessment feedback={secondFeedback}/>
+                    : prHistory
+                      && <ReviewAssessment feedback={prHistory.secondFeedback}/>
+                  }
                   <div className="fixed w-full max-w-lg bottom-0 left-1/2 transform -translate-x-1/2 p-2 bg-white border border-gray-200 z-10">
-                    {secondFeedback ? (
-                      <></>
-                    ) : (
-                      <button
-                        className="w-full py-3 bg-purple-600 text-white text-lg font-medium rounded-lg hover:bg-purple-700"
-                        onClick={() => secondLearning()}
-                      >
-                        {isSecondLoading ? (<LoadingSpinner size={'xs'}/>) : "검사하기"}
-                      </button>
-                    )}
+                    {prHistory
+                      ? (
+                          <button
+                            className="w-full py-3 bg-purple-600 text-white text-lg font-medium rounded-lg hover:bg-purple-700"
+                            onClick={() => router.back()}
+                          >
+                            돌아가기
+                          </button>
+                         ) 
+                      : !secondFeedback && (
+                          <button
+                            className="w-full py-3 bg-purple-600 text-white text-lg font-medium rounded-lg hover:bg-purple-700"
+                            onClick={() => secondLearning()}
+                          >
+                            {isSecondLoading ? (<LoadingSpinner size={'xs'}/>) : "검사하기"}
+                          </button>
+                        )
+                    }
                   </div>
               </div>
           )}
@@ -193,7 +221,13 @@ export default function PrLearningContainer({ isReview = false, userId = undefin
 					<div className="max-w-lg mx-auto">
 						<button
 							className="w-full py-3 bg-gradient-to-r from-purple-400 to-pink-500 hover:from-purple-500 hover:to-pink-600 text-white text-lg font-medium rounded-lg"
-							onClick={() => getFinalFeedback()}
+							onClick={() => {
+                if(prHistory) {
+                  router.back();
+                } else {
+                  getFinalFeedback();
+                }
+              }}
 						>
 							{isFinalLoading 
                 ? (<LoadingSpinner size={'xs'}/>)

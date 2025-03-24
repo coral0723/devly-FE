@@ -5,6 +5,7 @@ import { Avatar } from "antd";
 import { Heart, MessageCircle } from "lucide-react";
 import { useState } from "react";
 import CommentsContainer from "./CommentsContainer";
+import { useRouter, useParams } from "next/navigation";
 
 type Props = {
   solution: ISolution;
@@ -14,6 +15,8 @@ export default function Solution({ solution }: Props) {
   const [liked, setLiked] = useState<boolean>(false);
   const [likeCount, setLikeCount] = useState(5);
   const [showComments, setShowComments] = useState<boolean>(false);
+  const router = useRouter();
+  const {studyId, prId} = useParams();
 
   const handleLike = () => {
     if (liked) {
@@ -64,14 +67,17 @@ export default function Solution({ solution }: Props) {
             <span>8</span>
           </button>
         </div>
-        <div className="flex items-center p-2 bg-purple-100 text-sm text-purple-600 rounded-md hover:cursor-pointer">
+        <button 
+          className="flex items-center p-2 bg-purple-100 text-sm text-purple-600 rounded-md hover:cursor-pointer"
+          onClick={() => router.push(`/pr/${studyId}/${prId}/solutions/${solution.user.id}`)}
+        >
           <span>PR 보러 가기</span>
           <span className="ml-1 inline-block animate-bounce">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
             </svg>
           </span>
-        </div>
+        </button>
       </div>
       
       {showComments && (
