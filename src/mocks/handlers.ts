@@ -6,6 +6,8 @@ const delay = (ms: number) => new Promise((res) => {
   setTimeout(res, ms);
 });
 
+const generateId = () => Date.now() + Math.floor(Math.random() * 1000);
+
 export const handlers = [
   http.get('/api/studies/tasks', async ({ }) => {
     return new HttpResponse(
@@ -481,7 +483,7 @@ export const handlers = [
         result: {
           solutions: [
             {
-              id: 1,
+              id: generateId(),
               text: "이 문제는 useCallback을 활용하여 메모이제이션을 구현하면 해결할 수 있습니다. 렌더링 최적화에 도움이 됩니다.",
               user: {
                 id: "user123",
@@ -491,11 +493,12 @@ export const handlers = [
                 developerType: DeveloperType.Frontend,
                 level: 4
               },
+              isLiked: true,
               likeCount: 42,
               commentCount: 7
             },
             {
-              id: 2,
+              id: generateId(),
               text: "JPA의 지연 로딩(Lazy Loading)을 사용하면 N+1 문제를 효과적으로 해결할 수 있습니다. 예제 코드를 첨부합니다.",
               user: {
                 id: "user456",
@@ -505,11 +508,12 @@ export const handlers = [
                 developerType: DeveloperType.Backend,
                 level: 5
               },
+              isLiked: false,
               likeCount: 65,
               commentCount: 12
             },
             {
-              id: 3,
+              id: generateId(),
               text: "이 이슈는 서비스 레이어에서 트랜잭션 관리를 제대로 하지 않아서 발생했습니다. @Transactional 애노테이션을 추가하면 해결됩니다.",
               user: {
                 id: "user789",
@@ -519,11 +523,12 @@ export const handlers = [
                 developerType: DeveloperType.Backend,
                 level: 3
               },
+              isLiked: true,
               likeCount: 28,
               commentCount: 4
             },
             {
-              id: 4,
+              id: generateId(),
               text: "CSS Grid를 사용하면 이 레이아웃 문제를 더 간단하게 해결할 수 있습니다. flexbox보다 이 경우에 더 적합합니다.",
               user: {
                 id: "user101",
@@ -533,11 +538,12 @@ export const handlers = [
                 developerType: DeveloperType.Frontend,
                 level: 4
               },
+              isLiked: false,
               likeCount: 33,
               commentCount: 8
             },
             {
-              id: 5,
+              id: generateId(),
               text: "이 PR에서는 코드 중복이 많이 보입니다. 공통 로직을 유틸리티 함수로 추출하는 것이 좋을 것 같습니다.",
               user: {
                 id: "user202",
@@ -547,11 +553,28 @@ export const handlers = [
                 developerType: DeveloperType.Backend,
                 level: 5
               },
+              isLiked: true,
               likeCount: 51,
               commentCount: 9
             }
           ]
         }
+      })
+    )
+  }),
+  http.post(`/api/pr/solution/like/:solutionId`, async ({ }) => {
+    return new HttpResponse(
+      JSON.stringify({
+        code: "Success",
+        message: "성공",
+      })
+    )
+  }),
+  http.post(`/api/pr/solution/unlike/:solutionId`, async ({ }) => {
+    return new HttpResponse(
+      JSON.stringify({
+        code: "Success",
+        message: "성공",
       })
     )
   }),
