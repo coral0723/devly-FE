@@ -11,19 +11,19 @@ export const getPrComments: QueryFunction<PrComments, [_1: string, _2: string, s
     };
 
     // msw 용
-    // const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/pr/comments/${prId}`, {
-    //   headers: {
-    //     'Cache-Control': 'no-store',
-    //   },
-    // });
-
-    // return res.data.result;
-
-    const res = await authApi.get(`/api/pr/comments/${prId}`, {
+    const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/pr/comments/${prId}`, {
       headers: {
         'Cache-Control': 'no-store',
-      }
+      },
     });
+
+    return res.data.result;
+
+    // const res = await authApi.get(`/api/pr/comments/${prId}`, {
+    //   headers: {
+    //     'Cache-Control': 'no-store',
+    //   }
+    // });
 
     return res.data.result;
     

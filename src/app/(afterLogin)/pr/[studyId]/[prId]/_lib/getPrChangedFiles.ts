@@ -11,21 +11,21 @@ export const getPrChangedFiles: QueryFunction<PrChangedFiles, [_1: string, _2: s
     };
 
     // msw 용
-    // const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/pr/changed-files/${prId}`, {
-    //   headers: {
-    //     'Cache-Control': 'no-store',
-    //   },
-    // });
-
-    // return res.data.result;
-
-    const res = await authApi.get(`/api/pr/changed-files/${prId}`, {
+    const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/pr/changed-files/${prId}`, {
       headers: {
         'Cache-Control': 'no-store',
-      }
+      },
     });
 
     return res.data.result;
+
+    // const res = await authApi.get(`/api/pr/changed-files/${prId}`, {
+    //   headers: {
+    //     'Cache-Control': 'no-store',
+    //   }
+    // });
+
+    // return res.data.result;
     
   } catch(err) {
     throw new Error('Failed to fetch data', { cause: err});

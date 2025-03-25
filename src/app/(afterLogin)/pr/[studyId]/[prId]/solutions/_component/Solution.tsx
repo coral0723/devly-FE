@@ -212,7 +212,10 @@ export default function Solution({ solution }: Props) {
       </div>
       
       {showComments && (
-        <CommentsContainer/>
+        <CommentsContainer
+          prId={prId as string}
+          solutionId={solution.id}
+        />
       )}
     </div>
   )

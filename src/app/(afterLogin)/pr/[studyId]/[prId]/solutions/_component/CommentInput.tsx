@@ -4,12 +4,11 @@ import { faker } from "@faker-js/faker";
 import { Avatar } from "antd";
 
 type Props = {
-  newComment: string;
-  setNewComment: (newComment: string) => void;
-  handleSubmitComment: (e: React.FormEvent<HTMLFormElement>) => void;
+  prId: string,
+  solutionId: number,
 }
 
-export default function CommentInput({ newComment, setNewComment, handleSubmitComment }: Props) {
+export default function CommentInput({ prId, solutionId }: Props) {
   return (
     <form 
       onSubmit={handleSubmitComment} 

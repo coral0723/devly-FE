@@ -689,6 +689,23 @@ export const handlers = [
       })
     )
   }),
+  http.get(`/api/pr/solution/comments/:prId/:solutionId`, async ({ }) => {
+    return new HttpResponse(
+      JSON.stringify({
+        code: "Success",
+        message: "성공",
+        result: {
+          comments: [
+            { id: generateId(), name: "이지민", profile: faker.image.avatar(), text: "좋은 접근법이네요! 저도 비슷하게 풀었어요.", time: new Date(2025, 2, 19, 12, 30) },
+            { id: generateId(), name: "박도현", profile: faker.image.avatar(), text: "이 부분 조금 더 최적화할 수 있을 것 같아요!", time: new Date(2025, 2, 19, 13, 45) },
+            { id: generateId(), name: "최서연", profile: faker.image.avatar(), text: "코드가 너무 깔끔해요! 참고하겠습니다.", time: new Date(2025, 2, 19, 14, 20) },
+            { id: generateId(), name: "정민준", profile: faker.image.avatar(), text: "이런 방식으로도 문제를 해결할 수 있군요. 배울 점이 많네요.", time: new Date(2025, 2, 19, 14, 35) },
+            { id: generateId(), name: "김지우", profile: faker.image.avatar(), text: "시간 복잡도 측면에서도 효율적인 것 같아요!", time: new Date(2025, 2, 19, 15, 0) },
+          ]
+        }
+      })
+    )
+  }),
   http.get(`/profile/stats`, async ({ }) => {
     return new HttpResponse(
       JSON.stringify({
