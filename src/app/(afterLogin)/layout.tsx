@@ -3,6 +3,7 @@
 import { ReactNode } from "react"
 import { useEffect } from "react"
 import { useRouter } from "next/navigation"
+import ToastProvider from "./_component/ToastProvider"
 
 type Props = {
   children: ReactNode;
@@ -22,6 +23,7 @@ export default function AfterLoginLayout({ children }: Props) {
   return (
     <>
       {children}
+      <ToastProvider/>
     </>
   )
 }
