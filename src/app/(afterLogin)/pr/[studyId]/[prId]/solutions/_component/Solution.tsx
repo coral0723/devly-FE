@@ -195,7 +195,7 @@ export default function Solution({ solution }: Props) {
             onClick={() => setShowComments(!showComments)}
           >
             <MessageCircle className={`w-5 h-5`} />
-            <span>8</span>
+            <span>{solution.commentCount}</span>
           </button>
         </div>
         <button 
@@ -213,7 +213,6 @@ export default function Solution({ solution }: Props) {
       
       {showComments && (
         <CommentsContainer
-          prId={prId as string}
           solutionId={solution.id}
         />
       )}

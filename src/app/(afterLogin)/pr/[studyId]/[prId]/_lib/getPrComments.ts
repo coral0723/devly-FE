@@ -25,7 +25,7 @@ export const getPrComments: QueryFunction<PrComments, [_1: string, _2: string, s
     //   }
     // });
 
-    return res.data.result;
+    // return res.data.result;
     
   } catch(err) {
     throw new Error('Failed to fetch data', { cause: err});

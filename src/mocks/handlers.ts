@@ -578,6 +578,14 @@ export const handlers = [
       })
     )
   }),
+  http.post(`/api/pr/solution/addComment/:solutionId`, async ({ }) => {
+    return new HttpResponse(
+      JSON.stringify({
+        code: "Success",
+        message: "성공",
+      })
+    )
+  }),
   http.get(`/api/pr/history/:prId/:userId`, async ({ }) => {
     return new HttpResponse(
       JSON.stringify({
@@ -689,7 +697,7 @@ export const handlers = [
       })
     )
   }),
-  http.get(`/api/pr/solution/comments/:prId/:solutionId`, async ({ }) => {
+  http.get(`/api/pr/solution/comments/:solutionId`, async ({ }) => {
     return new HttpResponse(
       JSON.stringify({
         code: "Success",
