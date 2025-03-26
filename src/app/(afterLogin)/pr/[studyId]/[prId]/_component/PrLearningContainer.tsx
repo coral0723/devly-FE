@@ -20,6 +20,8 @@ import { getPrComments } from "../_lib/getPrComments"
 import { PrHistory } from "@/model/pr/prHistory"
 import { getPrHistory } from "../_lib/getPrHistory"
 import { useRouter } from "next/navigation"
+import { authApi } from "@/app/_lib/axios"
+import { Answer } from "@/model/pr/Answer"
 
 type Props = {
   isReview?: boolean;
@@ -67,28 +69,33 @@ export default function PrLearningContainer({ isReview = false, userId = undefin
     enabled: !!userId,
   });
 
-  const { mutate: firstLearning, isPending: isFirstLoading } = useMutation({
-		mutationFn: async () => {
-			return await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/study/pr/${prId}/feedback`, {
-				prDescription: prDescription
+  const { mutate: postAnswer, isPending: isPostAnswerLoading } = useMutation<
+    Feedback,
+    Error,
+    Answer
+  >({
+		mutationFn: async (params) => {
+      // msw용
+			const response = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/pr/review/comment/${params.commentId}`, {
+				answer: prDescription,
+        studyId: studyId,
 			});
-		},
-		onSuccess: (response) => {
-			setFirstFeedback(response.data);
-		},
-		onError: (error) => {
-			console.log('에러 상세:', error);
-		}
-	});
 
-  const { mutate: secondLearning, isPending: isSecondLoading } = useMutation({
-		mutationFn: async () => {
-			return await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/study/pr/${prId}/feedback`, {
-				prDescription: prDescription
-			});
+      return response.data.result;
+
+      // const response = await authApi.post(`/api/pr/review/comment/${params.commentId}`, {
+      //   answer: prDescription,
+      //   studyId: studyId,
+      // });
+
+      // return response.data.result;
 		},
-		onSuccess: (response) => {
-			setSecondFeedback(response.data);
+		onSuccess: (feedbackData, variables) => {
+      if(variables.commentId === prComments?.comments[0].id) {
+        setFirstFeedback(feedbackData);
+      } else if(variables.commentId === prComments?.comments[1].id) {
+        setSecondFeedback(feedbackData);
+      }
 		},
 		onError: (error) => {
 			console.log('에러 상세:', error);
@@ -126,7 +133,7 @@ export default function PrLearningContainer({ isReview = false, userId = undefin
       />
 
       {/* Main Content */}
-      <div className="p-4 overflow-y-auto scrollbar-hide" style={{ height: 'calc(100vh - 176px)' }}>
+      <div className="p-4 overflow-y-auto scrollbar-hide" style={{ height: 'calc(100vh - 200px)' }}>
 				{currentStep === 1 ? ( // PR 설명 작성 Step
 					<div className="space-y-4">
 						<div className="bg-white p-4 rounded-lg border border-gray-200">
@@ -157,9 +164,12 @@ export default function PrLearningContainer({ isReview = false, userId = undefin
 							) : (
 								<button
 									className="w-full py-3 bg-purple-600 text-white rounded-lg text-lg font-medium hover:bg-purple-700"
-									onClick={() => firstLearning()}
+									onClick={() => postAnswer({
+                    commentId: prComments?.comments[0].id,
+                    answer: prDescription
+                  })}
 								>
-									{isFirstLoading ? (<LoadingSpinner size={'xs'}/>) : "검사하기"}
+									{isPostAnswerLoading ? (<LoadingSpinner size={'xs'}/>) : "검사하기"}
 								</button>
 							)}
 						</div>
@@ -203,9 +213,12 @@ export default function PrLearningContainer({ isReview = false, userId = undefin
                       : !secondFeedback && (
                           <button
                             className="w-full py-3 bg-purple-600 text-white text-lg font-medium rounded-lg hover:bg-purple-700"
-                            onClick={() => secondLearning()}
+                            onClick={() => postAnswer({
+                              commentId: prComments?.comments[1].id,
+                              answer: prDescription
+                            })}
                           >
-                            {isSecondLoading ? (<LoadingSpinner size={'xs'}/>) : "검사하기"}
+                            {isPostAnswerLoading ? (<LoadingSpinner size={'xs'}/>) : "검사하기"}
                           </button>
                         )
                     }
