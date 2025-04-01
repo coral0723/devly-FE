@@ -2,7 +2,7 @@
 
 export default function SignInBtn() {
   const handleLogin = () => {
-    window.location.href = `${process.env.NEXT_PUBLIC_BACKEND_URL}/oauth2/authorization/google?developerType=2`;
+    window.location.replace(`${process.env.NEXT_PUBLIC_BACKEND_URL}/oauth2/authorization/google?developerType=2`);
   }
   return (
     <button
