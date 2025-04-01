@@ -22,13 +22,18 @@ authApi.interceptors.response.use(
     return response;
   },
   (error) => {
-    // 토큰 만료 오류 처리
-    if (error.response && error.response.status === 401) {
-      alert("토큰이 만료되었습니다. 다시 로그인해주세요.");
-      localStorage.removeItem('accessToken');
-      
-      // 인터셉터 내부에서는 router 사용이 불가능하므로 window.location 사용
-      window.location.href = '/';
+    if (error.response) {
+      // 토큰 만료 오류 처리
+      if (error.response.status === 401 || error.response.status === 403) {
+        alert("토큰이 만료되었습니다. 다시 로그인해주세요.");
+        localStorage.removeItem('accessToken');
+        
+        // 인터셉터 내부에서는 router 사용이 불가능하므로 window.location 사용
+        window.location.replace('/');
+      }
+      else if(error.response.status === 500) {
+        alert("서버에 문제가 발생했습니다. 잠시 후 다시 시도해주세요.");
+      }
     }
     
     return Promise.reject(error);
