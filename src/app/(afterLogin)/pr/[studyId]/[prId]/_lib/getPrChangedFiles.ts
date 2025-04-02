@@ -19,7 +19,7 @@ export const getPrChangedFiles: QueryFunction<PrChangedFiles, [_1: string, _2: s
 
     // return res.data.result;
 
-    const res = await authApi.get(`/api/pr/changed-files/${prId}`, {
+    const res = await authApi.get(`/api/pr/${prId}/changed-files`, {
       headers: {
         'Cache-Control': 'no-store',
       }

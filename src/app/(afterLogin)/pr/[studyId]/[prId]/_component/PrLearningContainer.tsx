@@ -4,10 +4,10 @@ import LoadingSpinner from "@/app/_component/LoadingSpinner"
 import Header from "./Header"
 import ReviewAssessment from "./ReviewAssessment"
 import ChangedFilesModal from "./ChangedFilesModal"
-import FinalScoreModal from "./FinalScoreModal"
+// import FinalScoreModal from "./FinalScoreModal"
 import { useState } from "react"
 import { Feedback } from "@/model/pr/Feedback"
-import { FinalFeedback } from "@/model/pr/FinalFeedback"
+// import { FinalFeedback } from "@/model/pr/FinalFeedback"
 import { PrChangedFiles } from "@/model/pr/PrChangedFiles"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { useParams } from "next/navigation"
@@ -22,6 +22,7 @@ import { getPrHistory } from "../_lib/getPrHistory"
 import { useRouter } from "next/navigation"
 import { authApi } from "@/app/_lib/axios"
 import { Answer } from "@/model/pr/Answer"
+import { CompletionModal } from "./CompletionModal"
 
 type Props = {
   isReview?: boolean;
@@ -34,9 +35,10 @@ export default function PrLearningContainer({ isReview = false, userId = undefin
   const [firstFeedback, setFirstFeedback] = useState<Feedback>(); 
   const [replies, setReplies] = useState<string>(''); //두 번째 답안 저장용
   const [secondFeedback, setSecondFeedback] = useState<Feedback>();
-  const [finalFeedback, setFinalFeedback] = useState<FinalFeedback>(); 
+  // const [finalFeedback, setFinalFeedback] = useState<FinalFeedback>(); 
   const [showFiles, setShowFiles] = useState<boolean>(false); //"커밋 내역" Modal
-  const [showFinalScore, setShowFinalScore] = useState<boolean>(false); //"최종 결과" Modal
+  // const [showFinalScore, setShowFinalScore] = useState<boolean>(false); //"최종 결과" Modal
+  const [showCompletion, setShowCompletion] = useState<boolean>(false);
   const {studyId, prId} = useParams();
   const router = useRouter();
 
@@ -76,19 +78,19 @@ export default function PrLearningContainer({ isReview = false, userId = undefin
   >({
 		mutationFn: async (params) => {
       // msw용
-			const response = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/pr/review/comment/${params.commentId}`, {
-				answer: prDescription,
-        studyId: studyId,
-			});
-
-      return response.data.result;
-
-      // const response = await authApi.post(`/api/pr/review/comment/${params.commentId}`, {
-      //   answer: prDescription,
+			// const response = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/pr/review/comment/${params.commentId}`, {
+			// 	answer: prDescription,
       //   studyId: studyId,
-      // });
+			// });
 
       // return response.data.result;
+
+      const response = await authApi.post(`/api/pr/review/comment/${params.commentId}`, {
+        answer: prDescription,
+        studyId: Number(studyId),
+      });
+
+      return response.data.result;
 		},
 		onSuccess: (feedbackData, variables) => {
       if(variables.commentId === prComments?.comments[0].id) {
@@ -102,13 +104,26 @@ export default function PrLearningContainer({ isReview = false, userId = undefin
 		}
 	});
 
-  const { mutate: getFinalFeedback, isPending: isFinalLoading } = useMutation({
+  // 추후 점수 추가 된 Feedback 개발 되면 사용 예정
+  // const { mutate: getFinalFeedback, isPending: isFinalLoading } = useMutation({
+  //   mutationFn: async () => {
+	// 		return await authApi.post(`${process.env.NEXT_PUBLIC_BASE_URL}/study/pr/${prId}/finalFeedback`);
+  //   },
+  //   onSuccess: (response) => {
+	// 		setFinalFeedback(response.data);
+	// 		setShowFinalScore(true);
+  //   },
+  //   onError: (error) => {
+	// 		console.log('에러 상세:', error);
+  //   }
+  // });
+
+  const { mutate: completeStudy, isPending: isCompleteLoading } = useMutation({
     mutationFn: async () => {
-			return await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/study/pr/${prId}/finalFeedback`);
+			return await authApi.post(`/api/pr/${prId}/study/${studyId}/done`);
     },
-    onSuccess: (response) => {
-			setFinalFeedback(response.data);
-			setShowFinalScore(true);
+    onSuccess: () => {
+			setShowCompletion(true);
     },
     onError: (error) => {
 			console.log('에러 상세:', error);
@@ -228,7 +243,7 @@ export default function PrLearningContainer({ isReview = false, userId = undefin
       </div>
 
 			{/* 마무리 버튼 - 모든 답변이 제출되었을 때만 표시 */}
-			{currentStep === 2 && secondFeedback && (
+			{currentStep === prComments.comments.length && secondFeedback && (
 				// <div className="sticky bottom-0 left-0 right-0 p-4 bg-white border-t border-gray-200">
         <div className="fixed w-full max-w-lg bottom-0 left-1/2 transform -translate-x-1/2 p-2 bg-white border border-gray-200 z-10">
 					<div className="max-w-lg mx-auto">
@@ -238,11 +253,12 @@ export default function PrLearningContainer({ isReview = false, userId = undefin
                 if(prHistory) {
                   router.back();
                 } else {
-                  getFinalFeedback();
+                  completeStudy();
                 }
               }}
+              disabled={isCompleteLoading}
 						>
-							{isFinalLoading 
+							{isCompleteLoading
                 ? (<LoadingSpinner size={'xs'}/>)
                 : isReview 
                   ? "복습 마무리하기"
@@ -262,14 +278,21 @@ export default function PrLearningContainer({ isReview = false, userId = undefin
 
 			): <></>}
 
-			{showFinalScore && finalFeedback ? (
+			{/* {showFinalScore && finalFeedback ? (
 				<FinalScoreModal
           isReview={isReview}
           studyId={studyId as string}
           prId={prId as string}
 					finalFeedback={finalFeedback}
 				/>
-			): <></>}
+			): <></>} */}
+
+      {showCompletion ? (
+        <CompletionModal
+          isReview={isReview}
+          onClose={() => router.replace('/home')}
+        />
+      ): <></>}
     </div>
   )
 }

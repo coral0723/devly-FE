@@ -19,7 +19,7 @@ export const getPrCards: QueryFunction<PrCard, [_1: string, _2: string, string]>
 
     // return res.data.result;
 
-    const res = await authApi.get(`/api/pr/${studyId}`, {
+    const res = await authApi.get(`/api/pr/study/${studyId}`, {
       headers: {
         'Cache-Control': 'no-store',
       }

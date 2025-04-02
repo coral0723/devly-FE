@@ -19,7 +19,7 @@ export const getPrComments: QueryFunction<PrComments, [_1: string, _2: string, s
 
     // return res.data.result;
 
-    const res = await authApi.get(`/api/pr/comments/${prId}`, {
+    const res = await authApi.get(`/api/pr/${prId}/comments`, {
       headers: {
         'Cache-Control': 'no-store',
       }
