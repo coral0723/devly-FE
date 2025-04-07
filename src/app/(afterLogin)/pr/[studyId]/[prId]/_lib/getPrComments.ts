@@ -11,7 +11,7 @@ export const getPrComments: QueryFunction<PrComments, [_1: string, _2: string, s
     };
 
     // msw 용
-    // const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/pr/comments/${prId}`, {
+    // const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/pr/${prId}/comments`, {
     //   headers: {
     //     'Cache-Control': 'no-store',
     //   },

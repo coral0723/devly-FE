@@ -2,12 +2,9 @@
 
 import LoadingSpinner from "@/app/_component/LoadingSpinner"
 import Header from "./Header"
-import ReviewAssessment from "./ReviewAssessment"
 import ChangedFilesModal from "./ChangedFilesModal"
-// import FinalScoreModal from "./FinalScoreModal"
 import { useState } from "react"
 import { Feedback } from "@/model/pr/Feedback"
-// import { FinalFeedback } from "@/model/pr/FinalFeedback"
 import { PrChangedFiles } from "@/model/pr/PrChangedFiles"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { useParams } from "next/navigation"
@@ -23,6 +20,9 @@ import { useRouter } from "next/navigation"
 import { authApi } from "@/app/_lib/axios"
 import { Answer } from "@/model/pr/Answer"
 import { CompletionModal } from "./CompletionModal"
+import PrMainContent from "./PrMainContent"
+// import { FinalFeedback } from "@/model/pr/FinalFeedback"
+// import FinalScoreModal from "./FinalScoreModal"
 
 type Props = {
   isReview?: boolean;
@@ -31,16 +31,14 @@ type Props = {
 
 export default function PrLearningContainer({ isReview = false, userId = undefined }: Props) {
   const [currentStep, setCurrentStep] = useState<number>(1);
-  const [prDescription, setPrDescription] = useState<string>(''); //첫 번째 답안 저장용
-  const [firstFeedback, setFirstFeedback] = useState<Feedback>(); 
-  const [replies, setReplies] = useState<string>(''); //두 번째 답안 저장용
-  const [secondFeedback, setSecondFeedback] = useState<Feedback>();
-  // const [finalFeedback, setFinalFeedback] = useState<FinalFeedback>(); 
+  const [replies, setReplies] = useState<string[]>([]); //답안들 저장용
+  const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
   const [showFiles, setShowFiles] = useState<boolean>(false); //"커밋 내역" Modal
-  // const [showFinalScore, setShowFinalScore] = useState<boolean>(false); //"최종 결과" Modal
   const [showCompletion, setShowCompletion] = useState<boolean>(false);
   const {studyId, prId} = useParams();
   const router = useRouter();
+  // const [showFinalScore, setShowFinalScore] = useState<boolean>(false); //"점수 포함된 최종 결과" Modal
+  // const [finalFeedback, setFinalFeedback] = useState<FinalFeedback>(); 
 
   const {data: prCards, isLoading: isCardsLoading} = useQuery<PrCard, object, PrCard, [_1: string, _2: string, string]>({
     queryKey: ['pr', 'cards', studyId as string],
@@ -79,24 +77,27 @@ export default function PrLearningContainer({ isReview = false, userId = undefin
 		mutationFn: async (params) => {
       // msw용
 			// const response = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/pr/review/comment/${params.commentId}`, {
-			// 	answer: prDescription,
-      //   studyId: studyId,
+			// 	answer: params.answer,
+      //   studyId: Number(studyId),
 			// });
 
       // return response.data.result;
 
       const response = await authApi.post(`/api/pr/review/comment/${params.commentId}`, {
-        answer: prDescription,
+        answer: params.answer,
         studyId: Number(studyId),
       });
 
       return response.data.result;
 		},
-		onSuccess: (feedbackData, variables) => {
-      if(variables.commentId === prComments?.comments[0].id) {
-        setFirstFeedback(feedbackData);
-      } else if(variables.commentId === prComments?.comments[1].id) {
-        setSecondFeedback(feedbackData);
+    //feedbackData: response.data.result, variables: 함수 호출할 때 사용한 파라미터
+		onSuccess: (feedbackData, variables) => { 
+      const commentIndex = prComments?.comments.findIndex((comment) => comment.id === variables.commentId);
+
+      if (commentIndex !== undefined && commentIndex !== -1) {
+        const updatedFeedbacks = [...feedbacks];
+        updatedFeedbacks[commentIndex] = feedbackData;
+        setFeedbacks(updatedFeedbacks);
       }
 		},
 		onError: (error) => {
@@ -120,7 +121,7 @@ export default function PrLearningContainer({ isReview = false, userId = undefin
 
   const { mutate: completeStudy, isPending: isCompleteLoading } = useMutation({
     mutationFn: async () => {
-			return await authApi.post(`/api/pr/${prId}/study/${studyId}/done`);
+			return await authApi.post(isReview ? `${process.env.NEXT_PUBLIC_BASE_URL}/api/pr/${prId}/study/${studyId}/done` : `/api/pr/${prId}/study/${studyId}/done`);
     },
     onSuccess: () => {
 			setShowCompletion(true);
@@ -143,108 +144,25 @@ export default function PrLearningContainer({ isReview = false, userId = undefin
       <Header
         title={prCards.title}
         currentStep={currentStep}
+        stepLength={prComments.comments.length}
         setCurrentStep={setCurrentStep}
         setShowFiles={setShowFiles}
       />
 
-      {/* Main Content */}
-      <div className="p-4 overflow-y-auto scrollbar-hide" style={{ height: 'calc(100vh - 200px)' }}>
-				{currentStep === 1 ? ( // PR 설명 작성 Step
-					<div className="space-y-4">
-						<div className="bg-white p-4 rounded-lg border border-gray-200">
-							<h3 className="font-medium mb-2">PR 설명 작성</h3>
-							<p className="text-sm text-gray-600">
-								{prComments.comments[0].content}
-							</p>
-						</div>
-						<textarea
-							className="w-full h-32 p-3 border border-gray-300 rounded-lg text-sm bg-white"
-							placeholder="PR 설명을 작성해주세요..."
-							value={prHistory ? prHistory.firstAnswer : prDescription}
-							onChange={(e) => setPrDescription(e.target.value)}
-						/>
-						{firstFeedback 
-              ? <ReviewAssessment feedback={firstFeedback}/>
-              : prHistory
-                && <ReviewAssessment feedback={prHistory.firstFeedback}/>
-            }
-						<div className="fixed w-full max-w-lg bottom-0 left-1/2 transform -translate-x-1/2 p-2 bg-white border border-gray-200 z-10">
-							{firstFeedback || prHistory ? (
-								<button
-									className="w-full py-3 bg-purple-600 text-white rounded-lg text-lg font-medium hover:bg-purple-700"
-									onClick={() => setCurrentStep(2)}
-								>
-									다음 단계
-								</button>
-							) : (
-								<button
-									className="w-full py-3 bg-purple-600 text-white rounded-lg text-lg font-medium hover:bg-purple-700"
-									onClick={() => postAnswer({
-                    commentId: prComments?.comments[0].id,
-                    answer: prDescription
-                  })}
-								>
-									{isPostAnswerLoading ? (<LoadingSpinner size={'xs'}/>) : "검사하기"}
-								</button>
-							)}
-						</div>
-					</div>
-				) : ( //리뷰어 답변 Step
-              <div className="space-y-4">
-                  <div className="bg-white p-4 rounded-lg border border-gray-200">
-                    <h3 className="font-medium mb-2">리뷰어 답변</h3>
-                    <p className="text-sm text-gray-600">
-                        리뷰어의 코멘트에 답변해주세요.
-                    </p>
-                  </div>
-                  <div className="bg-white border border-gray-200 rounded-lg p-4">
-                    <div className="bg-gray-50 p-3 rounded-lg mb-3">
-                      <p className="text-sm text-gray-700">
-                        {prComments.comments[1].content}
-                      </p>
-                    </div>
-                    <textarea
-                      className="w-full h-32 p-3 border border-gray-300 rounded-lg text-sm bg-white"
-                      placeholder="답변을 영어로 작성해주세요..."
-                      value={prHistory ? prHistory.secondAnswer : replies}
-                      onChange={(e) => setReplies(e.target.value)}
-                    />
-                  </div>
-                  {secondFeedback 
-                    ? <ReviewAssessment feedback={secondFeedback}/>
-                    : prHistory
-                      && <ReviewAssessment feedback={prHistory.secondFeedback}/>
-                  }
-                  <div className="fixed w-full max-w-lg bottom-0 left-1/2 transform -translate-x-1/2 p-2 bg-white border border-gray-200 z-10">
-                    {prHistory
-                      ? (
-                          <button
-                            className="w-full py-3 bg-purple-600 text-white text-lg font-medium rounded-lg hover:bg-purple-700"
-                            onClick={() => router.back()}
-                          >
-                            돌아가기
-                          </button>
-                         ) 
-                      : !secondFeedback && (
-                          <button
-                            className="w-full py-3 bg-purple-600 text-white text-lg font-medium rounded-lg hover:bg-purple-700"
-                            onClick={() => postAnswer({
-                              commentId: prComments?.comments[1].id,
-                              answer: prDescription
-                            })}
-                          >
-                            {isPostAnswerLoading ? (<LoadingSpinner size={'xs'}/>) : "검사하기"}
-                          </button>
-                        )
-                    }
-                  </div>
-              </div>
-          )}
-      </div>
+      <PrMainContent
+        currentStep={currentStep}
+        prComments={prComments}
+        prHistory={prHistory}
+        replies={replies}
+        feedbacks={feedbacks}
+        isPostAnswerLoading={isPostAnswerLoading}
+        setReplies={setReplies}
+        setCurrentStep={setCurrentStep}
+        postAnswer={postAnswer}
+      />
 
 			{/* 마무리 버튼 - 모든 답변이 제출되었을 때만 표시 */}
-			{currentStep === prComments.comments.length && secondFeedback && (
-				// <div className="sticky bottom-0 left-0 right-0 p-4 bg-white border-t border-gray-200">
+			{currentStep === prComments.comments.length && feedbacks[currentStep-1] && (
         <div className="fixed w-full max-w-lg bottom-0 left-1/2 transform -translate-x-1/2 p-2 bg-white border border-gray-200 z-10">
 					<div className="max-w-lg mx-auto">
 						<button

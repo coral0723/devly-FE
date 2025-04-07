@@ -11,7 +11,7 @@ export const getPrCards: QueryFunction<PrCard, [_1: string, _2: string, string]>
     };
 
     //msw 용
-    // const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/study/prs/${studyId}`, {
+    // const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/pr/study/${studyId}`, {
     //   headers: {
     //     'Cache-Control': 'no-store',
     //   },

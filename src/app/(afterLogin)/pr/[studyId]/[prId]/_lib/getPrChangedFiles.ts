@@ -11,7 +11,7 @@ export const getPrChangedFiles: QueryFunction<PrChangedFiles, [_1: string, _2: s
     };
 
     // msw 용
-    // const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/pr/changed-files/${prId}`, {
+    // const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/pr/${prId}/changed-files`, {
     //   headers: {
     //     'Cache-Control': 'no-store',
     //   },

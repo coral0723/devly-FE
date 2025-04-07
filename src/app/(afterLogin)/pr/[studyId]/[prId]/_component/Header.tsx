@@ -3,11 +3,12 @@
 type Props = {
   title: string;
   currentStep: number;
+  stepLength: number;
   setCurrentStep: (currentStep: number) => void; 
   setShowFiles: (value: boolean) => void;
 }
 
-export default function Header({title, currentStep, setCurrentStep, setShowFiles}: Props) {
+export default function Header({title, currentStep, stepLength, setCurrentStep, setShowFiles}: Props) {
   return (
     <div className="sticky top-0 z-10 bg-white p-4 border-b border-gray-200 shadow-sm">
       <div className="flex flex-col gap-3">
@@ -22,7 +23,7 @@ export default function Header({title, currentStep, setCurrentStep, setShowFiles
               </button>
             )}
             <span className="px-2 py-1 text-sm bg-purple-100 text-purple-800 rounded-full">
-              Step {currentStep}/2
+              Step {currentStep}/{stepLength}
             </span>
           </div>
           <div className="flex gap-2">
