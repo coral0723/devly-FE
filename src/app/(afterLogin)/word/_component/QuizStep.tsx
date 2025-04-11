@@ -33,7 +33,7 @@ export default function QuizStep({ index, word, wordsLength, handleQuizNext, onS
 
       setDistractors(updatedDistractors);
     }
-  }, [word]);
+  }, [word, quiz.distractors]);
 
   const onCheck = () => {
     onScrollUp();

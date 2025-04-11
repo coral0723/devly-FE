@@ -1,7 +1,7 @@
 import { QueryFunction } from "@tanstack/react-query";
 import { Word } from "@/model/word/Word";
 import axios from "axios";
-import { authApi } from "@/app/_lib/axios";
+// import { authApi } from "@/app/_lib/axios";
 
 export const getReviewWords: QueryFunction<Word[], [_1: string, _2: string, string]>
  = async ({ queryKey: [,, studyId] }) => { //앞의 두 파라미터는 생략

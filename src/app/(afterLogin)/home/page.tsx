@@ -2,7 +2,7 @@ import { dehydrate, QueryClient, HydrationBoundary } from "@tanstack/react-query
 import BottomNavigation from "../_component/BottomNavigation";
 import Header from "./_component/Header";
 import MainFeatures from "./_component/MainFeatures";
-import WeeklyActivity from "./_component/WeeklyActivity";
+// import WeeklyActivity from "./_component/WeeklyActivity";
 import { getTodayTasks } from "./_lib/getTodayTasks";
 import { getWeeklyActivity } from "./_lib/getWeeklyActivity";
 

@@ -1,14 +1,16 @@
-import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
-import BottomNavigation from '../_component/BottomNavigation';
+import { QueryClient } from '@tanstack/react-query';
 import { getRankings } from './_lib/getRankings';
-import RankingContents from './_component/RankingContents';
 import UnderDevelopment from '../_component/UnderDevelopment';
+// import { dehydrate,  QueryClient } from '@tanstack/react-query';
+// import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
+// import BottomNavigation from '../_component/BottomNavigation';
+// import RankingContents from './_component/RankingContents';
 
 
 export default async function RankingPage() {
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery({queryKey: ['rankings'], queryFn: getRankings});
-  const dehydratedState = dehydrate(queryClient);
+  // const dehydratedState = dehydrate(queryClient);
 
   //기능 개발 되면 overflow-hidden 지워야 함
   return (

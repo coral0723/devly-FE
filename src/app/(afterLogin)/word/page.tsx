@@ -8,10 +8,10 @@ import LearningSection from './_component/LearningSection';
 import ReviewSection from './_component/ReviewSection';
 
 type Props = {
-  searchParams: {
+  searchParams: Promise<{
     studyId: string;
     wordTotal: string;
-  }
+  }>
 }
 
 export default async function WordPage({searchParams}: Props) {

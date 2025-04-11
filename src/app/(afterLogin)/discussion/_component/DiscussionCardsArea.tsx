@@ -29,8 +29,8 @@ export default function DiscussionCardsArea({groupId}: Props) {
 
   return (
     <>
-      {discussionCards.map((pr) => (
-        <DisscussionCard key={pr.id} pr={pr}/>
+      {discussionCards.map((discussion) => (
+        <DisscussionCard key={discussion.id} discussion={discussion}/>
       ))}
     </>
   )

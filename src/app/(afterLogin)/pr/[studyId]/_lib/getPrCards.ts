@@ -1,7 +1,7 @@
 import { QueryFunction } from "@tanstack/react-query";
 import { PrCard } from "@/model/pr/PrCard";
-import axios from "axios";
 import { authApi } from "@/app/_lib/axios";
+// import axios from "axios";
 
 export const getPrCards: QueryFunction<PrCard, [_1: string, _2: string, string]>
  = async ({ queryKey: [, , studyId] }) => {

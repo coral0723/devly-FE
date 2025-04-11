@@ -1,11 +1,11 @@
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
-import BottomNavigation from '../_component/BottomNavigation';
-import Header from './_component/Header';
-import ProfileInfo from './_component/ProfileInfo';
-import ProfileStats from './_component/ProfileStats';
 import { getProfileInfo } from './_lib/getProfileInfo';
 import { getProfileStats } from './_lib/getProfileStats';
 import UnderDevelopment from '../_component/UnderDevelopment';
+// import BottomNavigation from '../_component/BottomNavigation';
+// import Header from './_component/Header';
+// import ProfileInfo from './_component/ProfileInfo';
+// import ProfileStats from './_component/ProfileStats';
 
 export default async function Profile() {
   const queryClient = new QueryClient();

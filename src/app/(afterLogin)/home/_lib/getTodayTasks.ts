@@ -1,7 +1,7 @@
 import { QueryFunction } from "@tanstack/react-query";
 import { Tasks } from "@/model/Tasks";
-import axios from "axios";
 import { authApi } from "@/app/_lib/axios";
+// import axios from "axios";
 
 export const getTodayTasks: QueryFunction<Tasks, [_1: string]>
  = async () => {

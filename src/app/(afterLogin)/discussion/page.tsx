@@ -1,13 +1,13 @@
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
-import BottomNavigation from "../_component/BottomNavigation";
 import { getDiscussionCards } from "./_lib/getDiscussionCards";
-import DiscussionCardsArea from "./_component/DiscussionCardsArea";
 import UnderDevelopment from "../_component/UnderDevelopment";
+// import DiscussionCardsArea from "./_component/DiscussionCardsArea";
+// import BottomNavigation from "../_component/BottomNavigation";
 
 type Props = {
-  searchParams: {
+  searchParams: Promise<{
     groupId: string;
-  }
+  }>
 }
 
 export default async function DiscussionPage({searchParams}: Props) {

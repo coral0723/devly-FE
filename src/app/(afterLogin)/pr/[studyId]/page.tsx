@@ -3,7 +3,11 @@ import BottomNavigation from "../../_component/BottomNavigation";
 import { getPrCards } from "./_lib/getPrCards";
 import PrCardsArea from "./_component/PrCardsArea";
 
-export default async function PRPage({params}: {params: { studyId: string}}) {
+export default async function PRPage({
+  params,
+}: {
+  params: Promise<{ studyId: string }>
+}) {
   const {studyId} = await params;
   const queryClient = new QueryClient();
   queryClient.prefetchQuery({queryKey: ['pr', 'cards', studyId], queryFn: getPrCards});
