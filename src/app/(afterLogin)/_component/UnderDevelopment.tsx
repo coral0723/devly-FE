@@ -16,7 +16,7 @@ const UnderDevelopment: React.FC<UnderDevelopmentProps> = ({
   return (
     <div className="min-h-screen flex flex-col items-center justify-center py-12 px-6 rounded-lg bg-white shadow-md relative">
       <button 
-        onClick={() => router.back()}
+        onClick={() => router.replace('/home')}
         className="absolute top-4 left-4 p-2 rounded-full hover:bg-gray-100 transition-colors duration-200"
         aria-label="돌아가기"
       >
