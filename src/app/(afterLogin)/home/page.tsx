@@ -32,7 +32,7 @@ export default async function Home() {
               </svg>
             </div>
           </div>
-          <WeeklyActivity/>
+          {/* <WeeklyActivity/> */}
           {/* Second Icon Section */}
           <div className="relative h-9 z-0"> 
             <div className="absolute right-10 animate-float-medium">

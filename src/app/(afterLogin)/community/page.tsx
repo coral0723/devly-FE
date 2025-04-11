@@ -4,6 +4,7 @@ import { MessageCircle, Search, ThumbsUp } from "lucide-react";
 import BottomNavigation from "../_component/BottomNavigation"
 import { useState } from "react";
 import {faker} from "@faker-js/faker";
+import UnderDevelopment from "../_component/UnderDevelopment";
 
 const samplePosts = [
   {
@@ -81,10 +82,10 @@ const samplePosts = [
 export default function CommunityPage() {
   const [searchQuery, setSearchQuery] = useState<string>("");
 
+  //기능 개발 되면 overflow-hidden 지워야 함
   return (
-    <div className="max-w-lg mx-auto h-[100dvh] bg-gray-100 flex flex-col relative">
-      <div className="bg-white border-b border-gray-200">
-        {/* Header */}
+    <div className="max-w-lg mx-auto h-[100dvh] bg-gray-100 flex flex-col relative overflow-hidden">
+      {/* <div className="bg-white border-b border-gray-200">
         <div className="p-4">
           <h1 className="text-xl font-semibold text-gray-900">커뮤니티</h1>
             <p className="text-sm text-gray-500 mt-1">
@@ -92,7 +93,6 @@ export default function CommunityPage() {
             </p>
         </div>
 
-        {/* Search Input */}
         <div className="px-4 pb-4">
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -108,7 +108,6 @@ export default function CommunityPage() {
         </div>
       </div>
 
-      {/* 게시글 목록 */}
       <div className="flex-1 overflow-y-auto pb-16 scrollbar-hide">
         <div className="divide-y divide-gray-200">
           {samplePosts.map((post) => (
@@ -154,7 +153,6 @@ export default function CommunityPage() {
         </div>
       </div>
 
-      {/* Floating Button */}
       <div className="absolute right-4 bottom-24 z-40">
         <button 
           className="bg-black text-white rounded-full w-12 h-12 flex items-center justify-center shadow-lg"
@@ -166,11 +164,12 @@ export default function CommunityPage() {
         </button>
       </div>
 
-      <div className="fixed bottom-0 left-0 right-0 z-50 bg-white safe-area-bottom"> {/* iOS safe area 고려 */}
+      <div className="fixed bottom-0 left-0 right-0 z-50 bg-white safe-area-bottom"> 
         <div className="max-w-lg mx-auto border-t border-gray-200">
             <BottomNavigation/>
         </div>
-      </div>
+      </div> */}
+      <UnderDevelopment/>
     </div>
   )
 }

@@ -6,6 +6,7 @@
   import { StudyLog } from "@/model/StudyLog";
   import { getStudyLogs } from "./_lib/getStudyLogs";
   import LogContainer from "./_component/LogContainer";
+import UnderDevelopment from "../_component/UnderDevelopment";
 
   const categories = [
     { study: 'all', name: '전체', style: 'bg-black text-white' },
@@ -48,10 +49,10 @@
       }
     }).filter(dateGroup => dateGroup.logs.length > 0); // 필터링 후 로그가 없는 날짜는 제외
 
+    //기능 개발 되면 overflow-hidden 지워야 함
     return (
-      <div className="max-w-lg mx-auto h-[100dvh] bg-gray-100 flex flex-col">
-        {/* Header */}
-        <div className="bg-white border-b border-gray-200">
+      <div className="max-w-lg mx-auto h-[100dvh] bg-gray-100 flex flex-col overflow-hidden">
+        {/* <div className="bg-white border-b border-gray-200">
           <div className="p-4">
             <h1 className="text-xl font-semibold text-gray-900">복습</h1>
             <p className="text-sm text-gray-500 mt-1">
@@ -60,7 +61,6 @@
           </div>
         </div>
 
-        {/* Category Bar */}
         <div className="px-4 pb-2 my-2">
           <div className="flex gap-2 overflow-x-auto scrollbar-hide">
             {categories.map((category) => (
@@ -79,7 +79,6 @@
           </div>
         </div>
 
-        {/* Main */}
         <LogContainer
           studyLogs={filteredLogs}
           hasNextPage={hasNextPage}
@@ -89,11 +88,12 @@
           }}
         />
         
-        <div className="fixed bottom-0 left-0 right-0 z-50 bg-white safe-area-bottom"> {/* iOS safe area 고려 */}
+        <div className="fixed bottom-0 left-0 right-0 z-50 bg-white safe-area-bottom"> 
           <div className="max-w-lg mx-auto border-t border-gray-200">
               <BottomNavigation/>
           </div>
-        </div>
+        </div> */}
+        <UnderDevelopment/>
       </div>
     )
   }
