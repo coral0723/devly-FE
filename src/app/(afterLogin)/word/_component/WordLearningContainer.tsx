@@ -82,12 +82,11 @@ export default function WordLearningContainer({ isReview }: Props) {
         // });
 
         const endPoint = `/api/words/review/study/${studyId}`;
-        const method = validationResult?.correctIds.length === 0 ? 'post' : 'put';
         const payload = validationResult?.correctIds.length === 0 
           ? {correctIds, incorrectIds}
           : {correctIds}; 
 
-        const res = await authApi[method](endPoint, payload);
+        const res = await authApi.put(endPoint, payload);
 
         if(res.status === 200) {
           setShowCompletion(true);
