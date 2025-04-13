@@ -27,13 +27,24 @@ export default function QuizStep({ index, word, wordsLength, handleQuizNext, onS
   useEffect(() => {
     if (word) {
       // 새로운 `word` 데이터를 기반으로 distractors 생성
-      const updatedDistractors = [...quiz.distractors, word.word];
-      // 배열을 무작위로 섞기
-      updatedDistractors.sort(() => Math.random() - 0.5);
-
-      setDistractors(updatedDistractors);
+      const distractorsArray = quiz.distractors;
+      const currentWord = word.word;
+      const updatedDistractors = [...distractorsArray, currentWord];
+      
+      // 배열을 무작위로 섞기 (한 번만 실행됨)
+      const shuffled = [...updatedDistractors];
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
+      
+      setDistractors(shuffled);
+      // 새 문제로 넘어갈 때 선택 상태 초기화
+      setSelectedDistractor(null);
+      setShowCorrect(false);
     }
-  }, [word, quiz.distractors]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [word.id]); // 의도적으로 word.id만 의존성으로 사용하고 eslint 경고 비활성화
 
   const onCheck = () => {
     onScrollUp();
