@@ -19,7 +19,7 @@ export const getValidationWordResult: QueryFunction<ValidationResult, [_1: strin
 
     // return res.data.result;
 
-    const res = await authApi.get(`/api/studies/${studyId}/words/review`, {
+    const res = await authApi.get(`/api/words/review/study/${studyId}`, {
       headers: {
         'Cache-Control': 'no-store',
       },
