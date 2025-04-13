@@ -4,7 +4,11 @@ import { getPrCards } from "../_lib/getPrCards";
 import { getPrChangedFiles } from "./_lib/getPrChangedFiles";
 import { getPrComments } from "./_lib/getPrComments";
 
-export default async function PRLearnPage({params}: {params: {studyId: string, prId: string}}) {
+export default async function PRLearnPage({
+  params,
+}: {
+  params: Promise<{ studyId: string; prId: string }>
+}) {
   const { studyId, prId } = await params;
   const queryClient = new QueryClient();
   queryClient.prefetchQuery({queryKey: ['pr', 'cards', studyId], queryFn: getPrCards});

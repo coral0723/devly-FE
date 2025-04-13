@@ -1,16 +1,16 @@
 "use client"
 
-import { DeveloperType } from "@/model/User"
-import { useQuery } from "@tanstack/react-query";
-import { getDevTypes } from "../_lib/getDevTypes";
+// import { useQuery } from "@tanstack/react-query";
+// import { getDevTypes } from "../_lib/getDevTypes";
+// import { DeveloperType } from "@/model/User"
 
 export default function DevSelectionArea() {
-  const {data: devTypes} = useQuery<number[], object, number[], [_1: string]>({
-    queryKey: ['dev-types'],
-    queryFn: getDevTypes,
-    staleTime: 60 * 1000,
-    gcTime: 300 * 1000,
-  }); 
+  // const {data: devTypes} = useQuery<number[], object, number[], [_1: string]>({
+  //   queryKey: ['dev-types'],
+  //   queryFn: getDevTypes,
+  //   staleTime: 60 * 1000,
+  //   gcTime: 300 * 1000,
+  // }); 
 
   const handleDevTypeSelect = async (devType: number) => {
     try {
@@ -22,7 +22,8 @@ export default function DevSelectionArea() {
 
   return (
     <div className="space-y-4">
-      {devTypes?.map((devType) => (
+      {/* API 개발 되면 사용 예정 */}
+      {/* {devTypes?.map((devType) => (
         <button
           key={devType}
           className="w-full py-4 bg-white border border-gray-300 rounded-xl font-medium hover:bg-gray-50 active:scale-[0.98] transition-all"
@@ -30,7 +31,19 @@ export default function DevSelectionArea() {
         >
           {DeveloperType[devType]} Developer
         </button>
-      ))}
+      ))} */}
+      <button
+        className="w-full py-4 bg-white border border-gray-300 rounded-xl font-medium hover:bg-gray-50 active:scale-[0.98] transition-all"
+        onClick={() => handleDevTypeSelect(1)}
+      >
+        Backend Developer
+      </button>
+      <button
+        className="w-full py-4 bg-white border border-gray-300 rounded-xl font-medium hover:bg-gray-50 active:scale-[0.98] transition-all"
+        onClick={() => handleDevTypeSelect(2)}
+      >
+        Frontend Developer
+      </button>
     </div>
   )
 }

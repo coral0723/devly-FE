@@ -1,7 +1,7 @@
 import { QueryFunction } from "@tanstack/react-query";
 import { authApi } from "@/app/_lib/axios";
 import { ValidationResult } from "@/model/ValidationResult";
-import axios from "axios";
+// import axios from "axios";
 
 export const getValidationWordResult: QueryFunction<ValidationResult, [_1: string, _2: string, string]>
  = async ({ queryKey: [, , studyId] }) => {
@@ -19,7 +19,7 @@ export const getValidationWordResult: QueryFunction<ValidationResult, [_1: strin
 
     // return res.data.result;
 
-    const res = await authApi.get(`/api/studies/${studyId}/words/review`, {
+    const res = await authApi.get(`/api/words/review/study/${studyId}`, {
       headers: {
         'Cache-Control': 'no-store',
       },

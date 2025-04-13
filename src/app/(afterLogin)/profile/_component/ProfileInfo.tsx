@@ -13,6 +13,13 @@ export default function ProfileInfo() {
     gcTime: 300 * 1000,
   });
 
+  // user가 없는 경우를 대비한 안전한 접근
+  const developerTypeText = user?.developerType !== undefined 
+    ? DeveloperType[user.developerType] 
+    : 'Unknown';
+
+  const firstLetter = user?.nickname ? user.nickname[0] : '';
+
   return (
     <div className="bg-white p-6 flex flex-col items-center">
       {user?.profile !== "" ? (
@@ -22,13 +29,13 @@ export default function ProfileInfo() {
         />
       ) : (
         <div className="w-20 h-20 rounded-full bg-purple-100 flex items-center justify-center mb-4">
-          <span className="text-3xl font-bold text-purple-600">{user?.nickname[0]}</span>
+          <span className="text-3xl font-bold text-purple-600">{firstLetter}</span>
         </div>
       )}
       <h1 className="text-xl font-semibold">{user?.nickname}</h1>
-      <p className="text-gray-500 mt-1">{DeveloperType[user?.developerType!]} Developer</p>
+      <p className="text-gray-500 mt-1">{developerTypeText} Developer</p>
       <div className="mt-4 px-3 py-1 bg-purple-100 text-purple-600 rounded-full text-sm">
-        Lv. {user?.level}
+        Lv. {user?.level || 0}
       </div>
     </div>
   )

@@ -1,7 +1,7 @@
 import { QueryFunction } from "@tanstack/react-query";
 import axios from "axios";
-import { authApi } from "@/app/_lib/axios";
 import { PrHistory } from "@/model/pr/prHistory";
+// import { authApi } from "@/app/_lib/axios";
 
 export const getPrHistory: QueryFunction<PrHistory, [_1: string, _2: string, string, string]>
  = async ({ queryKey: [, , prId, userId] }) => {

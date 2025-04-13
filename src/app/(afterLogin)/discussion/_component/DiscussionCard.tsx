@@ -2,7 +2,7 @@
 
 import { DiscussionCard as IDiscussionCard } from "@/model/discussion/DiscussionCard";
 import { useRouter } from "next/navigation"
-import { ChevronRight, Clock } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 
 type Props = {
   discussion: IDiscussionCard;

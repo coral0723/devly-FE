@@ -1,7 +1,7 @@
 import { QueryFunction } from "@tanstack/react-query";
-import axios from "axios";
 import { PrChangedFiles } from "@/model/pr/PrChangedFiles";
 import { authApi } from "@/app/_lib/axios";
+// import axios from "axios";
 
 export const getPrChangedFiles: QueryFunction<PrChangedFiles, [_1: string, _2: string, string]>
  = async ({ queryKey: [, , prId] }) => {
