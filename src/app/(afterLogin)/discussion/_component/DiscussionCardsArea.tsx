@@ -1,6 +1,6 @@
 "use client"
 
-import { DiscussionCard as IDiscussionCard } from "@/model/DiscussionCard";
+import { DiscussionCard as IDiscussionCard } from "@/model/discussion/DiscussionCard";
 import { useQuery } from "@tanstack/react-query";
 import { getDiscussionCards } from "../_lib/getDiscussionCards";
 import DisscussionCard from "./DiscussionCard";
@@ -29,8 +29,8 @@ export default function DiscussionCardsArea({groupId}: Props) {
 
   return (
     <>
-      {discussionCards.map((pr) => (
-        <DisscussionCard key={pr.id} pr={pr}/>
+      {discussionCards.map((discussion) => (
+        <DisscussionCard key={discussion.id} discussion={discussion}/>
       ))}
     </>
   )

@@ -1,5 +1,5 @@
 import { QueryFunction } from "@tanstack/react-query";
-import { DiscussionCard } from "@/model/DiscussionCard";
+import { DiscussionCard } from "@/model/discussion/DiscussionCard";
 import axios from "axios";
 
 export const getDiscussionCards: QueryFunction<DiscussionCard[], [_1: string, _2: string, string]>

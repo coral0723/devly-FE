@@ -5,10 +5,15 @@ import { X } from "lucide-react";
 type Props = {
   timeLeft: number;
   setShowExitConfirm: (value: boolean) => void;
-  formatTime: (time: number) => string;
 }
 
-export default function Header({timeLeft, setShowExitConfirm, formatTime}: Props) {
+export default function Header({ timeLeft, setShowExitConfirm }: Props) {
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+   };
+
   return (
     <div className="sticky top-0 bg-white border-b border-gray-200">
       <div className="px-4 py-2">
@@ -30,7 +35,7 @@ export default function Header({timeLeft, setShowExitConfirm, formatTime}: Props
       <div className="h-1 bg-gray-100">
         <div
           className="h-full bg-orange-500 transition-all duration-300"
-          style={{ width: `${(timeLeft / 300) * 100}%` }}
+          style={{ width: `${(timeLeft / 30) * 100}%` }}
         />
       </div>
     </div>

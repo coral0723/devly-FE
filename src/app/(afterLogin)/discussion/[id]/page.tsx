@@ -22,7 +22,7 @@ declare global {
 }
 
 export default function DiscussionLearnPage() {
-  const [timeLeft, setTimeLeft] = useState<number>(300); // 5분
+  const [timeLeft, setTimeLeft] = useState<number>(30); // 30초
   const [showTimeoutModal, setShowTimeoutModal] = useState<boolean>(false);
   const [showExitConfirm, setShowExitConfirm] = useState<boolean>(false);
   const [chats, setChats] = useState<Chat[]>([]);
@@ -33,7 +33,6 @@ export default function DiscussionLearnPage() {
   const queryClient = useQueryClient();
   const router = useRouter();
   const temporaryMessageId = useRef<number | null>(null);
-
   const params = useParams();
   const id = params.id as string;
 
@@ -145,7 +144,6 @@ export default function DiscussionLearnPage() {
     },
    });
 
-
   // 음성 인식 코드
   const handleRecord = () => {
     try {
@@ -216,6 +214,7 @@ export default function DiscussionLearnPage() {
       } else { // 녹음 중단
         if (recognition.current) {
           recognition.current.stop();
+          setTimeLeft(30);
           postChat.mutate();
         }
       }
@@ -236,12 +235,6 @@ export default function DiscussionLearnPage() {
     };
   }, []);
 
-  const formatTime = (seconds: number) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-   };
-
   return (
     <div className="max-w-lg mx-auto min-h-screen bg-gray-50">
 
@@ -249,7 +242,6 @@ export default function DiscussionLearnPage() {
       <Header
         timeLeft={timeLeft}
         setShowExitConfirm={setShowExitConfirm}
-        formatTime={formatTime}
       />
 
       {/* Chat Messages */}
