@@ -81,7 +81,7 @@ export default function WordLearningContainer({ isReview }: Props) {
         //   correctIds: correctIds
         // });
 
-        const endPoint = `/api/studies/${studyId}/words/review`;
+        const endPoint = `/api/words/review/study/${studyId}`;
         const method = validationResult?.correctIds.length === 0 ? 'post' : 'put';
         const payload = validationResult?.correctIds.length === 0 
           ? {correctIds, incorrectIds}
