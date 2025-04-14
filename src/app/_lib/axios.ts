@@ -20,6 +20,7 @@ export { authApi };
 // 응답 인터셉터 추가 (토큰 만료 처리)
 authApi.interceptors.response.use(
   (response) => {
+    console.log("response: ", response);
     if (response.status === 302) {
       alert("토큰이 만료되었습니다. 다시 로그인해주세요.");
       localStorage.removeItem('accessToken');
@@ -30,6 +31,7 @@ authApi.interceptors.response.use(
     return response;
   },
   (error) => {
+    console.log("error: ", error);
     if (error.response) {
       // 토큰 만료 오류 처리
       if (error.response.status === 401 || 
