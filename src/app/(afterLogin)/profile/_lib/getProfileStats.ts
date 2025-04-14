@@ -4,15 +4,11 @@ import axios from "axios";
 
 export const getProfileStats: QueryFunction<Stats, [_1: string, _2: string]>
  = async () => {
-  try {
-    const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/profile/stats`, {
-      headers: {
-        'Cache-Control': 'no-store',
-      },
-    });
+   const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/profile/stats`, {
+     headers: {
+       'Cache-Control': 'no-store',
+     },
+   });
 
-    return res.data.result;
-  } catch(err) {
-    throw err;
-  }
+   return res.data.result;
  }

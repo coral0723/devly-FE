@@ -5,29 +5,25 @@ import axios from "axios";
 
 export const getPrComments: QueryFunction<PrComments, [_1: string, _2: string, string]>
  = async ({ queryKey: [, , prId] }) => {
-  try {
-    if (!prId) { // prId가 없다면 예외 처리
-      throw new Error("id is required");
-    };
+   if (!prId) { // prId가 없다면 예외 처리
+     throw new Error("id is required");
+   };
 
-    const useMock = process.env.NEXT_PUBLIC_USE_MSW_PR === 'true';
-    let response;
+   const useMock = process.env.NEXT_PUBLIC_USE_MSW_PR === 'true';
+   let response;
 
-    if(useMock) {
-      response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/pr/${prId}/comments`, {
-        headers: {
-          'Cache-Control': 'no-store',
-        },
-      });
-    } else {
-      response = await authApi.get(`/api/pr/${prId}/comments`, {
-        headers: {
-          'Cache-Control': 'no-store',
-        }
-      });
-    }
-    return response.data.result;
-  } catch(err) {
-    throw err;
-  }
+   if(useMock) {
+     response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/pr/${prId}/comments`, {
+       headers: {
+         'Cache-Control': 'no-store',
+       },
+     });
+   } else {
+     response = await authApi.get(`/api/pr/${prId}/comments`, {
+       headers: {
+         'Cache-Control': 'no-store',
+       }
+     });
+   }
+   return response.data.result;
  }
