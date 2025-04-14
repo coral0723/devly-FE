@@ -2,8 +2,7 @@ import axios from 'axios';
 
 // 인증이 필요한 요청을 위한 인스턴스
 const authApi = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
-  maxRedirects: 0
+  baseURL: process.env.NEXT_PUBLIC_BACKEND_URL
 });
 
 // 인증 인스턴스 추가
@@ -20,18 +19,19 @@ export { authApi };
 // 응답 인터셉터 추가 (토큰 만료 처리)
 authApi.interceptors.response.use(
   (response) => {
-    console.log("response: ", response);
-    if (response.status === 302) {
-      alert("토큰이 만료되었습니다. 다시 로그인해주세요.");
-      localStorage.removeItem('accessToken');
-      window.location.replace('/');
-      // 에러로 변환하여 아래쪽 promise chain 중단
-      return Promise.reject(new Error('Token expired'));
-    }
     return response;
   },
   (error) => {
     console.log("error: ", error);
+    // 네트워크 오류 처리 (ERR_NETWORK)
+    if (error.code === "ERR_NETWORK" || !error.response) {
+      console.log("네트워크 오류 또는 응답 없음");
+      alert("서버 연결에 문제가 있거나 토큰이 만료되었습니다. 다시 로그인해주세요.");
+      localStorage.removeItem('accessToken');
+      window.location.replace('/');
+      return Promise.reject(error);
+    }
+    
     if (error.response) {
       // 토큰 만료 오류 처리
       if (error.response.status === 401 || 
