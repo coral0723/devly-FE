@@ -2,7 +2,7 @@ import { Lightbulb, MessageSquare } from "lucide-react";
 import SignInBtn from "./_component/SignInBtn";
 import SignUpBtn from "./_component/SignUpBtn";
 
-export default async function LoginPage() {
+export default function LoginPage() {
   return (
     <div className="min-h-screen w-full bg-white-50 to-white overflow-y-auto">
       {/* Floating Background Icons */}

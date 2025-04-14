@@ -9,6 +9,15 @@ const delay = (ms: number) => new Promise((res) => {
 const generateId = () => Date.now() + Math.floor(Math.random() * 1000);
 
 export const handlers = [
+  http.get('/developerType', async ({ }) => {
+    return new HttpResponse(
+      JSON.stringify({
+        code: "SUCCESS",
+        message: "성공",
+        result: [1, 2],
+      })
+    );
+  }),
   http.get('/api/studies/tasks', async ({ }) => {
     return new HttpResponse(
       JSON.stringify({
@@ -43,7 +52,123 @@ export const handlers = [
       }
     );
   }),
-  http.get('/api/studies/:groupId/words/review', async ({ }) => {
+  http.get(`/weeklyActivity`, async ({ }) => {
+    return new HttpResponse(
+      JSON.stringify({
+        code: "SUCCESS",
+        message: "성공",
+        result: [
+          {
+            day: '월',
+            activities: [
+              {
+                study: 'word',
+                title: "리액트 훅 사용법 정리",
+                exp: 150,
+                date: new Date("2025-01-20")
+              },
+              {
+                study: 'knowledge',
+                title: "Next.js 13 새로운 기능 학습",
+                exp: 180,
+                date: new Date("2025-01-21")
+              },
+              {
+                study: 'pr',
+                title: "로그인 페이지 UI 구현",
+                exp: 200,
+                date: new Date("2025-01-20")
+              },
+              {
+                study: 'discussion',
+                title: "프로젝트 아키텍처 설계 논의",
+                exp: 120,
+                date: new Date("2025-01-21")
+              }
+            ]
+          },
+          {
+            day: '화',
+            activities: [
+              {
+                study: 'knowledge',
+                title: "Next.js 13 새로운 기능 학습",
+                exp: 180,
+                date: new Date("2025-01-21")
+              },
+              {
+                study: 'discussion',
+                title: "프로젝트 아키텍처 설계 논의",
+                exp: 120,
+                date: new Date("2025-01-21")
+              }
+            ]
+          },
+          {
+            day: '수',
+            activities: [
+              {
+                study: 'pr',
+                title: "회원가입 유효성 검사 추가",
+                exp: 160,
+                date: new Date("2025-01-22")
+              }
+            ]
+          },
+          {
+            day: '목',
+            activities: [
+              {
+                study: 'word',
+                title: "타입스크립트 제네릭 정리글 작성",
+                exp: 130,
+                date: new Date("2025-01-23")
+              },
+              {
+                study: 'knowledge',
+                title: "상태관리 라이브러리 비교 분석",
+                exp: 200,
+                date: new Date("2025-01-23")
+              }
+            ]
+          },
+          {
+            day: '금',
+            activities: [
+              {
+                study: 'pr',
+                title: "마이페이지 기능 구현",
+                exp: 190,
+                date: new Date("2025-01-24")
+              },
+              {
+                study: 'discussion',
+                title: "코드 리뷰 및 피드백",
+                exp: 140,
+                date: new Date("2025-01-24")
+              }
+            ]
+          },
+          {
+            day: '토',
+            activities: [
+              {
+                study: 'word',
+                title: "주간 개발 회고록 작성",
+                exp: 100,
+                date: new Date("2025-01-25")
+              }
+            ]
+          },
+          {
+            day: '일',
+            activities: []
+          }
+        ]
+      })
+    )
+  }),
+  http.get('/api/words/review/studies/:studyId', async ({ }) => {
     return new HttpResponse(
       JSON.stringify({
         code: "SUCCESS",
@@ -55,27 +180,7 @@ export const handlers = [
       })
     )
   }),
-  http.post('/api/studies/:groupId/words/review', async ({ }) => {
-    return new HttpResponse(
-      JSON.stringify({
-        code: "SUCCESS",
-        message: "성공",
-      })
-    )
-  }),
-  http.get('/api/studies/:groupId/knowledge/review', async ({ }) => {
-    return new HttpResponse(
-      JSON.stringify({
-        code: "SUCCESS",
-        message: "성공",
-        result: {
-          correctIds: [1],
-          incorrectIds: [2, 3]
-        }
-      })
-    )
-  }),
-  http.post('/api/studies/:groupId/knowledge/review', async ({ }) => {
+  http.put('/api/words/review/studies/:studyId', async ({ }) => {
     return new HttpResponse(
       JSON.stringify({
         code: "SUCCESS",
@@ -195,143 +300,300 @@ export const handlers = [
       })
     )
   }),
-  http.get('/study/knowledges/:studyId', async ({ }) => {
+  http.get('/api/knowledge/review/studies/:studyId', async ({ }) => {
     return new HttpResponse(
-      JSON.stringify([
-        {
-          id: 1,
-          title: "스레드의 기본 개념",
-          content: "스레드는 프로세스 내에서 실행되는 가장 작은 실행 단위입니다. 하나의 프로세스는 여러 개의 스레드를 가질 수 있으며, 각 스레드는 같은 프로세스의 메모리를 공유합니다.",
-          quiz: {
-            text: "다음 중 스레드의 특징이 아닌 것은?",
-            distractors: [
-              {
-                id: 1,
-                distractor: "프로세스의 메모리를 공유한다",
-              },
-              {
-                id: 2,
-                distractor: "각 스레드는 독립적인 메모리 공간을 가진다",
-              },
-              {
-                id: 3,
-                distractor: "동시에 여러 작업을 수행할 수 있다",
-              },
-              {
-                id: 4,
-                distractor: "스택 영역은 스레드마다 독립적이다",
-              },
-            ],
-            answer: 1
-          },
-          code: `// Java에서 스레드 생성 예시
-            class MyThread extends Thread {
-            public void run() {
-                System.out.println("스레드 실행 중");
-            }
-            }
-      
-            public class Main {
-            public static void main(String[] args) {
-                MyThread thread = new MyThread();
-                thread.start(); // 새로운 스레드 시작
-            }
-            }`
-        },
-        {
-          id: 2,
-          title: "스레드 동기화",
-          content: "여러 스레드가 동시에 같은 자원에 접근할 때 발생할 수 있는 문제를 방지하기 위해 동기화가 필요합니다. synchronized 키워드나 락을 사용하여 스레드 간 동기화를 구현할 수 있습니다.",
-          quiz: {
-            text: "다음 중 스레드 동기화 방법이 아닌 것은?",
-            distractors: [
-              {
-                id: 1,
-                distractor: "synchronized 키워드 사용",
-              },
-              {
-                id: 2,
-                distractor: "ReentrantLock 사용",
-              },
-              {
-                id: 3,
-                distractor: "volatile 키워드 사용",
-              },
-              {
-                id: 4,
-                distractor: "thread.stop() 메서드 사용"
-              },
-            ],
-            answer: 3
-          },
-          code: `// 동기화 예시
-            public class Counter {
-            private int count = 0;
-      
-            public synchronized void increment() {
-                count++;
-            }
-      
-            public synchronized int getCount() {
-                return count;
-            }
-            }`
-        },
-        {
-          id: 3,
-          title: "SSR(Server-Side Rendering)의 개념",
-          content: "SSR은 서버에서 페이지의 HTML을 생성하여 클라이언트에 전달하는 렌더링 방식입니다. 초기 로딩 속도와 SEO 측면에서 장점을 가집니다.",
-          quiz: {
-            text: "SSR의 주요 장점이 아닌 것은?",
-            distractors: [
-              {
-                id: 1,
-                distractor: "더 나은 SEO",
-              },
-              {
-                id: 2,
-                distractor: "빠른 초기 페이지 로드",
-              },
-              {
-                id: 3,
-                distractor: "낮은 서버 부하",
-              },
-              {
-                id: 4,
-                distractor: "더 나은 소셜 미디어 공유",
-              },
-            ],
-            answer: 2
-          },
-          code: `// Next.js SSR 예시
-            // pages/index.js
-            export async function getServerSideProps() {
-            const res = await fetch('https://api.example.com/data')
-            const data = await res.json()
-      
-            return {
-            props: {
-              data,
-            },
-            }
-            }
-      
-            export default function Home({ data }) {
-            return (
-            <div>
-              {data.map(item => (
-                <div key={item.id}>{item.title}</div>
-              ))}
-            </div>
-            )
-            }`
-        },
-      ])
+      JSON.stringify({
+        code: "SUCCESS",
+        message: "성공",
+        result: {
+          correctIds: [1],
+          incorrectIds: [2, 3]
+        }
+      })
     )
   }),
-  http.get('/developerType', async ({ }) => {
+  http.put('/api/knowledge/review/studies/:studyId', async ({ }) => {
     return new HttpResponse(
-      JSON.stringify([1, 2])
+      JSON.stringify({
+        code: "SUCCESS",
+        message: "성공",
+      })
+    )
+  }),
+  http.get('/study/knowledges/:studyId', async ({ }) => {
+    return new HttpResponse(
+      JSON.stringify({
+        code: "SUCCESS",
+        message: "성공",
+        result: [
+          {
+            id: 1,
+            title: "스레드의 기본 개념",
+            content: "스레드는 프로세스 내에서 실행되는 가장 작은 실행 단위입니다. 하나의 프로세스는 여러 개의 스레드를 가질 수 있으며, 각 스레드는 같은 프로세스의 메모리를 공유합니다.",
+            quiz: {
+              text: "다음 중 스레드의 특징이 아닌 것은?",
+              distractors: [
+                {
+                  id: 1,
+                  distractor: "프로세스의 메모리를 공유한다",
+                },
+                {
+                  id: 2,
+                  distractor: "각 스레드는 독립적인 메모리 공간을 가진다",
+                },
+                {
+                  id: 3,
+                  distractor: "동시에 여러 작업을 수행할 수 있다",
+                },
+                {
+                  id: 4,
+                  distractor: "스택 영역은 스레드마다 독립적이다",
+                },
+              ],
+              answer: 1
+            },
+            code: `// Java에서 스레드 생성 예시
+              class MyThread extends Thread {
+              public void run() {
+                  System.out.println("스레드 실행 중");
+              }
+              }
+        
+              public class Main {
+              public static void main(String[] args) {
+                  MyThread thread = new MyThread();
+                  thread.start(); // 새로운 스레드 시작
+              }
+              }`
+          },
+          {
+            id: 2,
+            title: "스레드 동기화",
+            content: "여러 스레드가 동시에 같은 자원에 접근할 때 발생할 수 있는 문제를 방지하기 위해 동기화가 필요합니다. synchronized 키워드나 락을 사용하여 스레드 간 동기화를 구현할 수 있습니다.",
+            quiz: {
+              text: "다음 중 스레드 동기화 방법이 아닌 것은?",
+              distractors: [
+                {
+                  id: 1,
+                  distractor: "synchronized 키워드 사용",
+                },
+                {
+                  id: 2,
+                  distractor: "ReentrantLock 사용",
+                },
+                {
+                  id: 3,
+                  distractor: "volatile 키워드 사용",
+                },
+                {
+                  id: 4,
+                  distractor: "thread.stop() 메서드 사용"
+                },
+              ],
+              answer: 3
+            },
+            code: `// 동기화 예시
+              public class Counter {
+              private int count = 0;
+        
+              public synchronized void increment() {
+                  count++;
+              }
+        
+              public synchronized int getCount() {
+                  return count;
+              }
+              }`
+          },
+          {
+            id: 3,
+            title: "SSR(Server-Side Rendering)의 개념",
+            content: "SSR은 서버에서 페이지의 HTML을 생성하여 클라이언트에 전달하는 렌더링 방식입니다. 초기 로딩 속도와 SEO 측면에서 장점을 가집니다.",
+            quiz: {
+              text: "SSR의 주요 장점이 아닌 것은?",
+              distractors: [
+                {
+                  id: 1,
+                  distractor: "더 나은 SEO",
+                },
+                {
+                  id: 2,
+                  distractor: "빠른 초기 페이지 로드",
+                },
+                {
+                  id: 3,
+                  distractor: "낮은 서버 부하",
+                },
+                {
+                  id: 4,
+                  distractor: "더 나은 소셜 미디어 공유",
+                },
+              ],
+              answer: 2
+            },
+            code: `// Next.js SSR 예시
+              // pages/index.js
+              export async function getServerSideProps() {
+              const res = await fetch('https://api.example.com/data')
+              const data = await res.json()
+        
+              return {
+              props: {
+                data,
+              },
+              }
+              }
+        
+              export default function Home({ data }) {
+              return (
+              <div>
+                {data.map(item => (
+                  <div key={item.id}>{item.title}</div>
+                ))}
+              </div>
+              )
+              }`
+          },
+        ]
+      })
+    )
+  }),
+  http.get('/api/knowledges/:studyId/review', async ({ }) => {
+    return new HttpResponse(
+      JSON.stringify({
+        code: "SUCCESS",
+        message: "성공",
+        result: [
+          {
+            id: 1,
+            title: "스레드의 기본 개념",
+            content: "스레드는 프로세스 내에서 실행되는 가장 작은 실행 단위입니다. 하나의 프로세스는 여러 개의 스레드를 가질 수 있으며, 각 스레드는 같은 프로세스의 메모리를 공유합니다.",
+            quiz: {
+              text: "다음 중 스레드의 특징이 아닌 것은?",
+              distractors: [
+                {
+                  id: 1,
+                  distractor: "프로세스의 메모리를 공유한다",
+                },
+                {
+                  id: 2,
+                  distractor: "각 스레드는 독립적인 메모리 공간을 가진다",
+                },
+                {
+                  id: 3,
+                  distractor: "동시에 여러 작업을 수행할 수 있다",
+                },
+                {
+                  id: 4,
+                  distractor: "스택 영역은 스레드마다 독립적이다",
+                },
+              ],
+              answer: 1
+            },
+            code: `// Java에서 스레드 생성 예시
+              class MyThread extends Thread {
+              public void run() {
+                  System.out.println("스레드 실행 중");
+              }
+              }
+        
+              public class Main {
+              public static void main(String[] args) {
+                  MyThread thread = new MyThread();
+                  thread.start(); // 새로운 스레드 시작
+              }
+              }`
+          },
+          {
+            id: 2,
+            title: "스레드 동기화",
+            content: "여러 스레드가 동시에 같은 자원에 접근할 때 발생할 수 있는 문제를 방지하기 위해 동기화가 필요합니다. synchronized 키워드나 락을 사용하여 스레드 간 동기화를 구현할 수 있습니다.",
+            quiz: {
+              text: "다음 중 스레드 동기화 방법이 아닌 것은?",
+              distractors: [
+                {
+                  id: 1,
+                  distractor: "synchronized 키워드 사용",
+                },
+                {
+                  id: 2,
+                  distractor: "ReentrantLock 사용",
+                },
+                {
+                  id: 3,
+                  distractor: "volatile 키워드 사용",
+                },
+                {
+                  id: 4,
+                  distractor: "thread.stop() 메서드 사용"
+                },
+              ],
+              answer: 3
+            },
+            code: `// 동기화 예시
+              public class Counter {
+              private int count = 0;
+        
+              public synchronized void increment() {
+                  count++;
+              }
+        
+              public synchronized int getCount() {
+                  return count;
+              }
+              }`
+          },
+          {
+            id: 3,
+            title: "SSR(Server-Side Rendering)의 개념",
+            content: "SSR은 서버에서 페이지의 HTML을 생성하여 클라이언트에 전달하는 렌더링 방식입니다. 초기 로딩 속도와 SEO 측면에서 장점을 가집니다.",
+            quiz: {
+              text: "SSR의 주요 장점이 아닌 것은?",
+              distractors: [
+                {
+                  id: 1,
+                  distractor: "더 나은 SEO",
+                },
+                {
+                  id: 2,
+                  distractor: "빠른 초기 페이지 로드",
+                },
+                {
+                  id: 3,
+                  distractor: "낮은 서버 부하",
+                },
+                {
+                  id: 4,
+                  distractor: "더 나은 소셜 미디어 공유",
+                },
+              ],
+              answer: 2
+            },
+            code: `// Next.js SSR 예시
+              // pages/index.js
+              export async function getServerSideProps() {
+              const res = await fetch('https://api.example.com/data')
+              const data = await res.json()
+        
+              return {
+              props: {
+                data,
+              },
+              }
+              }
+        
+              export default function Home({ data }) {
+              return (
+              <div>
+                {data.map(item => (
+                  <div key={item.id}>{item.title}</div>
+                ))}
+              </div>
+              )
+              }`
+          },
+        ]
+      })
     )
   }),
   http.get('/api/pr/study/:studyId', async ({ }) => {
@@ -588,189 +850,37 @@ export const handlers = [
       })
     )
   }),
-  http.get(`/profile/stats`, async ({ }) => {
+  http.get('/study/discussions/:studyId', async ({ }) => {
     return new HttpResponse(
       JSON.stringify({
-        days: 24,
-        exp: 3434,
-        words: 32,
-        knowledge: 55,
-        pr: 19,
-        discussion: 4
-      })
-    )
-  }),
-  http.get(`/profile`, async ({ }) => {
-    return new HttpResponse(
-      JSON.stringify({
-        id: "user1234",
-        nickname: "김데블리",
-        profile: faker.image.urlLoremFlickr(),
-        developerType: 2,
-        level: 6
-      })
-    )
-  }),
-  http.get(`/rankings`, async ({ }) => {
-    return new HttpResponse(
-      JSON.stringify({
-        totalUsers: 1234,
-        myRank: 33,
-        rankings: [
-          // Top 3
-          { rank: 1, name: "김서준", score: 2840, level: 8, change: 'up' },
-          { rank: 2, name: "이도윤", score: 2790, level: 7, change: 'same' },
-          { rank: 3, name: "박지호", score: 2755, level: 7, change: 'up' },
-          // 4-5위
-          { rank: 4, name: "최수아", score: 2720, level: 6, change: 'down' },
-          { rank: 5, name: "정하준", score: 2685, level: 6, change: 'up' },
-          // 구분선
-          { type: 'separator', rank: '...' },
-          // 내 주변 순위
-          { rank: 40, name: "장현우", score: 2250, level: 4, change: 'up' },
-          { rank: 41, name: "임지원", score: 2235, level: 4, change: 'down' },
-          { rank: 42, name: "박정수", score: 2220, level: 4, change: 'same', isMe: true },
-          { rank: 42, name: "한소희", score: 2220, level: 4, change: 'up' },
-          { rank: 44, name: "송태호", score: 2190, level: 4, change: 'down' },
+        code: "SUCCESS",
+        message: "성공",
+        result: [
+          {
+            id: 1,
+            title: "React Virtual DOM",
+            description: "간단한 Virtual DOM과 실제 DOM의 차이점을 설명해보세요.",
+            difficulty: "고급",
+            estimatedTime: "45분",
+            category: "React",
+            tags: ["Virtual DOM", "React", "Performance"]
+            },
         ]
       })
     )
   }),
-  http.get(`/weeklyActivity`, async ({ }) => {
-    return new HttpResponse(
-      JSON.stringify([
-        {
-          day: '월',
-          activities: [
-            {
-              study: 'word',
-              title: "리액트 훅 사용법 정리",
-              exp: 150,
-              date: new Date("2025-01-20")
-            },
-            {
-              study: 'knowledge',
-              title: "Next.js 13 새로운 기능 학습",
-              exp: 180,
-              date: new Date("2025-01-21")
-            },
-            {
-              study: 'pr',
-              title: "로그인 페이지 UI 구현",
-              exp: 200,
-              date: new Date("2025-01-20")
-            },
-            {
-              study: 'discussion',
-              title: "프로젝트 아키텍처 설계 논의",
-              exp: 120,
-              date: new Date("2025-01-21")
-            }
-          ]
-        },
-        {
-          day: '화',
-          activities: [
-            {
-              study: 'knowledge',
-              title: "Next.js 13 새로운 기능 학습",
-              exp: 180,
-              date: new Date("2025-01-21")
-            },
-            {
-              study: 'discussion',
-              title: "프로젝트 아키텍처 설계 논의",
-              exp: 120,
-              date: new Date("2025-01-21")
-            }
-          ]
-        },
-        {
-          day: '수',
-          activities: [
-            {
-              study: 'pr',
-              title: "회원가입 유효성 검사 추가",
-              exp: 160,
-              date: new Date("2025-01-22")
-            }
-          ]
-        },
-        {
-          day: '목',
-          activities: [
-            {
-              study: 'word',
-              title: "타입스크립트 제네릭 정리글 작성",
-              exp: 130,
-              date: new Date("2025-01-23")
-            },
-            {
-              study: 'knowledge',
-              title: "상태관리 라이브러리 비교 분석",
-              exp: 200,
-              date: new Date("2025-01-23")
-            }
-          ]
-        },
-        {
-          day: '금',
-          activities: [
-            {
-              study: 'pr',
-              title: "마이페이지 기능 구현",
-              exp: 190,
-              date: new Date("2025-01-24")
-            },
-            {
-              study: 'discussion',
-              title: "코드 리뷰 및 피드백",
-              exp: 140,
-              date: new Date("2025-01-24")
-            }
-          ]
-        },
-        {
-          day: '토',
-          activities: [
-            {
-              study: 'word',
-              title: "주간 개발 회고록 작성",
-              exp: 100,
-              date: new Date("2025-01-25")
-            }
-          ]
-        },
-        {
-          day: '일',
-          activities: []
-        }
-      ])
-    )
-  }),
-  http.get('/study/discussions/:groupId', async ({ }) => {
-    return new HttpResponse(
-      JSON.stringify([
-        {
-          id: 1,
-          title: "React Virtual DOM",
-          description: "간단한 Virtual DOM과 실제 DOM의 차이점을 설명해보세요.",
-          difficulty: "고급",
-          estimatedTime: "45분",
-          category: "React",
-          tags: ["Virtual DOM", "React", "Performance"]
-          },
-      ])
-    )
-  }),
   http.get('/study/discussion/:id', async ({ }) => {
     return new HttpResponse(
-      JSON.stringify([{
-        id: Date.now(),
-        role: 'ai',
-        content: 'Virtual DOM의 개념에 대해 설명해주시겠어요?'
-      }])
-    )
+      JSON.stringify({
+        code: "SUCCESS",
+        message: "성공",
+        result: [{
+          id: Date.now(),
+          role: 'ai',
+          content: 'Virtual DOM의 개념에 대해 설명해주시겠어요?'
+        }]
+      })
+    );
   }),
   http.post(`/study/discussion/recomment/:id`, async ({ }) => {
     await delay(2000);
@@ -782,77 +892,140 @@ export const handlers = [
       })
     )
   }),
-  http.get(`/review`, async ({  }) => {
-
+  http.get(`/profile`, async ({ }) => {
     return new HttpResponse(
-      JSON.stringify([
-        {
-          date: new Date("2025-01-20"),
-          logs: [
-            {
-              id: 1,
-              study: 'word',
-              title: "리액트 훅 사용법 정리",
-              exp: 130
-            },
-            {
-              id: 2,
-              study: 'knowledge',
-              title: "Next.js 13 새로운 기능 학습",
-              exp: 200
-            },
-            {
-              id: 58,
-              prId: 27,
-              study: 'pr',
-              title: "로그인 페이지 UI 구현",
-              exp: 150
-            },
-            {
-              id: 4,
-              study: 'discussion',
-              title: "프로젝트 아키텍처 설계 논의",
-              exp: 200
-            }
+      JSON.stringify({
+        code: "SUCCESS",
+        message: "성공",
+        result: {
+          id: "user1234",
+          nickname: "김데블리",
+          profile: faker.image.urlLoremFlickr(),
+          developerType: 2,
+          level: 6
+        }
+      })
+    );
+  }),
+  http.get(`/profile/stats`, async ({ }) => {
+    return new HttpResponse(
+      JSON.stringify({
+        code: "SUCCESS",
+        message: "성공",
+        result: {
+          days: 24,
+          exp: 3434,
+          words: 32,
+          knowledge: 55,
+          pr: 19,
+          discussion: 4
+        }
+      })
+    );
+  }),
+  http.get(`/rankings`, async ({ }) => {
+    return new HttpResponse(
+      JSON.stringify({
+        code: "SUCCESS",
+        message: "성공",
+        result: {
+          totalUsers: 1234,
+          myRank: 33,
+          rankings: [
+            // Top 3
+            { rank: 1, name: "김서준", score: 2840, level: 8, change: 'up' },
+            { rank: 2, name: "이도윤", score: 2790, level: 7, change: 'same' },
+            { rank: 3, name: "박지호", score: 2755, level: 7, change: 'up' },
+            // 4-5위
+            { rank: 4, name: "최수아", score: 2720, level: 6, change: 'down' },
+            { rank: 5, name: "정하준", score: 2685, level: 6, change: 'up' },
+            // 구분선
+            { type: 'separator', rank: '...' },
+            // 내 주변 순위
+            { rank: 40, name: "장현우", score: 2250, level: 4, change: 'up' },
+            { rank: 41, name: "임지원", score: 2235, level: 4, change: 'down' },
+            { rank: 42, name: "박정수", score: 2220, level: 4, change: 'same', isMe: true },
+            { rank: 42, name: "한소희", score: 2220, level: 4, change: 'up' },
+            { rank: 44, name: "송태호", score: 2190, level: 4, change: 'down' },
           ]
-        },
-        {
-          date: new Date("2025-01-27"),
-          logs: [
-            {
-              id: 1,
-              study: 'word',
-              title: "리액트 훅 사용법 정리",
-              exp: 130
-            },
-            {
-              id: 58,
-              prId: 27,
-              study: 'pr',
-              title: "로그인 페이지 UI 구현",
-              exp: 150
-            },
-          ]
-        },
-        {
-          date: new Date("2025-02-20"),
-          logs: [
-            {
-              id: 2,
-              study: 'knowledge',
-              title: "Next.js 13 새로운 기능 학습",
-              exp: 200
-            },
-            {
-              id: 58,
-              prId: 27,
-              study: 'pr',
-              title: "로그인 페이지 UI 구현",
-              exp: 150
-            },
-          ]
-        },
-      ])
+        }
+      })
+    );
+  }),
+  http.get(`/review`, async ({  }) => {
+    return new HttpResponse(
+      JSON.stringify({
+        code: "SUCCESS",
+        message: "성공",
+        result: [
+          {
+            date: new Date("2025-01-20"),
+            logs: [
+              {
+                id: 1,
+                study: 'word',
+                title: "리액트 훅 사용법 정리",
+                exp: 130
+              },
+              {
+                id: 2,
+                study: 'knowledge',
+                title: "Next.js 13 새로운 기능 학습",
+                exp: 200
+              },
+              {
+                id: 58,
+                prId: 27,
+                study: 'pr',
+                title: "로그인 페이지 UI 구현",
+                exp: 150
+              },
+              {
+                id: 4,
+                study: 'discussion',
+                title: "프로젝트 아키텍처 설계 논의",
+                exp: 200
+              }
+            ]
+          },
+          {
+            date: new Date("2025-01-27"),
+            logs: [
+              {
+                id: 1,
+                study: 'word',
+                title: "리액트 훅 사용법 정리",
+                exp: 130
+              },
+              {
+                id: 58,
+                prId: 27,
+                study: 'pr',
+                title: "로그인 페이지 UI 구현",
+                exp: 150
+              },
+            ]
+          },
+          {
+            date: new Date("2025-02-20"),
+            logs: [
+              {
+                id: 2,
+                study: 'knowledge',
+                title: "Next.js 13 새로운 기능 학습",
+                exp: 200
+              },
+              {
+                id: 58,
+                prId: 27,
+                study: 'pr',
+                title: "로그인 페이지 UI 구현",
+                exp: 150
+              },
+            ]
+          },
+        ]
+      })
     )
   }),
   http.get('/api/words/:studyId/review', () => {
@@ -904,139 +1077,5 @@ export const handlers = [
         ]
       }
     });
-  }),
-  http.get('/api/knowledges/:studyId/review', async ({ }) => {
-    return new HttpResponse(
-      JSON.stringify([
-        {
-          id: 1,
-          title: "스레드의 기본 개념",
-          content: "스레드는 프로세스 내에서 실행되는 가장 작은 실행 단위입니다. 하나의 프로세스는 여러 개의 스레드를 가질 수 있으며, 각 스레드는 같은 프로세스의 메모리를 공유합니다.",
-          quiz: {
-            text: "다음 중 스레드의 특징이 아닌 것은?",
-            distractors: [
-              {
-                id: 1,
-                distractor: "프로세스의 메모리를 공유한다",
-              },
-              {
-                id: 2,
-                distractor: "각 스레드는 독립적인 메모리 공간을 가진다",
-              },
-              {
-                id: 3,
-                distractor: "동시에 여러 작업을 수행할 수 있다",
-              },
-              {
-                id: 4,
-                distractor: "스택 영역은 스레드마다 독립적이다",
-              },
-            ],
-            answer: 1
-          },
-          code: `// Java에서 스레드 생성 예시
-            class MyThread extends Thread {
-            public void run() {
-                System.out.println("스레드 실행 중");
-            }
-            }
-      
-            public class Main {
-            public static void main(String[] args) {
-                MyThread thread = new MyThread();
-                thread.start(); // 새로운 스레드 시작
-            }
-            }`
-        },
-        {
-          id: 2,
-          title: "스레드 동기화",
-          content: "여러 스레드가 동시에 같은 자원에 접근할 때 발생할 수 있는 문제를 방지하기 위해 동기화가 필요합니다. synchronized 키워드나 락을 사용하여 스레드 간 동기화를 구현할 수 있습니다.",
-          quiz: {
-            text: "다음 중 스레드 동기화 방법이 아닌 것은?",
-            distractors: [
-              {
-                id: 1,
-                distractor: "synchronized 키워드 사용",
-              },
-              {
-                id: 2,
-                distractor: "ReentrantLock 사용",
-              },
-              {
-                id: 3,
-                distractor: "volatile 키워드 사용",
-              },
-              {
-                id: 4,
-                distractor: "thread.stop() 메서드 사용"
-              },
-            ],
-            answer: 3
-          },
-          code: `// 동기화 예시
-            public class Counter {
-            private int count = 0;
-      
-            public synchronized void increment() {
-                count++;
-            }
-      
-            public synchronized int getCount() {
-                return count;
-            }
-            }`
-        },
-        {
-          id: 3,
-          title: "SSR(Server-Side Rendering)의 개념",
-          content: "SSR은 서버에서 페이지의 HTML을 생성하여 클라이언트에 전달하는 렌더링 방식입니다. 초기 로딩 속도와 SEO 측면에서 장점을 가집니다.",
-          quiz: {
-            text: "SSR의 주요 장점이 아닌 것은?",
-            distractors: [
-              {
-                id: 1,
-                distractor: "더 나은 SEO",
-              },
-              {
-                id: 2,
-                distractor: "빠른 초기 페이지 로드",
-              },
-              {
-                id: 3,
-                distractor: "낮은 서버 부하",
-              },
-              {
-                id: 4,
-                distractor: "더 나은 소셜 미디어 공유",
-              },
-            ],
-            answer: 2
-          },
-          code: `// Next.js SSR 예시
-            // pages/index.js
-            export async function getServerSideProps() {
-            const res = await fetch('https://api.example.com/data')
-            const data = await res.json()
-      
-            return {
-            props: {
-              data,
-            },
-            }
-            }
-      
-            export default function Home({ data }) {
-            return (
-            <div>
-              {data.map(item => (
-                <div key={item.id}>{item.title}</div>
-              ))}
-            </div>
-            )
-            }`
-        },
-      ])
-    )
   }),
 ];

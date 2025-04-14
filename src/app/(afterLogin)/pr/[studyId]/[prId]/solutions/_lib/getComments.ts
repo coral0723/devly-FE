@@ -16,9 +16,7 @@ export const getComments: QueryFunction<Comment[], [_1: string, _2: string, numb
       });
   
       return res.data.result.comments;
-
     } catch(err) {
-      throw new Error('Failed to fetch data', { cause: err });
-    }
-    
+      throw err;
+    }  
   }

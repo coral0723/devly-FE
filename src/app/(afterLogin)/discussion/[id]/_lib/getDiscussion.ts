@@ -15,9 +15,8 @@ export const getDiscussion: QueryFunction<Chat[], [_1: string, _2: string, strin
       },
     });
 
-    return res.data;
+    return res.data.result;
   } catch(err) {
-    throw new Error('Failed to fetch data', { cause: err});
+    throw err;
   }
-
  }

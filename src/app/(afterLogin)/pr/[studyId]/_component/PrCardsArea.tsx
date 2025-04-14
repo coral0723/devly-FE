@@ -10,13 +10,13 @@ type Props = {
   studyId: string;
 }
 
-export default function PrCardsArea({studyId}: Props) {
+export default function PrCardsArea({ studyId }: Props) {
 
   const {data: prCards, isLoading} = useQuery<IPRCard, object, IPRCard, [_1: string, _2: string, string]>({
     queryKey: ['pr', 'cards', studyId],
     queryFn: getPrCards,
-    staleTime: 60 * 1000,
-    gcTime: 300 * 1000
+    staleTime: 0,
+    refetchOnMount: 'always',
   });
 
   if(isLoading || !prCards) {

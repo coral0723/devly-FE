@@ -11,8 +11,7 @@ type Props = {
   onLoadMore: () => Promise<void>,
 }
 
-export default function LogContainer({studyLogs, hasNextPage, onLoadMore}: Props) {
-
+export default function LogContainer({ studyLogs, hasNextPage, onLoadMore }: Props) {
   const { ref, inView } = useInView({
     threshold: 0,
     delay: 0,

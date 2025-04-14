@@ -7,13 +7,13 @@ import DisscussionCard from "./DiscussionCard";
 import LoadingSpinner from "@/app/_component/LoadingSpinner";
 
 type Props = {
-  groupId: string;
+  studyId: string;
 }
 
-export default function DiscussionCardsArea({groupId}: Props) {
+export default function DiscussionCardsArea({ studyId }: Props) {
 
   const {data: discussionCards, isLoading} = useQuery<IDiscussionCard[], object, IDiscussionCard[], [_1: string, _2: string, string]>({
-    queryKey: ['discussion', 'cards', groupId],
+    queryKey: ['discussion', 'cards', studyId],
     queryFn: getDiscussionCards,
     staleTime: 60 * 1000,
     gcTime: 300 * 1000

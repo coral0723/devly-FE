@@ -1,7 +1,7 @@
 import { QueryFunction } from "@tanstack/react-query";
 import { PrCard } from "@/model/pr/PrCard";
 import { authApi } from "@/app/_lib/axios";
-// import axios from "axios";
+import axios from "axios";
 
 export const getPrCards: QueryFunction<PrCard, [_1: string, _2: string, string]>
  = async ({ queryKey: [, , studyId] }) => {
@@ -10,25 +10,25 @@ export const getPrCards: QueryFunction<PrCard, [_1: string, _2: string, string]>
       throw new Error("studyId is required");
     };
 
-    //msw 용
-    // const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/pr/study/${studyId}`, {
-    //   headers: {
-    //     'Cache-Control': 'no-store',
-    //   },
-    // });
-
-    // return res.data.result;
-
-    const res = await authApi.get(`/api/pr/study/${studyId}`, {
-      headers: {
-        'Cache-Control': 'no-store',
-      }
-    });
-
-    return res.data.result;
-
+    const useMock = process.env.NEXT_PUBLIC_USE_MSW_PR === 'true';
+    let response;
+    
+    if(useMock) {
+      response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/pr/study/${studyId}`, {
+        headers: {
+          'Cache-Control': 'no-store',
+        },
+      });
+    } else {
+      response = await authApi.get(`/api/pr/study/${studyId}`, {
+        headers: {
+          'Cache-Control': 'no-store',
+        }
+      });
+    }
+    
+    return response.data.result;
   } catch(err) {
-    throw new Error('Failed to fetch data', { cause: err});
+    throw err;
   }
-
  }

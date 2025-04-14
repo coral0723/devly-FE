@@ -14,12 +14,13 @@ import Header from "./Header";
 import KnowledgeStep from "./KnowledgeStep";
 import ExitConfirmModal from "./ExitConfirmModal";
 import CompletionModal from "./CompletionModal";
+import { authApi } from "@/app/_lib/axios";
 
 type Props = {
-  isReview?: boolean;
+  isReview: boolean;
 }
 
-export default function KnowledgeLearningContainer({ isReview = false }: Props) {
+export default function KnowledgeLearningContainer({ isReview }: Props) {
   const [currentKnowledgeIndex, setCurrentKnowledgeIndex] = useState<number>(0);
   const [showExitConfirm, setShowExitConfirm] = useState<boolean>(false);
   const [showCompletion, setShowCompletion] = useState<boolean>(false);
@@ -32,8 +33,8 @@ export default function KnowledgeLearningContainer({ isReview = false }: Props) 
   const {data: knowledges, isLoading, refetch: knowledgeRefetch} = useQuery<Knowledge[], object, Knowledge[], [_1: string, _2: string, string]>({
     queryKey: ['knowledge', isReview ? 'review' : 'learn', studyId!],
     queryFn: isReview ? getReviewKnowledges : getKnowledges,
-    staleTime: 60 * 1000,
-    gcTime: 300 * 1000,
+    staleTime: 0,
+    refetchOnMount: 'always',
   });
 
   const {data: validationResult, refetch: validationRefetch} = useQuery<ValidationResult, object, ValidationResult, [_1: string, _2: string, string]>({
@@ -62,20 +63,24 @@ export default function KnowledgeLearningContainer({ isReview = false }: Props) 
       setShowCompletion(true);
     } else {
       try {
-        //msw용
-        const res = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/studies/${studyId}/knowledge/review`, {
-          correctIds: correctIds
-        });
+        const useMock = process.env.NEXT_PUBLIC_USE_MSW_KNOWLEDGE === 'true';
+        let response;
 
-        // const endPoint = `/api/studies/${studyId}/knowledge/review`;
-        // const method = validationResult?.correctIds.length === 0 ? 'post' : 'put';
-        // const payload = validationResult?.correctIds.length === 0 
-        //   ? {correctIds, incorrectIds}
-        //   : {correctIds}; 
+        if(useMock){
+          response = await axios.put(`${process.env.NEXT_PUBLIC_BASE_URL}/api/studies/${studyId}/knowledge/review`, {
+            correctIds: correctIds
+          });
+        } else {
+          const endPoint = `/api/studies/${studyId}/knowledge/review`;
+          const method = validationResult?.correctIds.length === 0 ? 'post' : 'put';
+          const payload = validationResult?.correctIds.length === 0 
+            ? {correctIds, incorrectIds}
+            : {correctIds}; 
+  
+          response = await authApi[method](endPoint, payload);
+        }
 
-        // const res = await authApi[method](endPoint, payload);
-
-        if(res.status === 200) {
+        if(response.status === 200) {
           setShowCompletion(true);
         }
       } catch(error) {

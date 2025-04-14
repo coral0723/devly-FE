@@ -15,9 +15,8 @@ export const getReviewKnowledges: QueryFunction<Knowledge[], [_1: string, _2: st
       },
     });
 
-    return res.data;
+    return res.data.result;
   } catch(err) {
     throw new Error('Failed to fetch data', { cause: err});
   }
-
  }

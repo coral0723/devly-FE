@@ -1,21 +1,17 @@
-import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import BottomNavigation from "../../_component/BottomNavigation";
-import { getPrCards } from "./_lib/getPrCards";
 import PrCardsArea from "./_component/PrCardsArea";
 
-export default async function PRPage({
-  params,
-}: {
-  params: Promise<{ studyId: string }>
-}) {
-  const {studyId} = await params;
-  const queryClient = new QueryClient();
-  queryClient.prefetchQuery({queryKey: ['pr', 'cards', studyId], queryFn: getPrCards});
-  const dehydratedState = dehydrate(queryClient);
+type Props = {
+  params: Promise<{ 
+    studyId: string,
+  }>
+}
+
+export default async function PRPage({ params }: Props) {
+  const { studyId } = await params;
   
   return (
     <div className="max-w-lg mx-auto min-h-screen bg-gray-50 pb-20">
-      <HydrationBoundary state={dehydratedState}>
       {/* Header */}
       <div className="bg-white p-4 border-b border-gray-200">
         <h1 className="text-xl font-semibold text-gray-900">모의 PR</h1>
@@ -35,7 +31,6 @@ export default async function PRPage({
         <PrCardsArea studyId={studyId}/>
       </div>
       <BottomNavigation />
-      </HydrationBoundary>
     </div>
   );
 };

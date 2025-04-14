@@ -8,7 +8,7 @@ type Props = {
   pr: IPrCard;
 }
 
-export default function PrCard({pr}: Props) {
+export default function PrCard({ pr }: Props) {
   const router = useRouter();
   const studyId = useParams().studyId;
 

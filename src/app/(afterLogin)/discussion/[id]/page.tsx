@@ -39,8 +39,8 @@ export default function DiscussionLearnPage() {
   const {data: discussion, isLoading} = useQuery<Chat[], object, Chat[], [_1: string, _2: string, string]>({
     queryKey: ['discussion', 'learn', id],
     queryFn: getDiscussion,
-    staleTime: 60 * 1000,
-    gcTime: 300 * 1000,
+    staleTime: 0,
+    refetchOnMount: 'always',
   });
 
   //쿼리와 채팅 상태를 동시에 업데이트 하는 함수

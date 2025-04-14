@@ -16,9 +16,7 @@ export const getSolutions: QueryFunction<Solution[], [_1: string, _2: string, st
       });
   
       return res.data.result.solutions;
-
     } catch(err) {
-      throw new Error('Failed to fetch data', { cause: err });
+      throw err;
     }
-    
   }

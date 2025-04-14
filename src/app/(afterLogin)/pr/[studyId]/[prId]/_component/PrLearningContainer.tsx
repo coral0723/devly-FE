@@ -20,22 +20,22 @@ import { authApi } from "@/app/_lib/axios"
 import { Answer } from "@/model/pr/Answer"
 import { CompletionModal } from "./CompletionModal"
 import PrMainContent from "./PrMainContent"
-// import axios from "axios"
+import axios from "axios"
 // import { FinalFeedback } from "@/model/pr/FinalFeedback"
 // import FinalScoreModal from "./FinalScoreModal"
 
 type Props = {
-  isReview?: boolean;
+  isReview: boolean;
   userId?: string;
 }
 
-export default function PrLearningContainer({ isReview = false, userId = undefined }: Props) {
+export default function PrLearningContainer({ isReview, userId = undefined }: Props) {
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [replies, setReplies] = useState<string[]>([]); //답안들 저장용
   const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
   const [showFiles, setShowFiles] = useState<boolean>(false); //"커밋 내역" Modal
   const [showCompletion, setShowCompletion] = useState<boolean>(false);
-  const {studyId, prId} = useParams();
+  const { studyId, prId } = useParams();
   const router = useRouter();
   // const [showFinalScore, setShowFinalScore] = useState<boolean>(false); //"점수 포함된 최종 결과" Modal
   // const [finalFeedback, setFinalFeedback] = useState<FinalFeedback>(); 
@@ -43,29 +43,29 @@ export default function PrLearningContainer({ isReview = false, userId = undefin
   const {data: prCards, isLoading: isCardsLoading} = useQuery<PrCard, object, PrCard, [_1: string, _2: string, string]>({
     queryKey: ['pr', 'cards', studyId as string],
     queryFn: getPrCards,
-    staleTime: 60 * 1000,
-    gcTime: 300 * 1000,
+    staleTime: 0,
+    refetchOnMount: 'always',
   });
 
   const {data: prChangedFiles, isLoading: isChangedFilesLoading} = useQuery<PrChangedFiles, object, PrChangedFiles, [_1: string, _2: string, string]>({
     queryKey: ['pr', 'changedFiles', prId as string],
     queryFn: getPrChangedFiles,
-    staleTime: 60 * 1000,
-    gcTime: 300 * 1000,
+    staleTime: 0,
+    refetchOnMount: 'always',
   });
 
   const {data: prComments, isLoading: isCommentsLoading} = useQuery<PrComments, object, PrComments, [_1: string, _2: string, string]>({
     queryKey: ['pr', 'comments', prId as string],
     queryFn: getPrComments,
-    staleTime: 60 * 1000,
-    gcTime: 300 * 1000,
+    staleTime: 0,
+    refetchOnMount: 'always',
   });
 
   const {data: prHistory, isLoading: isPrHistoryLoading} = useQuery<PrHistory, object, PrHistory, [_1: string, _2: string, string, string]>({
     queryKey: ['pr', 'history', prId as string, userId as string],
     queryFn: getPrHistory,
-    staleTime: 60 * 1000,
-    gcTime: 300 * 1000,
+    staleTime: 0,
+    refetchOnMount: 'always',
     enabled: !!userId,
   });
 
@@ -75,19 +75,20 @@ export default function PrLearningContainer({ isReview = false, userId = undefin
     Answer
   >({
 		mutationFn: async (params) => {
-      // msw용
-			// const response = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/pr/review/comment/${params.commentId}`, {
-			// 	answer: params.answer,
-      //   studyId: Number(studyId),
-			// });
+      const useMock = process.env.NEXT_PUBLIC_USE_MSW_PR === 'true';
+      let response;
 
-      // return response.data.result;
-
-      const response = await authApi.post(`/api/pr/review/comment/${params.commentId}`, {
-        answer: params.answer,
-        studyId: Number(studyId),
-      });
-
+      if(useMock) {
+        response = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/pr/review/comment/${params.commentId}`, {
+          answer: params.answer,
+          studyId: Number(studyId),
+        });
+      } else {
+        response = await authApi.post(`/api/pr/review/comment/${params.commentId}`, {
+          answer: params.answer,
+          studyId: Number(studyId),
+        });
+      }
       return response.data.result;
 		},
     //feedbackData: response.data.result, variables: 함수 호출할 때 사용한 파라미터

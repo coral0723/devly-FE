@@ -1,28 +1,22 @@
-import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
-import { getProfileInfo } from './_lib/getProfileInfo';
-import { getProfileStats } from './_lib/getProfileStats';
 import UnderDevelopment from '../_component/UnderDevelopment';
-// import BottomNavigation from '../_component/BottomNavigation';
-// import Header from './_component/Header';
-// import ProfileInfo from './_component/ProfileInfo';
-// import ProfileStats from './_component/ProfileStats';
+import BottomNavigation from '../_component/BottomNavigation';
+import Header from './_component/Header';
+import ProfileInfo from './_component/ProfileInfo';
+import ProfileStats from './_component/ProfileStats';
 
 export default async function Profile() {
-  const queryClient = new QueryClient();
-  await queryClient.prefetchQuery({queryKey: ["profile", "info"], queryFn: getProfileInfo});
-  await queryClient.prefetchQuery({queryKey: ["profile", "stats"], queryFn: getProfileStats});
-  const dehydratedState = dehydrate(queryClient);
+  const isDevelopment = process.env.NODE_ENV === 'development';
 
-  //기능 개발 되면 overflow-hidden 지워야 함
+  if(!isDevelopment) { //배포 환경에서는 <UnderDevelopment/>를 보여줌
+    return <UnderDevelopment/>;
+  }
+
   return (
-    <div className="max-w-lg mx-auto min-h-screen bg-gray-50 pb-20 overflow-hidden">
-      <HydrationBoundary state={dehydratedState}>
-        {/* <Header/>
-        <ProfileInfo/>
-        <ProfileStats/>
-        <BottomNavigation/> */}
-        <UnderDevelopment/>
-      </HydrationBoundary>
+    <div className="max-w-lg mx-auto min-h-screen bg-gray-50 pb-20">
+      <Header/>
+      <ProfileInfo/>
+      <ProfileStats/>
+      <BottomNavigation/>
     </div>
   );
 }

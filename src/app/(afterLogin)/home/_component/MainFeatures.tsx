@@ -92,11 +92,11 @@ export default function MainFeatures() {
         <p className="text-base text-gray-500">PR 작성 연습과 질문 답변 연습</p>
       </div>
 
-      {/* 모의 논의 */}
+      {/* 모의 면접 */}
       <div
           className={`bg-white rounded-2xl border border-gray-200 p-5 space-y-2 transition-all
             ${tasks.discussion.completed === false && "cursor-pointer hover:bg-orange-50 hover:border-orange-200 active:scale-95"}`}
-          onClick={tasks.discussion.completed ? undefined : (() => {router.replace(`/discussion?groupId=${tasks.discussion.studyId}`)})}
+          onClick={tasks.discussion.completed ? undefined : (() => {router.replace(`/discussion?studyId=${tasks.discussion.studyId}`)})}
       >
         <div className="flex items-center justify-between">
           <MessageSquare size={24} className="text-orange-500"/>

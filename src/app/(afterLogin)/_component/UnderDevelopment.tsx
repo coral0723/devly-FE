@@ -14,7 +14,7 @@ const UnderDevelopment: React.FC<UnderDevelopmentProps> = ({
   const router = useRouter();
   
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center py-12 px-6 rounded-lg bg-white shadow-md relative">
+    <div className="min-h-screen flex flex-col items-center justify-center py-12 px-6 bg-white shadow-md relative">
       <button 
         onClick={() => router.replace('/home')}
         className="absolute top-4 left-4 p-2 rounded-full hover:bg-gray-100 transition-colors duration-200"

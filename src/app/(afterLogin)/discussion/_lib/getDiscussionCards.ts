@@ -5,7 +5,6 @@ import axios from "axios";
 export const getDiscussionCards: QueryFunction<DiscussionCard[], [_1: string, _2: string, string]>
  = async ({ queryKey: [, , studyId] }) => {
   try {
-
     if (!studyId) { // studyId가 없다면 예외 처리
       throw new Error("studyId is required");
     };
@@ -16,9 +15,8 @@ export const getDiscussionCards: QueryFunction<DiscussionCard[], [_1: string, _2
       },
     });
 
-    return res.data;
+    return res.data.result;
   } catch(err) {
-    throw new Error('Failed to fetch data', { cause: err});
+    throw err;
   }
-
  }

@@ -1,25 +1,19 @@
-import { QueryClient } from '@tanstack/react-query';
-import { getRankings } from './_lib/getRankings';
 import UnderDevelopment from '../_component/UnderDevelopment';
-// import { dehydrate,  QueryClient } from '@tanstack/react-query';
-// import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
-// import BottomNavigation from '../_component/BottomNavigation';
-// import RankingContents from './_component/RankingContents';
+import BottomNavigation from '../_component/BottomNavigation';
+import RankingContents from './_component/RankingContents';
 
 
-export default async function RankingPage() {
-  const queryClient = new QueryClient();
-  await queryClient.prefetchQuery({queryKey: ['rankings'], queryFn: getRankings});
-  // const dehydratedState = dehydrate(queryClient);
+export default function RankingPage() {
+  const isDevelopment = process.env.NODE_ENV === 'development';
 
-  //기능 개발 되면 overflow-hidden 지워야 함
+  if(!isDevelopment) {//배포 환경에서는 <UnderDevelopment/>를 보여줌
+    return <UnderDevelopment/>;
+  }
+
   return (
-    <div className="max-w-lg mx-auto min-h-screen bg-gray-50 pb-16 overflow-hidden">
-      {/* <HydrationBoundary state={dehydratedState}>
-        <RankingContents/>
-      </HydrationBoundary>
-      <BottomNavigation/> */}
-      <UnderDevelopment/>
+    <div className="max-w-lg mx-auto min-h-screen bg-gray-50 pb-16">
+      <RankingContents/>
+      <BottomNavigation/>
     </div>
   );
 };

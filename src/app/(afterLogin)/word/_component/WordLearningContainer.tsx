@@ -17,6 +17,7 @@ import { ContextStep } from "./ContextStep";
 import QuizStep from "./QuizStep";
 import { ExitConfirmModal } from "./ExitConfirmModal";
 import { CompletionModal } from "./CompletionModal";
+import axios from "axios";
 
 type Props = {
   isReview: boolean;
@@ -76,19 +77,23 @@ export default function WordLearningContainer({ isReview }: Props) {
       setShowCompletion(true);
     } else {
       try {
-        //msw용
-        // const res = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/studies/${studyId}/words/review`, {
-        //   correctIds: correctIds
-        // });
+        const useMock = process.env.NEXT_PUBLIC_USE_MSW_WORD === 'true';
+        let response;
 
-        const endPoint = `/api/words/review/study/${studyId}`;
-        const payload = validationResult?.correctIds.length === 0 
-          ? {correctIds, incorrectIds}
-          : {correctIds}; 
+        if(useMock) {
+          response = await axios.put(`${process.env.NEXT_PUBLIC_BASE_URL}/api/studies/${studyId}/words/review`, {
+            correctIds: correctIds
+          });
+        } else {
+          const endPoint = `/api/words/review/study/${studyId}`;
+          const payload = validationResult?.correctIds.length === 0 
+            ? {correctIds, incorrectIds}
+            : {correctIds}; 
+  
+          response = await authApi.put(endPoint, payload);
+        }
 
-        const res = await authApi.put(endPoint, payload);
-
-        if(res.status === 200) {
+        if(response.status === 200) {
           setShowCompletion(true);
         }
       } catch (error) {
@@ -149,22 +154,22 @@ export default function WordLearningContainer({ isReview }: Props) {
       </div>
 
       {showExitConfirm && (
-          <ExitConfirmModal 
-            isReview={isReview}
-            onClose={() => setShowExitConfirm(false)} 
-          />
+        <ExitConfirmModal 
+          isReview={isReview}
+          onClose={() => setShowExitConfirm(false)} 
+        />
       )}
 
       {showCompletion && (
-          <CompletionModal
-            isReview={isReview} 
-            incorrectIds={incorrectIds}
-            onClose={() => {
-              validationRefetch();
-              wordsRefetch();
-              router.replace(isReview ? '/review' : '/home');
-            }}
-          />
+        <CompletionModal
+          isReview={isReview} 
+          incorrectIds={incorrectIds}
+          onClose={() => {
+            validationRefetch();
+            wordsRefetch();
+            router.replace(isReview ? '/review' : '/home');
+          }}
+        />
       )}
     </div>
   );
