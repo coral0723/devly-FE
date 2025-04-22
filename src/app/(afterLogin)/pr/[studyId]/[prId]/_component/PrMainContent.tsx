@@ -21,6 +21,16 @@ type Props = {
 
 export default function PrMainContent({ currentStep, prComments, prHistory, replies, feedbacks, isPostAnswerLoading, setReplies, setCurrentStep, postAnswer }: Props) {
   const router = useRouter();
+  const MAX_CHAR_LIMIT = 500;
+
+  const getCharCount = (text: string) => {
+    return text ? text.length : 0;
+  };
+  
+  const currentReplyLength = getCharCount(prHistory
+    ? prHistory.answers[currentStep - 1]
+    : replies[currentStep - 1] || ''
+  );
   
   return (
       <div className="p-4 overflow-y-auto scrollbar-hide" style={{ height: 'calc(100vh - 200px)' }}>
@@ -32,32 +42,50 @@ export default function PrMainContent({ currentStep, prComments, prHistory, repl
             </p>
           </div>
           {currentStep === 1 ? (
-            <textarea
-              className="w-full h-32 p-3 border border-gray-300 rounded-lg text-sm bg-white"
-              placeholder="PR 설명을 작성해주세요..."
-              value={prHistory ? prHistory.answers[0] : replies[0]}
-              onChange={(e) => {
-                const updatedReplies = [e.target.value, ...replies.slice(1)];
-                setReplies(updatedReplies);
-              }}
-            />
-          ) : (
-              <div className="bg-white border border-gray-200 rounded-lg p-4">
-              <div className="bg-gray-50 p-3 rounded-lg mb-3">
-                <p className="text-sm text-gray-700">
-                  {prComments.comments[currentStep-1].content}
-                </p>
-              </div>
+            <div className="relative">
               <textarea
                 className="w-full h-32 p-3 border border-gray-300 rounded-lg text-sm bg-white"
-                placeholder="답변을 작성해주세요..."
-                value={prHistory ? prHistory.answers[currentStep-1] : replies[currentStep-1]}
+                placeholder="PR 설명을 작성해주세요..."
+                value={prHistory ? prHistory.answers[0] : replies[0]}
                 onChange={(e) => {
-                  const updatedReplies = [...replies];
-                  updatedReplies[currentStep-1] = e.target.value;
-                  setReplies(updatedReplies);
+                  const value = e.target.value;
+                  if (value.length <= MAX_CHAR_LIMIT) {
+                    const updatedReplies = [e.target.value, ...replies.slice(1)];
+                    setReplies(updatedReplies);
+                  }
                 }}
+                maxLength={MAX_CHAR_LIMIT}
               />
+              <div className="absolute bottom-2 right-2 text-xs text-gray-500">
+                {getCharCount(prHistory ? prHistory.answers[0] : replies[0])}/{MAX_CHAR_LIMIT}
+              </div>
+            </div>
+          ) : (
+              <div className="bg-white border border-gray-200 rounded-lg p-4">
+                <div className="bg-gray-50 p-3 rounded-lg mb-3">
+                  <p className="text-sm text-gray-700">
+                    {prComments.comments[currentStep-1].content}
+                  </p>
+                </div>
+                <div className="relative">
+                  <textarea
+                    className="w-full h-32 p-3 border border-gray-300 rounded-lg text-sm bg-white"
+                    placeholder="답변을 작성해주세요..."
+                    value={prHistory ? prHistory.answers[currentStep-1] : replies[currentStep-1]}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      if (value.length <= MAX_CHAR_LIMIT) {
+                        const updatedReplies = [...replies];
+                        updatedReplies[currentStep-1] = e.target.value;
+                        setReplies(updatedReplies);
+                      }
+                    }}
+                    maxLength={MAX_CHAR_LIMIT}
+                  />
+                  <div className="absolute bottom-2 right-2 text-xs text-gray-500">
+                    {currentReplyLength}/{MAX_CHAR_LIMIT}
+                  </div>
+                </div>
             </div>
           )}
             {feedbacks[currentStep-1]
