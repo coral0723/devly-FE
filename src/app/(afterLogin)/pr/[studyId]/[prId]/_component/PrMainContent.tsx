@@ -32,6 +32,19 @@ export default function PrMainContent({ currentStep, prComments, prHistory, repl
     : replies[currentStep - 1] || ''
   );
   
+  // 현재 텍스트가 있는지 확인하는 함수
+  const hasText = () => {
+    if (prHistory) return true; // 이미 제출된 히스토리가 있으면 항상 true
+    return (replies[currentStep - 1] && replies[currentStep - 1].trim().length > 10);
+  };
+  
+  // 버튼 스타일을 결정하는 함수
+  const getButtonStyle = () => {
+    if (isPostAnswerLoading) return "w-full py-3 bg-purple-600 text-white rounded-lg text-lg font-medium hover:bg-purple-700";
+    if (hasText()) return "w-full py-3 bg-purple-600 text-white rounded-lg text-lg font-medium hover:bg-purple-700";
+    return "w-full py-3 bg-gray-300 text-white rounded-lg text-lg font-medium cursor-not-allowed";
+  };
+  
   return (
       <div className="p-4 overflow-y-auto scrollbar-hide" style={{ height: 'calc(100vh - 200px)' }}>
         <div className="space-y-4">
@@ -45,7 +58,7 @@ export default function PrMainContent({ currentStep, prComments, prHistory, repl
             <div className="relative">
               <textarea
                 className="w-full h-32 p-3 border border-gray-300 rounded-lg text-sm bg-white"
-                placeholder="PR 설명을 작성해주세요..."
+                placeholder="PR 설명을 작성해주세요 (최소 10자 이상)"
                 value={prHistory ? prHistory.answers[0] : replies[0]}
                 onChange={(e) => {
                   const value = e.target.value;
@@ -70,7 +83,7 @@ export default function PrMainContent({ currentStep, prComments, prHistory, repl
                 <div className="relative">
                   <textarea
                     className="w-full h-32 p-3 border border-gray-300 rounded-lg text-sm bg-white"
-                    placeholder="답변을 작성해주세요..."
+                    placeholder="답변을 작성해주세요 (최소 10자 이상)"
                     value={prHistory ? prHistory.answers[currentStep-1] : replies[currentStep-1]}
                     onChange={(e) => {
                       const value = e.target.value;
@@ -128,11 +141,16 @@ export default function PrMainContent({ currentStep, prComments, prHistory, repl
                 // 검사하기 버튼 (기본)
                 return (
                   <button
-                    className="w-full py-3 bg-purple-600 text-white rounded-lg text-lg font-medium hover:bg-purple-700"
-                    onClick={() => postAnswer({
-                      commentId: prComments?.comments[currentStep-1].id,
-                      answer: replies[currentStep-1],
-                    })}
+                    className={getButtonStyle()}
+                    onClick={() => {
+                      if (hasText()) {
+                        postAnswer({
+                          commentId: prComments?.comments[currentStep-1].id,
+                          answer: replies[currentStep-1],
+                        })
+                      }
+                    }}
+                    disabled={!hasText() || isPostAnswerLoading}
                   >
                     {isPostAnswerLoading ? (<LoadingSpinner size={'xs'}/>) : "검사하기"}
                   </button>

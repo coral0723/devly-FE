@@ -3,7 +3,7 @@
 import LoadingSpinner from "@/app/_component/LoadingSpinner"
 import Header from "./Header"
 import ChangedFilesModal from "./ChangedFilesModal"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Feedback } from "@/model/pr/Feedback"
 import { PrChangedFiles } from "@/model/pr/PrChangedFiles"
 import { useMutation, useQuery } from "@tanstack/react-query"
@@ -69,6 +69,19 @@ export default function PrLearningContainer({ isReview, userId = undefined }: Pr
     enabled: !!userId,
   });
 
+  // prComments가 로드되면 replies 배열 초기화
+  useEffect(() => {
+    if (prComments) {
+      if (prHistory) {
+        // prHistory가 있으면 history에서 답변 가져오기
+        setReplies(prHistory.answers);
+      } else {
+        // prHistory가 없으면 빈 문자열로 초기화된 배열 생성
+        setReplies(Array(prComments.comments.length).fill(''));
+      }
+    }
+  }, [prComments, prHistory]);
+
   const { mutate: postAnswer, isPending: isPostAnswerLoading } = useMutation<
     Feedback,
     Error,
@@ -122,7 +135,13 @@ export default function PrLearningContainer({ isReview, userId = undefined }: Pr
 
   const { mutate: completeStudy, isPending: isCompleteLoading } = useMutation({
     mutationFn: async () => {
-			return await authApi.post(isReview ? `${process.env.NEXT_PUBLIC_BASE_URL}/api/pr/${prId}/study/${studyId}/done` : `/api/pr/${prId}/study/${studyId}/done`);
+      const useMock = process.env.NEXT_PUBLIC_USE_MSW_PR === 'true';
+
+      if(useMock) {
+        return await axios.post(isReview ? `${process.env.NEXT_PUBLIC_BASE_URL}/api/pr/${prId}/study/${studyId}/done` : `${process.env.NEXT_PUBLIC_BASE_URL}/api/pr/${prId}/study/${studyId}/done`)
+      } else {
+        return await authApi.post(isReview ? `${process.env.NEXT_PUBLIC_BASE_URL}/api/pr/${prId}/study/${studyId}/done` : `/api/pr/${prId}/study/${studyId}/done`);
+      }
     },
     onSuccess: () => {
 			setShowCompletion(true);

@@ -658,6 +658,12 @@ export const handlers = [
               idx: 1,
               prId: 1,
               content: "사용자가 슬라이더를 원하는 이미지로 넘길 수 있는 기능에 대한 의견을 여쭤보고 싶습니다."
+            },
+            {
+              id: 7,
+              idx: 2,
+              prId: 1,
+              content: "UX를 더 좋게 만드려면 어떻게 해야 할까요?"
             }
           ]
         }

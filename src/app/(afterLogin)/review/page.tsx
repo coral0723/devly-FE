@@ -1,7 +1,7 @@
 "use client"
 
 import UnderDevelopment from "../_component/UnderDevelopment";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { InfiniteData, useInfiniteQuery } from "@tanstack/react-query";
 import { StudyLog } from "@/model/StudyLog";
 import { getStudyLogs } from "./_lib/getStudyLogs";
@@ -11,41 +11,59 @@ import { categories } from "./_data/categories";
 
 export default function ReviewPage() {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
-  const isDevelopment = process.env.NODE_ENV === 'development';
+  const [isClient, setIsClient] = useState(false);
+  
+  // useEffect를 사용해 클라이언트 사이드임을 확인
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+  
+  // 클라이언트에서만 process.env 값을 확인
+  const isDevelopment = isClient ? process.env.NODE_ENV === 'development' : false;
+  
   const {
     data,
     fetchNextPage, 
-    hasNextPage
+    hasNextPage,
+    isLoading
   } = useInfiniteQuery<StudyLog[], object, InfiniteData<StudyLog[]>, [_1: string], number>({
     queryKey: ["review"],
     queryFn: getStudyLogs,
     initialPageParam: 0, 
-    getNextPageParam: (lastPage, allPages) => { //백엔드 완성되면 수정 필요
+    getNextPageParam: (lastPage, allPages) => {
       return lastPage.length === 0 ? undefined : allPages.length
     },
     staleTime: 60 * 1000,
     gcTime: 300 * 1000,
-    enabled: isDevelopment,
+    enabled: isClient && isDevelopment, // 클라이언트 사이드에서만 활성화
   });
 
-  if(!isDevelopment) {
+  // 개발 모드가 아니거나 아직 클라이언트 사이드 렌더링이 아닌 경우
+  if(!isClient || !isDevelopment) {
     return <UnderDevelopment/>
   }
 
-  // // 선택된 카테고리에 따라 데이터 필터링
-  const filteredLogs = data?.pages.flatMap(page => page).map(dateGroup => {
-    // 각 날짜 그룹에 대해 필터링된 로그 생성
+  // 로딩 중이거나 데이터가 없는 경우
+  if(isLoading || !data) {
+    return (
+      <div className="max-w-lg mx-auto h-[100dvh] bg-gray-100 flex flex-col items-center justify-center">
+        <p>로딩 중...</p>
+      </div>
+    );
+  }
+
+  // 선택된 카테고리에 따라 데이터 필터링
+  const filteredLogs = data.pages.flatMap(page => page).map(dateGroup => {
     if (selectedCategory === 'all') {
-      return dateGroup; // 전체 카테고리 선택 시 모든 데이터 반환
+      return dateGroup;
     } else {
-      // 선택된 카테고리에 맞는 로그만 필터링
       const filteredDateLogs = {
         ...dateGroup,
         logs: dateGroup.logs.filter(log => log.study === selectedCategory)
       };
       return filteredDateLogs;
     }
-  }).filter(dateGroup => dateGroup.logs.length > 0); // 필터링 후 로그가 없는 날짜는 제외
+  }).filter(dateGroup => dateGroup.logs.length > 0);
 
   return (
     <div className="max-w-lg mx-auto h-[100dvh] bg-gray-100 flex flex-col">
@@ -77,7 +95,7 @@ export default function ReviewPage() {
       </div>
 
       <LogContainer
-        studyLogs={filteredLogs!}
+        studyLogs={filteredLogs}
         hasNextPage={hasNextPage}
         onLoadMore={() => {
           fetchNextPage();
