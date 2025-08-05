@@ -8,7 +8,7 @@ const delay = (ms: number) => new Promise((res) => {
 
 const generateId = () => Date.now() + Math.floor(Math.random() * 1000);
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+const baseUrl = process.env.NODE_ENV === "production" ? process.env.NEXT_PUBLIC_FRONTEND_URL : process.env.NEXT_PUBLIC_BASE_URL;
 
 export const handlers = [
   http.get('/developerType', async ({ }) => {
