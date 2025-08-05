@@ -5,6 +5,7 @@ import BottomNavigation from "../_component/BottomNavigation"
 import { useState } from "react";
 import UnderDevelopment from "../_component/UnderDevelopment";
 import { samplePosts } from "./_data/samplePosts";
+import Image from "next/image";
 
 export default function CommunityPage() {
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -49,9 +50,10 @@ export default function CommunityPage() {
                   <p className="mt-1 text-sm text-gray-500 line-clamp-2 hover:cursor-pointer">{post.content}</p>
                 </div>
                 <div className="flex-shrink-0">
-                  <img 
+                  <Image
                     className="w-16 h-16 rounded-md object-cover"
                     src={post.thumbnail}
+                    alt={post.id.toString()}
                   />
                 </div>
               </div>
