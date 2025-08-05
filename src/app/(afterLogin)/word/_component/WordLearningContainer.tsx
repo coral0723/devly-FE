@@ -81,7 +81,7 @@ export default function WordLearningContainer({ isReview }: Props) {
         let response;
 
         if(useMock) {
-          response = await axios.put(`${process.env.NEXT_PUBLIC_BASE_URL}/api/studies/${studyId}/words/review`, {
+          response = await axios.put(`/mock/studies/${studyId}/words/review`, {
             correctIds: correctIds
           });
         } else {

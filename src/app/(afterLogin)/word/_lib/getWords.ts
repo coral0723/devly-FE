@@ -13,7 +13,7 @@ export const getWords: QueryFunction<Word[], [_1: string, _2: string, string]>
   let response;
   
   if(useMock) {
-    response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/words/${studyId}`, {
+    response = await axios.get(`/mock/words/${studyId}`, {
       headers: {
         'Cache-Control': 'no-store',
       },

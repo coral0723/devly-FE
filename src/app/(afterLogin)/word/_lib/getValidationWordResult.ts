@@ -13,7 +13,7 @@ export const getValidationWordResult: QueryFunction<ValidationResult, [_1: strin
    let response;
 
    if(useMock) {
-     response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/studies/${studyId}/words/review`, {
+     response = await axios.get(`/mock/studies/${studyId}/words/review`, {
        headers: {
          'Cache-Control': 'no-store',
        }
