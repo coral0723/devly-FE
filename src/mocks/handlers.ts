@@ -302,19 +302,19 @@ export const handlers = [
       })
     )
   }),
-  http.get('/api/knowledge/review/studies/:studyId', async ({ }) => {
+  http.get(`${baseUrl}/mock/studies/:studyId/knowledge/review`, async ({ }) => {
     return new HttpResponse(
       JSON.stringify({
         code: "SUCCESS",
         message: "성공",
         result: {
-          correctIds: [1],
-          incorrectIds: [2, 3]
+          correctIds: [],
+          incorrectIds: [1, 2, 3]
         }
       })
     )
   }),
-  http.put('/api/knowledge/review/studies/:studyId', async ({ }) => {
+  http.put(`${baseUrl}/mock/studies/:studyId/knowledge/review`, async ({ }) => {
     return new HttpResponse(
       JSON.stringify({
         code: "SUCCESS",
@@ -322,7 +322,7 @@ export const handlers = [
       })
     )
   }),
-  http.get('/study/knowledges/:studyId', async ({ }) => {
+  http.get(`${baseUrl}/mock/study/knowledges/:studyId`, async ({ }) => {
     return new HttpResponse(
       JSON.stringify({
         code: "SUCCESS",

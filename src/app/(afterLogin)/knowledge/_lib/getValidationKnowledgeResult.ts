@@ -9,7 +9,7 @@ export const getValidationKnowledgeResult: QueryFunction<ValidationResult, [_1: 
    };
 
    //msw용
-   const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/knowledge/review/studies/${studyId}`, {
+   const res = await axios.get(`/mock/studies/${studyId}/knowledge/review`, {
      headers: {
        'Cache-Control': 'no-store',
      }

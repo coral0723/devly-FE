@@ -67,7 +67,7 @@ export default function KnowledgeLearningContainer({ isReview }: Props) {
         let response;
 
         if(useMock){
-          response = await axios.put(`${process.env.NEXT_PUBLIC_BASE_URL}/api/studies/${studyId}/knowledge/review`, {
+          response = await axios.put(`/mock/studies/${studyId}/knowledge/review`, {
             correctIds: correctIds
           });
         } else {
