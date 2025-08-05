@@ -13,7 +13,7 @@ export const getPrComments: QueryFunction<PrComments, [_1: string, _2: string, s
    let response;
 
    if(useMock) {
-     response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/pr/${prId}/comments`, {
+     response = await axios.get(`/mock/pr/${prId}/comments`, {
        headers: {
          'Cache-Control': 'no-store',
        },

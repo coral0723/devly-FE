@@ -92,7 +92,7 @@ export default function PrLearningContainer({ isReview, userId = undefined }: Pr
       let response;
 
       if(useMock) {
-        response = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/pr/review/comment/${params.commentId}`, {
+        response = await axios.post(`/mock/pr/review/comment/${params.commentId}`, {
           answer: params.answer,
           studyId: Number(studyId),
         });
@@ -138,7 +138,7 @@ export default function PrLearningContainer({ isReview, userId = undefined }: Pr
       const useMock = process.env.NEXT_PUBLIC_USE_MSW_PR === 'true';
 
       if(useMock) {
-        return await axios.post(isReview ? `${process.env.NEXT_PUBLIC_BASE_URL}/api/pr/${prId}/study/${studyId}/done` : `${process.env.NEXT_PUBLIC_BASE_URL}/api/pr/${prId}/study/${studyId}/done`)
+        return await axios.post(isReview ? `${process.env.NEXT_PUBLIC_BASE_URL}/api/pr/${prId}/study/${studyId}/done` : `/mock/pr/${prId}/study/${studyId}/done`)
       } else {
         return await authApi.post(isReview ? `${process.env.NEXT_PUBLIC_BASE_URL}/api/pr/${prId}/study/${studyId}/done` : `/api/pr/${prId}/study/${studyId}/done`);
       }

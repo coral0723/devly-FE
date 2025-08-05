@@ -13,7 +13,7 @@ export const getPrCards: QueryFunction<PrCard, [_1: string, _2: string, string]>
    let response;
    
    if(useMock) {
-     response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/pr/study/${studyId}`, {
+     response = await axios.get(`/mock/pr/study/${studyId}`, {
        headers: {
          'Cache-Control': 'no-store',
        },

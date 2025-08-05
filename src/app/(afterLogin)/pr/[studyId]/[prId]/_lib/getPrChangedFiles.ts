@@ -13,7 +13,7 @@ export const getPrChangedFiles: QueryFunction<PrChangedFiles, [_1: string, _2: s
    let response;
 
    if(useMock) {
-     response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/pr/${prId}/changed-files`, {
+     response = await axios.get(`/mock/pr/${prId}/changed-files`, {
        headers: {
          'Cache-Control': 'no-store',
        },

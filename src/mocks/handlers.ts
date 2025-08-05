@@ -598,7 +598,7 @@ export const handlers = [
       })
     )
   }),
-  http.get('/api/pr/study/:studyId', async ({ }) => {
+  http.get(`${baseUrl}/mock/pr/study/:studyId`, async ({ }) => {
     return new HttpResponse(
       JSON.stringify({
         code: "SUCCESS",
@@ -616,7 +616,7 @@ export const handlers = [
       })
     )
   }),
-  http.get(`/api/pr/:prId/changed-files`, async ({ }) => {
+  http.get(`${baseUrl}/mock/pr/:prId/changed-files`, async ({ }) => {
     return new HttpResponse(
       JSON.stringify({
         code: "SUCCESS",
@@ -642,7 +642,7 @@ export const handlers = [
       })
     )
   }),
-  http.get('/api/pr/:prId/comments', async ({  }) => {
+  http.get(`${baseUrl}/mock/pr/:prId/comments`, async ({  }) => {
     return new HttpResponse(
       JSON.stringify({
         code: "SUCCESS",
@@ -672,7 +672,7 @@ export const handlers = [
       })
     )
   }),
-  http.post('/api/pr/review/comment/:commentId', async ({ }) => {
+  http.post(`${baseUrl}/mock/pr/review/comment/:commentId`, async ({ }) => {
     return new HttpResponse(
       JSON.stringify({
         code: "Success",
@@ -683,7 +683,7 @@ export const handlers = [
       })
     )
   }),
-  http.post('/api/pr/:prId/study/:studyId/done', async ({ }) => {
+  http.post(`${baseUrl}/mock/pr/:prId/study/:studyId/done`, async ({ }) => {
     return new HttpResponse(
       JSON.stringify({
         code: "Success",
