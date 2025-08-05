@@ -858,7 +858,7 @@ export const handlers = [
       })
     )
   }),
-  http.get('/study/discussions/:studyId', async ({ }) => {
+  http.get(`${baseUrl}/mock/study/discussions/:studyId`, async ({ }) => {
     return new HttpResponse(
       JSON.stringify({
         code: "SUCCESS",
@@ -877,7 +877,7 @@ export const handlers = [
       })
     )
   }),
-  http.get('/study/discussion/:id', async ({ }) => {
+  http.get(`${baseUrl}/mock/study/discussion/:id`, async ({ }) => {
     return new HttpResponse(
       JSON.stringify({
         code: "SUCCESS",
@@ -885,18 +885,20 @@ export const handlers = [
         result: [{
           id: Date.now(),
           role: 'ai',
-          content: 'Virtual DOM의 개념에 대해 설명해주시겠어요?'
+          content: 'Virtual DOM의 개념에 대해 설명해주시겠어요?',
+          end: false
         }]
       })
     );
   }),
-  http.post(`/study/discussion/recomment/:id`, async ({ }) => {
+  http.post(`${baseUrl}/mock/study/discussion/recomment/:id`, async ({ }) => {
     await delay(2000);
     return new HttpResponse(
       JSON.stringify({
         id: Date.now() + 1,
         role: 'ai',
-        content: '정말 chill 하군요...'
+        content: '정말 chill 하군요...',
+        end: Math.random() < 0.3
       })
     )
   }),

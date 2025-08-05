@@ -1,6 +1,6 @@
 import { QueryFunction } from "@tanstack/react-query";
 import axios from "axios";
-import { Chat } from "@/model/Chat";
+import { Chat } from "@/model/discussion/Chat";
 
 export const getDiscussion: QueryFunction<Chat[], [_1: string, _2: string, string]>
  = async ({ queryKey: [, , id] }) => {
@@ -8,7 +8,7 @@ export const getDiscussion: QueryFunction<Chat[], [_1: string, _2: string, strin
      throw new Error("id is required");
    };
 
-   const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/study/discussion/${id}`, {
+   const res = await axios.get(`/mock/study/discussion/${id}`, {
      headers: {
        'Cache-Control': 'no-store',
      },

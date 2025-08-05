@@ -7,12 +7,13 @@ import BottomButton from './_component/BottomButton';
 import ChatMessage from './_component/ChatMessage';
 import Header from './_component/Header';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Chat } from '@/model/Chat';
+import { Chat } from '@/model/discussion/Chat';
 import { useParams } from 'next/navigation';
 import { getDiscussion } from './_lib/getDiscussion';
 import { SpeechRecognition as ISpeechRecognition } from '@/model/Speech';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
+import { CompletionModal } from './_component/CompletionModal';
 
 declare global {
   interface Window {
@@ -25,8 +26,10 @@ export default function DiscussionLearnPage() {
   const [timeLeft, setTimeLeft] = useState<number>(30); // 30초
   const [showTimeoutModal, setShowTimeoutModal] = useState<boolean>(false);
   const [showExitConfirm, setShowExitConfirm] = useState<boolean>(false);
+  const [showCompletion, setShowCompletion] = useState<boolean>(false);
   const [chats, setChats] = useState<Chat[]>([]);
   const [isRecording, setIsRecording] = useState<boolean>(false);
+  const [isEnd, setIsEnd] = useState<boolean>(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const [transcript, setTranscript] = useState<string>('');
   const recognition = useRef<ISpeechRecognition | null>(null);
@@ -56,14 +59,14 @@ export default function DiscussionLearnPage() {
   };
 
   // 남은 시간
-  useEffect(() => {
-    if (timeLeft > 0) {
-      const timer = setInterval(() => setTimeLeft(prev => prev - 1), 1000);
-      return () => clearInterval(timer);
-    } else {
-      setShowTimeoutModal(true);
-    }
-  }, [timeLeft]);
+useEffect(() => {
+  if (timeLeft > 0 && !isEnd) {
+    const timer = setInterval(() => setTimeLeft(prev => prev - 1), 1000);
+    return () => clearInterval(timer);
+  } else if (timeLeft <= 0) {
+    setShowTimeoutModal(true);
+  }
+}, [timeLeft, isEnd]);
 
   //초기 채팅 저장
   // discussion이 undefined일 때도 chats를 빈 배열로 설정하도록 변경
@@ -94,7 +97,7 @@ export default function DiscussionLearnPage() {
 
   const postChat = useMutation({
     mutationFn: () => {
-      return axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/study/discussion/recomment/${chats[chats.length-1].id}`, {
+      return axios.post(`/mock/study/discussion/recomment/${chats[chats.length-1].id}`, {
         id: temporaryMessageId.current,
         role: 'user',
         content: transcript,
@@ -117,6 +120,7 @@ export default function DiscussionLearnPage() {
             id: Date.now() + 1,
             role: 'ai',
             content: '', // 빈 content로 시작
+            end: false,
           });
           updateQueryAndChats(shallow);
         }
@@ -138,6 +142,10 @@ export default function DiscussionLearnPage() {
           setChats(shallow);
         }
       });
+
+      if(recomment.end === true) {
+        setIsEnd(true);
+      }
     },
     onError: (error) => {
       console.error('Mutation error:', error);
@@ -159,7 +167,8 @@ export default function DiscussionLearnPage() {
         const newMessage: Chat = {
           id: temporaryMessageId.current,
           role: 'user',
-          content: ''
+          content: '',
+          end: false,
         };
   
         // 새 메시지를 쿼리와 상태에 추가
@@ -258,6 +267,8 @@ export default function DiscussionLearnPage() {
       {/* Recording Button */}
       <BottomButton
         isRecording={isRecording}
+        isEnd={isEnd}
+        setShowCompletion={setShowCompletion}
         handleRecord={handleRecord}
       />
 
@@ -272,6 +283,14 @@ export default function DiscussionLearnPage() {
             setChats([]);
             router.replace('/home');
           }}/>
+      )}
+
+      {showCompletion && (
+        <CompletionModal
+          onClose={() => {
+            router.replace('/home');
+          }}
+        />
       )}
 
       {showExitConfirm && (

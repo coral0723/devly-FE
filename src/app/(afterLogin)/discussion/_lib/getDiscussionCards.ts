@@ -8,7 +8,7 @@ export const getDiscussionCards: QueryFunction<DiscussionCard[], [_1: string, _2
      throw new Error("studyId is required");
    };
 
-   const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/study/discussions/${studyId}`, {
+   const res = await axios.get(`/mock/study/discussions/${studyId}`, {
      headers: {
        'Cache-Control': 'no-store',
      },
