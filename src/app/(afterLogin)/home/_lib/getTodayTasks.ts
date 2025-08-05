@@ -9,7 +9,7 @@ export const getTodayTasks: QueryFunction<Tasks, [_1: string]>
   let response;
 
   if(useMock) {
-    response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/studies/tasks`, { 
+    response = await axios.get(`/mock/studies/tasks`, { 
       headers: {
         'Cache-Control': 'no-store',
       },

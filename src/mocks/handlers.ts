@@ -8,6 +8,8 @@ const delay = (ms: number) => new Promise((res) => {
 
 const generateId = () => Date.now() + Math.floor(Math.random() * 1000);
 
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
 export const handlers = [
   http.get('/developerType', async ({ }) => {
     return new HttpResponse(
@@ -18,7 +20,7 @@ export const handlers = [
       })
     );
   }),
-  http.get('/api/studies/tasks', async ({ }) => {
+  http.get(`${baseUrl}/mock/studies/tasks`, async ({ }) => {
     return new HttpResponse(
       JSON.stringify({
         code: "SUCCESS",
@@ -26,7 +28,7 @@ export const handlers = [
         result: {
           word: {
             studyId: 1,
-            total: 3,
+            total: 5,
             completed: false
           },
           knowledge: {
@@ -52,7 +54,7 @@ export const handlers = [
       }
     );
   }),
-  http.get(`/weeklyActivity`, async ({ }) => {
+  http.get(`${baseUrl}/mock/weeklyActivity`, async ({ }) => {
     return new HttpResponse(
       JSON.stringify({
         code: "SUCCESS",
