@@ -107,7 +107,11 @@ export default function LoginPage() {
           <SignInBtn/>
           <div className="text-center">
             <p className="text-xs text-gray-500">
-              시작하기를 클릭하면 서비스 이용약관에 동의하게 됩니다
+              {/* 시작하기를 클릭하면 서비스 이용약관에 동의하게 됩니다 */}
+              이 사이트는 현재 서버 없이 동작하는 데모 버전입니다.
+            </p>
+            <p className="text-xs text-gray-500">
+              구글 로그인 및 회원가입은 실제 인증 없이 체험용으로 구현되어 있습니다.
             </p>
           </div>
         </div>

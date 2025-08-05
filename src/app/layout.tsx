@@ -4,6 +4,7 @@ import "./globals.css";
 import { MSWProvider } from "./_component/MSWComponent";
 import RQProvider from "./(afterLogin)/_component/RQProvider";
 
+// SSR용 MSW 코드
 if (process.env.NEXT_RUNTIME === 'nodejs' && process.env.NODE_ENV !== 'production' && process.env.NEXT_PUBLIC_MSW_ENABLED !== 'false') {
   const { server } = require('@/mocks/http');
   server.listen();

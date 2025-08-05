@@ -6,8 +6,11 @@ export default function SignUpBtn() {
   const router = useRouter();
 
   const handleSignup = () => {
-    router.push('/selectDev');
-  }
+    // router.push('/selectDev');
+    localStorage.setItem('accessToken', 'guest');
+    router.replace('/home');
+  };
+  
   return (
     <button
       className="w-full py-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-xl font-medium hover:opacity-90 active:scale-[0.98] transition-all flex items-center justify-center gap-3 shadow-sm"

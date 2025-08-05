@@ -1,8 +1,12 @@
 "use client"
+import { useRouter } from "next/navigation"
 
 export default function SignInBtn() {
+  const router = useRouter();
   const handleLogin = () => {
-    window.location.replace(`${process.env.NEXT_PUBLIC_BACKEND_URL}/oauth2/authorization/google?developerType=2`);
+    // window.location.replace(`${process.env.NEXT_PUBLIC_BACKEND_URL}/oauth2/authorization/google?developerType=2`);
+    localStorage.setItem('accessToken', 'guest');
+    router.replace('/home');
   }
   return (
     <button
