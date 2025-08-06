@@ -949,7 +949,7 @@ export const handlers = [
       })
     );
   }),
-  http.get(`/rankings`, async ({ }) => {
+  http.get(`${baseUrl}/mock/rankings`, async ({ }) => {
     return new HttpResponse(
       JSON.stringify({
         code: "SUCCESS",
@@ -970,7 +970,7 @@ export const handlers = [
             // 내 주변 순위
             { rank: 40, name: "장현우", score: 2250, level: 4, change: 'up' },
             { rank: 41, name: "임지원", score: 2235, level: 4, change: 'down' },
-            { rank: 42, name: "박정수", score: 2220, level: 4, change: 'same', isMe: true },
+            { rank: 42, name: "ME", score: 2220, level: 4, change: 'same', isMe: true },
             { rank: 42, name: "한소희", score: 2220, level: 4, change: 'up' },
             { rank: 44, name: "송태호", score: 2190, level: 4, change: 'down' },
           ]
@@ -978,7 +978,7 @@ export const handlers = [
       })
     );
   }),
-  http.get(`/review`, async ({ }) => {
+  http.get(`${baseUrl}/mock/review`, async ({ }) => {
     const baseDate = new Date();
     baseDate.setDate(baseDate.getDate() - 1 - requestCount * 3); // 시작 날짜
 

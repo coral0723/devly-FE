@@ -4,7 +4,7 @@ import { Rankings } from "@/model/Rankings";
 
 export const getRankings: QueryFunction<Rankings, [_1: string]>
  = async ({ }) => {
-   const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/rankings`, {
+   const res = await axios.get(`/mock/rankings`, {
      headers: {
        'Cache-Control': 'no-store',
      },
