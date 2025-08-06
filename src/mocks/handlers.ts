@@ -2,6 +2,8 @@ import { DeveloperType } from '@/model/User';
 import { faker } from '@faker-js/faker';
 import { http, HttpResponse } from 'msw';
 
+let requestCount = 0;
+
 const delay = (ms: number) => new Promise((res) => {
   setTimeout(res, ms);
 });
@@ -976,81 +978,55 @@ export const handlers = [
       })
     );
   }),
-  http.get(`/review`, async ({  }) => {
+  http.get(`/review`, async ({ }) => {
+    const baseDate = new Date();
+    baseDate.setDate(baseDate.getDate() - 1 - requestCount * 3); // 시작 날짜
+
+    const result = Array.from({ length: 3 }, (_, i) => {
+      const date = new Date(baseDate);
+      date.setDate(baseDate.getDate() - i); // 하루씩 감소
+
+      return {
+        date,
+        logs: [
+          {
+            id: 1,
+            study: 'word',
+            title: "리액트 훅 사용법 정리",
+            exp: 130
+          },
+          {
+            id: 2,
+            study: 'knowledge',
+            title: "Next.js 13 새로운 기능 학습",
+            exp: 200
+          },
+          {
+            id: 58,
+            prId: 27,
+            study: 'pr',
+            title: "로그인 페이지 UI 구현",
+            exp: 150
+          },
+          {
+            id: 4,
+            study: 'discussion',
+            title: "프로젝트 아키텍처 설계 논의",
+            exp: 200
+          }
+        ]
+      };
+    });
+
+    requestCount++; // 요청 수 증가
+
     return new HttpResponse(
       JSON.stringify({
         code: "SUCCESS",
         message: "성공",
-        result: [
-          {
-            date: new Date("2025-01-20"),
-            logs: [
-              {
-                id: 1,
-                study: 'word',
-                title: "리액트 훅 사용법 정리",
-                exp: 130
-              },
-              {
-                id: 2,
-                study: 'knowledge',
-                title: "Next.js 13 새로운 기능 학습",
-                exp: 200
-              },
-              {
-                id: 58,
-                prId: 27,
-                study: 'pr',
-                title: "로그인 페이지 UI 구현",
-                exp: 150
-              },
-              {
-                id: 4,
-                study: 'discussion',
-                title: "프로젝트 아키텍처 설계 논의",
-                exp: 200
-              }
-            ]
-          },
-          {
-            date: new Date("2025-01-27"),
-            logs: [
-              {
-                id: 1,
-                study: 'word',
-                title: "리액트 훅 사용법 정리",
-                exp: 130
-              },
-              {
-                id: 58,
-                prId: 27,
-                study: 'pr',
-                title: "로그인 페이지 UI 구현",
-                exp: 150
-              },
-            ]
-          },
-          {
-            date: new Date("2025-02-20"),
-            logs: [
-              {
-                id: 2,
-                study: 'knowledge',
-                title: "Next.js 13 새로운 기능 학습",
-                exp: 200
-              },
-              {
-                id: 58,
-                prId: 27,
-                study: 'pr',
-                title: "로그인 페이지 UI 구현",
-                exp: 150
-              },
-            ]
-          },
-        ]
+        result,
       })
-    )
+    );
   }),
   http.get('/api/words/:studyId/review', () => {
     return HttpResponse.json({
