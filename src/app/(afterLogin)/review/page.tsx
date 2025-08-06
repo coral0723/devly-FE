@@ -1,6 +1,6 @@
 "use client"
 
-import UnderDevelopment from "../_component/UnderDevelopment";
+// import UnderDevelopment from "../_component/UnderDevelopment";
 import { useState, useEffect } from "react";
 import { InfiniteData, useInfiniteQuery } from "@tanstack/react-query";
 import { StudyLog } from "@/model/StudyLog";
@@ -38,10 +38,11 @@ export default function ReviewPage() {
     enabled: isClient && isDevelopment, // 클라이언트 사이드에서만 활성화
   });
 
+  // 미완성 기능일 때 보여주는 컴포넌트
   // 개발 모드가 아니거나 아직 클라이언트 사이드 렌더링이 아닌 경우
-  if(!isClient || !isDevelopment) {
-    return <UnderDevelopment/>
-  }
+  // if(!isClient || !isDevelopment) {
+  //   return <UnderDevelopment/>
+  // }
 
   // 로딩 중이거나 데이터가 없는 경우
   if(isLoading || !data) {
