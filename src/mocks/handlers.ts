@@ -600,12 +600,13 @@ export const handlers = [
         message: "성공",
         result: {
           id: 1,
-          title: "테스트 PR 제목",
-          description: "테스트 PR 설명",
+          title: "Refactor login flow to improve readability and error handling",
+          description: `로그인 로직이 너무 복잡하고 예외 처리가 중복되어 있어서 전체적으로 리팩토링했습니다.`,
           labels: [
-            "backend",
-            "feature",
-            "bug-fix",
+            "refactor",
+            "login",
+            "frontend",
+            "improvement"
           ]
         }
       })
@@ -618,19 +619,19 @@ export const handlers = [
         message: "성공",
         result: {
           files: [
-            { 
+            {
               id: null,
               prId: 1,
-              fileName: "src/main/java/com/example/SingletonService.java",
-              language: "Java",
-              content: "public class SingletonService {\n\n    private static volatile SingletonService instance;\n\n    private SingletonService() {\n        // private constructor\n    }\n\n    public static SingletonService getInstance() {\n        if (instance == null) {\n            synchronized (SingletonService.class) {\n                if (instance == null) {\n                    instance = new SingletonService();\n                }\n            }\n        }\n        return instance;\n    }\n}"
+              fileName: "src/hooks/useLogin.ts",
+              language: "TypeScript",
+              content: "import { useState } from \"react\";\nimport axios from \"axios\";\n\nexport function useLogin() {\n  const [loading, setLoading] = useState(false);\n\n  async function login(username: string, password: string) {\n    setLoading(true);\n    try {\n      const res = await axios.post(\"/api/login\", { username, password });\n      if (res.status !== 200) {\n        alert(\"Login failed\");\n      }\n    } catch (e) {\n      console.error(e);\n    } finally {\n      setLoading(false);\n    }\n  }\n\n  return { login, loading };\n}"
             },
             {
               id: null,
               prId: 1,
-              fileName: "src/test/java/com/example/SingletonServiceTest.java",
-              language: "Java",
-              content: "import org.junit.jupiter.api.Test;\nimport static org.junit.jupiter.api.Assertions.*;\n\npublic class SingletonServiceTest {\n\n    @Test\n    void testSingletonInstance() {\n        SingletonService instance1 = SingletonService.getInstance();\n        SingletonService instance2 = SingletonService.getInstance();\n        assertSame(instance1, instance2);\n    }\n}"
+              fileName: "src/hooks/useLogin.ts",
+              language: "TypeScript",
+              content: "import { useState } from \"react\";\nimport axios from \"axios\";\n\nexport function useLogin() {\n  const [loading, setLoading] = useState(false);\n  const [error, setError] = useState<string | null>(null);\n\n  async function login(username: string, password: string) {\n    setLoading(true);\n    setError(null);\n    try {\n      const res = await axios.post(\"/api/login\", { username, password });\n      if (res.status !== 200) {\n        throw new Error(\"Invalid credentials\");\n      }\n    } catch (e: any) {\n      console.error(\"Login error:\", e);\n      setError(e.message || \"Unknown error\");\n    } finally {\n      setLoading(false);\n    }\n  }\n\n  return { login, loading, error };\n}"
             }
           ]
         }
@@ -654,13 +655,13 @@ export const handlers = [
               id: 6,
               idx: 1,
               prId: 1,
-              content: "사용자가 슬라이더를 원하는 이미지로 넘길 수 있는 기능에 대한 의견을 여쭤보고 싶습니다."
+              content: "에러 상태를 관리하는 방식에 대해 더 나은 접근이 있을지 궁금합니다."
             },
             {
               id: 7,
               idx: 2,
               prId: 1,
-              content: "UX를 더 좋게 만드려면 어떻게 해야 할까요?"
+              content: "로그인 실패 시 사용자 경험을 개선할 수 있는 방법이 있을까요?"
             }
           ]
         }
@@ -673,7 +674,7 @@ export const handlers = [
         code: "Success",
         message: "성공",
         result: {
-          review: "동의합니다. 이 부분은 이런 부분이 타당하지 못하지만 이 부분은 다시 볼 필요가 ---",
+          review: "좋은 지적입니다. 해당 부분은 사용자 경험과 코드 유지보수 측면에서 더 고민해볼 여지가 있는 것 같습니다.",
         },
       })
     )
