@@ -4,7 +4,7 @@ import { Knowledge } from "@/model/knowledge/Knowledge";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useRef, useState } from "react";
-import { getReviewKnowledges } from "../_lib/getReviewKnowledge";
+import { getReviewKnowledges } from "../_lib/getReviewKnowledges";
 import { getKnowledges } from "../_lib/getKnowledges";
 import { ValidationResult } from "@/model/ValidationResult";
 import { getValidationKnowledgeResult } from "../_lib/getValidationKnowledgeResult";
