@@ -85,32 +85,40 @@ export default function WeeklyActivity() {
 
       {/* Activities */}
       <div className="space-y-3 mt-5">
-        {getFilteredActivities().map((activity, index) => (
-          <div key={index} className="flex items-center gap-3 p-2 hover:bg-gray-50 rounded-lg">
-            <div
-              className={`w-10 h-10 rounded-full bg-${
-                activity.study === 'word' ? 'emerald' :
-                activity.study === 'knowledge' ? 'blue' :
-                activity.study === 'pr' ? 'purple' :
-                'orange'
-              }-100 flex items-center justify-center`}
-            >
-              {activity.study === 'word' && <BookOpen size={20} className={`text-emerald-600`} />}
-              {activity.study === 'knowledge' && <Lightbulb size={20} className={`text-blue-600`} />}
-              {activity.study === 'pr' && <GitPullRequest size={20} className={`text-purple-600`} />}
-              {activity.study === 'discussion' && <MessageSquare size={20} className={`text-orange-600`} />}
-            </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-base font-medium truncate">{activity.title}</p>
-              <p className="text-sm text-gray-500">
-                {activity.date.toLocaleDateString()}
-              </p>
-            </div>
-            <span className={`flex items-end text-sm text-gray-600`}>
-              +{activity.exp} XP
-            </span>
+        {getFilteredActivities().length === 0 ? (
+          <div className="text-center text-gray-500 text-md py-4">
+            {selectedDay === ['일', '월', '화', '수', '목', '금', '토'][new Date().getDay()]
+              ? "오늘은 아직 활동이 없어요!"
+              : "이날은 아직 활동이 없어요!"}
           </div>
-        ))}
+        ) : (
+          getFilteredActivities().map((activity, index) => (
+            <div key={index} className="flex items-center gap-3 p-2 hover:bg-gray-50 rounded-lg">
+              <div
+                className={`w-10 h-10 rounded-full bg-${
+                  activity.study === 'word' ? 'emerald' :
+                  activity.study === 'knowledge' ? 'blue' :
+                  activity.study === 'pr' ? 'purple' :
+                  'orange'
+                }-100 flex items-center justify-center`}
+              >
+                {activity.study === 'word' && <BookOpen size={20} className={`text-emerald-600`} />}
+                {activity.study === 'knowledge' && <Lightbulb size={20} className={`text-blue-600`} />}
+                {activity.study === 'pr' && <GitPullRequest size={20} className={`text-purple-600`} />}
+                {activity.study === 'discussion' && <MessageSquare size={20} className={`text-orange-600`} />}
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-base font-medium truncate">{activity.title}</p>
+                <p className="text-sm text-gray-500">
+                  {activity.date.toLocaleDateString()}
+                </p>
+              </div>
+              <span className={`flex items-end text-sm text-gray-600`}>
+                +{activity.exp} XP
+              </span>
+            </div>
+          ))
+        )}
       </div>
     </div>
   );

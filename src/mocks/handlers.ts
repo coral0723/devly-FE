@@ -54,121 +54,139 @@ export const handlers = [
       }
     );
   }),
-  http.get(`${baseUrl}/mock/weeklyActivity`, async ({ }) => {
+  http.get(`${baseUrl}/mock/weeklyActivity`, async () => {
+    const weekDays = ['일', '월', '화', '수', '목', '금', '토'];
+
+    // 오늘의 요일 인덱스 구함 (0: 일 ~ 6: 토)
+    const today = new Date();
+    const todayIndex = today.getDay();
+
+    // 오늘 포함 이후 요일 리스트 (ex. 금요일이면 ['금', '토', '일'])
+    const targetDays = weekDays.slice(todayIndex).concat(todayIndex === 0 ? [] : []);
+
+    // 전체 요일 데이터
+    const fullWeekData = [
+      {
+        day: '월',
+        activities: [
+          {
+            study: 'word',
+            title: "개발 용어 5개",
+            exp: 100,
+            date: new Date("2025-01-20")
+          },
+          {
+            study: 'knowledge',
+            title: "개발/CS 지식 3개",
+            exp: 150,
+            date: new Date("2025-01-21")
+          },
+          {
+            study: 'pr',
+            title: "로그인 페이지 UI 구현",
+            exp: 200,
+            date: new Date("2025-01-20")
+          },
+          {
+            study: 'discussion',
+            title: "프로젝트 아키텍처 설계 논의",
+            exp: 200,
+            date: new Date("2025-01-21")
+          }
+        ]
+      },
+      {
+        day: '화',
+        activities: [
+          {
+            study: 'knowledge',
+            title: "개발/CS 지식 3개",
+            exp: 150,
+            date: new Date("2025-01-21")
+          },
+          {
+            study: 'discussion',
+            title: "프로젝트 아키텍처 설계 논의",
+            exp: 200,
+            date: new Date("2025-01-21")
+          }
+        ]
+      },
+      {
+        day: '수',
+        activities: [
+          {
+            study: 'pr',
+            title: "회원가입 유효성 검사 추가",
+            exp: 200,
+            date: new Date("2025-01-22")
+          }
+        ]
+      },
+      {
+        day: '목',
+        activities: [
+          {
+            study: 'word',
+            title: "개발 용어 5개",
+            exp: 100,
+            date: new Date("2025-01-23")
+          },
+          {
+            study: 'knowledge',
+            title: "개발/CS 지식 3개",
+            exp: 150,
+            date: new Date("2025-01-23")
+          }
+        ]
+      },
+      {
+        day: '금',
+        activities: [
+          {
+            study: 'pr',
+            title: "마이페이지 기능 구현",
+            exp: 200,
+            date: new Date("2025-01-24")
+          },
+          {
+            study: 'discussion',
+            title: "코드 리뷰 및 피드백",
+            exp: 200,
+            date: new Date("2025-01-24")
+          }
+        ]
+      },
+      {
+        day: '토',
+        activities: [
+          {
+            study: 'word',
+            title: "주간 개발 회고록 작성",
+            exp: 100,
+            date: new Date("2025-01-25")
+          }
+        ]
+      },
+      {
+        day: '일',
+        activities: []
+      }
+    ];
+
+    // 오늘 포함 이후 요일의 activities를 빈 배열로 설정
+    const modifiedResult = fullWeekData.map(item => ({
+      ...item,
+      activities: targetDays.includes(item.day) ? [] : item.activities
+    }));
+
     return new HttpResponse(
       JSON.stringify({
         code: "SUCCESS",
         message: "성공",
-        result: [
-          {
-            day: '월',
-            activities: [
-              {
-                study: 'word',
-                title: "리액트 훅 사용법 정리",
-                exp: 150,
-                date: new Date("2025-01-20")
-              },
-              {
-                study: 'knowledge',
-                title: "Next.js 13 새로운 기능 학습",
-                exp: 180,
-                date: new Date("2025-01-21")
-              },
-              {
-                study: 'pr',
-                title: "로그인 페이지 UI 구현",
-                exp: 200,
-                date: new Date("2025-01-20")
-              },
-              {
-                study: 'discussion',
-                title: "프로젝트 아키텍처 설계 논의",
-                exp: 120,
-                date: new Date("2025-01-21")
-              }
-            ]
-          },
-          {
-            day: '화',
-            activities: [
-              {
-                study: 'knowledge',
-                title: "Next.js 13 새로운 기능 학습",
-                exp: 180,
-                date: new Date("2025-01-21")
-              },
-              {
-                study: 'discussion',
-                title: "프로젝트 아키텍처 설계 논의",
-                exp: 120,
-                date: new Date("2025-01-21")
-              }
-            ]
-          },
-          {
-            day: '수',
-            activities: [
-              {
-                study: 'pr',
-                title: "회원가입 유효성 검사 추가",
-                exp: 160,
-                date: new Date("2025-01-22")
-              }
-            ]
-          },
-          {
-            day: '목',
-            activities: [
-              {
-                study: 'word',
-                title: "타입스크립트 제네릭 정리글 작성",
-                exp: 130,
-                date: new Date("2025-01-23")
-              },
-              {
-                study: 'knowledge',
-                title: "상태관리 라이브러리 비교 분석",
-                exp: 200,
-                date: new Date("2025-01-23")
-              }
-            ]
-          },
-          {
-            day: '금',
-            activities: [
-              {
-                study: 'pr',
-                title: "마이페이지 기능 구현",
-                exp: 190,
-                date: new Date("2025-01-24")
-              },
-              {
-                study: 'discussion',
-                title: "코드 리뷰 및 피드백",
-                exp: 140,
-                date: new Date("2025-01-24")
-              }
-            ]
-          },
-          {
-            day: '토',
-            activities: [
-              {
-                study: 'word',
-                title: "주간 개발 회고록 작성",
-                exp: 100,
-                date: new Date("2025-01-25")
-              }
-            ]
-          },
-          {
-            day: '일',
-            activities: []
-          }
-        ]
+        result: modifiedResult
       })
-    )
+    );
   }),
   http.get(`${baseUrl}/mock/studies/:studyId/words/review`, async ({ }) => {
     return new HttpResponse(

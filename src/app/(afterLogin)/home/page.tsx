@@ -4,7 +4,7 @@ import MainFeatures from "./_component/MainFeatures";
 import WeeklyActivity from "./_component/WeeklyActivity";
 
 export default function Home() {
-  const isDevelopment = process.env.NODE_ENV === 'development';
+  // const isDevelopment = process.env.NODE_ENV === 'development';
 
   return (
     <div className="max-w-lg mx-auto h-[100dvh] bg-gray-50 flex flex-col">
@@ -25,7 +25,8 @@ export default function Home() {
               </svg>
             </div>
           </div>
-          {isDevelopment && <WeeklyActivity/>}
+          {/* {isDevelopment && <WeeklyActivity/>} */}
+          <WeeklyActivity/>
           {/* Second Icon Section */}
           <div className="relative h-9 z-0"> 
             <div className="absolute right-10 animate-float-medium">

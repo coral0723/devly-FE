@@ -19,7 +19,7 @@ export function CompletionModal({ onClose }: Props) {
         </p>
         <div className="bg-gray-50 rounded-lg p-4 mb-6">
           <div className="text-sm text-gray-500 mb-1">획득한 경험치</div>
-          <div className="text-2xl font-bold text-orange-600">+100 XP</div>
+          <div className="text-2xl font-bold text-orange-600">+200 XP</div>
         </div>
         <button
           onClick={onClose}
