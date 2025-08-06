@@ -1,4 +1,4 @@
-import UnderDevelopment from '../_component/UnderDevelopment';
+// import UnderDevelopment from '../_component/UnderDevelopment';
 import BackButton from '../_component/BackButton';
 import BottomButton from './_component/BottomButton';
 import LearningSection from './_component/LearningSection';

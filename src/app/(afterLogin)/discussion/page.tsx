@@ -1,4 +1,4 @@
-import UnderDevelopment from "../_component/UnderDevelopment";
+// import UnderDevelopment from "../_component/UnderDevelopment";
 import DiscussionCardsArea from "./_component/DiscussionCardsArea";
 import BottomNavigation from "../_component/BottomNavigation";
 
