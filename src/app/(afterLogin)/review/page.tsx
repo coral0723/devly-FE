@@ -19,7 +19,7 @@ export default function ReviewPage() {
   }, []);
   
   // 클라이언트에서만 process.env 값을 확인
-  const isDevelopment = isClient ? process.env.NODE_ENV === 'development' : false;
+  // const isDevelopment = isClient ? process.env.NODE_ENV === 'development' : false;
   
   const {
     data,
@@ -35,7 +35,8 @@ export default function ReviewPage() {
     },
     staleTime: 60 * 1000,
     gcTime: 300 * 1000,
-    enabled: isClient && isDevelopment, // 클라이언트 사이드에서만 활성화
+    enabled: isClient,
+    // enabled: isClient && isDevelopment, // 클라이언트 사이드에서만 활성화
   });
 
   // 미완성 기능일 때 보여주는 컴포넌트
