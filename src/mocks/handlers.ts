@@ -918,14 +918,14 @@ export const handlers = [
       })
     )
   }),
-  http.get(`/profile`, async ({ }) => {
+  http.get(`${baseUrl}/mock/profile`, async ({ }) => {
     return new HttpResponse(
       JSON.stringify({
         code: "SUCCESS",
         message: "성공",
         result: {
-          id: "user1234",
-          nickname: "김데블리",
+          id: "user",
+          nickname: "devly",
           profile: faker.image.urlLoremFlickr(),
           developerType: 2,
           level: 6
@@ -933,7 +933,7 @@ export const handlers = [
       })
     );
   }),
-  http.get(`/profile/stats`, async ({ }) => {
+  http.get(`${baseUrl}/mock/profile/stats`, async ({ }) => {
     return new HttpResponse(
       JSON.stringify({
         code: "SUCCESS",
@@ -970,7 +970,7 @@ export const handlers = [
             // 내 주변 순위
             { rank: 40, name: "장현우", score: 2250, level: 4, change: 'up' },
             { rank: 41, name: "임지원", score: 2235, level: 4, change: 'down' },
-            { rank: 42, name: "ME", score: 2220, level: 4, change: 'same', isMe: true },
+            { rank: 42, name: "devly", score: 2220, level: 4, change: 'same', isMe: true },
             { rank: 42, name: "한소희", score: 2220, level: 4, change: 'up' },
             { rank: 44, name: "송태호", score: 2190, level: 4, change: 'down' },
           ]
