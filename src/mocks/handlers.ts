@@ -199,103 +199,98 @@ export const handlers = [
           words: [
             {
               id: 1,
-              word: "Annotation-based Configuration",
-              meaning: "주석 기반 설정",
+              word: "Encapsulation",
+              meaning: "캡슐화",
               example: JSON.stringify({
-                source: "Spring Framework Documentation",
-                text: "Spring allows for annotation-based configuration of your application.",
-                translation: "스프링은 애플리케이션의 주석 기반 설정을 허용합니다."
+                source: "Object-Oriented Programming Guide",
+                text: "Encapsulation helps to protect an object's internal state by restricting direct access.",
+                translation: "캡슐화는 직접적인 접근을 제한함으로써 객체의 내부 상태를 보호하는 데 도움이 됩니다."
               }),
               quiz: JSON.stringify({
-                text: "What does Annotation-based Configuration mean in Spring Framework?",
+                text: "Encapsulation helps to protect an object's internal state by restricting direct access.",
                 distractors: [
-                  "Code-based Configuration",
-                  "XML-based Configuration",
-                  "Java-based Configuration",
-                  "HTML-based Configuration"
+                  "Abstraction",
+                  "Polymorphism",
+                  "Inheritance"
                 ]
               }),
-              pronunciation: "/ænəʊˈteɪʃən beɪst kənˈfɪɡəˈreɪʃən/"
+              pronunciation: "/ɛnˌkæpsjʊˈleɪʃən/"
             },
             {
               id: 2,
-              word: "Dependency Injection",
-              meaning: "의존성 주입",
+              word: "Abstraction",
+              meaning: "추상화",
               example: JSON.stringify({
-                source: "Spring Framework Documentation",
-                text: "Dependency Injection is a fundamental aspect of the Spring framework.",
-                translation: "의존성 주입은 스프링 프레임워크의 기본적인 측면입니다."
+                source: "Software Engineering Textbook",
+                text: "Abstraction hides complexity by showing only essential features of an object.",
+                translation: "추상화는 객체의 필수적인 특징만 보여줌으로써 복잡성을 숨깁니다."
               }),
               quiz: JSON.stringify({
-                text: "What is a fundamental aspect of the Spring framework?",
+                text: "Abstraction hides complexity by showing only essential features of an object.",
                 distractors: [
-                  "Dependency Extraction",
-                  "Dependency Reduction",
-                  "Dependency Increase",
-                  "Dependency Multiplication"
+                  "Encapsulation",
+                  "Serialization",
+                  "Mutation"
                 ]
               }),
-              pronunciation: "/dɪˈpɛndənsi ɪnˈdʒɛkʃən/"
+              pronunciation: "/æbˈstrækʃən/"
             },
             {
               id: 3,
-              word: "Aspect Oriented Programming (AOP)",
-              meaning: "관점 지향 프로그래밍",
+              word: "Polymorphism",
+              meaning: "다형성",
               example: JSON.stringify({
-                source: "Spring Framework Documentation",
-                text: "Spring supports Aspect Oriented Programming (AOP) for separation of concerns.",
-                translation: "스프링은 관심사의 분리를 위해 관점 지향 프로그래밍(AOP)를 지원합니다."
+                source: "OOP Principles Overview",
+                text: "Polymorphism allows objects to be treated as instances of their parent class.",
+                translation: "다형성은 객체들이 부모 클래스의 인스턴스로 취급될 수 있도록 합니다."
               }),
               quiz: JSON.stringify({
-                text: "What does Spring use for separation of concerns?",
+                text: "Polymorphism allows objects to be treated as instances of their parent class.",
                 distractors: [
-                  "Object Oriented Programming",
-                  "Functional Programming",
-                  "Procedural Programming",
-                  "Modular Programming"
+                  "Inheritance",
+                  "Casting",
+                  "Typing"
                 ]
               }),
-              pronunciation: "/ˈæspekt ˈɔːrientid ˈproʊgræmɪŋ/"
+              pronunciation: "/ˌpɒliˈmɔːfɪzəm/"
             },
             {
               id: 4,
-              word: "Inversion of Control (IoC)",
-              meaning: "제어의 역전",
+              word: "Inheritance",
+              meaning: "상속",
               example: JSON.stringify({
-                source: "Spring Framework Documentation",
-                text: "Inversion of Control (IoC) is a design principle which guides the design of Spring Framework.",
-                translation: "제어의 역전(IoC)은 스프링 프레임워크의 설계를 안내하는 설계 원칙입니다."
+                source: "Java Programming Handbook",
+                text: "Inheritance enables a class to acquire properties and behavior from another class.",
+                translation: "상속은 한 클래스가 다른 클래스의 속성과 동작을 얻을 수 있게 합니다."
               }),
               quiz: JSON.stringify({
-                text: "What is a design principle which guides the design of Spring Framework?",
+                text: "Inheritance enables a class to acquire properties and behavior from another class.",
                 distractors: [
-                  "Control of Inversion",
-                  "Inversion of Command",
-                  "Control of Command",
-                  "Command of Inversion"
+                  "Aggregation",
+                  "Composition",
+                  "Cloning"
                 ]
               }),
-              pronunciation: "/ɪnˈvɜːrʒən ɒv kənˈtroʊl/"
+              pronunciation: "/ɪnˈhɛrɪtəns/"
             },
             {
               id: 5,
-              word: "Spring Boot",
-              meaning: "스프링 부트",
+              word: "Recursion",
+              meaning: "재귀",
               example: JSON.stringify({
-                source: "Spring Framework Documentation",
-                text: "Spring Boot makes it easy to create stand-alone, production-grade Spring based Applications.",
-                translation: "스프링 부트는 독립 실행형, 생산 수준의 스프링 기반 애플리케이션을 쉽게 만들 수 있습니다."
+                source: "Algorithms 101",
+                text: "Recursion is a method where the solution to a problem depends on solutions to smaller instances of the same problem.",
+                translation: "재귀는 문제의 해결이 같은 문제의 더 작은 인스턴스들의 해결에 의존하는 방식입니다."
               }),
               quiz: JSON.stringify({
-                text: "What makes it easy to create stand-alone, production-grade Spring based Applications?",
+                text: "Recursion is a method where the solution to a problem depends on solutions to smaller instances of the same problem.",
                 distractors: [
-                  "Spring Bean",
-                  "Spring Cloud",
-                  "Spring MVC",
-                  "Spring Batch"
+                  "Iteration",
+                  "Looping",
+                  "Branching"
                 ]
               }),
-              pronunciation: "/sprɪŋ buːt/"
+              pronunciation: "/rɪˈkɜːʃən/"
             }
           ]
         }
