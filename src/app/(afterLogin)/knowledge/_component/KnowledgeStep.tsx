@@ -87,37 +87,52 @@ export default function KnowledgeStep({knowledge, knowledgesLength, currentStep,
         </div>
         
         {/* Navigation Tabs */}
-        <div className="flex space-x-1 border-b">
-          <button
-            onClick={() => setActiveTab('concept')}
-            className={`flex items-center px-4 py-2 space-x-2 text-sm font-medium rounded-t-lg transition-colors
-              ${activeTab === 'concept' 
-                ? 'text-blue-600 bg-blue-50 border-b-2 border-blue-500' 
-                : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'}`}
+        <div className="flex border-b">
+          <div
+            className={`flex-1 flex justify-center rounded-t-lg
+              ${activeTab === 'concept' ? 'bg-blue-50 border-b-2 border-blue-500' : 'hover:text-gray-700 hover:bg-gray-50'}`}
           >
-            <Lightbulb size={16} />
-            <span>개념</span>
-          </button>
-          <button
-            onClick={() => setActiveTab('example')}
-            className={`flex items-center px-4 py-2 space-x-2 text-sm font-medium rounded-t-lg transition-colors
-              ${activeTab === 'example' 
-                ? 'text-blue-600 bg-blue-50 border-b-2 border-blue-500' 
-                : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'}`}
+            <button
+              onClick={() => setActiveTab('concept')}
+              className={`flex items-center px-2 py-2 space-x-2 text-sm font-medium transition-colors
+                ${activeTab === 'concept' 
+                  ? 'text-blue-600' 
+                  : 'text-gray-500'}`}
+            >
+              <Lightbulb size={16} />
+              <span>개념</span>
+            </button>
+          </div>
+          <div
+            className={`flex-1 flex justify-center rounded-t-lg
+              ${activeTab === 'example' ? 'bg-blue-50 border-b-2 border-blue-500' : 'hover:text-gray-700 hover:bg-gray-50'}`}
           >
-            <FileCode2 size={16} />
-            <span>예시 코드</span>
-          </button>
-          <button
-            onClick={() => setActiveTab('practice')}
-            className={`flex items-center px-4 py-2 space-x-2 text-sm font-medium rounded-t-lg transition-colors
-              ${activeTab === 'practice' 
-                ? 'text-blue-600 bg-blue-50 border-b-2 border-blue-500' 
-                : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'}`}
+            <button
+              onClick={() => setActiveTab('example')}
+              className={`flex items-center px-2 py-2 space-x-2 text-sm font-medium rounded-t-lg transition-colors
+                ${activeTab === 'example' 
+                  ? 'text-blue-600' 
+                  : 'text-gray-500'}`}
+            >
+              <FileCode2 size={16} />
+              <span>예시 코드</span>
+            </button>
+          </div>
+          <div
+            className={`flex-1 flex justify-center rounded-t-lg
+              ${activeTab === 'practice' ? 'bg-blue-50 border-b-2 border-blue-500' : 'hover:text-gray-700 hover:bg-gray-50'}`}
           >
-            <BookOpen size={16} />
-            <span>실습 문제</span>
-          </button>
+            <button
+              onClick={() => setActiveTab('practice')}
+              className={`flex items-center px-2 py-2 space-x-2 text-sm font-medium rounded-t-lg transition-colors
+                ${activeTab === 'practice' 
+                  ? 'text-blue-600' 
+                  : 'text-gray-500'}`}
+            >
+              <BookOpen size={16} />
+              <span>실습 문제</span>
+            </button>
+          </div>
         </div>
 
         {/* Content Based on Active Tab */}
