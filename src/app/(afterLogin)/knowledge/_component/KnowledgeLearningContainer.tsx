@@ -91,7 +91,7 @@ export default function KnowledgeLearningContainer({ isReview }: Props) {
     }
   }
 
-  if(isLoading || !knowledges) {
+  if(isLoading || !knowledges || (!isReview && !validationResult)) {
     return (
       <div className='flex max-w-lg mx-auto min-h-screen bg-gray-50 items-center justify-center'>
         <LoadingSpinner size={"md"} />
