@@ -346,7 +346,7 @@ export const handlers = [
           {
             id: 1,
             title: "스레드의 기본 개념",
-            content: "스레드는 프로세스 내에서 실행되는 가장 작은 실행 단위입니다. 하나의 프로세스는 여러 개의 스레드를 가질 수 있으며, 각 스레드는 같은 프로세스의 메모리를 공유합니다.",
+            content: "스레드는 프로세스 내에서 실행되는 가장 작은 실행 단위입니다.\n하나의 프로세스는 여러 개의 스레드를 가질 수 있으며, 각 스레드는 같은 프로세스의 메모리를 공유합니다.",
             quiz: {
               text: "다음 중 스레드의 특징이 아닌 것은?",
               distractors: [
@@ -369,24 +369,12 @@ export const handlers = [
               ],
               answer: 1
             },
-            code: `// Java에서 스레드 생성 예시
-              class MyThread extends Thread {
-              public void run() {
-                  System.out.println("스레드 실행 중");
-              }
-              }
-        
-              public class Main {
-              public static void main(String[] args) {
-                  MyThread thread = new MyThread();
-                  thread.start(); // 새로운 스레드 시작
-              }
-              }`
+            code: "// Java에서 스레드 생성 예시\n\nclass MyThread extends Thread {\npublic void run() {\n    System.out.println(\"스레드 실행 중\");\n}\n}\n\npublic class Main {\npublic static void main(String[] args) {\n    MyThread thread = new MyThread();\n    thread.start(); // 새로운 스레드 시작\n}\n}"
           },
           {
             id: 2,
             title: "스레드 동기화",
-            content: "여러 스레드가 동시에 같은 자원에 접근할 때 발생할 수 있는 문제를 방지하기 위해 동기화가 필요합니다. synchronized 키워드나 락을 사용하여 스레드 간 동기화를 구현할 수 있습니다.",
+            content: "여러 스레드가 동시에 같은 자원에 접근할 때 발생할 수 있는 문제를 방지하기 위해 동기화가 필요합니다.\n synchronized 키워드나 락을 사용하여 스레드 간 동기화를 구현할 수 있습니다.",
             quiz: {
               text: "다음 중 스레드 동기화 방법이 아닌 것은?",
               distractors: [
@@ -409,23 +397,12 @@ export const handlers = [
               ],
               answer: 3
             },
-            code: `// 동기화 예시
-              public class Counter {
-              private int count = 0;
-        
-              public synchronized void increment() {
-                  count++;
-              }
-        
-              public synchronized int getCount() {
-                  return count;
-              }
-              }`
+            code: "// 동기화 예시\n\npublic class Counter {\nprivate int count = 0;\n\npublic synchronized void increment() {\n    count++;\n}\n\npublic synchronized int getCount() {\n    return count;\n}\n}"
           },
           {
             id: 3,
             title: "SSR(Server-Side Rendering)의 개념",
-            content: "SSR은 서버에서 페이지의 HTML을 생성하여 클라이언트에 전달하는 렌더링 방식입니다. 초기 로딩 속도와 SEO 측면에서 장점을 가집니다.",
+            content: "SSR은 서버에서 페이지의 HTML을 생성하여 클라이언트에 전달하는 렌더링 방식입니다.\n초기 로딩 속도와 SEO 측면에서 장점을 가집니다.",
             quiz: {
               text: "SSR의 주요 장점이 아닌 것은?",
               distractors: [
@@ -448,28 +425,7 @@ export const handlers = [
               ],
               answer: 2
             },
-            code: `// Next.js SSR 예시
-              // pages/index.js
-              export async function getServerSideProps() {
-              const res = await fetch('https://api.example.com/data')
-              const data = await res.json()
-        
-              return {
-              props: {
-                data,
-              },
-              }
-              }
-        
-              export default function Home({ data }) {
-              return (
-              <div>
-                {data.map(item => (
-                  <div key={item.id}>{item.title}</div>
-                ))}
-              </div>
-              )
-              }`
+            code: "// Next.js SSR 예시\n\n// pages/index.js\nexport async function getServerSideProps() {\nconst res = await fetch('https://api.example.com/data')\nconst data = await res.json()\n\nreturn {\nprops: {\ndata,\n},\n}\n}\n\nexport default function Home({ data }) {\nreturn (\n<div>\n{data.map(item => (\n<div key={item.id}>{item.title}</div>\n))}\n</div>\n)\n}"
           },
         ]
       })
@@ -507,19 +463,7 @@ export const handlers = [
               ],
               answer: 1
             },
-            code: `// Java에서 스레드 생성 예시
-              class MyThread extends Thread {
-              public void run() {
-                  System.out.println("스레드 실행 중");
-              }
-              }
-        
-              public class Main {
-              public static void main(String[] args) {
-                  MyThread thread = new MyThread();
-                  thread.start(); // 새로운 스레드 시작
-              }
-              }`
+            code: "// Java에서 스레드 생성 예시입니당\nclass MyThread extends Thread {\npublic void run() {\n    System.out.println(\"스레드 실행 중\");\n}\n}\n\npublic class Main {\npublic static void main(String[] args) {\n    MyThread thread = new MyThread();\n    thread.start(); // 새로운 스레드 시작\n}\n}"
           },
           {
             id: 2,
@@ -547,18 +491,7 @@ export const handlers = [
               ],
               answer: 3
             },
-            code: `// 동기화 예시
-              public class Counter {
-              private int count = 0;
-        
-              public synchronized void increment() {
-                  count++;
-              }
-        
-              public synchronized int getCount() {
-                  return count;
-              }
-              }`
+            code: "// 동기화 예시\npublic class Counter {\nprivate int count = 0;\n\npublic synchronized void increment() {\n    count++;\n}\n\npublic synchronized int getCount() {\n    return count;\n}\n}"
           },
           {
             id: 3,
@@ -586,28 +519,7 @@ export const handlers = [
               ],
               answer: 2
             },
-            code: `// Next.js SSR 예시
-              // pages/index.js
-              export async function getServerSideProps() {
-              const res = await fetch('https://api.example.com/data')
-              const data = await res.json()
-        
-              return {
-              props: {
-                data,
-              },
-              }
-              }
-        
-              export default function Home({ data }) {
-              return (
-              <div>
-                {data.map(item => (
-                  <div key={item.id}>{item.title}</div>
-                ))}
-              </div>
-              )
-              }`
+            code: "// Next.js SSR 예시\n// pages/index.js\nexport async function getServerSideProps() {\nconst res = await fetch('https://api.example.com/data')\nconst data = await res.json()\n\nreturn {\nprops: {\ndata,\n},\n}\n}\n\nexport default function Home({ data }) {\nreturn (\n<div>\n{data.map(item => (\n<div key={item.id}>{item.title}</div>\n))}\n</div>\n)\n}"
           },
         ]
       })
