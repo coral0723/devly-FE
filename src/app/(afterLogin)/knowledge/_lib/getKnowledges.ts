@@ -8,7 +8,7 @@ export const getKnowledges: QueryFunction<Knowledge[], [_1: string, _2: string, 
      throw new Error("studyId is required");
    };
 
-   const res = await axios.get(`/mock/study/knowledges/${studyId}`, {
+   const res = await axios.get(`/mock/knowledges/${studyId}`, {
      headers: {
        'Cache-Control': 'no-store',
      },
