@@ -1,5 +1,5 @@
 // import UnderDevelopment from "../_component/UnderDevelopment";
-import DiscussionCardsArea from "./_component/DiscussionCardsArea";
+import InterviewCardsArea from "./_component/InterviewCardsArea";
 import BottomNavigation from "../_component/BottomNavigation";
 
 type Props = {
@@ -8,7 +8,7 @@ type Props = {
   }>
 }
 
-export default async function DiscussionPage({ searchParams }: Props) {
+export default async function InterviewPage({ searchParams }: Props) {
   const { studyId } = await searchParams;
 
   // 미완성 기능일 때 보여주는 컴포넌트
@@ -33,7 +33,7 @@ export default async function DiscussionPage({ searchParams }: Props) {
             매일 새로운 면접 주제가 업데이트됩니다
           </div>
         </div>
-        <DiscussionCardsArea studyId={studyId}/>
+        <InterviewCardsArea studyId={studyId}/>
       </div>
       <BottomNavigation />
     </div>

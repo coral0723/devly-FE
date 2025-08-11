@@ -95,14 +95,14 @@ export default function MainFeatures() {
       {/* 모의 면접 */}
       <div
           className={`bg-white rounded-2xl border border-gray-200 p-5 space-y-2 transition-all
-            ${tasks.discussion.completed === false && "cursor-pointer hover:bg-orange-50 hover:border-orange-200 active:scale-95"}`}
-          onClick={tasks.discussion.completed ? undefined : (() => {router.replace(`/discussion?studyId=${tasks.discussion.studyId}`)})}
+            ${tasks.interview.completed === false && "cursor-pointer hover:bg-orange-50 hover:border-orange-200 active:scale-95"}`}
+          onClick={tasks.interview.completed ? undefined : (() => {router.replace(`/interview?studyId=${tasks.interview.studyId}`)})}
       >
         <div className="flex items-center justify-between">
           <MessageSquare size={24} className="text-orange-500"/>
-          {tasks.discussion.completed === false ?(
+          {tasks.interview.completed === false ?(
             <span className="text-sm px-3 py-1.5 bg-orange-100 text-orange-600 rounded-full animate-pulse">
-              주제 {tasks.discussion.total}개
+              주제 {tasks.interview.total}개
             </span>
           ) : (
             <span className="text-sm font-semibold px-3 py-1.5 bg-slate-100 text-slate-600 rounded-full">

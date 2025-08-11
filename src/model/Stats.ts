@@ -4,5 +4,5 @@ export interface Stats {
   words: number;
   knowledge: number;
   pr: number;
-  discussion: number;
+  interview: number;
 }

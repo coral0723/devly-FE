@@ -7,9 +7,9 @@ import BottomButton from './_component/BottomButton';
 import ChatMessage from './_component/ChatMessage';
 import Header from './_component/Header';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Chat } from '@/model/discussion/Chat';
+import { Chat } from '@/model/interview/Chat';
 import { useParams } from 'next/navigation';
-import { getDiscussion } from './_lib/getDiscussion';
+import { getInterview } from './_lib/getInterview';
 import { SpeechRecognition as ISpeechRecognition } from '@/model/Speech';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
@@ -22,7 +22,7 @@ declare global {
   }
 }
 
-export default function DiscussionLearnPage() {
+export default function InterviewLearnPage() {
   const [timeLeft, setTimeLeft] = useState<number>(30); // 30초
   const [showTimeoutModal, setShowTimeoutModal] = useState<boolean>(false);
   const [showExitConfirm, setShowExitConfirm] = useState<boolean>(false);
@@ -39,9 +39,9 @@ export default function DiscussionLearnPage() {
   const params = useParams();
   const id = params.id as string;
 
-  const {data: discussion, isLoading} = useQuery<Chat[], object, Chat[], [_1: string, _2: string, string]>({
-    queryKey: ['discussion', 'learn', id],
-    queryFn: getDiscussion,
+  const {data: interview, isLoading} = useQuery<Chat[], object, Chat[], [_1: string, _2: string, string]>({
+    queryKey: ['interview', 'learn', id],
+    queryFn: getInterview,
     staleTime: 0,
     refetchOnMount: 'always',
   });
@@ -51,7 +51,7 @@ export default function DiscussionLearnPage() {
     const queryCache = queryClient.getQueryCache();
     const queryKeys = queryCache.getAll().map(cache => cache.queryKey);
     queryKeys.forEach((queryKey) => {
-      if (queryKey[0] === "discussion" && queryKey[1] === "learn") {
+      if (queryKey[0] === "interview" && queryKey[1] === "learn") {
         queryClient.setQueryData(queryKey, newChats);
         setChats(newChats);
       }
@@ -72,9 +72,9 @@ useEffect(() => {
   // discussion이 undefined일 때도 chats를 빈 배열로 설정하도록 변경
   useEffect(() => {
     if (!isLoading) {
-      setChats(discussion ? [...discussion] : []);
+      setChats(interview ? [...interview] : []);
     }
-  }, [isLoading, discussion]);
+  }, [isLoading, interview]);
 
   // 채팅 추가될 때마다 스크롤 다운
   useEffect(() => {
@@ -97,7 +97,7 @@ useEffect(() => {
 
   const postChat = useMutation({
     mutationFn: () => {
-      return axios.post(`/mock/study/discussion/recomment/${chats[chats.length-1].id}`, {
+      return axios.post(`/mock/study/interview/recomment/${chats[chats.length-1].id}`, {
         id: temporaryMessageId.current,
         role: 'user',
         content: transcript,
@@ -107,7 +107,7 @@ useEffect(() => {
       const queryCache = queryClient.getQueryCache();
       const queryKeys = queryCache.getAll().map(cache => cache.queryKey);
       queryKeys.forEach((queryKey) => {
-        if(queryKey[0] === "discussion" && queryKey[1] === "learn") {
+        if(queryKey[0] === "interview" && queryKey[1] === "learn") {
           const value: Chat[] = queryClient.getQueryData(queryKey) ?? []; //undefined라면 빈 배열 추가
           const shallow = [...value];
           if (temporaryMessageId.current) {
@@ -133,7 +133,7 @@ useEffect(() => {
       const queryCache = queryClient.getQueryCache();
       const queryKeys = queryCache.getAll().map(cache => cache.queryKey);
       queryKeys.forEach((queryKey) => {
-        if(queryKey[0] === "discussion" && queryKey[1] === "learn") {
+        if(queryKey[0] === "interview" && queryKey[1] === "learn") {
           const value: Chat[] = queryClient.getQueryData(queryKey) ?? [];
           const shallow = [...value];
           // 마지막 메시지(빈 AI 응답)를 실제 응답으로 교체
@@ -175,7 +175,7 @@ useEffect(() => {
         const queryCache = queryClient.getQueryCache();
         const queryKeys = queryCache.getAll().map(cache => cache.queryKey);
         queryKeys.forEach((queryKey) => {
-          if (queryKey[0] === "discussion" && queryKey[1] === "learn") {
+          if (queryKey[0] === "interview" && queryKey[1] === "learn") {
             const value: Chat[] = queryClient.getQueryData(queryKey) ?? [];
             const newChats = [...value, newMessage];
             queryClient.setQueryData(queryKey, newChats);
@@ -204,7 +204,7 @@ useEffect(() => {
           const queryCache = queryClient.getQueryCache();
           const queryKeys = queryCache.getAll().map(cache => cache.queryKey);
           queryKeys.forEach((queryKey) => {
-            if (queryKey[0] === "discussion" && queryKey[1] === "learn") {
+            if (queryKey[0] === "interview" && queryKey[1] === "learn") {
               const value: Chat[] = queryClient.getQueryData(queryKey) ?? [];
               const shallow = [...value];
               const messageIndex = shallow.findIndex(chat => chat.id === temporaryMessageId.current);
@@ -255,7 +255,7 @@ useEffect(() => {
 
       {/* Chat Messages */}
       <div ref={containerRef} className="p-4 pb-24 overflow-y-auto scrollbar-hide" style={{ height: 'calc(100vh - 40px)' }}>
-        {discussion && chats.map((chat) => (
+        {interview && chats.map((chat) => (
           <ChatMessage
             key={chat.id}
             chat={chat}
@@ -277,7 +277,7 @@ useEffect(() => {
         <TimeoutModal
           onClose={() => {
             queryClient.removeQueries({
-              queryKey: ["discussion", "learn", id],
+              queryKey: ["interview", "learn", id],
               exact: true
             });
             setChats([]);
@@ -300,7 +300,7 @@ useEffect(() => {
           }}
           onExit={() => {
             queryClient.removeQueries({
-              queryKey: ["discussion", "learn", id],
+              queryKey: ["interview", "learn", id],
               exact: true
             });
             setChats([]);

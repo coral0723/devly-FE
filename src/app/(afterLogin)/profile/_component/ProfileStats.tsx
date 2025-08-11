@@ -18,7 +18,7 @@ export default function ProfileStats() {
     { label: "학습한 단어", key: "words", suffix: "개" },
     { label: "학습한 지식", key: "knowledge", suffix: "개" },
     { label: "완료한 PR", key: "pr", suffix: "개" },
-    { label: "참여 토론", key: "discussion", suffix: "회" },
+    { label: "참여 면접", key: "interview", suffix: "회" },
   ];
     
   return (

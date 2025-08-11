@@ -43,7 +43,7 @@ export const handlers = [
             total: 1,
             completed: false
           },
-          discussion: {
+          interview: {
             studyId: 4,
             total: 1,
             completed: false
@@ -90,7 +90,7 @@ export const handlers = [
             date: new Date("2025-01-20")
           },
           {
-            study: 'discussion',
+            study: 'interview',
             title: "프로젝트 아키텍처 설계 논의",
             exp: 200,
             date: new Date("2025-01-21")
@@ -107,7 +107,7 @@ export const handlers = [
             date: new Date("2025-01-21")
           },
           {
-            study: 'discussion',
+            study: 'interview',
             title: "프로젝트 아키텍처 설계 논의",
             exp: 200,
             date: new Date("2025-01-21")
@@ -152,7 +152,7 @@ export const handlers = [
             date: new Date("2025-01-24")
           },
           {
-            study: 'discussion',
+            study: 'interview',
             title: "코드 리뷰 및 피드백",
             exp: 200,
             date: new Date("2025-01-24")
@@ -786,7 +786,7 @@ export const handlers = [
       })
     )
   }),
-  http.get(`${baseUrl}/mock/study/discussions/:studyId`, async ({ }) => {
+  http.get(`${baseUrl}/mock/study/interviews/:studyId`, async ({ }) => {
     return new HttpResponse(
       JSON.stringify({
         code: "SUCCESS",
@@ -805,7 +805,7 @@ export const handlers = [
       })
     )
   }),
-  http.get(`${baseUrl}/mock/study/discussion/:id`, async ({ }) => {
+  http.get(`${baseUrl}/mock/study/interview/:id`, async ({ }) => {
     return new HttpResponse(
       JSON.stringify({
         code: "SUCCESS",
@@ -819,13 +819,13 @@ export const handlers = [
       })
     );
   }),
-  http.post(`${baseUrl}/mock/study/discussion/recomment/:id`, async ({ }) => {
+  http.post(`${baseUrl}/mock/study/interview/recomment/:id`, async ({ }) => {
     await delay(2000);
     return new HttpResponse(
       JSON.stringify({
         id: Date.now() + 1,
         role: 'ai',
-        content: '정말 chill 하군요...',
+        content: '좋은 답변이었습니다.',
         end: Math.random() < 0.3
       })
     )
@@ -856,7 +856,7 @@ export const handlers = [
           words: 32,
           knowledge: 55,
           pr: 19,
-          discussion: 4
+          interview: 4
         }
       })
     );
@@ -904,26 +904,26 @@ export const handlers = [
           {
             id: 1,
             study: 'word',
-            title: "리액트 훅 사용법 정리",
+            title: "개발 용어 5개",
             exp: 130
           },
           {
             id: 2,
             study: 'knowledge',
-            title: "Next.js 13 새로운 기능 학습",
+            title: "개발/CS 지식 3개",
             exp: 200
           },
           {
-            id: 58,
-            prId: 27,
+            id: 3,
+            prId: 1,
             study: 'pr',
-            title: "로그인 페이지 UI 구현",
+            title: "로그인 흐름 리팩토링",
             exp: 150
           },
           {
             id: 4,
-            study: 'discussion',
-            title: "프로젝트 아키텍처 설계 논의",
+            study: 'interview',
+            title: "React Vitual DOM",
             exp: 200
           }
         ]
@@ -939,55 +939,5 @@ export const handlers = [
         result,
       })
     );
-  }),
-  http.get('/api/words/:studyId/review', () => {
-    return HttpResponse.json({
-      code: "SUCCESS",
-      message: "성공",
-      result: {
-        words: [
-          {
-            "id": 1,
-            "word": "Middleware",
-            "meaning": "     ",
-            "example": "{\"source\": \"Express.js documentation\", \"text\": \"Middleware functions are functions that have access to the request object (req), the response object (res), and the next middleware function in the application's request-response cycle.\", \"translation\": \"   (req),  (res),   -        .\"}",
-            "quiz": "{\"text\": \"Middleware is a software that provides an interface between _______.\", \"distractors\": [\"Client and server\", \"User and application\", \"Database and server\", \"Server and application\"]}",
-            "pronunciation": "/mdlwer/"
-          },
-          {
-            "id": 2,
-            "word": "RESTful",
-            "meaning": "     , HTTP (GET, POST, PUT, DELETE)    ",
-            "example": "{\"source\": \"RESTful Web Services\", \"text\": \"A RESTful web service exposes a set of resources that identify the targets of the interaction with its clients.\", \"translation\": \"RESTful          .\"}",
-            "quiz": "{\"text\": \"RESTful web service is a way to implement web services that process resources through _____.\", \"distractors\": [\"XML\", \"JSON\", \"SOAP\", \"HTTP methods\"]}",
-            "pronunciation": "/restfl/"
-          },
-          {
-            "id": 3,
-            "word": "Endpoint",
-            "meaning": "     URL  ",
-            "example": "{\"source\": \"Amazon Web Services\", \"text\": \"Each API is deployed at one or many HTTP endpoints.\", \"translation\": \" API    HTTP  .\"}",
-            "quiz": "{\"text\": \"Endpoint refers to a specific location of a URL where you can access _____\", \"distractors\": [\"Web browser\", \"Operating system\", \"Network service\", \"Database\"]}",
-            "pronunciation": "/ndpont/"
-          },
-          {
-            "id": 4,
-            "word": "Payload",
-            "meaning": "       .",
-            "example": "{\"source\": \"Node.js API documentation\", \"text\": \"The payload of a packet is the actual data that is sent over the network.\", \"translation\": \"      .\"}",
-            "quiz": "{\"text\": \"What is the term for the actual data that is sent over the network?\", \"distractors\": [\"Protocol\", \"Port\", \"Socket\", \"API\"]}",
-            "pronunciation": "/pe.lod/"
-          },
-          {
-            "id": 5,
-            "word": "Query",
-            "meaning": "     .",
-            "example": "{\"source\": \"MySQL documentation\", \"text\": \"A query is a request for data from a database.\", \"translation\": \"    .\"}",
-            "quiz": "{\"text\": \"What is a request for data from a database called?\", \"distractors\": [\"Payload\", \"Schema\", \"Entity\", \"API\"]}",
-            "pronunciation": "/kwr.i/"
-          }
-        ]
-      }
-    });
-  }),
+  })
 ];

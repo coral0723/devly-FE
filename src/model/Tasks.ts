@@ -14,7 +14,7 @@ export interface Tasks {
     total: number;
     completed: boolean;
   },
-  discussion: {
+  interview: {
     studyId: number | null;
     total: number;
     completed: boolean;

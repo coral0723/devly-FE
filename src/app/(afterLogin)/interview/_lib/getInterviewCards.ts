@@ -1,14 +1,14 @@
 import { QueryFunction } from "@tanstack/react-query";
-import { DiscussionCard } from "@/model/discussion/DiscussionCard";
+import { DiscussionCard } from "@/model/interview/InterviewCard";
 import axios from "axios";
 
-export const getDiscussionCards: QueryFunction<DiscussionCard[], [_1: string, _2: string, string]>
+export const getInterviewCards: QueryFunction<DiscussionCard[], [_1: string, _2: string, string]>
  = async ({ queryKey: [, , studyId] }) => {
    if (!studyId) { // studyId가 없다면 예외 처리
      throw new Error("studyId is required");
    };
 
-   const res = await axios.get(`/mock/study/discussions/${studyId}`, {
+   const res = await axios.get(`/mock/study/interviews/${studyId}`, {
      headers: {
        'Cache-Control': 'no-store',
      },

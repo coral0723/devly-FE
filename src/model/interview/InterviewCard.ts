@@ -1,4 +1,4 @@
-export interface DiscussionCard {
+export interface InterviewCard {
   id: number;
   title: string;
   description: string;
