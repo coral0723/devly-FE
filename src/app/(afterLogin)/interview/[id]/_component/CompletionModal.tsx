@@ -1,10 +1,11 @@
 "use client"
 
 type Props = {
+  isReview: boolean;
   onClose: () => void;
 }
 
-export function CompletionModal({ onClose }: Props) {
+export function CompletionModal({ isReview, onClose }: Props) {
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
@@ -14,13 +15,24 @@ export function CompletionModal({ onClose }: Props) {
             <circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/>
           </svg>
         </div>
+        <h2 className="text-xl font-bold mb-2">
+          {isReview 
+            ? "복습 완료!"
+            : "학습 완료! 🎉" 
+          }
+        </h2>
         <p className="text-gray-600 mb-2">
-          모의 면접을 완료했어요
+          {isReview
+            ? "모의 면접을 복습했어요"
+            : "모의 면접을 완료했어요"
+          }
         </p>
-        <div className="bg-gray-50 rounded-lg p-4 mb-6">
-          <div className="text-sm text-gray-500 mb-1">획득한 경험치</div>
-          <div className="text-2xl font-bold text-orange-600">+200 XP</div>
-        </div>
+        {!isReview ? (
+          <div className="bg-gray-50 rounded-lg p-4 mb-6">
+            <div className="text-sm text-gray-500 mb-1">획득한 경험치</div>
+            <div className="text-2xl font-bold text-orange-600">+200 XP</div>
+          </div>
+          ) : <></>}
         <button
           onClick={onClose}
           className="w-full py-4 bg-gradient-to-r from-orange-400 to-amber-500 hover:from-orange-500 hover:to-amber-600 text-white rounded-xl text-lg font-medium"
