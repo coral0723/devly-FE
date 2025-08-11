@@ -135,16 +135,25 @@ export default function PrLearningContainer({ isReview, userId = undefined }: Pr
 
   const { mutate: completeStudy, isPending: isCompleteLoading } = useMutation({
     mutationFn: async () => {
+      if (isReview) { // 복습 페이지에서는 학습 완료 요청 안 보내게끔
+        setShowCompletion(true);
+        return; // API 요청 건너뛰기
+      }
+
       const useMock = process.env.NEXT_PUBLIC_USE_MSW_PR === 'true';
 
       if(useMock) {
-        return await axios.post(isReview ? `${process.env.NEXT_PUBLIC_BASE_URL}/api/pr/${prId}/study/${studyId}/done` : `/mock/pr/${prId}/study/${studyId}/done`)
+        return await axios.post(`/mock/pr/${prId}/study/${studyId}/done`)
       } else {
-        return await authApi.post(isReview ? `${process.env.NEXT_PUBLIC_BASE_URL}/api/pr/${prId}/study/${studyId}/done` : `/api/pr/${prId}/study/${studyId}/done`);
+        return await authApi.post(`/api/pr/${prId}/study/${studyId}/done`);
       }
     },
     onSuccess: () => {
-			setShowCompletion(true);
+      // isReview일 때도 setShowCompletion을 위에서 이미 호출하므로
+      // 여기서는 API 요청 후의 경우에만 의미 있음
+      if (!isReview) {
+        setShowCompletion(true);
+      }
     },
     onError: (error) => {
 			console.log('에러 상세:', error);
