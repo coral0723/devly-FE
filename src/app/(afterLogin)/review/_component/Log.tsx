@@ -46,7 +46,7 @@ export default function Log({studyLog}: Props) {
               {log.study === 'word' && <BookOpen size={20} className={`text-emerald-600`} />}
               {log.study === 'knowledge' && <Lightbulb size={20} className={`text-blue-600`} />}
               {log.study === 'pr' && <GitPullRequest size={20} className={`text-purple-600`} />}
-              {log.study === 'discussion' && <MessageSquare size={20} className={`text-orange-600`} />}
+              {log.study === 'interview' && <MessageSquare size={20} className={`text-orange-600`} />}
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-base font-medium truncate">{log.title}</p>

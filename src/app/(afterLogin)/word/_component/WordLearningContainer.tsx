@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
-import { getReviewWords } from "../_lib/getReviewWords";
 import { getWords } from "../_lib/getWords";
 import { getValidationWordResult } from "../_lib/getValidationWordResult";
 import { ValidationResult } from "@/model/ValidationResult";
@@ -35,8 +34,8 @@ export default function WordLearningContainer({ isReview }: Props) {
   const studyId = useSearchParams().get('studyId');
   
   const {data: words, isLoading, refetch: wordsRefetch} = useQuery<Word[], object, Word[], [_1: string, _2: string, string]>({
-    queryKey: ['word', isReview ? 'review' : 'learn', studyId!],
-    queryFn: isReview ? getReviewWords : getWords,
+    queryKey: ['word', 'learn', studyId!],
+    queryFn: getWords,
     staleTime: 0,
     refetchOnMount: 'always',
   });
