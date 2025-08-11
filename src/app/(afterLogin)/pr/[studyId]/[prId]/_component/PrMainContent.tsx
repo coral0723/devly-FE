@@ -58,7 +58,7 @@ export default function PrMainContent({ currentStep, prComments, prHistory, repl
             <div className="relative">
               <textarea
                 className="w-full h-32 p-3 border border-gray-300 rounded-lg text-sm bg-white text-base"
-                placeholder="PR 설명을 작성해주세요 (최소 10자 이상)"
+                placeholder="(최소 10자 이상)"
                 value={prHistory ? prHistory.answers[0] : replies[0]}
                 onChange={(e) => {
                   const value = e.target.value;

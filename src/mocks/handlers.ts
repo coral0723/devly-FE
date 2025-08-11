@@ -337,7 +337,7 @@ export const handlers = [
       })
     )
   }),
-  http.get(`${baseUrl}/mock/study/knowledges/:studyId`, async ({ }) => {
+  http.get(`${baseUrl}/mock/knowledges/:studyId`, async ({ }) => {
     return new HttpResponse(
       JSON.stringify({
         code: "SUCCESS",
@@ -533,7 +533,7 @@ export const handlers = [
         result: {
           id: 1,
           title: "Refactor login flow to improve readability and error handling",
-          description: `로그인 로직이 너무 복잡하고 예외 처리가 중복되어 있어서 전체적으로 리팩토링했습니다.`,
+          description: `로그인 흐름을 리팩터링하여 가독성과 오류 처리를 개선`,
           labels: [
             "refactor",
             "login",
@@ -581,7 +581,7 @@ export const handlers = [
               id: 5,
               idx: 0,
               prId: 1,
-              content: "이 부분은 어떻게 구현하면 좋을까요?"
+              content: "변경된 파일을 확인하여 PR을 작성해 주세요."
             },
             {
               id: 6,
@@ -838,7 +838,7 @@ export const handlers = [
         result: {
           id: "user",
           nickname: "devly",
-          profile: faker.image.urlLoremFlickr(),
+          profile: faker.image.avatar(),
           developerType: 2,
           level: 6
         }

@@ -21,6 +21,7 @@ import { Answer } from "@/model/pr/Answer"
 import { CompletionModal } from "./CompletionModal"
 import PrMainContent from "./PrMainContent"
 import axios from "axios"
+import ExitConfirmModal from "./ExitConfirmModal"
 // import { FinalFeedback } from "@/model/pr/FinalFeedback"
 // import FinalScoreModal from "./FinalScoreModal"
 
@@ -31,14 +32,17 @@ type Props = {
 
 export default function PrLearningContainer({ isReview, userId = undefined }: Props) {
   const [currentStep, setCurrentStep] = useState<number>(1);
+  const [showExitConfirm, setShowExitConfirm] = useState<boolean>(false);
+  const [showCompletion, setShowCompletion] = useState<boolean>(false);
   const [replies, setReplies] = useState<string[]>([]); //답안들 저장용
   const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
   const [showFiles, setShowFiles] = useState<boolean>(false); //"커밋 내역" Modal
-  const [showCompletion, setShowCompletion] = useState<boolean>(false);
   const { studyId, prId } = useParams();
   const router = useRouter();
   // const [showFinalScore, setShowFinalScore] = useState<boolean>(false); //"점수 포함된 최종 결과" Modal
   // const [finalFeedback, setFinalFeedback] = useState<FinalFeedback>(); 
+
+  console.log(studyId, prId);
 
   const {data: prCards, isLoading: isCardsLoading} = useQuery<PrCard, object, PrCard, [_1: string, _2: string, string]>({
     queryKey: ['pr', 'cards', studyId as string],
@@ -176,6 +180,7 @@ export default function PrLearningContainer({ isReview, userId = undefined }: Pr
         stepLength={prComments.comments.length}
         setCurrentStep={setCurrentStep}
         setShowFiles={setShowFiles}
+        onExit={() => setShowExitConfirm(true)}
       />
 
       <PrMainContent
@@ -234,10 +239,17 @@ export default function PrLearningContainer({ isReview, userId = undefined }: Pr
 				/>
 			): <></>} */}
 
+      {showExitConfirm && (
+        <ExitConfirmModal 
+          isReview={isReview}
+          onClose={() => setShowExitConfirm(false)}
+        />
+      )}
+
       {showCompletion ? (
         <CompletionModal
           isReview={isReview}
-          onClose={() => router.replace('/home')}
+          onClose={() => router.replace(isReview ? '/review' : '/home')}
         />
       ): <></>}
     </div>
