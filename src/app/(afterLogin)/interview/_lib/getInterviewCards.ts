@@ -1,8 +1,8 @@
 import { QueryFunction } from "@tanstack/react-query";
-import { DiscussionCard } from "@/model/interview/InterviewCard";
+import { InterviewCard } from "@/model/interview/InterviewCard";
 import axios from "axios";
 
-export const getInterviewCards: QueryFunction<DiscussionCard[], [_1: string, _2: string, string]>
+export const getInterviewCards: QueryFunction<InterviewCard[], [_1: string, _2: string, string]>
  = async ({ queryKey: [, , studyId] }) => {
    if (!studyId) { // studyId가 없다면 예외 처리
      throw new Error("studyId is required");
