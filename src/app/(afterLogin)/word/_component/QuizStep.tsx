@@ -127,7 +127,7 @@ export default function QuizStep({ index, word, wordsLength, handleQuizNext, onS
               className={`w-full flex items-center gap-4 p-4 text-left border rounded-lg transition-all ${getButtonStyle(distractor, idx)}`}
               disabled={showCorrect}
             >
-              <div className={`w-8 h-8 flex items-center justify-center rounded-full border-2 ${getCircleStyle(distractor, idx)}`}>
+              <div className={`w-8 h-8 flex items-center justify-center rounded-full border-2 flex-shrink-0 ${getCircleStyle(distractor, idx)}`}>
                 {(selectedDistractor === idx || (showCorrect && distractor === word.word)) && 
                   <Check size={16} className="text-white" />
                 }
