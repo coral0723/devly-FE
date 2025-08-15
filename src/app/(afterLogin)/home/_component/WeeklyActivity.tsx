@@ -105,7 +105,7 @@ export default function WeeklyActivity() {
                 {activity.study === 'word' && <BookOpen size={20} className={`text-emerald-600`} />}
                 {activity.study === 'knowledge' && <Lightbulb size={20} className={`text-blue-600`} />}
                 {activity.study === 'pr' && <GitPullRequest size={20} className={`text-purple-600`} />}
-                {activity.study === 'discussion' && <MessageSquare size={20} className={`text-orange-600`} />}
+                {activity.study === 'interview' && <MessageSquare size={20} className={`text-orange-600`} />}
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-base font-medium truncate">{activity.title}</p>
