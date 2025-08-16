@@ -1,7 +1,7 @@
 # 개발자 AI 교육 서비스 **devly**
 
 <div align="center">
-  <img width="280" height="180" alt="Image" src="https://github.com/user-attachments/assets/e93df2b5-585b-4075-84ef-92f5070ef2e6" />
+  <img width="350" height="240" alt="Image" src="https://github.com/user-attachments/assets/e93df2b5-585b-4075-84ef-92f5070ef2e6" />
 </div>
 
 - 배포 URL : https://devly-ten.vercel.app
@@ -195,7 +195,25 @@
   - 원하는 학습을 클릭하면 해당 내용을 바로 복습 가능  
 
 - **카테고리별 필터링**  
-  - 상단의 카테고리 버튼을 통해 개발 용어, CS 지식, 모의 PR, 모의 면접 등 **학습 종류별로 필터링** 가능  
+  - 상단의 카테고리 버튼을 통해 개발 용어, CS 지식, 모의 PR, 모의 면접 등 **학습 종류별로 필터링** 가능
+
+ <br>
+
+ ### [🏆 랭킹 페이지]
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/a62a4d1e-402e-4098-9d0a-9bb094c82451" width="350"/>
+</p>
+
+랭킹 페이지에서는 전체 이용자 중 자신의 학습 성취도를 확인하고, 다른 사용자와 비교할 수 있습니다.  
+
+- **접근 방법**  
+  - 메인 페이지 하단에서 '랭킹' 클릭 시 랭킹 페이지로 이동  
+
+- **랭킹 확인**  
+  - 전체 이용자 수와 본인의 **등수** 확인 가능
+
+ <br>
 
 ## 4. 프로젝트 구조
 
