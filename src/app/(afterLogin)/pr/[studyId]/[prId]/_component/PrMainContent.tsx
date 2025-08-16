@@ -57,8 +57,9 @@ export default function PrMainContent({ currentStep, prComments, prHistory, repl
           {currentStep === 1 ? (
             <div className="relative">
               <textarea
-                className="w-full h-32 p-3 border border-gray-300 rounded-lg text-sm bg-white text-base"
+                className="w-full h-32 p-3 border border-gray-300 rounded-lg text-sm bg-white text-base outline-none"
                 placeholder="(최소 10자 이상)"
+                spellCheck="false"
                 value={prHistory ? prHistory.answers[0] : replies[0]}
                 onChange={(e) => {
                   const value = e.target.value;
