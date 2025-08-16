@@ -27,10 +27,10 @@ export function CompletionModal({ isReview, incorrectIds, onClose }: Props) {
         </h2>
         <p className="text-gray-600 mb-2">
           {isReview
-            ? "단어를 모두 복습했어요"
+            ? "용어를 모두 복습했어요"
             : incorrectIds.length === 0 
-              ? `단어를 모두 학습했어요` 
-              : `${incorrectIds.length}개 단어만 더 완벽해지면 됩니다`
+              ? `용어를 모두 학습했어요` 
+              : `${incorrectIds.length}개 용어만 더 완벽해지면 됩니다`
           }
         </p>
         {!isReview && incorrectIds.length === 0 ? (

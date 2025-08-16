@@ -15,7 +15,7 @@ export default function ProfileStats() {
   const statsConfig = [
     { label: "학습일수", key: "days", suffix: "일" },
     { label: "총 경험치", key: "exp", suffix: "" },
-    { label: "학습한 단어", key: "words", suffix: "개" },
+    { label: "학습한 용어", key: "words", suffix: "개" },
     { label: "학습한 지식", key: "knowledge", suffix: "개" },
     { label: "완료한 PR", key: "pr", suffix: "개" },
     { label: "참여 면접", key: "interview", suffix: "회" },

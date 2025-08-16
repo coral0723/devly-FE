@@ -8,13 +8,13 @@ export default function LearningSection() {
         </svg>
         </div>
         <h1 className="text-2xl font-bold mb-3">
-          오늘의 개발 영단어
+          오늘의 개발 영어 용어
         </h1>
         <p className="text-gray-600 mb-2">
           개발 문서에서 자주 사용되는
         </p>
         <p className="text-gray-600">
-          필수 영단어를 학습해보세요
+          필수 영어 용어를 학습해보세요
         </p>
       </div>
 
@@ -46,8 +46,8 @@ export default function LearningSection() {
             </svg>
           </div>
           <div>
-            <h3 className="font-medium">복습할 단어</h3>
-            <p className="text-sm text-gray-500">5개의 새로운 단어</p>
+            <h3 className="font-medium">복습할 용어</h3>
+            <p className="text-sm text-gray-500">5개의 새로운 용어</p>
           </div>
         </div>
         <div className="bg-gray-50 rounded-lg p-3 text-sm text-gray-600">
