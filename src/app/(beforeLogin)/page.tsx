@@ -52,9 +52,9 @@ export default function LoginPage() {
               </svg>
             </div>
             <div>
-              <h3 className="font-semibold mb-1 text-lg">개발 단어 마스터</h3>
+              <h3 className="font-semibold mb-1 text-lg">개발 용어 마스터</h3>
               <p className="text-sm text-gray-600">
-                개발 문서와 코드에서 자주 등장하는 영어 단어를 학습하여 기술 문서 이해력을 높이세요
+                개발 문서와 코드에서 자주 등장하는 영어 용어를 학습하여 기술 문서 이해력을 높이세요
               </p>
             </div>
           </div>
