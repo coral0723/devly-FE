@@ -13,9 +13,11 @@ export default function RankingPage() {
   // }
 
   return (
-    <div className="max-w-lg mx-auto min-h-screen bg-gray-50 pb-16">
-      <RankingContents/>
-      <BottomNavigation/>
+    <div className="min-h-screen bg-gray-50">
+      <div className='max-w-xl mx-auto'>
+        <RankingContents/>
+        <BottomNavigation/>
+      </div>
     </div>
   );
 };

@@ -29,7 +29,7 @@ export default function RankingContents() {
       <Header totalUsers={rankings.totalUsers}/>
 
       {/* Main Content */}
-      <div className="p-4 overflow-y-auto scrollbar-hide" style={{ height: 'calc(100vh - 176px)' }}>
+      <div className="p-4 overflow-y-auto pt-[105px] scrollbar-hide" style={{ height: 'calc(100vh - 75px)' }}>
         <MyRanking
           myRank={rankings.myRank}
           totalUsers={rankings.totalUsers}
