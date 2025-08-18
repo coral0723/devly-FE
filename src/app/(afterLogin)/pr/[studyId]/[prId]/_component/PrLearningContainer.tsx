@@ -190,6 +190,7 @@ export default function PrLearningContainer({ isReview, userId = undefined }: Pr
         replies={replies}
         feedbacks={feedbacks}
         isPostAnswerLoading={isPostAnswerLoading}
+        prChangedFiles={prChangedFiles}
         setReplies={setReplies}
         setCurrentStep={setCurrentStep}
         postAnswer={postAnswer}

@@ -46,7 +46,7 @@ export default function Header({title, currentStep, stepLength, setCurrentStep, 
               Step {currentStep}/{stepLength}
             </span>
           </div>
-          <div className="flex flex-1 justify-end gap-2 relative group inline-block">
+          <div className="flex flex-1 justify-end gap-2 relative group inline-block lg:invisible">
             <button
               onClick={() => setShowFiles(true)}
               className="p-2 -ml-2 hover:bg-gray-100 rounded-full"
