@@ -7,7 +7,7 @@ export default function Header() {
   const router = useRouter();
   
   return (
-    <div className="bg-white/80 backdrop-blur-sm p-4 border-b border-gray-200 flex-shrink-0">
+    <div className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-sm p-4 border-b border-gray-200 flex-shrink-0">
       <div className="flex justify-between items-center p-15">
         <div className="flex justify-normal gap-2">
           <div className="flex items-center gap-3">

@@ -45,7 +45,7 @@ export default function MainFeatures() {
           )}
         </div>
         <h3 className="text-lg font-medium">개발 용어</h3>
-        <p className="text-base text-gray-500">문서에 자주 등장하는 영어 용어 학습</p>
+        <p className="text-base text-gray-500">문서에 등장하는 영어 용어 학습</p>
       </div>
 
       {/* 개발 지식 */}
