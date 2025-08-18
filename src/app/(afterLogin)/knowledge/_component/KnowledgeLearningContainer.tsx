@@ -99,7 +99,7 @@ export default function KnowledgeLearningContainer({ isReview }: Props) {
   }
 
   return (
-    <div className="relative max-w-lg mx-auto min-h-screen bg-gray-50">
+    <div className="relative min-h-screen bg-gray-50">
       {/* Progress Header */}
       <Header
         currentKnowledgeIndex={currentKnowledgeIndex}

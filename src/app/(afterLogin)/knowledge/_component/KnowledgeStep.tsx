@@ -79,7 +79,7 @@ export default function KnowledgeStep({knowledge, knowledgesLength, currentStep,
   };
   
   return (
-    <div className="max-w-4xl mx-auto space-y-6">
+    <div className="max-w-2xl mx-auto space-y-6">
       {/* Topic Header with Progress */}
       <div className="bg-white rounded-xl p-6 shadow-sm">
         <div className="flex items-center gap-4 mb-4">
@@ -193,30 +193,32 @@ export default function KnowledgeStep({knowledge, knowledgesLength, currentStep,
                 ))}
               </div>
 
-              <div className="fixed w-full max-w-lg left-1/2 transform -translate-x-1/2 bottom-0 bg-white p-2 border border-gray-200 z-10">
-                <button
-                  onClick={showCorect ? onNext : onCheck}
-                  className={`w-full py-3 text-white rounded-xl text-lg font-medium transition-all
-                    ${selectedDistractor === null 
-                      ? 'bg-gray-300 cursor-not-allowed' 
-                      : showCorect && currentStep === knowledgesLength - 1
-                          ? 'bg-gradient-to-r from-sky-400 to-blue-600 hover:from-sky-500 hover:to-blue-700 active:scale-[0.98]'
-                          : 'bg-blue-500 hover:bg-blue-600 active:scale-[0.98]'
-                    }`}
-                  disabled={selectedDistractor === null}
-                >
-                  {showCorect ? (
-                    currentStep === knowledgesLength - 1 ? (
-                      <div className="flex items-center justify-center gap-2">
-                        <span>학습 끝내기</span>
-                      </div>
+              <div className="fixed bottom-0 left-0 right-0 bg-white p-2 border border-gray-200 z-10">
+                <div className="max-w-xl mx-auto">
+                  <button
+                    onClick={showCorect ? onNext : onCheck}
+                    className={`w-full py-3 text-white rounded-xl text-lg font-medium transition-all
+                      ${selectedDistractor === null 
+                        ? 'bg-gray-300 cursor-not-allowed' 
+                        : showCorect && currentStep === knowledgesLength - 1
+                            ? 'bg-gradient-to-r from-sky-400 to-blue-600 hover:from-sky-500 hover:to-blue-700 active:scale-[0.98]'
+                            : 'bg-blue-500 hover:bg-blue-600 active:scale-[0.98]'
+                      }`}
+                    disabled={selectedDistractor === null}
+                  >
+                    {showCorect ? (
+                      currentStep === knowledgesLength - 1 ? (
+                        <div className="flex items-center justify-center gap-2">
+                          <span>학습 끝내기</span>
+                        </div>
+                      ) : (
+                        "다음 문제"
+                      )
                     ) : (
-                      "다음 문제"
-                    )
-                  ) : (
-                    "결과 확인"
-                  )}
-                </button>
+                      "결과 확인"
+                    )}
+                  </button>
+                </div>
               </div>
             </div>
           )}

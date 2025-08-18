@@ -23,21 +23,24 @@ export default async function KnowledgePage({ searchParams }: Props) {
   // }
 
   return (
-    <div className="max-w-lg mx-auto min-h-screen bg-gray-50 relative overflow-hidden">
-      <FloatingIcons/>
-      <div className="relative z-10 px-6 pb-24">
-        <BackButton/>
-        {knowledgeTotal === "3" 
-          ? <LearningSection/>
-          : <ReviewSection
-              KnowledgeTotal={knowledgeTotal}
-            />
-        }
+    <div className="min-h-screen bg-gray-50 relative overflow-hidden">
+      <BackButton/>
+      {/* Main Content */}
+      <div className="max-w-xl mx-auto relative">
+        <div className="z-10 pb-24">
+          <FloatingIcons/>
+          {knowledgeTotal === "3" 
+            ? <LearningSection/>
+            : <ReviewSection
+                KnowledgeTotal={knowledgeTotal}
+              />
+          }
+        </div>
+        <BottomButton 
+          studyId={studyId}
+          knowledgeTotal={knowledgeTotal}
+        />
       </div>
-      <BottomButton 
-        studyId={studyId}
-        knowledgeTotal={knowledgeTotal}
-      />
     </div>
   );
 }
