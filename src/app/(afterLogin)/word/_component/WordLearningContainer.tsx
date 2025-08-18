@@ -112,7 +112,7 @@ export default function WordLearningContainer({ isReview }: Props) {
   }
 
   return (
-    <div className="relative max-w-lg mx-auto min-h-screen bg-gray-50">
+    <div className="relative min-h-screen bg-gray-50">
       <Header
         currentWordIndex={currentWordIndex}
         wordsLength={filteredWords.length}

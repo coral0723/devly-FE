@@ -97,7 +97,7 @@ export default function QuizStep({ index, word, wordsLength, handleQuizNext, onS
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 max-w-xl mx-auto">
       <div className="bg-white rounded-xl p-6 shadow-sm">
           <div className="flex items-center gap-2 mb-4 text-gray-500 text-sm">
               <BookOpen size={16}/>
@@ -141,30 +141,32 @@ export default function QuizStep({ index, word, wordsLength, handleQuizNext, onS
         </div>
       </div>
 
-      <div className="fixed w-full max-w-lg bottom-0 bg-white p-2 left-1/2 transform -translate-x-1/2 border border-gray-200 z-10">
-        <button
-          onClick={showCorrect ? onNext : onCheck}
-          className={`w-full py-3 text-white text-lg font-medium rounded-xl transition-all
-            ${selectedDistractor === null 
-              ? 'bg-gray-300 cursor-not-allowed' 
-              : showCorrect && index === wordsLength - 1
-                  ? 'bg-gradient-to-r from-green-400 to-teal-500 hover:from-green-500 hover:to-teal-600 active:scale-[0.98]'
-                  : 'bg-green-500 hover:bg-green-600 active:scale-[0.98]'
-            }`}
-          disabled={selectedDistractor === null}
-        >
-          {showCorrect ? (
-            index === wordsLength - 1 ? (
-              <div className="flex items-center justify-center gap-2">
-                <span>학습 끝내기</span>
-              </div>
+      <div className="fixed bottom-0 left-0 right-0 bg-white p-2 border border-gray-200 z-10">
+        <div className="max-w-xl mx-auto">
+          <button
+            onClick={showCorrect ? onNext : onCheck}
+            className={`w-full py-3 text-white text-lg font-medium rounded-xl transition-all
+              ${selectedDistractor === null 
+                ? 'bg-gray-300 cursor-not-allowed' 
+                : showCorrect && index === wordsLength - 1
+                    ? 'bg-gradient-to-r from-green-400 to-teal-500 hover:from-green-500 hover:to-teal-600 active:scale-[0.98]'
+                    : 'bg-green-500 hover:bg-green-600 active:scale-[0.98]'
+              }`}
+            disabled={selectedDistractor === null}
+          >
+            {showCorrect ? (
+              index === wordsLength - 1 ? (
+                <div className="flex items-center justify-center gap-2">
+                  <span>학습 끝내기</span>
+                </div>
+              ) : (
+                "다음 문제"
+              )
             ) : (
-              "다음 문제"
-            )
-          ) : (
-            "결과 확인"
-          )}
-        </button>
+              "결과 확인"
+            )}
+          </button>
+        </div>
       </div>
     </div>
   )

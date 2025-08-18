@@ -47,7 +47,7 @@ export function WordStep({ word, onNext }: Props) {
   }, [word.word]);
 
   return (
-    <div className="space-y-8">
+    <div className="mt-8 space-y-8">
       <div className="text-center">
         <h1 className="text-2xl font-bold mb-2">{word.word}</h1>
         <p className="text-gray-500">{word.pronunciation}</p>
@@ -81,13 +81,15 @@ export function WordStep({ word, onNext }: Props) {
       <div className="text-center text-lg text-gray-600">
         {word.meaning}
       </div>
-      <div className="fixed w-full max-w-lg bottom-0 left-1/2 transform -translate-x-1/2 p-2 bg-white border border-gray-200 z-10">
-        <button
-          className=" w-full py-3 bg-green-500 text-white rounded-xl text-lg font-medium hover:bg-green-600 active:scale-[0.98] transition-all"
-          onClick={onNext}
-        >
-          다음
-        </button>
+      <div className="fixed bottom-0 left-0 right-0 p-2 bg-white border border-gray-200 z-10">
+        <div className='max-w-xl mx-auto'>
+          <button
+            className=" w-full py-3 bg-green-500 text-white rounded-xl text-lg font-medium hover:bg-green-600 active:scale-[0.98] transition-all"
+            onClick={onNext}
+          >
+            다음
+          </button>
+        </div>
       </div>
     </div>
   );
