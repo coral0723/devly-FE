@@ -41,12 +41,12 @@ export default function PrMainContent({ currentStep, prComments, prHistory, repl
   // 버튼 스타일을 결정하는 함수
   const getButtonStyle = () => {
     if (isPostAnswerLoading) return "w-full py-3 bg-purple-600 text-white rounded-lg text-lg font-medium hover:bg-purple-700";
-    if (hasText()) return "w-full py-3 bg-purple-600 text-white rounded-lg text-lg font-medium hover:bg-purple-700";
-    return "w-full py-3 bg-gray-300 text-white rounded-lg text-lg font-medium cursor-not-allowed";
+    if (hasText()) return "w-full mx-auto py-3 bg-purple-600 text-white rounded-lg text-lg font-medium hover:bg-purple-700";
+    return "w-full mx-auto py-3 bg-gray-300 text-white rounded-lg text-lg font-medium cursor-not-allowed";
   };
   
   return (
-      <div className="p-4 overflow-y-auto scrollbar-hide" style={{ height: 'calc(100vh - 200px)' }}>
+      <div className="max-w-2xl mx-auto p-4 overflow-y-auto scrollbar-hide" style={{ height: 'calc(100vh - 200px)' }}>
         <div className="space-y-4">
           <div className="bg-white p-4 rounded-lg border border-gray-200">
             <h3 className="font-medium mb-2">{currentStep === 1 ? "PR 설명 작성" : "리뷰어 답변"}</h3>
@@ -107,57 +107,59 @@ export default function PrMainContent({ currentStep, prComments, prHistory, repl
               : prHistory
                 && <ReviewAssessment feedback={prHistory.feedbacks[currentStep-1]}/>
             }
-          <div className="fixed w-full max-w-lg bottom-0 left-1/2 transform -translate-x-1/2 p-2 bg-white border border-gray-200 z-10">
-            {
-              (() => {
-                // 모든 단계가 완료된 경우 버튼을 표시하지 않음
-                if (currentStep === prComments.comments.length && feedbacks[currentStep-1] && !prHistory) {
-                  return null; // 아무것도 렌더링하지 않음
-                }
-                
-                // 돌아가기 버튼 조건
-                if (prHistory && currentStep === feedbacks.length) {
+          <div className="fixed bottom-0 left-0 right-0 p-2 bg-white border border-gray-200 z-10">
+            <div className="max-w-xl mx-auto">
+              {
+                (() => {
+                  // 모든 단계가 완료된 경우 버튼을 표시하지 않음
+                  if (currentStep === prComments.comments.length && feedbacks[currentStep-1] && !prHistory) {
+                    return null; // 아무것도 렌더링하지 않음
+                  }
+                  
+                  // 돌아가기 버튼 조건
+                  if (prHistory && currentStep === feedbacks.length) {
+                    return (
+                      <button
+                        className="w-full py-3 bg-purple-600 text-white text-lg font-medium rounded-lg hover:bg-purple-700"
+                        onClick={() => router.back()}
+                      >
+                        돌아가기
+                      </button>
+                    );
+                  }
+                  
+                  // 다음 단계 버튼 조건
+                  if (prHistory || feedbacks[currentStep-1]) {
+                    return (
+                      <button
+                        className="w-full py-3 bg-purple-600 text-white rounded-lg text-lg font-medium hover:bg-purple-700"
+                        onClick={() => setCurrentStep(currentStep + 1)}
+                      >
+                        다음 단계
+                      </button>
+                    );
+                  }
+                  
+                  // 검사하기 버튼 (기본)
                   return (
                     <button
-                      className="w-full py-3 bg-purple-600 text-white text-lg font-medium rounded-lg hover:bg-purple-700"
-                      onClick={() => router.back()}
+                      className={getButtonStyle()}
+                      onClick={() => {
+                        if (hasText()) {
+                          postAnswer({
+                            commentId: prComments?.comments[currentStep-1].id,
+                            answer: replies[currentStep-1],
+                          })
+                        }
+                      }}
+                      disabled={!hasText() || isPostAnswerLoading}
                     >
-                      돌아가기
+                      {isPostAnswerLoading ? (<LoadingSpinner size={'xs'}/>) : "검사하기"}
                     </button>
                   );
-                }
-                
-                // 다음 단계 버튼 조건
-                if (prHistory || feedbacks[currentStep-1]) {
-                  return (
-                    <button
-                      className="w-full py-3 bg-purple-600 text-white rounded-lg text-lg font-medium hover:bg-purple-700"
-                      onClick={() => setCurrentStep(currentStep + 1)}
-                    >
-                      다음 단계
-                    </button>
-                  );
-                }
-                
-                // 검사하기 버튼 (기본)
-                return (
-                  <button
-                    className={getButtonStyle()}
-                    onClick={() => {
-                      if (hasText()) {
-                        postAnswer({
-                          commentId: prComments?.comments[currentStep-1].id,
-                          answer: replies[currentStep-1],
-                        })
-                      }
-                    }}
-                    disabled={!hasText() || isPostAnswerLoading}
-                  >
-                    {isPostAnswerLoading ? (<LoadingSpinner size={'xs'}/>) : "검사하기"}
-                  </button>
-                );
-              })()
-            } 
+                })()
+              } 
+            </div>
           </div>
         </div>
       </div>

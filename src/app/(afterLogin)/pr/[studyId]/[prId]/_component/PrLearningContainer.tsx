@@ -173,7 +173,7 @@ export default function PrLearningContainer({ isReview, userId = undefined }: Pr
   }
   
   return (
-    <div className="max-w-lg mx-auto min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50">
       <Header
         title={prCards.title}
         currentStep={currentStep}
@@ -197,7 +197,7 @@ export default function PrLearningContainer({ isReview, userId = undefined }: Pr
 
 			{/* 마무리 버튼 - 모든 답변이 제출되었을 때만 표시 */}
 			{currentStep === prComments.comments.length && feedbacks[currentStep-1] && (
-        <div className="fixed w-full max-w-lg bottom-0 left-1/2 transform -translate-x-1/2 p-2 bg-white border border-gray-200 z-10">
+        <div className="fixed bottom-0 left-0 right-0 p-2 bg-white border border-gray-200 z-10">
 					<div className="max-w-lg mx-auto">
 						<button
 							className="w-full py-3 bg-gradient-to-r from-purple-400 to-pink-500 hover:from-purple-500 hover:to-pink-600 text-white text-lg font-medium rounded-lg"
