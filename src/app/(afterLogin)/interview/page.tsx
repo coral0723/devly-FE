@@ -1,6 +1,7 @@
 // import UnderDevelopment from "../_component/UnderDevelopment";
 import InterviewCardsArea from "./_component/InterviewCardsArea";
 import BottomNavigation from "../_component/BottomNavigation";
+import Header from "./_component/Header";
 
 type Props = {
   searchParams: Promise<{
@@ -19,14 +20,9 @@ export default async function InterviewPage({ searchParams }: Props) {
   // }
   
   return (
-    <div className="max-w-lg mx-auto min-h-screen bg-gray-50 pb-20">
-      <div className="bg-white p-4 border-b border-gray-200">
-        <h1 className="text-xl font-semibold text-gray-900">모의 면접</h1>
-        <p className="text-sm text-gray-500 mt-1">
-          AI 면접관과 함께하는 기술 면접을 연습해보세요
-        </p>
-      </div>
-      <div className="p-4 space-y-4">
+    <div className="min-h-screen bg-gray-50 pb-20">
+      <Header/>
+      <div className="max-w-xl mx-auto p-4 space-y-4">
         <div className="flex items-center justify-between">
           <h2 className="font-medium text-gray-900">추천 주제</h2>
           <div className="text-sm text-orange-600">

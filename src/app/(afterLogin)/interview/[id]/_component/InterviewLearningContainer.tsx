@@ -61,7 +61,6 @@ export default function InterviewLearningContainer({ isReview }: Props) {
     });
   };
   
-  // 남은 시간
   useEffect(() => {
   if (timeLeft > 0 && !isEnd) {
     const timer = setInterval(() => setTimeLeft(prev => prev - 1), 1000);
@@ -248,7 +247,7 @@ export default function InterviewLearningContainer({ isReview }: Props) {
    }, []);
    
    return (
-     <div className="max-w-lg mx-auto min-h-screen bg-gray-50">
+     <div className="min-h-screen bg-gray-50">
    
        {/* Progress Header */}
        <Header
@@ -257,7 +256,7 @@ export default function InterviewLearningContainer({ isReview }: Props) {
        />
    
        {/* Chat Messages */}
-       <div ref={containerRef} className="p-4 pb-24 overflow-y-auto scrollbar-hide" style={{ height: 'calc(100vh - 40px)' }}>
+       <div ref={containerRef} className="max-w-4xl mx-auto p-4 pb-24 overflow-y-auto scrollbar-hide" style={{ height: 'calc(100vh - 40px)' }}>
          {interview && chats.map((chat) => (
            <ChatMessage
              key={chat.id}
@@ -265,7 +264,7 @@ export default function InterviewLearningContainer({ isReview }: Props) {
              isLoading={chat.role === 'ai' && chat.content === '' && postChat.isPending}
            />
          ))}
-         </div>
+        </div>
    
        {/* Recording Button */}
        <BottomButton
