@@ -15,12 +15,12 @@ export default function Header() {
         >
           <ArrowLeft size={20} />
         </button>
-        <button
+        {/* <button
           onClick={() => router.push('/settings')}
           className="p-2 hover:bg-gray-100 rounded-lg"
         >
           <Settings size={20} />
-        </button>
+        </button> */}
       </div>
     </div>
   )

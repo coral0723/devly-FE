@@ -22,15 +22,17 @@ export default function ProfileStats() {
   ];
     
   return (
-    <div className="grid grid-cols-2 gap-4 p-4">
-      {statsConfig.map((stat, idx) => (
-        <div key={idx} className="bg-white rounded-xl border border-gray-200 p-4">
-          <div className="text-gray-500 text-sm">{stat.label}</div>
-          <div className="text-xl font-semibold mt-1">
-            {data ? `${data[stat.key as keyof Stats]}${stat.suffix}` : '-'}
+    <div className="max-w-xl mx-auto">
+      <div className="grid grid-cols-2 gap-4 p-4">
+        {statsConfig.map((stat, idx) => (
+          <div key={idx} className="bg-white rounded-xl border border-gray-200 p-4">
+            <div className="text-gray-500 text-sm">{stat.label}</div>
+            <div className="text-xl font-semibold mt-1">
+              {data ? `${data[stat.key as keyof Stats]}${stat.suffix}` : '-'}
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   )
 }

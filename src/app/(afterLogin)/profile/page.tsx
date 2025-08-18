@@ -14,7 +14,7 @@ export default async function Profile() {
   // }
 
   return (
-    <div className="max-w-lg mx-auto min-h-screen bg-gray-50 pb-20">
+    <div className="min-h-screen bg-gray-50 pb-20">
       <Header/>
       <ProfileInfo/>
       <ProfileStats/>
