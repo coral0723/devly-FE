@@ -8,6 +8,7 @@ import { getStudyLogs } from "./_lib/getStudyLogs";
 import BottomNavigation from "../_component/BottomNavigation";
 import LogContainer from "./_component/LogContainer";
 import { categories } from "./_data/categories";
+import Header from "./_component/Header";
 
 export default function ReviewPage() {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
@@ -68,46 +69,41 @@ export default function ReviewPage() {
   }).filter(dateGroup => dateGroup.logs.length > 0);
 
   return (
-    <div className="max-w-lg mx-auto h-[100dvh] bg-gray-100 flex flex-col">
-      <div className="bg-white border-b border-gray-200">
-        <div className="p-4">
-          <h1 className="text-xl font-semibold text-gray-900">복습</h1>
-          <p className="text-sm text-gray-500 mt-1">
-            매일 배운 내용을 복습하며 실력을 쌓아보세요!
-          </p>
-        </div>
-      </div>
+    <div className="bg-gray-100">
+      <div className="max-w-xl mx-auto h-[100dvh] bg-gray-100 flex flex-col">
+        <Header/>
 
-      <div className="px-4 pb-2 my-2">
-        <div className="flex gap-2 overflow-x-auto scrollbar-hide">
-          {categories.map((category) => (
-            <button
-              key={category.study}
-              onClick={() => setSelectedCategory(category.study)}
-              className={`px-7 py-2 rounded-full text-sm whitespace-nowrap transition-color
-                ${selectedCategory === category.study
-                  ? category.style
-                  : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-200'
-                }`}
-            >
-              {category.name}  
-            </button>
-          ))}
+        <div className="px-4 pb-2 pt-2 my-2 mt-[85px]">
+          <div className="flex justify-evenly gap-2 overflow-x-auto scrollbar-hide">
+            {categories.map((category) => (
+              <button
+                key={category.study}
+                onClick={() => setSelectedCategory(category.study)}
+                className={`px-7 py-2 rounded-full text-sm whitespace-nowrap transition-color
+                  ${selectedCategory === category.study
+                    ? category.style
+                    : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-200'
+                  }`}
+              >
+                {category.name}  
+              </button>
+            ))}
+          </div>
         </div>
-      </div>
 
-      <LogContainer
-        studyLogs={filteredLogs}
-        hasNextPage={hasNextPage}
-        onLoadMore={() => {
-          fetchNextPage();
-          return Promise.resolve();
-        }}
-      />
-      
-      <div className="fixed bottom-0 left-0 right-0 z-50 bg-white safe-area-bottom"> 
-        <div className="max-w-lg mx-auto border-t border-gray-200">
-            <BottomNavigation/>
+        <LogContainer
+          studyLogs={filteredLogs}
+          hasNextPage={hasNextPage}
+          onLoadMore={() => {
+            fetchNextPage();
+            return Promise.resolve();
+          }}
+        />
+        
+        <div className="fixed bottom-0 left-0 right-0 z-50 bg-white safe-area-bottom"> 
+          <div className="max-w-lg mx-auto border-t border-gray-200">
+              <BottomNavigation/>
+          </div>
         </div>
       </div>
     </div>
