@@ -1,3 +1,5 @@
+"use client";
+import { motion } from "framer-motion";
 import ScrollStack, { ScrollStackItem } from "../_animations/ScrollStack";
 import MockContextStep from "./word/MockContextStep";
 import MockQuizStep from "./word/MockQuizStep";
@@ -5,14 +7,19 @@ import MockWordStep from "./word/MockWordStep";
 
 export default function WordSection() {
   return (
-    <section className="h-screen w-full flex flex-col items-center justify-center snap-start px-6">
+    <motion.section
+      className="h-screen w-full flex flex-col items-center justify-center snap-start px-6"
+      initial={{ backgroundColor: "#ffffff" }} // 시작 색
+      whileInView={{ backgroundColor: "#e3f5ecff" }} // emerald-100
+      transition={{ duration: 2 }} // 전환 시간
+      viewport={{ once: true, amount: 0.8 }} // 처음 한번, 30% 보이면 실행
+    >
       {/* Header */}
       <div className="flex items-center gap-3 mb-4">
-        <div
-          className="w-12 h-12 rounded-full bg-emerald-100 border-2 border-emerald-600 flex items-center justify-center shrink-0">
+        <div className="w-10 h-10 mt-14 rounded-full bg-emerald-100 border-2 border-emerald-600 flex items-center justify-center shrink-0">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="w-6 h-6 stroke-emerald-600"
+            className="w-5 h-5 stroke-emerald-600"
             fill="none"
             viewBox="0 0 24 24"
             strokeWidth="2"
@@ -23,31 +30,30 @@ export default function WordSection() {
             <path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z" />
           </svg>
         </div>
-        <h1 className="text-2xl font-bold">개발 용어</h1>
+        <h1 className="hidden md:block md:text-lg md:font-bold">개발 용어</h1>
       </div>
 
       {/* Description */}
-      <p className="text-gray-600 text-base leading-relaxed text-center max-w-xs mb-6">
-        자주 쓰이는 개발 영어 용어를 학습하고<br/>
-        기술 문서 이해력을 높이세요
+      <p className="text-gray-700 text-lg leading-relaxed text-center max-w-xs mb-1">
+        자주 쓰이는 개발 영어 용어를 학습하고,<br />
+        퀴즈로 실력을 점검하세요
       </p>
 
-      {/* 예시 컴포넌트 */}
-      <div className="flex flex-col items-center justify-center h-[70vh] w-full overflow-auto">
-        {/* <MockWordStep/>
-        <MockContextStep/> */}
+      {/* mock 컴포넌트들 */}
+      <div className="flex flex-col items-center justify-center w-full overflow-auto"
+        style={{ height: "calc(100vh - 100px)" }}>
         <ScrollStack>
           <ScrollStackItem>
-            <MockWordStep/>
+            <MockWordStep />
           </ScrollStackItem>
           <ScrollStackItem>
-            <MockContextStep/>
+            <MockContextStep />
           </ScrollStackItem>
           <ScrollStackItem>
-            <MockQuizStep/>
+            <MockQuizStep />
           </ScrollStackItem>
         </ScrollStack>
       </div>
-    </section>
-  )
+    </motion.section>
+  );
 }

@@ -41,11 +41,11 @@ interface ScrollStackProps {
 const ScrollStack: React.FC<ScrollStackProps> = ({
   children,
   className = "",
-  itemDistance = 100,
+  itemDistance = 120,
   itemScale = 0.03,
   itemStackDistance = 30,
   stackPosition = "5%",
-  scaleEndPosition = "5%",
+  scaleEndPosition = "10%",
   baseScale = 0.85,
   scaleDuration = 0.5,
   rotationAmount = 0,
@@ -349,7 +349,7 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
 
   return (
     <div
-      className={`relative w-full h-full overflow-y-auto overflow-x-visible ${className}`.trim()}
+      className={`relative w-full h-full overflow-y-auto overflow-x-visible scrollbar-hide ${className}`.trim()}
       ref={scrollerRef}
       style={{
         overscrollBehavior: "contain",
