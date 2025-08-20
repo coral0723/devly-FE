@@ -40,7 +40,7 @@ export default function WordSection() {
       </p>
 
       {/* mock 컴포넌트들 */}
-      <div className="flex flex-col items-center justify-center w-full max-w-7xl overflow-auto"
+      <div className="flex flex-col items-center justify-center w-full overflow-auto"
         style={{ height: "calc(100vh - 100px)" }}>
         <ScrollStack>
           <ScrollStackItem>
