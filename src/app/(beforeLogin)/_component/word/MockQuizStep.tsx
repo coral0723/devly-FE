@@ -6,13 +6,14 @@ import { Fragment } from "react";
 export default function MockQuizStep() {
   let text = "Encapsulation helps to protect an object's internal state by restricting direct access."
   const distractors = [
+    "Encapsulation",
     "Abstraction",
     "Polymorphism",
     "Inheritance"
   ];
 
   return (
-    <div className="flex-grow relative w-full h-full bg-gray-50">
+    <div className="flex-grow relative w-full h-full overflow-hidden bg-gray-50">
       {/* Header */}
       <div className="absolute top-0 left-0 right-0 z-10 bg-white border-b border-gray-200">
         <div className="px-4 py-2">
@@ -20,9 +21,14 @@ export default function MockQuizStep() {
             <button
                 className="p-2 -ml-2 hover:bg-gray-100 rounded-full"
             >
-              <X size={16}/>
+              <svg xmlns="http://www.w3.org/2000/svg" 
+                className="w-4 h-4 md:w-6 md:h-6"
+                viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M18 6 6 18"/>
+                <path d="m6 6 12 12"/>
+              </svg>
             </button>
-            <span className="text-xs text-gray-500">
+            <span className="text-xs text-gray-500 md:text-base">
               1 / 5
             </span>
           </div>
@@ -36,13 +42,18 @@ export default function MockQuizStep() {
       </div>
 
       {/* Content */}
-      <div className="mt-20 px-4 space-y-4">
-        <div className="bg-white rounded-xl p-6 shadow-sm">
-          <div className="flex items-center gap-2 mb-4 text-gray-500 text-xs">
-              <BookOpen size={14}/>
+      <div className="mt-20 px-4 space-y-4 md:mt-24 md:px-8">
+        <div className="bg-white rounded-xl p-6 shadow-sm max-w-3xl sm:mx-6 md:mx-auto">
+          <div className="flex items-center gap-2 mb-4 text-gray-500 text-xs md:text-base">
+              <svg xmlns="http://www.w3.org/2000/svg" 
+                className="w-4 h-4 md:w-6 md:h-6 flex-shrink-0"
+                viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 7v14"/>
+                <path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/>
+              </svg>
               <span>출처: Object-Oriented Programming Guide</span>
           </div>
-          <div className="text-sm mb-1 font-mono">
+          <div className="text-sm mb-1 font-mono md:text-xl">
             {text.split(/(Encapsulation)/i).map((part, i) => (
               <Fragment key={i}>
                 {part.toLowerCase() === "Encapsulation".toLowerCase() ? (
@@ -57,18 +68,18 @@ export default function MockQuizStep() {
           </div>
         </div>
 
-        <div className="bg-white rounded-xl p-2 shadow-sm">
-          <div className="space-y-2">
+        <div className="bg-white rounded-xl p-2 shadow-sm max-w-3xl sm:mx-6 md:mx-auto">
+          <div className="space-y-2 md:space-y-4">
             {distractors.map((distractor, idx) => (
               <button
                 key={idx}
                 className={`w-full flex items-center gap-4 p-4 text-left border rounded-lg transition-all`}
                 disabled={true}
               >
-                <div className={`w-6 h-6 flex items-center justify-center rounded-full border-2 flex-shrink-0`}>
+                <div className={`w-6 h-6 flex items-center justify-center rounded-full border-2 flex-shrink-0 md:w-10 md:h-10`}>
                   <span className="text-gray-500">{idx + 1}</span>
                 </div>
-                <span className="text-sm">{distractor}</span>
+                <span className="text-sm md:text-lg">{distractor}</span>
               </button>
             ))}
           </div>

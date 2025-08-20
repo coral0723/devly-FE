@@ -10,9 +10,9 @@ export default function WordSection() {
     <motion.section
       className="h-screen w-full flex flex-col items-center justify-center snap-start px-6"
       initial={{ backgroundColor: "#ffffff" }} // 시작 색
-      whileInView={{ backgroundColor: "#e3f5ecff" }} // emerald-100
-      transition={{ duration: 2 }} // 전환 시간
-      viewport={{ once: true, amount: 0.8 }} // 처음 한번, 30% 보이면 실행
+      whileInView={{ backgroundColor: "#f2fdf8ff" }} // emerald-100
+      transition={{ duration: 3 }} // 전환 시간
+      viewport={{ once: true, amount: 1 }}
     >
       {/* Header */}
       <div className="flex items-center gap-3 mb-4">
@@ -30,17 +30,17 @@ export default function WordSection() {
             <path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z" />
           </svg>
         </div>
-        <h1 className="hidden md:block md:text-lg md:font-bold">개발 용어</h1>
       </div>
 
       {/* Description */}
-      <p className="text-gray-700 text-lg leading-relaxed text-center max-w-xs mb-1">
+      <h1 className="hidden md:block md:text-4xl md:font-bold md:mb-4">버그 잡듯 영어 용어도 잡아보세요</h1>
+      <p className="text-gray-700 text-lg leading-relaxed text-center max-w-xs mb-1 md:text-sm">
         자주 쓰이는 개발 영어 용어를 학습하고,<br />
         퀴즈로 실력을 점검하세요
       </p>
 
       {/* mock 컴포넌트들 */}
-      <div className="flex flex-col items-center justify-center w-full overflow-auto"
+      <div className="flex flex-col items-center justify-center w-full max-w-7xl overflow-auto"
         style={{ height: "calc(100vh - 100px)" }}>
         <ScrollStack>
           <ScrollStackItem>
