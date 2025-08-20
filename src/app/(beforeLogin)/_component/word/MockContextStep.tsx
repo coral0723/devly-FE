@@ -5,9 +5,9 @@ export default function MockContextStep() {
   let text = "Encapsulation helps to protect an object's internal state by restricting direct access."
 
   return (
-    <div className="flex-grow relative w-64 h-auto bg-gray-50">
+    <div className="flex-grow relative w-full h-full bg-gray-50">
       {/* Header */}
-      <div className="sticky top-0 z-20 bg-white border-b border-gray-200">
+      <div className="absolute top-0 left-0 right-0 z-10 bg-white border-b border-gray-200">
         <div className="px-4 py-2">
           <div className="flex items-center justify-between mb-2">
             <button
@@ -27,10 +27,9 @@ export default function MockContextStep() {
           </div>
         </div>
       </div>
-
       {/* Content */}
-      <div className="mt-2 space-y-4">
-        <div className="bg-white rounded-xl p-2 mx-2 shadow-sm">
+      <div className="mt-20 space-y-4">
+        <div className="bg-white rounded-xl p-6 mx-4 shadow-sm">
           <div className="flex items-center gap-2 mb-2 text-gray-500 text-xs">
             <BookOpen size={14}/>
             <span>출처: Object-Oriented Programming Guide</span>

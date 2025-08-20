@@ -1,4 +1,6 @@
+import ScrollStack, { ScrollStackItem } from "../_animations/ScrollStack";
 import MockContextStep from "./word/MockContextStep";
+import MockQuizStep from "./word/MockQuizStep";
 import MockWordStep from "./word/MockWordStep";
 
 export default function WordSection() {
@@ -32,8 +34,19 @@ export default function WordSection() {
 
       {/* 예시 컴포넌트 */}
       <div className="flex flex-col items-center justify-center h-[70vh] w-full overflow-auto">
-        {/* <MockWordStep/> */}
-        <MockContextStep/>
+        {/* <MockWordStep/>
+        <MockContextStep/> */}
+        <ScrollStack>
+          <ScrollStackItem>
+            <MockWordStep/>
+          </ScrollStackItem>
+          <ScrollStackItem>
+            <MockContextStep/>
+          </ScrollStackItem>
+          <ScrollStackItem>
+            <MockQuizStep/>
+          </ScrollStackItem>
+        </ScrollStack>
       </div>
     </section>
   )

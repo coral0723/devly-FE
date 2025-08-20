@@ -5,9 +5,9 @@ import { X } from "lucide-react"
 export default function MockWordStep() {
 
   return (
-    <div className="flex-grow relative w-64 h-auto bg-gray-50">
+    <div className="flex-grow relative w-full h-full bg-gray-50">
       {/* Header */}
-      <div className="sticky top-0 z-20 bg-white border-b border-gray-200">
+      <div className="absolute top-0 left-0 right-0 z-10 bg-white border-b border-gray-200">
         <div className="px-4 py-2">
           <div className="flex items-center justify-between mb-2">
             <button
@@ -28,8 +28,8 @@ export default function MockWordStep() {
         </div>
       </div>
 
-      {/* Content */}
-      <div className="mt-8 space-y-8">
+      {/* Content - add top padding to account for header height */}
+      <div className="pt-20 space-y-8">
         <div className="text-center">
           <h1 className="text-lg font-bold mb-2">Encapsulation</h1>
           <p className="text-sm text-gray-500">/ɛnˌkæpsjʊˈleɪʃən/</p>
