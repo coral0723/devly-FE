@@ -1,4 +1,5 @@
-import WordContext from "./word/WordContext";
+import MockContextStep from "./word/MockContextStep";
+import MockWordStep from "./word/MockWordStep";
 
 export default function WordSection() {
   return (
@@ -31,7 +32,8 @@ export default function WordSection() {
 
       {/* 예시 컴포넌트 */}
       <div className="flex flex-col items-center justify-center h-[70vh] w-full overflow-auto">
-        <WordContext/>
+        {/* <MockWordStep/> */}
+        <MockContextStep/>
       </div>
     </section>
   )

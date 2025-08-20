@@ -1,20 +1,8 @@
 "use client"
 
 import { X } from "lucide-react"
-import { useEffect, useState } from "react"
 
-export default function WordContext() {
-  const [currentStep, setCurrentStep] = useState<number>(0);
-
-  // 1초마다 1 ↔ 2 반복
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentStep(prev => (prev === 0 ? 1 : 0));
-    }, 2000);
-
-    // 컴포넌트 언마운트 시 interval 해제
-    return () => clearInterval(interval);
-  }, []);
+export default function MockWordStep() {
 
   return (
     <div className="flex-grow relative w-64 h-auto bg-gray-50">
@@ -28,13 +16,13 @@ export default function WordContext() {
               <X size={16}/>
             </button>
             <span className="text-xs text-gray-500">
-              {currentStep} / 5
+              1 / 5
             </span>
           </div>
           <div className="h-1 bg-gray-100 rounded-full overflow-hidden">
             <div
               className="h-full bg-green-500 transition-all duration-300"
-              style={{ width: `${((currentStep) / 5) * 100}%`}}
+              style={{ width: `${(1 / 5) * 100}%`}}
             />
           </div>
         </div>
