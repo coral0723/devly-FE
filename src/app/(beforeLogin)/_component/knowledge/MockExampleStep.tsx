@@ -46,7 +46,8 @@ export default function MockExampleStep() {
               className={`flex-1 flex justify-center rounded-t-lg`}
             >
               <button
-                className={`flex items-center px-1 py-2 space-x-2 text-xs font-medium transition-colors text-gray-500 md:px-2 md:text-sm`}
+                className={`flex items-center px-1 py-2 space-x-2 text-xs font-medium transition-colors text-gray-500 md:px-2 md:py-3 md:text-sm`}
+                disabled={true}
               >
                 <svg 
                   xmlns="http://www.w3.org/2000/svg" 
@@ -67,7 +68,9 @@ export default function MockExampleStep() {
             <div
               className={`flex-1 flex justify-center rounded-t-lg bg-blue-50 border-b-2 border-blue-500`}>
               <button
-                className={`flex items-center px-1 py-2 space-x-2 text-xs font-medium rounded-t-lg transition-colors text-blue-600 md:px-2 md:text-sm`}>
+                className={`flex items-center px-1 py-2 space-x-2 text-xs font-medium rounded-t-lg transition-colors text-blue-600 md:px-2 md:py-3 md:text-sm`}
+                disabled={true}  
+              >
                 <svg 
                   xmlns="http://www.w3.org/2000/svg" 
                   className="w-4 h-4 md:w-5 md:h-5"
@@ -88,7 +91,9 @@ export default function MockExampleStep() {
             <div
               className={`flex-1 flex justify-center rounded-t-lg`}>
               <button
-                className={`flex items-center px-1 py-2 space-x-2 text-xs font-medium rounded-t-lg transition-colors text-gray-500 md:px-2 md:text-sm`}>
+                className={`flex items-center px-1 py-2 space-x-2 text-xs font-medium rounded-t-lg transition-colors text-gray-500 md:px-2 md:py-3 md:text-sm`}
+                disabled={true}  
+              >
                 <svg 
                   xmlns="http://www.w3.org/2000/svg" 
                   className="w-4 h-4 md:w-5 md:h-5"

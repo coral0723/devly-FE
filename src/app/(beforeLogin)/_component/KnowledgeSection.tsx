@@ -4,6 +4,7 @@ import { motion } from "framer-motion"
 import ScrollStack, { ScrollStackItem } from "../_animations/ScrollStack"
 import MockKnowledgeStep from "./knowledge/MockKnowledgeStep"
 import MockExampleStep from "./knowledge/MockExampleStep"
+import MockQuizStep from "./knowledge/MockQuizStep"
 
 export default function KnowledgeSection() {
   return (
@@ -51,7 +52,7 @@ export default function KnowledgeSection() {
             <MockExampleStep/>
           </ScrollStackItem>
           <ScrollStackItem>
-            <h1>세 번째</h1>
+            <MockQuizStep/>
           </ScrollStackItem>
         </ScrollStack>
       </div>

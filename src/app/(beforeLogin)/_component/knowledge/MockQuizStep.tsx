@@ -1,6 +1,25 @@
-export default function MockKnowledgeStep() {
+export default function MockQuizStep() {
+  const distractors = [
+    {
+      id: 1,
+      distractor: "프로세스의 메모리를 공유한다",
+    },
+    {
+      id: 2,
+      distractor: "각 스레드는 독립적인 메모리 공간을 가진다",
+    },
+    {
+      id: 3,
+      distractor: "동시에 여러 작업을 수행할 수 있다",
+    },
+    {
+      id: 4,
+      distractor: "스택 영역은 스레드마다 독립적이다",
+    },
+  ];
+
   return (
-    <div className="flex-grow relative w-full h-full bg-gray-50">
+    <div className="flex-grow overflow-hidden relative w-full h-full bg-gray-50">
       {/* Header */}
       <div className="absolute top-0 left-0 right-0 z-10 bg-white border-b border-gray-200">
         <div className="px-4 py-2">
@@ -39,10 +58,10 @@ export default function MockKnowledgeStep() {
           {/* Navigation Tabs */}
           <div className="flex border-b">
             <div
-              className={`flex-1 flex justify-center rounded-t-lg bg-blue-50 border-b-2 border-blue-500`}
+              className={`flex-1 flex justify-center rounded-t-lg`}
             >
               <button
-                className={`flex items-center px-1 py-2 space-x-2 text-xs font-medium transition-colors text-blue-600 md:px-2 md:py-3 md:text-sm`}
+                className={`flex items-center px-1 py-2 space-x-2 text-xs font-medium transition-colors text-gray-500 md:px-2 md:py-3 md:text-sm`}
                 disabled={true}
               >
                 <svg 
@@ -65,7 +84,7 @@ export default function MockKnowledgeStep() {
               className={`flex-1 flex justify-center rounded-t-lg`}>
               <button
                 className={`flex items-center px-1 py-2 space-x-2 text-xs font-medium rounded-t-lg transition-colors text-gray-500 md:px-2 md:py-3 md:text-sm`}
-                disabled={true}
+                disabled={true}  
               >
                 <svg 
                   xmlns="http://www.w3.org/2000/svg" 
@@ -85,10 +104,10 @@ export default function MockKnowledgeStep() {
               </button>
             </div>
             <div
-              className={`flex-1 flex justify-center rounded-t-lg`}>
+              className={`flex-1 flex justify-center rounded-t-lg border-blue-500 bg-blue-50 border-b-2`}>
               <button
-                className={`flex items-center px-1 py-2 space-x-2 text-xs font-medium rounded-t-lg transition-colors text-gray-500 md:px-2 md:py-3 md:text-sm`}
-                disabled={true}
+                className={`flex items-center px-1 py-2 space-x-2 text-xs font-medium rounded-t-lg transition-colors text-blue-600 md:px-2 md:py-3 md:text-sm`}
+                disabled={true}  
               >
                 <svg 
                   xmlns="http://www.w3.org/2000/svg" 
@@ -108,13 +127,36 @@ export default function MockKnowledgeStep() {
           </div>
 
           {/* Content Based on Active Tab */}
-          <div className="mt-4">
-            <div className="prose max-w-none">
-              <p className="text-gray-600 leading-relaxed md:text-lg">
-                스레드는 프로세스 내에서 실행되는 가장 작은 실행 단위입니다.<br/>
-                하나의 프로세스는 여러 개의 스레드를 가질 수 있으며,<br/> 
-                각 스레드는 같은 프로세스의 메모리를 공유합니다.<br/>
-              </p>
+          <div className="space-y-4 mt-4">
+            <div className="bg-blue-50 border border-blue-100 rounded-lg p-4 mb-4">
+              <h2 className="text-base font-semibold text-blue-800 mb-2 md:text-lg">문제</h2>
+              <p className="text-blue-900 text-xs md:text-base">다음 중 스레드의 특징이 아닌 것은?</p>
+            </div>
+
+            <div className="space-y-2 md:space-y-4">
+              {distractors.map((distractor, idx) => (
+                <button
+                  key={distractor.id}
+                  className={`w-full flex items-center gap-4 p-4 text-left border rounded-lg transition-all`}
+                  disabled={true}
+                >
+                  <div className={`w-6 h-6 flex items-center justify-center rounded-full border-2 flex-shrink-0 md:w-10 md:h-10`}>
+                    <span className="text-gray-500">{idx + 1}</span>
+                  </div>
+                  <span className="text-sm md:text-lg">{distractor.distractor}</span>
+                </button>
+              ))}
+            </div>
+
+            <div className="fixed bottom-0 left-0 right-0 bg-white p-2 border border-gray-200 z-10">
+              <div className="max-w-xl mx-auto">
+                <button
+                  className={`w-full py-3 text-white rounded-xl text-lg font-medium transition-all bg-gray-300 cursor-not-allowed`}
+                  disabled={true}
+                >
+                  다음 문제
+                </button>
+              </div>
             </div>
           </div>
 
