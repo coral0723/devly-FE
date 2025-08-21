@@ -1,4 +1,8 @@
-export default function MockKnowledgeStep() {
+import { Code } from "lucide-react";
+
+export default function MockExampleStep() {
+  const code = "// Java에서 스레드 생성 예시\n\nclass MyThread extends Thread {\npublic void run() {\n    System.out.println(\"스레드 실행 중\");\n}\n}\n\npublic class Main {\npublic static void main(String[] args) {\n    MyThread thread = new MyThread();\n    thread.start(); // 새로운 스레드 시작\n}\n}";
+
   return (
     <div className="flex-grow relative w-full h-full bg-gray-50">
       {/* Header */}
@@ -39,10 +43,10 @@ export default function MockKnowledgeStep() {
           {/* Navigation Tabs */}
           <div className="flex border-b">
             <div
-              className={`flex-1 flex justify-center rounded-t-lg bg-blue-50 border-b-2 border-blue-500`}
+              className={`flex-1 flex justify-center rounded-t-lg`}
             >
               <button
-                className={`flex items-center px-1 py-2 space-x-2 text-xs font-medium transition-colors text-blue-600 md:px-2 md:text-sm`}
+                className={`flex items-center px-1 py-2 space-x-2 text-xs font-medium transition-colors text-gray-500 md:px-2 md:text-sm`}
               >
                 <svg 
                   xmlns="http://www.w3.org/2000/svg" 
@@ -61,9 +65,9 @@ export default function MockKnowledgeStep() {
               </button>
             </div>
             <div
-              className={`flex-1 flex justify-center rounded-t-lg`}>
+              className={`flex-1 flex justify-center rounded-t-lg bg-blue-50 border-b-2 border-blue-500`}>
               <button
-                className={`flex items-center px-1 py-2 space-x-2 text-xs font-medium rounded-t-lg transition-colors text-gray-500 md:px-2 md:text-sm`}>
+                className={`flex items-center px-1 py-2 space-x-2 text-xs font-medium rounded-t-lg transition-colors text-blue-600 md:px-2 md:text-sm`}>
                 <svg 
                   xmlns="http://www.w3.org/2000/svg" 
                   className="w-4 h-4 md:w-5 md:h-5"
@@ -103,16 +107,20 @@ export default function MockKnowledgeStep() {
           </div>
 
           {/* Content Based on Active Tab */}
-          <div className="mt-4">
-            <div className="prose max-w-none">
-              <p className="text-gray-600 leading-relaxed md:text-lg">
-                스레드는 프로세스 내에서 실행되는 가장 작은 실행 단위입니다.<br/>
-                하나의 프로세스는 여러 개의 스레드를 가질 수 있으며,<br/> 
-                각 스레드는 같은 프로세스의 메모리를 공유합니다.<br/>
-              </p>
+          <div className="space-y-4 mt-4">
+            <div className="bg-gray-900 text-gray-100 p-4 rounded-lg relative">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-sm text-gray-400">예시 코드</span>
+                <div className="flex items-center space-x-2">
+                  <Code size={16} className="text-gray-400" />
+                </div>
+              </div>
+              <pre className="overflow-x-auto text-xs md:text-base">
+                <code>{code}</code>
+              </pre>
             </div>
           </div>
-          
+
         </div>
       </div>
     </div>
