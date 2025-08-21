@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion"
 import ScrollStack, { ScrollStackItem } from "../_animations/ScrollStack"
+import MockTopic from "./interview/MockTopic"
 
 export default function InterviewSection() {
   return (
@@ -40,7 +41,7 @@ export default function InterviewSection() {
         style={{ height: "calc(100vh - 100px)" }}>
         <ScrollStack>
           <ScrollStackItem>
-            <h1>첫 번재 섹션</h1>
+            <MockTopic/>
           </ScrollStackItem>
           <ScrollStackItem>
             <h1>두 번째 섹션</h1>

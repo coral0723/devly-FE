@@ -800,7 +800,7 @@ export const handlers = [
             estimatedTime: "45분",
             category: "React",
             tags: ["Virtual DOM", "React", "Performance"]
-            },
+          },
         ]
       })
     )
