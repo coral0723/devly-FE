@@ -31,6 +31,7 @@ export default function MockContextStep() {
           </div>
         </div>
       </div>
+      
       {/* Content */}
       <div className="mt-20 space-y-4 md:mt-24 md:px-8">
         <div className="bg-white rounded-xl p-6 mx-4 shadow-sm max-w-3xl sm:mx-6 md:mx-auto">

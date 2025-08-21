@@ -1,4 +1,5 @@
 "use client";
+
 import { motion } from "framer-motion";
 import ScrollStack, { ScrollStackItem } from "../_animations/ScrollStack";
 import MockContextStep from "./word/MockContextStep";

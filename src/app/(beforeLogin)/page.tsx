@@ -1,4 +1,5 @@
 import FloatingIcons from "./_component/FloatingIcons";
+import KnowledgeSection from "./_component/KnowledgeSection";
 import MainSection from "./_component/MainSection";
 import WordSection from "./_component/WordSection";
 
@@ -8,9 +9,7 @@ export default function LoginPage() {
       <FloatingIcons/>
       <MainSection/>
       <WordSection/>
-      <section className="h-screen w-full flex items-center justify-center snap-start bg-gray-100">
-        <h1 className="text-4xl">두 번째 섹션</h1>
-      </section>
+      <KnowledgeSection/>
       <section className="h-screen w-full flex items-center justify-center snap-start bg-gray-100">
         <h1 className="text-4xl">세 번째 섹션</h1>
       </section>
