@@ -54,7 +54,8 @@ export default {
   		animation: {
   			'float-slow': 'float 5s infinite ease-in-out',
   			'float-medium': 'float 3s infinite ease-in-out',
-  			'float-fast': 'float 1.5s infinite ease-in-out'
+  			'float-fast': 'float 1.5s infinite ease-in-out',
+				shine: 'shine 5s linear infinite'
   		},
   		keyframes: {
   			float: {
@@ -64,7 +65,11 @@ export default {
   				'50%': {
   					transform: 'translateY(-10px)'
   				}
-  			}
+  			},
+				shine: {
+          '0%': { 'background-position': '100%' },
+          '100%': { 'background-position': '-100%' },
+        },
   		},
   		borderRadius: {
   			lg: 'var(--radius)',
