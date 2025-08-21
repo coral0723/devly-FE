@@ -3,6 +3,7 @@
 import { motion } from "framer-motion"
 import ScrollStack, { ScrollStackItem } from "../_animations/ScrollStack"
 import MockTopic from "./interview/MockTopic"
+import MockChat from "./interview/MockChat"
 
 export default function InterviewSection() {
   return (
@@ -44,10 +45,7 @@ export default function InterviewSection() {
             <MockTopic/>
           </ScrollStackItem>
           <ScrollStackItem>
-            <h1>두 번째 섹션</h1>
-          </ScrollStackItem>
-          <ScrollStackItem>
-            <h1>세 번째 섹션</h1>
+            <MockChat/>
           </ScrollStackItem>
         </ScrollStack>
       </div>
