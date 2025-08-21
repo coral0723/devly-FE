@@ -12,7 +12,7 @@ export default function WordSection() {
       className="h-screen w-full flex flex-col items-center justify-center snap-start px-6"
       initial={{ backgroundColor: "#ffffff" }} // 시작 색
       whileInView={{ backgroundColor: "#f2fdf8ff" }} // emerald-100
-      transition={{ duration: 3 }} // 전환 시간
+      transition={{ duration: 2 }} // 전환 시간
       viewport={{ once: true, amount: 1 }}
     >
       {/* Header */}

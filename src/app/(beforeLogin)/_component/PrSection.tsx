@@ -11,7 +11,7 @@ export default function PrSection() {
       className="h-screen w-full flex flex-col items-center justify-center snap-start px-6"
       initial={{ backgroundColor: "#ebf2fcff" }} // 시작 색
       whileInView={{ backgroundColor: "#f4eefaff" }}
-      transition={{ duration: 3 }} // 전환 시간
+      transition={{ duration: 2 }} // 전환 시간
       viewport={{ once: true, amount: 1 }}
     >
       {/* Header */}

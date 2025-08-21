@@ -11,7 +11,7 @@ export default function InterviewSection() {
       className="h-screen w-full flex flex-col items-center justify-center snap-start px-6"
       initial={{ backgroundColor: "#f4eefaff" }} // 시작 색
       whileInView={{ backgroundColor: "#fcf4e9ff" }}
-      transition={{ duration: 3 }} // 전환 시간
+      transition={{ duration: 2 }} // 전환 시간
       viewport={{ once: true, amount: 1 }}
     >
       {/* Header */}
