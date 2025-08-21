@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion"
 import ScrollStack, { ScrollStackItem } from "../_animations/ScrollStack"
+import MockTopic from "./pr/MockTopic"
 
 export default function PrSection() {
   return (
@@ -33,7 +34,7 @@ export default function PrSection() {
 
       {/* Description */}
       <h1 className="hidden md:block md:text-4xl md:font-bold md:mb-4">AI와 함께 실전 같은 PR 연습을 해보세요</h1>
-      <p className="text-gray-700 text-lg leading-relaxed text-center max-w-xs mb-1 md:text-sm">
+      <p className="text-gray-700 text-lg leading-relaxed text-center max-w-sm mb-1 md:text-sm">
         PR을 작성하고 AI와 코드 리뷰를 주고받으며,<br /> 
         실무 감각을 길러보세요
       </p>
@@ -43,7 +44,7 @@ export default function PrSection() {
         style={{ height: "calc(100vh - 100px)" }}>
         <ScrollStack>
           <ScrollStackItem>
-            <h1>첫 번재 섹션</h1>
+            <MockTopic/>
           </ScrollStackItem>
           <ScrollStackItem>
             <h1>두 번째 섹션</h1>
