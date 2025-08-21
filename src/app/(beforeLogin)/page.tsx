@@ -1,4 +1,5 @@
 import FloatingIcons from "./_component/FloatingIcons";
+import InterviewSection from "./_component/InterviewSection";
 import KnowledgeSection from "./_component/KnowledgeSection";
 import MainSection from "./_component/MainSection";
 import PrSection from "./_component/PrSection";
@@ -12,6 +13,7 @@ export default function LoginPage() {
       <WordSection/>
       <KnowledgeSection/>
       <PrSection/>
+      <InterviewSection/>
     </div>
   )
 }
