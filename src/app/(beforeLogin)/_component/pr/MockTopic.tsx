@@ -58,7 +58,7 @@ export default function MockTopic() {
           </div>
         </div>
         {prs.map((pr) => (
-          <MockPrCard pr={pr}/>
+          <MockPrCard key={pr.id} pr={pr}/>
         ))}
       </div>
     </div>
