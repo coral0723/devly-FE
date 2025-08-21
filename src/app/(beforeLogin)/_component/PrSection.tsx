@@ -3,6 +3,7 @@
 import { motion } from "framer-motion"
 import ScrollStack, { ScrollStackItem } from "../_animations/ScrollStack"
 import MockTopic from "./pr/MockTopic"
+import MockPr from "./pr/MockPr"
 
 export default function PrSection() {
   return (
@@ -47,7 +48,7 @@ export default function PrSection() {
             <MockTopic/>
           </ScrollStackItem>
           <ScrollStackItem>
-            <h1>두 번째 섹션</h1>
+            <MockPr/>
           </ScrollStackItem>
           <ScrollStackItem>
             <h1>세 번째 섹션</h1>
