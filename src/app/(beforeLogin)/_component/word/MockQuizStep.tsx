@@ -1,10 +1,9 @@
 "use client"
 
-import { BookOpen, X } from "lucide-react";
 import { Fragment } from "react";
 
 export default function MockQuizStep() {
-  let text = "Encapsulation helps to protect an object's internal state by restricting direct access."
+  const text = "Encapsulation helps to protect an object's internal state by restricting direct access."
   const distractors = [
     "Encapsulation",
     "Abstraction",

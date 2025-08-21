@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 
 export default function MockContextStep() {
-  let text = "Encapsulation helps to protect an object's internal state by restricting direct access."
+  const text = "Encapsulation helps to protect an object's internal state by restricting direct access."
 
   return (
     <div className="flex-grow relative w-full h-full bg-gray-50">
