@@ -49,129 +49,129 @@ export default function PrMainContent({ currentStep, prComments, prHistory, repl
   };
   
   return (
-      <div className="p-4 overflow-y-auto scrollbar-hide" style={{ height: 'calc(100vh - 113px)' }}>
-        <div className="lg:grid grid-cols-2">
-          <div className="space-y-4 mx-auto max-w-xl lg:max-w-none lg:mx-0">
-            <div className="bg-white p-4 rounded-lg border border-gray-200">
-              <h3 className="font-medium mb-2">{currentStep === 1 ? "PR 설명 작성" : "리뷰어 답변"}</h3>
-              <p className="text-sm text-gray-600">
-                {currentStep === 1 ? prComments.comments[0].content : "리뷰어의 코멘트에 답변해주세요."}
-              </p>
+    <div className="p-4 overflow-y-auto scrollbar-hide" style={{ height: 'calc(100vh - 113px)' }}>
+      <div className="lg:grid grid-cols-2">
+        <div className="space-y-4 mx-auto max-w-xl lg:max-w-none lg:mx-0">
+          <div className="bg-white p-4 rounded-lg border border-gray-200">
+            <h3 className="font-medium mb-2">{currentStep === 1 ? "PR 설명 작성" : "리뷰어 답변"}</h3>
+            <p className="text-sm text-gray-600">
+              {currentStep === 1 ? prComments.comments[0].content : "리뷰어의 코멘트에 답변해주세요."}
+            </p>
+          </div>
+          {currentStep === 1 ? (
+            <div className="relative">
+              <textarea
+                className="w-full h-32 p-3 border border-gray-300 rounded-lg text-sm bg-white text-base outline-none"
+                placeholder="(최소 10자 이상)"
+                spellCheck="false"
+                value={prHistory ? prHistory.answers[0] : replies[0]}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  if (value.length <= MAX_CHAR_LIMIT) {
+                    const updatedReplies = [e.target.value, ...replies.slice(1)];
+                    setReplies(updatedReplies);
+                  }
+                }}
+                maxLength={MAX_CHAR_LIMIT}
+              />
+              <div className="absolute bottom-2 right-2 text-xs text-gray-500">
+                {getCharCount(prHistory ? prHistory.answers[0] : replies[0])}/{MAX_CHAR_LIMIT}
+              </div>
             </div>
-            {currentStep === 1 ? (
-              <div className="relative">
-                <textarea
-                  className="w-full h-32 p-3 border border-gray-300 rounded-lg text-sm bg-white text-base outline-none"
-                  placeholder="(최소 10자 이상)"
-                  spellCheck="false"
-                  value={prHistory ? prHistory.answers[0] : replies[0]}
-                  onChange={(e) => {
-                    const value = e.target.value;
-                    if (value.length <= MAX_CHAR_LIMIT) {
-                      const updatedReplies = [e.target.value, ...replies.slice(1)];
-                      setReplies(updatedReplies);
-                    }
-                  }}
-                  maxLength={MAX_CHAR_LIMIT}
-                />
-                <div className="absolute bottom-2 right-2 text-xs text-gray-500">
-                  {getCharCount(prHistory ? prHistory.answers[0] : replies[0])}/{MAX_CHAR_LIMIT}
+          ) : (
+              <div className="bg-white border border-gray-200 rounded-lg p-4">
+                <div className="bg-gray-50 p-3 rounded-lg mb-3">
+                  <p className="text-sm text-gray-700">
+                    {prComments.comments[currentStep-1].content}
+                  </p>
                 </div>
-              </div>
-            ) : (
-                <div className="bg-white border border-gray-200 rounded-lg p-4">
-                  <div className="bg-gray-50 p-3 rounded-lg mb-3">
-                    <p className="text-sm text-gray-700">
-                      {prComments.comments[currentStep-1].content}
-                    </p>
+                <div className="relative">
+                  <textarea
+                    className="w-full h-32 p-3 border border-gray-300 rounded-lg text-sm bg-white"
+                    placeholder="답변을 작성해주세요 (최소 10자 이상)"
+                    value={prHistory ? prHistory.answers[currentStep-1] : replies[currentStep-1]}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      if (value.length <= MAX_CHAR_LIMIT) {
+                        const updatedReplies = [...replies];
+                        updatedReplies[currentStep-1] = e.target.value;
+                        setReplies(updatedReplies);
+                      }
+                    }}
+                    maxLength={MAX_CHAR_LIMIT}
+                  />
+                  <div className="absolute bottom-2 right-2 text-xs text-gray-500">
+                    {currentReplyLength}/{MAX_CHAR_LIMIT}
                   </div>
-                  <div className="relative">
-                    <textarea
-                      className="w-full h-32 p-3 border border-gray-300 rounded-lg text-sm bg-white"
-                      placeholder="답변을 작성해주세요 (최소 10자 이상)"
-                      value={prHistory ? prHistory.answers[currentStep-1] : replies[currentStep-1]}
-                      onChange={(e) => {
-                        const value = e.target.value;
-                        if (value.length <= MAX_CHAR_LIMIT) {
-                          const updatedReplies = [...replies];
-                          updatedReplies[currentStep-1] = e.target.value;
-                          setReplies(updatedReplies);
-                        }
-                      }}
-                      maxLength={MAX_CHAR_LIMIT}
-                    />
-                    <div className="absolute bottom-2 right-2 text-xs text-gray-500">
-                      {currentReplyLength}/{MAX_CHAR_LIMIT}
-                    </div>
-                  </div>
-              </div>
-            )}
-              {feedbacks[currentStep-1]
-                ? <ReviewAssessment feedback={feedbacks[currentStep-1]}/>
-                : prHistory
-                  && <ReviewAssessment feedback={prHistory.feedbacks[currentStep-1]}/>
-              }
-            <div className="fixed bottom-0 left-0 right-0 p-2 bg-white border border-gray-200 z-10">
-              <div className="max-w-xl mx-auto">
-                {
-                  (() => {
-                    // 모든 단계가 완료된 경우 버튼을 표시하지 않음
-                    if (currentStep === prComments.comments.length && feedbacks[currentStep-1] && !prHistory) {
-                      return null; // 아무것도 렌더링하지 않음
-                    }
-                    
-                    // 돌아가기 버튼 조건
-                    if (prHistory && currentStep === feedbacks.length) {
-                      return (
-                        <button
-                          className="w-full py-3 bg-purple-600 text-white text-lg font-medium rounded-lg hover:bg-purple-700"
-                          onClick={() => router.back()}
-                        >
-                          돌아가기
-                        </button>
-                      );
-                    }
-                    
-                    // 다음 단계 버튼 조건
-                    if (prHistory || feedbacks[currentStep-1]) {
-                      return (
-                        <button
-                          className="w-full py-3 bg-purple-600 text-white rounded-lg text-lg font-medium hover:bg-purple-700"
-                          onClick={() => setCurrentStep(currentStep + 1)}
-                        >
-                          다음 단계
-                        </button>
-                      );
-                    }
-                    
-                    // 검사하기 버튼 (기본)
+                </div>
+            </div>
+          )}
+            {feedbacks[currentStep-1]
+              ? <ReviewAssessment feedback={feedbacks[currentStep-1]}/>
+              : prHistory
+                && <ReviewAssessment feedback={prHistory.feedbacks[currentStep-1]}/>
+            }
+          <div className="fixed bottom-0 left-0 right-0 p-2 bg-white border border-gray-200 z-10">
+            <div className="max-w-xl mx-auto">
+              {
+                (() => {
+                  // 모든 단계가 완료된 경우 버튼을 표시하지 않음
+                  if (currentStep === prComments.comments.length && feedbacks[currentStep-1] && !prHistory) {
+                    return null; // 아무것도 렌더링하지 않음
+                  }
+                  
+                  // 돌아가기 버튼 조건
+                  if (prHistory && currentStep === feedbacks.length) {
                     return (
                       <button
-                        className={getButtonStyle()}
-                        onClick={() => {
-                          if (hasText()) {
-                            postAnswer({
-                              commentId: prComments?.comments[currentStep-1].id,
-                              answer: replies[currentStep-1],
-                            })
-                          }
-                        }}
-                        disabled={!hasText() || isPostAnswerLoading}
+                        className="w-full py-3 bg-purple-600 text-white text-lg font-medium rounded-lg hover:bg-purple-700"
+                        onClick={() => router.back()}
                       >
-                        {isPostAnswerLoading ? (<LoadingSpinner size={'xs'}/>) : "검사하기"}
+                        돌아가기
                       </button>
                     );
-                  })()
-                } 
-              </div>
+                  }
+                  
+                  // 다음 단계 버튼 조건
+                  if (prHistory || feedbacks[currentStep-1]) {
+                    return (
+                      <button
+                        className="w-full py-3 bg-purple-600 text-white rounded-lg text-lg font-medium hover:bg-purple-700"
+                        onClick={() => setCurrentStep(currentStep + 1)}
+                      >
+                        다음 단계
+                      </button>
+                    );
+                  }
+                  
+                  // 검사하기 버튼 (기본)
+                  return (
+                    <button
+                      className={getButtonStyle()}
+                      onClick={() => {
+                        if (hasText()) {
+                          postAnswer({
+                            commentId: prComments?.comments[currentStep-1].id,
+                            answer: replies[currentStep-1],
+                          })
+                        }
+                      }}
+                      disabled={!hasText() || isPostAnswerLoading}
+                    >
+                      {isPostAnswerLoading ? (<LoadingSpinner size={'xs'}/>) : "검사하기"}
+                    </button>
+                  );
+                })()
+              } 
             </div>
           </div>
-          <div className="hidden lg:block">
-            <ChangedFiles
-              prChangedFiles={prChangedFiles}
-            />
-          </div>
+        </div>
+        <div className="hidden lg:block">
+          <ChangedFiles
+            prChangedFiles={prChangedFiles}
+          />
         </div>
       </div>
+    </div>
   )
 }

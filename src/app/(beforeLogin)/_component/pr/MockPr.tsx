@@ -1,9 +1,32 @@
 import { Fragment } from "react";
 import MockChangedFiles from "./MockChangedFiles";
 
-export default function MockPr() {
+type Props = {
+  onModal: boolean;
+}
+
+export default function MockPr({ onModal }: Props) {
   return (
     <div className="flex-grow relative overflow-hidden w-full h-full bg-gray-50">
+
+      {/* Modal */}
+      {onModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-30 z-50 overflow-hidden">
+          <div className="h-[calc(100vh-6rem)] flex flex-col bg-gray-50 max-w-4xl overflow-hidden sm:rounded-lg sm:mx-8 sm:my-12">
+            <div className="p-4 mb-4 bg-white border-b border-gray-200 flex justify-between items-center">
+              <h3 className="font-semibold text-lg text-gray-800">변경된 파일</h3>
+              <button
+                className="px-3 py-1 text-sm border border-gray-300 rounded"
+                disabled={true}
+              >
+                닫기
+              </button>
+            </div>
+            <MockChangedFiles/>
+          </div>
+        </div>
+      )}
+
       {/* Header */}
       <div className="absolute top-0 left-0 right-0 z-10 bg-white p-4 border-b border-gray-200 shadow-sm">
         <div className="flex flex-col gap-3">

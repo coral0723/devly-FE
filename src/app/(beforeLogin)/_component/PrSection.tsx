@@ -48,11 +48,13 @@ export default function PrSection() {
             <MockTopic/>
           </ScrollStackItem>
           <ScrollStackItem>
-            <MockPr/>
+            <MockPr onModal={false}/>
           </ScrollStackItem>
-          <ScrollStackItem>
-            <h1>세 번째 섹션</h1>
-          </ScrollStackItem>
+          <div className="lg:hidden">
+            <ScrollStackItem>
+              <MockPr onModal={true}/>
+            </ScrollStackItem>
+          </div>
         </ScrollStack>
       </div>
     </motion.section>
