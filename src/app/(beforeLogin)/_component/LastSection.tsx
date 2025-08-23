@@ -1,8 +1,9 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import ShinyText from "../_animations/ShynyText";
 import SplitText from "../_animations/SplitText";
+import { useRef } from "react";
 
 interface LastSectionProps {
   scrollContainerRef: React.RefObject<HTMLDivElement | null>;
@@ -10,6 +11,24 @@ interface LastSectionProps {
 
 
 export default function LastSection({ scrollContainerRef }: LastSectionProps) {
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  // 스크롤 위치 트래킹 (커스텀 컨테이너 + 해당 섹션)
+  const { scrollYProgress } = useScroll({
+    container: scrollContainerRef,
+    target: sectionRef,
+    offset: ["start 80%", "start 20%"], 
+    // start end: 섹션이 뷰포트에 들어오기 시작
+    // end start: 섹션이 뷰포트에서 완전히 사라질 때
+  });
+
+  // 색상 변환 (progress: 0 → 흰색, 1 → 초록색)
+  const backgroundColor = useTransform(
+    scrollYProgress,
+    [0, 1],
+    ["#fcf4e9ff", "#ffffffff"],
+    { clamp: false} //scrollYProgress가 1이 넘어가도 마지막 색 유지
+  );
 
   const handleScrollToTop = () => {
     if (scrollContainerRef.current) {
@@ -23,10 +42,8 @@ export default function LastSection({ scrollContainerRef }: LastSectionProps) {
   return (
     <motion.section
       className="h-screen w-full flex flex-col items-center justify-center snap-start px-6"
-      initial={{ backgroundColor: "#fcf4e9ff" }}
-      whileInView={{ backgroundColor: "#ffffff" }}
-      transition={{ duration: 2 }}
-      viewport={{ once: true, amount: 1 }}
+      ref={sectionRef}
+      style={{ backgroundColor }}
     >
       <div className="flex flex-col">
         <SplitText

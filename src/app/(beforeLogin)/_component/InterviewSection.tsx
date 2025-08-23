@@ -1,18 +1,39 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { motion, useScroll, useTransform } from "framer-motion"
 import ScrollStack, { ScrollStackItem } from "../_animations/ScrollStack"
 import MockTopic from "./interview/MockTopic"
 import MockChat from "./interview/MockChat"
+import { RefObject, useRef } from "react"
 
-export default function InterviewSection() {
+type Props = {
+  scrollContainerRef: RefObject<HTMLDivElement | null>;
+};
+
+export default function InterviewSection({ scrollContainerRef }: Props) {
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  // 스크롤 위치 트래킹 (커스텀 컨테이너 + 해당 섹션)
+  const { scrollYProgress } = useScroll({
+    container: scrollContainerRef,
+    target: sectionRef,
+    offset: ["start end", "end start"], 
+    // start end: 섹션이 뷰포트에 들어오기 시작
+    // end start: 섹션이 뷰포트에서 완전히 사라질 때
+  });
+
+  // 색상 변환 (progress: 0 → 흰색, 1 → 초록색)
+  const backgroundColor = useTransform(
+    scrollYProgress,
+    [0, 1],
+    ["#f4eefaff", "#fcf4e9ff"]
+  );
+  
   return (
     <motion.section
       className="h-screen w-full flex flex-col items-center justify-center snap-start px-6"
-      initial={{ backgroundColor: "#f4eefaff" }} // 시작 색
-      whileInView={{ backgroundColor: "#fcf4e9ff" }}
-      transition={{ duration: 2 }} // 전환 시간
-      viewport={{ once: true, amount: 1 }}
+      ref={sectionRef}
+      style={{ backgroundColor }}
     >
       {/* Header */}
       <div className="flex items-center gap-3 mb-4">

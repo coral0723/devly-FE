@@ -15,14 +15,14 @@ export default function LoginPage() {
   return (
     <div
       ref={scrollContainerRef}
-      className="h-screen w-full overflow-y-scroll snap-y snap-mandatory"
+      className="h-screen w-full overflow-y-scroll"
     >
       <FloatingIcons />
       <MainSection />
-      <WordSection />
-      <KnowledgeSection />
-      <PrSection />
-      <InterviewSection />
+      <WordSection scrollContainerRef={scrollContainerRef}/>
+      <KnowledgeSection scrollContainerRef={scrollContainerRef}/>
+      <PrSection scrollContainerRef={scrollContainerRef}/>
+      <InterviewSection scrollContainerRef={scrollContainerRef}/>
       <LastSection scrollContainerRef={scrollContainerRef} />
     </div>
   );
