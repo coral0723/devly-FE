@@ -9,6 +9,7 @@ import MainSection from "./_component/MainSection";
 import PrSection from "./_component/PrSection";
 import WordSection from "./_component/WordSection";
 import ProblemSection from "./_component/ProblemSection";
+import SolutionSection from "./_component/SolutionSection";
 
 export default function LoginPage() {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -21,6 +22,7 @@ export default function LoginPage() {
       <FloatingIcons />
       <MainSection />
       <ProblemSection/>
+      <SolutionSection/>
       <WordSection scrollContainerRef={scrollContainerRef}/>
       <KnowledgeSection scrollContainerRef={scrollContainerRef}/>
       <PrSection scrollContainerRef={scrollContainerRef}/>
