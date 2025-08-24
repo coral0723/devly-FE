@@ -27,7 +27,7 @@ export default function WordSection({ scrollContainerRef }: Props) {
   return (
     <section ref={sectionRef} className="relative w-full" style={{ height: sectionHeight }}>
       <div className="sticky top-0 h-screen bg-white flex items-center justify-center overflow-hidden">
-        <div className="w-full max-w-[1100px] px-6 md:px-10 grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="w-full max-w-[1100px] px-6 md:px-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           {/* 왼쪽 문구는 그대로 */}
           <div className="max-w-md text-center md:text-left">
             <h2 className="text-2xl md:text-4xl font-bold mb-2">버그 잡듯 영어 용어도 잡아보세요</h2>
@@ -35,7 +35,7 @@ export default function WordSection({ scrollContainerRef }: Props) {
           </div>
 
           {/* 오른쪽 트랙 */}
-          <div className="h-[70vh] overflow-y-hidden scrollbar-hide md:h-[80vh]">
+          <div className="h-[70vh] md:h-[80vh]">
             <ScrollMockTrack
               progress={scrollYProgress}
               slides={slides}
