@@ -61,7 +61,7 @@ export default function MockContextStep() {
         </div>
 
         {/* Bottom button */}
-        <div className="absolute bottom-0 left-0 right-0 p-2 bg-white border border-gray-200 z-10">
+        {/* <div className="absolute bottom-0 left-0 right-0 p-2 bg-white border border-gray-200 z-10">
           <div className='max-w-xl mx-auto'>
             <button
               className=" w-full py-1 bg-green-500 text-white rounded-xl text-sm font-medium md:text-lg md:py-2"
@@ -69,7 +69,7 @@ export default function MockContextStep() {
               다음
             </button>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   )
