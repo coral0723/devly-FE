@@ -19,6 +19,7 @@ export default function MockQuizStep() {
           <div className="flex items-center justify-between mb-2">
             <button
                 className="p-2 -ml-2 hover:bg-gray-100 rounded-full"
+                disabled={true}
             >
               <svg xmlns="http://www.w3.org/2000/svg" 
                 className="w-4 h-4 md:w-6 md:h-6"
@@ -84,7 +85,7 @@ export default function MockQuizStep() {
           </div>
         </div>
 
-        <div className="fixed bottom-0 left-0 right-0 bg-white p-2 border border-gray-200 z-10">
+        <div className="absolute bottom-0 left-0 right-0 bg-white p-2 border border-gray-200 z-10">
           <div className="max-w-xl mx-auto">
             <button
               className={`w-full py-3 text-white text-lg font-medium rounded-xl transition-all bg-gray-300 cursor-not-allowed`}

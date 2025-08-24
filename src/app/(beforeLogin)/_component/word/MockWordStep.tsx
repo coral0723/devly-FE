@@ -7,7 +7,8 @@ export default function MockWordStep() {
         <div className="px-4 py-2">
           <div className="flex items-center justify-between mb-2">
             <button
-                className="p-2 -ml-2 hover:bg-gray-100 rounded-full"
+                className="p-2 -ml-2 rounded-full"
+                disabled={true}
             >
               <svg xmlns="http://www.w3.org/2000/svg" 
                 className="w-4 h-4 md:w-6 md:h-6"
@@ -55,6 +56,7 @@ export default function MockWordStep() {
           <div className='max-w-xl mx-auto'>
             <button
               className=" w-full py-1 bg-green-500 text-white rounded-xl text-sm font-medium md:text-lg md:py-2"
+              disabled={true}
             >
               다음
             </button>

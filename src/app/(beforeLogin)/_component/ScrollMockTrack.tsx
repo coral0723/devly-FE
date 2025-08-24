@@ -60,7 +60,7 @@ export default function ScrollMockTrack({
   );
 
   return (
-    <div ref={wrapperRef} className={`relative w-full h-full ${className}`}>
+    <div ref={wrapperRef} className={`relative w-full h-full md:flex md:items-center ${className}`}>
       <motion.div
         className="absolute left-0 flex"
         style={{ x, gap }}
