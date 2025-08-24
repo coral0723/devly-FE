@@ -29,7 +29,7 @@ export default function MockKnowledgeStep() {
       </div>
 
       {/* Content */}
-        <div className="mt-20 space-y-4 md:mt-24 md:px-8">
+        <div className="pt-20 space-y-4 md:pt-24 md:px-8">
         {/* Topic Header with Progress */}
         <div className="bg-white rounded-xl p-6 shadow-sm mx-4 shadow-sm max-w-3xl sm:mx-6 md:mx-auto">
           <div className="flex items-center gap-4 mb-4">
