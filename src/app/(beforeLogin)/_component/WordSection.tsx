@@ -1,19 +1,29 @@
 "use client";
 
-import { RefObject, useRef } from "react";
-import { useScroll } from "framer-motion";
+import { RefObject, useRef, useEffect } from "react";
+import {
+  motion,
+  useInView,
+  useMotionValue,
+  useTransform,
+  useMotionTemplate,
+  animate,
+  useScroll,
+} from "framer-motion";
 import ScrollMockTrack from "./ScrollMockTrack";
 import MockWordStep from "./word/MockWordStep";
 import MockQuizStep from "./word/MockQuizStep";
 import MockContextStep from "./word/MockContextStep";
+import { BookOpen } from "lucide-react";
 
 type Props = { scrollContainerRef?: RefObject<HTMLDivElement | null> };
 
 export default function WordSection({ scrollContainerRef }: Props) {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const stickyRef = useRef<HTMLDivElement>(null); // ← sticky 영역을 관찰
   const slides = [<MockWordStep key="a" />, <MockContextStep key="b" />, <MockQuizStep key="c" />];
 
-  const releaseVH = 40; // ← 마지막 공백을 40vh로 축소 (원하면 30~50 사이로 조절)
+  const releaseVH = 40;
   const releaseUnits = releaseVH / 100;
 
   const { scrollYProgress } = useScroll({
@@ -22,48 +32,87 @@ export default function WordSection({ scrollContainerRef }: Props) {
     offset: ["start start", "end start"],
   });
 
+  // 0 → 1 (애니메이션으로 제어)
+  const t = useMotionValue(0);
+  // white/90 → emerald-100/90
+  const leftColor = useTransform(
+    t,
+    [0, 1],
+    ["rgba(255,255,255,0.9)", "rgba(209,250,229,0.9)"]
+  );
+
+  // gradient 문자열에 MotionValue를 “실시간”으로 바인딩
+  const leftBg = useMotionTemplate`
+    linear-gradient(
+      to right,
+      ${leftColor} 0%,
+      ${leftColor} 70%,
+      rgba(0,0,0,0) 100%
+    )
+  `;
+
+  // sticky가 뷰포트를 정확히 채운 순간(즉시 100% 가시) 감지
+  const isStickyFull = useInView(stickyRef, { amount: 1 });
+
+  useEffect(() => {
+    // 들어올 때 1초 동안 천천히 → emerald-100
+    // 벗어날 땐 살짝 줄이며 원복
+    if (isStickyFull) {
+      animate(t, 1, { duration: 1 });
+    } else {
+      animate(t, 0, { duration: 0.2 });
+    }
+  }, [isStickyFull, t]);
+
   const sectionHeight = `calc(${slides.length} * 100vh + ${releaseVH}vh)`;
 
   return (
     <section ref={sectionRef} className="relative w-full" style={{ height: sectionHeight }}>
-      <div className="sticky top-0 h-screen bg-white flex items-center justify-center overflow-hidden">
-        {/* 그리드 컨테이너를 상대 위치로 */}
-        <div className="relative w-full h-full grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-          
-          {/* ⬇️ 왼쪽 반쪽을 덮는 스크림 오버레이 (md 이상에서만) */}
-          <div
-            className="
-              pointer-events-none
-              absolute left-0 top-0 h-full w-2/3
-              hidden md:block
-              z-10
-              bg-gradient-to-r from-white/90 via-white/90 to-transparent
-            "
+      <div
+        ref={stickyRef}
+        className="sticky top-0 h-dvh md:h-screen bg-white flex items-center justify-center overflow-hidden"
+      >
+        <div className="relative w-full h-full grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch px-6 lg:px-16">
+          {/* 좌측 스크림 */}
+          <motion.div
+            style={{ background: leftBg }}
+            className="pointer-events-none absolute left-0 top-0 h-full w-2/3 hidden md:block z-10"
           />
-  
-          {/* 왼쪽 문구: 오버레이보다 위로 올리기 */}
-          <div className="w-full h-full flex items-center md:z-20">
-            <div className="max-w-xl text-center md:text-left">
-              <h2 className="text-2xl md:text-4xl font-bold mb-2">버그 잡듯 영어 용어도 잡아보세요</h2>
-              <p className="text-gray-600 md:text-lg">스펠링·발음·예문·퀴즈까지 한 번에.</p>
+
+          {/* 왼쪽: 아이콘 + 제목 + 문구 */}
+          <div className="w-full h-full md:z-20 flex justify-start items-start">
+            <div className="max-w-xl md:pl-8 lg:pl-16 pt-10 md:pt-16 lg:pt-24 mx-auto md:mx-0 flex flex-col items-center md:items-start text-center md:text-left">
+              <div className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-36 lg:h-36 rounded-full bg-emerald-100 border-4 border-emerald-500 flex items-center justify-center mb-5 sm:mb-6">
+                <BookOpen className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 text-emerald-500" />
+              </div>
+
+              <h2 className="font-extrabold tracking-tight text-3xl sm:text-5xl md:text-6xl lg:text-7xl">
+                <span className="block">버그 잡듯</span>
+                <span className="block mt-2 sm:mt-3 md:mt-4 lg:mt-5">영어 용어도</span>
+                <span className="block mt-2 sm:mt-3 md:mt-4 lg:mt-5">잡아보세요</span>
+              </h2>
+
+              <p className="mt-4 text-gray-700 text-base sm:text-lg md:text-xl lg:text-2xl">
+                스펠링·발음·예문·퀴즈까지 한 번에.
+              </p>
             </div>
           </div>
-  
-          {/* 오른쪽 트랙: 기본 z-index (오버레이 아래) */}
+
+          {/* 오른쪽: mock 트랙 */}
           <div className="h-[70vh] md:h-[100vh]">
             <ScrollMockTrack
               progress={scrollYProgress}
               slides={slides}
               phoneWidth={330}
               phoneHeight={600}
-              gap={24}
-              edgeStart={32}
-              edgeEnd={8}
+              gap={128}
+              edgeStart={256}
+              edgeEnd={1024}
               releaseUnits={releaseUnits}
             />
           </div>
         </div>
       </div>
     </section>
-  );  
+  );
 }
