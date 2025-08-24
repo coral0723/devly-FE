@@ -12,7 +12,7 @@ import {
 } from "framer-motion";
 import ScrollMockTrack from "./ScrollMockTrack";
 import MockQuizStep from "./knowledge/MockQuizStep";
-import { BookOpen, Lightbulb } from "lucide-react";
+import { Lightbulb } from "lucide-react";
 import MockExampleStep from "./knowledge/MockExampleStep";
 import MockKnowledgeStep from "./knowledge/MockKnowledgeStep";
 
