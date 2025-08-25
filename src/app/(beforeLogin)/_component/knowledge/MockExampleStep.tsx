@@ -33,11 +33,11 @@ export default function MockExampleStep() {
       </div>
 
       {/* Content */}
-        <div className="pt-20 space-y-4 md:pt-24 md:px-8">
+        <div className="pt-20 space-y-4 px-4">
         {/* Topic Header with Progress */}
         <div className="bg-white rounded-xl p-6 shadow-sm mx-4 shadow-sm max-w-3xl sm:mx-6 md:mx-auto">
           <div className="flex items-center gap-4 mb-4">
-            <h1 className="text-lg font-bold flex-1 md:text-2xl">스레드의 기본 개념</h1>
+            <h1 className="text-lg font-bold flex-1">스레드의 기본 개념</h1>
           </div>
           
           {/* Navigation Tabs */}
@@ -51,7 +51,7 @@ export default function MockExampleStep() {
               >
                 <svg 
                   xmlns="http://www.w3.org/2000/svg" 
-                  className="w-4 h-4 md:w-5 md:h-5"
+                  className="w-4 h-4"
                   viewBox="0 0 24 24" 
                   fill="none" 
                   stroke="currentColor" 
@@ -73,7 +73,7 @@ export default function MockExampleStep() {
               >
                 <svg 
                   xmlns="http://www.w3.org/2000/svg" 
-                  className="w-4 h-4 md:w-5 md:h-5"
+                  className="w-4 h-4"
                   viewBox="0 0 24 24" 
                   fill="none" 
                   stroke="currentColor" 
@@ -85,7 +85,7 @@ export default function MockExampleStep() {
                   <path d="m5 12-3 3 3 3"/>
                   <path d="m9 18 3-3-3-3"/>
                 </svg>
-                <span>예시 코드</span>
+                <span>코드</span>
               </button>
             </div>
             <div
@@ -96,7 +96,7 @@ export default function MockExampleStep() {
               >
                 <svg 
                   xmlns="http://www.w3.org/2000/svg" 
-                  className="w-4 h-4 md:w-5 md:h-5"
+                  className="w-4 h-4"
                   viewBox="0 0 24 24" 
                   fill="none" 
                   stroke="currentColor" 
@@ -106,7 +106,7 @@ export default function MockExampleStep() {
                   <path d="M12 7v14"/>
                   <path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/>
                 </svg>
-                <span>실습 문제</span>
+                <span>문제</span>
               </button>
             </div>
           </div>
@@ -120,7 +120,7 @@ export default function MockExampleStep() {
                   <Code size={16} className="text-gray-400" />
                 </div>
               </div>
-              <pre className="overflow-x-auto text-xs md:text-base">
+              <pre className="overflow-x-hidden text-xs">
                 <code>{code}</code>
               </pre>
             </div>

@@ -29,11 +29,11 @@ export default function MockKnowledgeStep() {
       </div>
 
       {/* Content */}
-        <div className="pt-20 space-y-4 md:pt-24 md:px-8">
+        <div className="pt-20 space-y-4 px-4">
         {/* Topic Header with Progress */}
         <div className="bg-white rounded-xl p-6 shadow-sm mx-4 shadow-sm max-w-3xl sm:mx-6 md:mx-auto">
           <div className="flex items-center gap-4 mb-4">
-            <h1 className="text-lg font-bold flex-1 md:text-2xl">스레드의 기본 개념</h1>
+            <h1 className="text-lg font-bold flex-1">스레드의 기본 개념</h1>
           </div>
           
           {/* Navigation Tabs */}
@@ -42,12 +42,12 @@ export default function MockKnowledgeStep() {
               className={`flex-1 flex justify-center rounded-t-lg bg-blue-50 border-b-2 border-blue-500`}
             >
               <button
-                className={`flex items-center px-1 py-2 space-x-2 text-xs font-medium transition-colors text-blue-600 md:px-2 md:py-3 md:text-sm`}
+                className={`flex items-center py-2 space-x-2 text-xs font-medium transition-colors text-blue-600 md:px-2 md:py-3 md:text-sm`}
                 disabled={true}
               >
                 <svg 
                   xmlns="http://www.w3.org/2000/svg" 
-                  className="w-4 h-4 md:w-5 md:h-5"
+                  className="w-4 h-4"
                   viewBox="0 0 24 24" 
                   fill="none" 
                   stroke="currentColor" 
@@ -69,7 +69,7 @@ export default function MockKnowledgeStep() {
               >
                 <svg 
                   xmlns="http://www.w3.org/2000/svg" 
-                  className="w-4 h-4 md:w-5 md:h-5"
+                  className="w-4 h-4"
                   viewBox="0 0 24 24" 
                   fill="none" 
                   stroke="currentColor" 
@@ -81,7 +81,7 @@ export default function MockKnowledgeStep() {
                   <path d="m5 12-3 3 3 3"/>
                   <path d="m9 18 3-3-3-3"/>
                 </svg>
-                <span>예시 코드</span>
+                <span>코드</span>
               </button>
             </div>
             <div
@@ -92,7 +92,7 @@ export default function MockKnowledgeStep() {
               >
                 <svg 
                   xmlns="http://www.w3.org/2000/svg" 
-                  className="w-4 h-4 md:w-5 md:h-5"
+                  className="w-4 h-4"
                   viewBox="0 0 24 24" 
                   fill="none" 
                   stroke="currentColor" 
@@ -102,7 +102,7 @@ export default function MockKnowledgeStep() {
                   <path d="M12 7v14"/>
                   <path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/>
                 </svg>
-                <span>실습 문제</span>
+                <span>문제</span>
               </button>
             </div>
           </div>
@@ -110,7 +110,7 @@ export default function MockKnowledgeStep() {
           {/* Content Based on Active Tab */}
           <div className="mt-4">
             <div className="prose max-w-none">
-              <p className="text-gray-600 leading-relaxed md:text-lg">
+              <p className="text-gray-600 leading-relaxed text-xs md:text-base">
                 스레드는 프로세스 내에서 실행되는 가장 작은 실행 단위입니다.<br/>
                 하나의 프로세스는 여러 개의 스레드를 가질 수 있으며,<br/> 
                 각 스레드는 같은 프로세스의 메모리를 공유합니다.<br/>
