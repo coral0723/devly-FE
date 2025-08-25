@@ -21,7 +21,7 @@ export default function LoginPage() {
     >
       <FloatingIcons />
       <MainSection />
-      <ProblemSection/>
+      <ProblemSection scrollContainerRef={scrollContainerRef}/>
       <SolutionSection/>
       <WordSection scrollContainerRef={scrollContainerRef}/>
       <KnowledgeSection scrollContainerRef={scrollContainerRef}/>
