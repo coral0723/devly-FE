@@ -1,17 +1,17 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import ShinyText from "../_animations/ShynyText";
 import SplitText from "../_animations/SplitText";
-import { useRef } from "react";
+import { RefObject, useEffect, useRef, useState } from "react";
 
-interface LastSectionProps {
-  scrollContainerRef: React.RefObject<HTMLDivElement | null>;
+type Props = {
+  scrollContainerRef: RefObject<Element | null>;
 }
 
-
-export default function LastSection({ scrollContainerRef }: LastSectionProps) {
-  const sectionRef = useRef<HTMLDivElement>(null);
+export default function LastSection({ scrollContainerRef }: Props) {
+  const sectionRef = useRef<HTMLElement>(null);
+  const [started, setStarted] = useState(false);      // 애니메이션 시작
 
   const handleScrollToTop = () => {
     if (scrollContainerRef.current) {
@@ -22,6 +22,18 @@ export default function LastSection({ scrollContainerRef }: LastSectionProps) {
     }
   };
 
+  const fullyInView = useInView(sectionRef, {
+    root: scrollContainerRef,
+    amount: 0.9,
+    margin: "0px",
+    once: true,
+  });
+
+  useEffect(() => {
+    if (fullyInView) 
+      setStarted(true);
+  }, [fullyInView]);
+
   return (
     <motion.section
       className="h-screen w-full flex flex-col items-center justify-center snap-start px-6"
@@ -31,28 +43,24 @@ export default function LastSection({ scrollContainerRef }: LastSectionProps) {
         <SplitText
           text="하루 한 걸음,"
           className="text-xl font-bold mb-0 sm:text-3xl sm:mb-3 lg:mb-6 lg:text-5xl"
-          delay={100}
-          duration={0.6}
+          trigger="manual"
+          in={started}
+          delay={45}
+          duration={0.5}
           ease="power3.out"
-          splitType="chars"
-          from={{ opacity: 0, y: 40 }}
+          from={{ opacity: 0, y: 36 }}
           to={{ opacity: 1, y: 0 }}
-          threshold={0.1}
-          rootMargin="-100px"
-          textAlign="center"
         />
         <SplitText
           text="지금 학습의 첫 걸음을 내딛어보세요."
           className="text-xl font-bold mb-0 sm:text-3xl sm:mb-3 lg:mb-6 lg:text-5xl"
-          delay={100}
-          duration={0.6}
+          trigger="manual"
+          in={started}
+          delay={45}
+          duration={0.5}
           ease="power3.out"
-          splitType="chars"
-          from={{ opacity: 0, y: 40 }}
+          from={{ opacity: 0, y: 36 }}
           to={{ opacity: 1, y: 0 }}
-          threshold={0.1}
-          rootMargin="-100px"
-          textAlign="center"
         />
       </div>
       <button
