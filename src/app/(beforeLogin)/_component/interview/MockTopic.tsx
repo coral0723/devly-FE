@@ -34,8 +34,8 @@ export default function MockTopic() {
       {/* Content - add top padding to account for header height */}
       <div className="max-w-xl mx-auto p-4 space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="font-medium text-gray-900 text-xs md:text-base">추천 주제</h2>
-          <div className="text-orange-600 text-xs md:text-base">
+          <h2 className="font-medium text-gray-900 text-xs md:text-sm">추천 주제</h2>
+          <div className="text-orange-600 text-xs md:text-sm">
             매일 새로운 주제가 업데이트됩니다
           </div>
         </div>
