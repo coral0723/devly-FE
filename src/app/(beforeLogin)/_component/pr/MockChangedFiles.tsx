@@ -16,10 +16,10 @@ export default function MockChangedFiles() {
             <tbody>
               {content.split('\n').map((line, i) => (
                 <tr key={i}>
-                  <td className="select-none w-12 pl-4 pr-2 text-right text-gray-400 border-r border-gray-100">
+                  <td className="select-none w-12 pl-4 pr-2 text-right text-gray-400 border-r border-gray-100 text-xs md:text-sm">
                     {i + 1}
                   </td>
-                  <td className="px-2 font-mono whitespace-pre">
+                  <td className="px-2 font-mono whitespace-pre text-xs md:text-sm">
                     {colorizeCode(line, "Javascript")}
                   </td>
                 </tr>

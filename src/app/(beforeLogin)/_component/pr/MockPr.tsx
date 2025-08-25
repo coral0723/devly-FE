@@ -12,7 +12,7 @@ export default function MockPr({ onModal }: Props) {
       {/* Modal */}
       {onModal && (
         <div className="absolute inset-0 bg-black bg-opacity-30 z-20 overflow-hidden">
-          <div className="h-[calc(100vh-6rem)] flex flex-col bg-gray-50 max-w-4xl overflow-hidden sm:rounded-lg sm:mx-8 sm:my-12">
+          <div className="h-[calc(100vh-6rem)] flex flex-col bg-gray-50 max-w-4xl overflow-hidden sm:rounded-lg">
             <div className="p-4 mb-4 bg-white border-b border-gray-200 flex justify-between items-center">
               <h3 className="font-semibold text-lg text-gray-800">변경된 파일</h3>
               <button
@@ -70,14 +70,14 @@ export default function MockPr({ onModal }: Props) {
               </button>
             </div>
           </div>
-          <h1 className="text-base font-semibold text-gray-900 md:text-lg">
+          <h1 className="text-base font-semibold text-gray-900">
             Refactor login flow to improve readability and error handling
           </h1>
         </div>
       </div>
 
       {/* Content */}
-      <div className="p-4 overflow-y-hidden scrollbar-hide mt-36">
+      <div className="p-4 overflow-y-hidden scrollbar-hide mt-32">
         <div className="space-y-4 mx-auto max-w-xl lg:max-w-none lg:mx-0">
           <div className="bg-white p-4 rounded-lg border border-gray-200 px-4">
             <h3 className="font-medium mb-2">PR 설명 작성</h3>

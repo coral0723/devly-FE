@@ -9,8 +9,7 @@ export default function MockTopic() {
       labels: [
         "refactor",
         "login",
-        "frontend",
-        "improvement"
+        "frontend"
       ]
     },
     {
@@ -20,8 +19,7 @@ export default function MockTopic() {
       labels: [
         "performance",
         "image",
-        "frontend",
-        "optimization"
+        "frontend"
       ]
     },
     {
@@ -31,8 +29,7 @@ export default function MockTopic() {
       labels: [
         "test",
         "authentication",
-        "backend",
-        "quality"
+        "backend"
       ]
     }
   ];
@@ -42,8 +39,8 @@ export default function MockTopic() {
       {/* Header */}
       <div className="bg-white p-4 border-b border-gray-200">
         <div className="max-w-xl mx-auto">
-          <h1 className="text-base font-semibold text-gray-900 md:text-xl">모의 PR</h1>
-          <p className="text-xs text-gray-500 mt-1 md:text-sm">
+          <h1 className="text-base font-semibold text-gray-900 md:text-lg">모의 PR</h1>
+          <p className="text-xs text-gray-500 mt-1">
             실제 상황에서 발생할 수 있는 PR을 연습해보세요
           </p>
         </div>
