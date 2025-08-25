@@ -22,7 +22,7 @@ export default function LoginPage() {
       <FloatingIcons />
       <MainSection />
       <ProblemSection scrollContainerRef={scrollContainerRef}/>
-      <SolutionSection/>
+      <SolutionSection scrollContainerRef={scrollContainerRef}/>
       <WordSection scrollContainerRef={scrollContainerRef}/>
       <KnowledgeSection scrollContainerRef={scrollContainerRef}/>
       <PrSection scrollContainerRef={scrollContainerRef}/>
