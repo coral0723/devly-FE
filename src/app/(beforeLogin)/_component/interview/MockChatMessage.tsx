@@ -16,8 +16,8 @@ export default function MockChatMessages({ chat }: Props) {
       }`}
     >
       {chat.role === 'ai' && (
-        <div className="bg-orange-100 rounded-full p-2 mr-2 border-2 border-orange-400">
-          <Bot size={24} className="text-orange-400"/>
+        <div className="bg-orange-100 rounded-full shrink-0 p-1 md:p-2 mr-2 border-2 border-orange-400">
+          <Bot className="text-orange-400 w-4 h-4 md:w-5 md:h-5"/>
         </div>
       )}
       <div 
@@ -27,7 +27,7 @@ export default function MockChatMessages({ chat }: Props) {
             : 'bg-white rounded-b-xl rounded-tl-xl'
         }`}
       >
-        <div className="whitespace-pre-wrap break-words text-sm">
+        <div className="whitespace-pre-wrap break-words text-xs md:text-sm">
           {chat.content}
         </div>
       </div>

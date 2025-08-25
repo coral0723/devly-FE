@@ -13,8 +13,8 @@ export default function MockInterviewCard({ interview }: Props) {
     >
       <div className="flex items-start justify-between">
         <div>
-          <h3 className="font-medium text-gray-900">{interview.title}</h3>
-          <p className="text-sm text-gray-500 mt-1">{interview.description}</p>
+          <h3 className="font-medium text-gray-900 text-sm md:text-base">{interview.title}</h3>
+          <p className="text-xs text-gray-500 mt-1 md:text-sm">{interview.description}</p>
         </div>
         <ChevronRight className="text-gray-400" />
       </div>
