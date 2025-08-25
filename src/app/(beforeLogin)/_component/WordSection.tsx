@@ -77,7 +77,7 @@ export default function WordSection({ scrollContainerRef }: Props) {
 
   const sectionHeight = `calc(${slides.length} * 100vh + ${releaseVH}vh)`;
 
-  // ✅ 모바일 분기: phoneWidth/Height 조절
+  // 모바일 분기: phoneWidth/Height/edgeStart 조절
   const phoneWidth = isMobile ? 280 : 330;
   const phoneHeight = isMobile ? 500 : 600;
   const edgeStart = isMobile ? 16 : 256;
@@ -106,7 +106,7 @@ export default function WordSection({ scrollContainerRef }: Props) {
             <div className="max-w-xl mx-auto flex flex-col items-center text-center pt-8 md:pl-8 lg:pl-16 md:pt-16 lg:pt-24 md:mx-0 md:items-start md:text-left">
               <div className="flex flex-col gap-1 w-full">
                 <div className="flex justify-center md:justify-start md:flex-col gap-3">
-                  <div className="w-8 h-8 md:w-32 md:h-32 lg:w-36 lg:h-36 rounded-full bg-emerald-100 border-2 md:border-4 border-emerald-500 flex items-center justify-center">
+                  <div className="w-8 h-8 md:w-32 md:h-32 lg:w-36 lg:h-36 rounded-full bg-emerald-100 border-2 md:border-4 border-emerald-500 flex items-center justify-center md:mb-5">
                     <BookOpen className="w-4 h-4 md:w-16 md:h-16 lg:w-20 lg:h-20 text-emerald-500" />
                   </div>
 
@@ -119,8 +119,8 @@ export default function WordSection({ scrollContainerRef }: Props) {
 
                     {/* 태블릿, 데스크탑: 세 줄 */}
                     <span className="hidden md:block">
-                      <span className="block">버그 잡듯</span>
-                      <span className="block">영어 용어도</span>
+                      <span className="block md:mb-4">버그 잡듯</span>
+                      <span className="block md:mb-4">영어 용어도</span>
                       <span className="block">잡아보세요</span>
                     </span>
 
@@ -128,7 +128,7 @@ export default function WordSection({ scrollContainerRef }: Props) {
                 </div>
 
                 {/* 두 번째 줄: 설명 */}
-                <p className="mt-1 text-gray-700 text-base sm:text-lg md:text-xl lg:text-2xl text-center md:text-left">
+                <p className="mt-1 text-gray-700 text-base sm:text-lg md:text-xl lg:text-2xl text-center md:text-left md:mt-5">
                   스펠링·발음·예문·퀴즈까지 한 번에.
                 </p>
               </div>
