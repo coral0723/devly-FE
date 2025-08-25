@@ -33,7 +33,7 @@ export default function MockExampleStep() {
       </div>
 
       {/* Content */}
-        <div className="pt-20 space-y-4 px-4">
+        <div className="pt-20 space-y-4 px-1 md:px-4">
         {/* Topic Header with Progress */}
         <div className="bg-white rounded-xl p-6 shadow-sm mx-4 shadow-sm max-w-3xl sm:mx-6 md:mx-auto">
           <div className="flex items-center gap-4 mb-4">

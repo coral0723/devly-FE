@@ -49,8 +49,8 @@ export default function MockTopic() {
       {/* Content - add top padding to account for header height */}
       <div className="max-w-xl mx-auto p-4 space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="font-medium text-gray-900">추천 PR</h2>
-          <div className="text-sm text-purple-600">
+          <h2 className="font-medium text-gray-900 text-xs md:text-base">추천 PR</h2>
+          <div className="text-xs text-purple-600 md:text-sm">
             매일 새로운 PR이 업데이트됩니다
           </div>
         </div>
