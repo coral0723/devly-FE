@@ -46,14 +46,24 @@ export default function ScrollMockTrack({
 
   const n = slides.length;
 
-  // ✅ 전환 (n-1) + 해제(releaseUnits) 만큼만 진행도로 쓴다
-  const totalUnits = (n - 1) + releaseUnits;
-  const raw = useTransform(progress, v => v * totalUnits);
-  const clampedIndex = useTransform(raw, v => Math.min(Math.max(v, 0), n - 1));
-
+  // 카드 한 칸(=step) 계산
   const slideW = Math.min(phoneWidth, wrapW * 0.9);
   const step = slideW + gap;
 
+  // ✅ edgeEnd를 step으로 나눠 "추가로 더 밀 수 있는 인덱스 비율" 계산
+  const tail = edgeEnd > 0 ? edgeEnd / step : 0;
+
+  // ✅ 전환 (n-1) + tail + 해제(releaseUnits)
+  const totalUnits = (n - 1 + tail) + releaseUnits;
+
+  // 0~1 progress → 0~totalUnits
+  const raw = useTransform(progress, v => v * totalUnits);
+
+  // ✅ 상한을 (n - 1 + tail) 로 설정해야 edgeEnd까지 미는 스크롤이 가능
+  const maxIndex = n - 1 + tail;
+  const clampedIndex = useTransform(raw, v => Math.min(Math.max(v, 0), maxIndex));
+
+  // x 이동은 동일
   const x = useSpring(
     useTransform(clampedIndex, idx => -idx * step),
     { damping: 32, stiffness: 200, mass: 0.4 }
