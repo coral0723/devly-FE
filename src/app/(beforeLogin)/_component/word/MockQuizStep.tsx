@@ -44,20 +44,20 @@ export default function MockQuizStep() {
       {/* Content */}
       <div className="mt-20 px-4 space-y-4 md:mt-24 md:px-8">
         <div className="bg-white rounded-xl p-6 shadow-sm max-w-3xl sm:mx-6 md:mx-auto">
-          <div className="flex items-center gap-2 mb-4 text-gray-500 text-xs">
+          <div className="flex items-center gap-2 mb-4 text-gray-500 text-[8px] md:text-xs">
               <svg xmlns="http://www.w3.org/2000/svg" 
-                className="w-4 h-4 flex-shrink-0"
+                className="w-3 h-3 md:w-4 md:h-4 flex-shrink-0"
                 viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M12 7v14"/>
                 <path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/>
               </svg>
               <span>출처: Object-Oriented Programming Guide</span>
           </div>
-          <div className="text-sm mb-1 font-mono md:text-base">
+          <div className="text-xs mb-1 font-mono md:text-base">
             {text.split(/(Encapsulation)/i).map((part, i) => (
               <Fragment key={i}>
                 {part.toLowerCase() === "Encapsulation".toLowerCase() ? (
-                  <div className="inline-block border-2 border-gray p-1">
+                  <div className="inline-block border-2 border-gray md:p-1">
                     <span className="font-bold text-blue-600">
                       <span className="opacity-0">{part}</span>
                     </span>
@@ -76,10 +76,10 @@ export default function MockQuizStep() {
                 className={`w-full flex items-center gap-4 p-3 text-left border rounded-lg transition-all`}
                 disabled={true}
               >
-                <div className={`w-6 h-6 flex items-center justify-center rounded-full border-2 flex-shrink-0`}>
-                  <span className="text-gray-500 text-sm">{idx + 1}</span>
+                <div className={`w-5 h-5 md:w-6 md:h-6 flex items-center justify-center rounded-full border-2 flex-shrink-0`}>
+                  <span className="text-gray-500 text-xs md:text-sm">{idx + 1}</span>
                 </div>
-                <span className="text-sm md:text-base">{distractor}</span>
+                <span className="text-xs md:text-base">{distractor}</span>
               </button>
             ))}
           </div>

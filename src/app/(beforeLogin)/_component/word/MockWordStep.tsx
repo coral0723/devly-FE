@@ -33,14 +33,14 @@ export default function MockWordStep() {
       {/* Content - add top padding to account for header height */}
       <div className="pt-20 space-y-8 md:pt-28">
         <div className="text-center">
-          <h1 className="text-lg font-bold mb-2 md:text-2xl">Encapsulation</h1>
-          <p className="text-sm text-gray-500 md:text-base">/ɛnˌkæpsjʊˈleɪʃən/</p>
+          <h1 className="text-sm font-bold mb-2 md:text-2xl">Encapsulation</h1>
+          <p className="text-xs text-gray-500 md:text-base">/ɛnˌkæpsjʊˈleɪʃən/</p>
           <button
-            className="mx-auto mt-4 w-12 h-12 md:w-18 md:h-18 flex items-center justify-center rounded-full transition-all duration-200 bg-gray-100 disabled:opacity-50"
+            className="mx-auto mt-4 w-8 h-8 md:w-18 md:h-18 flex items-center justify-center rounded-full transition-all duration-200 bg-gray-100 disabled:opacity-50"
             disabled
           >
             <svg xmlns="http://www.w3.org/2000/svg" 
-              className="w-4 h-4 md:w-6 md:h-6 flex-shrink-0"
+              className="w-3 h-3 md:w-6 md:h-6 flex-shrink-0"
               viewBox="0 0 24 24" 
               fill="none" stroke="#6B7280" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z"/>
@@ -49,7 +49,7 @@ export default function MockWordStep() {
             </svg>
           </button>
         </div>
-        <div className="text-center text-sm text-gray-600 md:text-base">
+        <div className="text-center text-xs text-gray-600 md:text-base">
           캡슐화
         </div>
         <div className="absolute bottom-0 left-0 right-0 p-2 bg-white border border-gray-200 z-10">
