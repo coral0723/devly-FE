@@ -10,12 +10,14 @@ import {
   animate,
   useScroll,
 } from "framer-motion";
-import ScrollMockTrack from "./ScrollMockTrack";
 import MockWordStep from "./word/MockWordStep";
 import MockQuizStep from "./word/MockQuizStep";
 import MockContextStep from "./word/MockContextStep";
 import { BookOpen } from "lucide-react";
 import { useMediaQuery } from "../_hook/UseMediaQuery";
+import dynamic from "next/dynamic";
+const ScrollMockTrack = dynamic(() => import("./ScrollMockTrack"), { ssr: false }); //마운트 후 화면 크기 측정으로 첫 렌더 고정
+
 
 type Props = { scrollContainerRef?: RefObject<HTMLDivElement | null> };
 
@@ -142,8 +144,8 @@ export default function WordSection({ scrollContainerRef }: Props) {
             <ScrollMockTrack
               progress={scrollYProgress}
               slides={slides}
-              phoneWidth={phoneW}     // ✅ 모바일 280, 데스크탑 330
-              phoneHeight={phoneH}   // ✅ 모바일 500, 데스크탑 600
+              phoneWidth={phoneW}
+              phoneHeight={phoneH} 
               gap={128}
               edgeStart={edgeStart}
               edgeEnd={336}

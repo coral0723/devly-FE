@@ -46,28 +46,27 @@ export default function ScrollMockTrack({
 
   const n = slides.length;
 
-  // 카드 한 칸(=step) 계산
-  const slideW = Math.min(phoneWidth, wrapW * 0.9);
-  const step = slideW + gap;
+  // 1) 가시 카드 폭(렌더와 동일한 값)을 한 번만 계산
+  const cardW = Math.min(phoneWidth, wrapW * 0.9) || phoneWidth;
+  const step = cardW + gap;
 
-  // ✅ edgeEnd를 step으로 나눠 "추가로 더 밀 수 있는 인덱스 비율" 계산
-  const tail = edgeEnd > 0 ? edgeEnd / step : 0;
+  // 2) 트랙 전체 너비와 뷰포트 너비로 최대 이동량(px) 산출
+  const contentW = edgeStart + n * cardW + (n - 1) * gap + edgeEnd;
+  const viewportW = wrapW || cardW;
+  const maxTranslate = Math.max(0, contentW - viewportW);
 
-  // ✅ 전환 (n-1) + tail + 해제(releaseUnits)
-  const totalUnits = (n - 1 + tail) + releaseUnits;
+  // 3) tail을 도달하기 위한 progress 임계값(== 마지막 카드까지 가는 데 필요한 비율)
+  const tail = edgeEnd / step;                 // 기존과 동일
+  const needUnits = (n - 1) + tail + releaseUnits;
+  const threshold = ((n - 1) + 0 /* 마지막 카드 직전 */) / needUnits;
 
-  // 0~1 progress → 0~totalUnits
-  const raw = useTransform(progress, v => v * totalUnits);
+  // 4) progress를 임계값 기준으로 0~1로 재매핑 → 항상 tail까지 도달
+  const drive = useTransform(progress, (v) => Math.min(1, v / Math.max(threshold, 1e-6)));
 
-  // ✅ 상한을 (n - 1 + tail) 로 설정해야 edgeEnd까지 미는 스크롤이 가능
-  const maxIndex = n - 1 + tail;
-  const clampedIndex = useTransform(raw, v => Math.min(Math.max(v, 0), maxIndex));
-
-  // x 이동은 동일
-  const x = useSpring(
-    useTransform(clampedIndex, idx => -idx * step),
-    { damping: 32, stiffness: 200, mass: 0.4 }
-  );
+  // 5) 최종 x는 최대 이동량을 선형으로 사용
+  const x = useSpring(useTransform(drive, (t) => -t * maxTranslate), {
+    damping: 32, stiffness: 200, mass: 0.4
+  });
 
   return (
     <div ref={wrapperRef} className={`relative w-full h-full md:flex md:items-center ${className}`}>
@@ -82,7 +81,7 @@ export default function ScrollMockTrack({
           <div
             key={i}
             className="shrink-0 rounded-[28px] bg-white border border-gray-100 shadow-[0_10px_40px_rgba(0,0,0,0.12)] overflow-hidden"
-            style={{ width: slideW || phoneWidth, height: phoneHeight }}
+            style={{ width: cardW || phoneWidth, height: phoneHeight }}
           >
             {slide}
           </div>

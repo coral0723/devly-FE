@@ -10,11 +10,12 @@ import {
   animate,
   useScroll,
 } from "framer-motion";
-import ScrollMockTrack from "./ScrollMockTrack";
 import { GitPullRequest } from "lucide-react";
 import { useMediaQuery } from "../_hook/UseMediaQuery";
 import MockTopic from "./pr/MockTopic";
 import MockPr from "./pr/MockPr";
+import dynamic from "next/dynamic";
+const ScrollMockTrack = dynamic(() => import("./ScrollMockTrack"), { ssr: false }); //마운트 후 화면 크기 측정으로 첫 렌더 고정
 
 type Props = { scrollContainerRef?: RefObject<HTMLDivElement | null> };
 
@@ -77,8 +78,10 @@ export default function PrSection({ scrollContainerRef }: Props) {
   const sectionHeight = `calc(${slides.length} * 100vh + ${releaseVH}vh)`;
 
   // 모바일 분기: phoneWidth/Height/edgeStart 조절
-  const phoneWidth = isMobile ? 280 : 330;
-  const phoneHeight = isMobile ? 500 : 600;
+  const RATIO = 600 / 330; // 기존 비율
+  const vw = typeof window !== 'undefined' ? window.innerWidth : 390;
+  const phoneW = Math.round(Math.min(330, Math.max(220, vw * 0.62)));
+  const phoneH = Math.round(phoneW * RATIO);
   const edgeStart = isMobile ? 16 : 256;
 
   return (
@@ -138,8 +141,8 @@ export default function PrSection({ scrollContainerRef }: Props) {
             <ScrollMockTrack
               progress={scrollYProgress}
               slides={slides}
-              phoneWidth={phoneWidth}     // ✅ 모바일 280, 데스크탑 330
-              phoneHeight={phoneHeight}   // ✅ 모바일 500, 데스크탑 600
+              phoneWidth={phoneW}     // ✅ 모바일 280, 데스크탑 330
+              phoneHeight={phoneH}   // ✅ 모바일 500, 데스크탑 600
               gap={128}
               edgeStart={edgeStart}
               edgeEnd={336}
