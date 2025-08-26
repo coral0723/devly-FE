@@ -87,7 +87,7 @@ export default function MockPr({ onModal }: Props) {
           </div>
           <div className="relative">
             <div
-              className="w-full h-22 md:h-32 p-2 md:p-3 border border-gray-300 rounded-lg text-[10px] md:text-sm bg-white text-base whitespace-pre-wrap overflow-auto"
+              className="w-full h-22 md:h-32 p-2 md:p-3 border border-gray-300 rounded-lg text-[8px] md:text-sm bg-white whitespace-pre-wrap overflow-auto"
             >
               refactor: 로그인 흐름 리팩토링{'\n'}- 가독성과 오류 처리 개선
             </div>
@@ -97,7 +97,7 @@ export default function MockPr({ onModal }: Props) {
           </div>
           <div className="mt-4 bg-white border border-gray-200 rounded-lg p-2 md:p-4">
               <h4 className="font-medium mb-2 text-[10px] md:text-sm">AI 리뷰</h4>
-              <div className="bg-gray-50 p-3 rounded border border-gray-200 text-gray-600 whitespace-pre-line text-[8px] md:text-xs">
+              <div className="bg-gray-50 p-2 md:p-3 rounded border border-gray-200 text-gray-600 whitespace-pre-line text-[8px] md:text-xs">
                 <Fragment>
                   좋은 지적입니다. 해당 부분은 사용자 경험과 코드 유지보수 측면에서 더 고민해볼 여지가 있는 것 같습니다.
                 </Fragment>
@@ -113,7 +113,7 @@ export default function MockPr({ onModal }: Props) {
       <div className="absolute bottom-0 left-0 right-0 p-2 bg-white border-t border-gray-200 z-10">
         <div className="max-w-xl mx-auto">
           <button
-            className="w-full py-1 md:py-2 bg-purple-600 text-white rounded-xl text-sm md:text-lg font-medium"
+            className="w-full py-1 md:py-2 bg-purple-600 text-white rounded-xl text-xs md:text-lg font-medium"
             disabled={true}
           >
             다음 단계
