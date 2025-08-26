@@ -78,8 +78,10 @@ export default function WordSection({ scrollContainerRef }: Props) {
   const sectionHeight = `calc(${slides.length} * 100vh + ${releaseVH}vh)`;
 
   // 모바일 분기: phoneWidth/Height/edgeStart 조절
-  const phoneWidth = isMobile ? 245 : 330;
-  const phoneHeight = isMobile ? 465 : 600;
+  const RATIO = 600 / 330; // 기존 비율
+  const vw = typeof window !== 'undefined' ? window.innerWidth : 390;
+  const phoneW = Math.round(Math.min(330, Math.max(220, vw * 0.62)));
+  const phoneH = Math.round(phoneW * RATIO);
   const edgeStart = isMobile ? 16 : 256;
 
   return (
@@ -136,12 +138,12 @@ export default function WordSection({ scrollContainerRef }: Props) {
           </div>
 
           {/* 오른쪽: mock 트랙 */}
-          <div className="h-[60svh] md:h-[100vh] max-h-[560px] md:max-h-full pb-[env(safe-area-inset-bottom)]">
+          <div className="h-[min(560px,65dvh)] md:h-screen max-h-[560px] md:max-h-full pb-[env(safe-area-inset-bottom)]">
             <ScrollMockTrack
               progress={scrollYProgress}
               slides={slides}
-              phoneWidth={phoneWidth}     // ✅ 모바일 280, 데스크탑 330
-              phoneHeight={phoneHeight}   // ✅ 모바일 500, 데스크탑 600
+              phoneWidth={phoneW}     // ✅ 모바일 280, 데스크탑 330
+              phoneHeight={phoneH}   // ✅ 모바일 500, 데스크탑 600
               gap={128}
               edgeStart={edgeStart}
               edgeEnd={336}
