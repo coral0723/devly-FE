@@ -88,7 +88,7 @@ export default function MockQuizStep() {
         <div className="absolute bottom-0 left-0 right-0 bg-white p-2 border border-gray-200 z-10">
           <div className="max-w-xl mx-auto">
             <button
-              className={`w-full py-1 text-white text-sm md:text-lg font-medium rounded-xl transition-all bg-gray-300 cursor-not-allowed`}
+              className={`w-full py-1 text-white text-sm font-medium rounded-xl transition-all bg-gray-300 cursor-not-allowed md:text-lg md:py-2`}
               disabled={true}
             >
               다음 문제
