@@ -78,8 +78,8 @@ export default function WordSection({ scrollContainerRef }: Props) {
   const sectionHeight = `calc(${slides.length} * 100vh + ${releaseVH}vh)`;
 
   // 모바일 분기: phoneWidth/Height/edgeStart 조절
-  const phoneWidth = isMobile ? 300 : 330;
-  const phoneHeight = isMobile ? 560 : 600;
+  const phoneWidth = isMobile ? 280 : 330;
+  const phoneHeight = isMobile ? 500 : 600;
   const edgeStart = isMobile ? 16 : 256;
 
   return (
