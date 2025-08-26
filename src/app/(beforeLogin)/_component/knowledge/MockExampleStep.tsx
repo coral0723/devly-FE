@@ -33,11 +33,11 @@ export default function MockExampleStep() {
       </div>
 
       {/* Content */}
-        <div className="pt-20 space-y-4 px-1 md:px-4">
+        <div className="pt-20 space-y-4 md:px-4">
         {/* Topic Header with Progress */}
-        <div className="bg-white rounded-xl p-6 shadow-sm mx-4 shadow-sm max-w-3xl sm:mx-6 md:mx-auto">
-          <div className="flex items-center gap-4 mb-4">
-            <h1 className="text-lg font-bold flex-1">스레드의 기본 개념</h1>
+        <div className="bg-white rounded-xl p-4 md:p-6 shadow-sm mx-2 md:mx-4 shadow-sm max-w-3xl sm:mx-6 md:mx-auto">
+          <div className="flex items-center gap-4 mb-2 md:mb-4">
+            <h1 className="text-sm md:text-lg font-bold flex-1">스레드의 기본 개념</h1>
           </div>
           
           {/* Navigation Tabs */}
@@ -46,12 +46,12 @@ export default function MockExampleStep() {
               className={`flex-1 flex justify-center rounded-t-lg`}
             >
               <button
-                className={`flex items-center px-1 py-2 space-x-2 text-xs font-medium transition-colors text-gray-500 md:px-2 md:py-3 md:text-sm`}
+                className={`flex items-center py-1 space-x-1 text-[9px] font-medium rounded-t-lg transition-colors text-gray-500 md:px-2 md:py-3 md:text-sm md:space-x-2 md:py-2 `}
                 disabled={true}
               >
                 <svg 
                   xmlns="http://www.w3.org/2000/svg" 
-                  className="w-4 h-4"
+                  className="w-3 h-3 md:w-4 md:h-4"
                   viewBox="0 0 24 24" 
                   fill="none" 
                   stroke="currentColor" 
@@ -68,12 +68,11 @@ export default function MockExampleStep() {
             <div
               className={`flex-1 flex justify-center rounded-t-lg bg-blue-50 border-b-2 border-blue-500`}>
               <button
-                className={`flex items-center px-1 py-2 space-x-2 text-xs font-medium rounded-t-lg transition-colors text-blue-600 md:px-2 md:py-3 md:text-sm`}
-                disabled={true}  
+                className={`flex items-center py-1 space-x-1 text-[9px] font-medium transition-colors text-blue-600 md:px-2 md:py-3 md:text-sm md:space-x-2 md:py-2`}
               >
                 <svg 
                   xmlns="http://www.w3.org/2000/svg" 
-                  className="w-4 h-4"
+                  className="w-3 h-3 md:w-4 md:h-4"
                   viewBox="0 0 24 24" 
                   fill="none" 
                   stroke="currentColor" 
@@ -91,12 +90,12 @@ export default function MockExampleStep() {
             <div
               className={`flex-1 flex justify-center rounded-t-lg`}>
               <button
-                className={`flex items-center px-1 py-2 space-x-2 text-xs font-medium rounded-t-lg transition-colors text-gray-500 md:px-2 md:py-3 md:text-sm`}
+                className={`flex items-center py-1 space-x-1 text-[9px] font-medium rounded-t-lg transition-colors text-gray-500 md:px-2 md:py-3 md:text-sm md:space-x-2 md:py-2 `}
                 disabled={true}  
               >
                 <svg 
                   xmlns="http://www.w3.org/2000/svg" 
-                  className="w-4 h-4"
+                  className="w-3 h-3 md:w-4 md:h-4"
                   viewBox="0 0 24 24" 
                   fill="none" 
                   stroke="currentColor" 
@@ -115,12 +114,12 @@ export default function MockExampleStep() {
           <div className="space-y-4 mt-4">
             <div className="bg-gray-900 text-gray-100 p-4 rounded-lg relative">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-sm text-gray-400">예시 코드</span>
+                <span className="text-[9px] md:text-sm text-gray-400">예시 코드</span>
                 <div className="flex items-center space-x-2">
-                  <Code size={16} className="text-gray-400" />
+                  <Code className="text-gray-400 w-3 h-3 md:w-4 md:h-4" />
                 </div>
               </div>
-              <pre className="overflow-x-hidden text-xs">
+              <pre className="overflow-x-hidden text-[9px] md:text-xs">
                 <code>{code}</code>
               </pre>
             </div>

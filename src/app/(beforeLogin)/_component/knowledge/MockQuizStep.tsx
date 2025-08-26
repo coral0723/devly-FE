@@ -48,11 +48,11 @@ export default function MockQuizStep() {
       </div>
 
       {/* Content */}
-        <div className="pt-20 space-y-4 px-1 md:px-4">
+        <div className="pt-20 space-y-4 md:px-4">
         {/* Topic Header with Progress */}
-        <div className="bg-white rounded-xl p-6 shadow-sm mx-4 shadow-sm max-w-3xl sm:mx-6 md:mx-auto">
+        <div className="bg-white rounded-xl p-4 md:p-6 shadow-sm mx-2 md:mx-4 shadow-sm max-w-3xl sm:mx-6 md:mx-auto">
           <div className="flex items-center gap-4 mb-4">
-            <h1 className="text-lg font-bold flex-1">스레드의 기본 개념</h1>
+            <h1 className="text-sm md:text-lg font-bold flex-1">스레드의 기본 개념</h1>
           </div>
           
           {/* Navigation Tabs */}
@@ -61,12 +61,12 @@ export default function MockQuizStep() {
               className={`flex-1 flex justify-center rounded-t-lg`}
             >
               <button
-                className={`flex items-center px-1 py-2 space-x-2 text-xs font-medium transition-colors text-gray-500 md:px-2 md:py-3 md:text-sm`}
+                className={`flex items-center py-1 space-x-1 text-[9px] font-medium rounded-t-lg transition-colors text-gray-500 md:px-2 md:py-3 md:text-sm md:space-x-2 md:py-2 `}
                 disabled={true}
               >
                 <svg 
                   xmlns="http://www.w3.org/2000/svg" 
-                  className="w-4 h-4"
+                  className="w-3 h-3 md:w-4 md:h-4"
                   viewBox="0 0 24 24" 
                   fill="none" 
                   stroke="currentColor" 
@@ -83,12 +83,12 @@ export default function MockQuizStep() {
             <div
               className={`flex-1 flex justify-center rounded-t-lg`}>
               <button
-                className={`flex items-center px-1 py-2 space-x-2 text-xs font-medium rounded-t-lg transition-colors text-gray-500 md:px-2 md:py-3 md:text-sm`}
+                className={`flex items-center py-1 space-x-1 text-[9px] font-medium rounded-t-lg transition-colors text-gray-500 md:px-2 md:py-3 md:text-sm md:space-x-2 md:py-2 `}
                 disabled={true}  
               >
                 <svg 
                   xmlns="http://www.w3.org/2000/svg" 
-                  className="w-4 h-4"
+                  className="w-3 h-3 md:w-4 md:h-4"
                   viewBox="0 0 24 24" 
                   fill="none" 
                   stroke="currentColor" 
@@ -106,12 +106,12 @@ export default function MockQuizStep() {
             <div
               className={`flex-1 flex justify-center rounded-t-lg border-blue-500 bg-blue-50 border-b-2`}>
               <button
-                className={`flex items-center px-1 py-2 space-x-2 text-xs font-medium rounded-t-lg transition-colors text-blue-600 md:px-2 md:py-3 md:text-sm`}
+                className={`flex items-center py-1 space-x-1 text-[9px] font-medium transition-colors text-blue-600 md:px-2 md:py-3 md:text-sm md:space-x-2 md:py-2`}
                 disabled={true}  
               >
                 <svg 
                   xmlns="http://www.w3.org/2000/svg" 
-                  className="w-4 h-4"
+                  className="w-3 h-3 md:w-4 md:h-4"
                   viewBox="0 0 24 24" 
                   fill="none" 
                   stroke="currentColor" 
@@ -128,22 +128,22 @@ export default function MockQuizStep() {
 
           {/* Content Based on Active Tab */}
           <div className="space-y-4 mt-4">
-            <div className="bg-blue-50 border border-blue-100 rounded-lg p-4 mb-4">
-              <h2 className="text-base font-semibold text-blue-800 mb-2">문제</h2>
-              <p className="text-blue-900 text-xs md:text-sm">다음 중 스레드의 특징이 아닌 것은?</p>
+            <div className="bg-blue-50 border border-blue-100 rounded-lg p-3 md:p-4 mb-4">
+              <h2 className="text-xs md:text-base font-semibold text-blue-800 mb-2">문제</h2>
+              <p className="text-blue-900 text-[9px] md:text-sm">다음 중 스레드의 특징이 아닌 것은?</p>
             </div>
 
             <div className="space-y-2 md:space-y-4">
               {distractors.map((distractor, idx) => (
                 <button
                   key={distractor.id}
-                  className={`w-full flex items-center gap-4 p-4 text-left border rounded-lg transition-all`}
+                  className={`w-full flex items-center gap-4 p-3 md:p-4 text-left border rounded-lg transition-all`}
                   disabled={true}
                 >
-                  <div className={`w-6 h-6 flex items-center justify-center rounded-full border-2 flex-shrink-0 md:w-8 md:h-8`}>
-                    <span className="text-gray-500 text-base">{idx + 1}</span>
+                  <div className={`w-5 h-5 md:w-6 md:h-6 flex items-center justify-center rounded-full border-2 flex-shrink-0 md:w-8 md:h-8`}>
+                    <span className="text-gray-500 text-xs md:text-sm">{idx + 1}</span>
                   </div>
-                  <span className="text-sm md:text-base">{distractor.distractor}</span>
+                  <span className="text-xs md:text-base">{distractor.distractor}</span>
                 </button>
               ))}
             </div>

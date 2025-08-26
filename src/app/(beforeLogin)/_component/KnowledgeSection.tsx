@@ -139,7 +139,7 @@ export default function KnowledgeSection({ scrollContainerRef }: Props) {
           </div>
 
           {/* 오른쪽: mock 트랙 */}
-          <div className="h-[70vh] md:h-[100vh]">
+          <div className="h-[min(560px,65dvh)] md:h-screen max-h-[560px] md:max-h-full pb-[env(safe-area-inset-bottom)]">
             <ScrollMockTrack
               progress={scrollYProgress}
               slides={slides}

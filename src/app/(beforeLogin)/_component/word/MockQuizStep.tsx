@@ -42,8 +42,8 @@ export default function MockQuizStep() {
       </div>
 
       {/* Content */}
-      <div className="mt-20 px-4 space-y-4 md:mt-24 md:px-8">
-        <div className="bg-white rounded-xl p-6 shadow-sm max-w-3xl sm:mx-6 md:mx-auto">
+      <div className="mt-20 px-2 space-y-4 md:mt-24 md:px-8">
+        <div className="bg-white rounded-xl p-4 md:p-6 shadow-sm max-w-3xl sm:mx-6 md:mx-auto">
           <div className="flex items-center gap-2 mb-4 text-gray-500 text-[8px] md:text-xs">
               <svg xmlns="http://www.w3.org/2000/svg" 
                 className="w-3 h-3 md:w-4 md:h-4 flex-shrink-0"
@@ -73,7 +73,7 @@ export default function MockQuizStep() {
             {distractors.map((distractor, idx) => (
               <button
                 key={idx}
-                className={`w-full flex items-center gap-4 p-3 text-left border rounded-lg transition-all`}
+                className={`w-full flex items-center gap-4 p-3 md:p-4 text-left border rounded-lg transition-all`}
                 disabled={true}
               >
                 <div className={`w-5 h-5 md:w-6 md:h-6 flex items-center justify-center rounded-full border-2 flex-shrink-0`}>

@@ -34,8 +34,8 @@ export default function MockContextStep() {
       </div>
       
       {/* Content */}
-      <div className="pt-20 space-y-4 md:pt-24 md:px-8">
-        <div className="bg-white rounded-xl p-6 mx-4 shadow-sm max-w-3xl sm:mx-6 md:mx-auto">
+      <div className="pt-20 px-2 space-y-4 md:pt-24 md:px-8">
+        <div className="bg-white rounded-xl p-4 md:p-6 shadow-sm max-w-3xl sm:mx-6 md:mx-auto">
           <div className="flex items-center gap-2 mb-2 text-gray-500 text-[8px] md:text-xs">
             <svg xmlns="http://www.w3.org/2000/svg" 
               className="w-3 h-3 md:w-4 md:h-4 flex-shrink-0"
