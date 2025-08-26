@@ -78,8 +78,8 @@ export default function WordSection({ scrollContainerRef }: Props) {
   const sectionHeight = `calc(${slides.length} * 100vh + ${releaseVH}vh)`;
 
   // 모바일 분기: phoneWidth/Height/edgeStart 조절
-  const phoneWidth = isMobile ? 320 : 330;
-  const phoneHeight = isMobile ? 400 : 600;
+  const phoneWidth = isMobile ? 300 : 330;
+  const phoneHeight = isMobile ? 560 : 600;
   const edgeStart = isMobile ? 16 : 256;
 
   return (
@@ -136,7 +136,7 @@ export default function WordSection({ scrollContainerRef }: Props) {
           </div>
 
           {/* 오른쪽: mock 트랙 */}
-          <div className="h-[70vh] md:h-[100vh]">
+          <div className="h-[60svh] md:h-dvh max-h-[560px] pb-[env(safe-area-inset-bottom)]">
             <ScrollMockTrack
               progress={scrollYProgress}
               slides={slides}
