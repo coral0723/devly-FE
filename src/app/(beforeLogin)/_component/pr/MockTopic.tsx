@@ -39,18 +39,18 @@ export default function MockTopic() {
       {/* Header */}
       <div className="bg-white p-4 border-b border-gray-200">
         <div className="max-w-xl mx-auto">
-          <h1 className="text-base font-semibold text-gray-900 md:text-lg">모의 PR</h1>
-          <p className="text-xs text-gray-500 mt-1">
+          <h1 className="text-sm font-semibold text-gray-900 md:text-lg">모의 PR</h1>
+          <p className="text-[9px] md:text-xs text-gray-500 mt-1">
             실제 상황에서 발생할 수 있는 PR을 연습해보세요
           </p>
         </div>
       </div>
 
       {/* Content - add top padding to account for header height */}
-      <div className="max-w-xl mx-auto p-4 space-y-4">
+      <div className="max-w-xl mx-auto pt-4 px-2 md:p-4 space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="font-medium text-gray-900 text-xs md:text-base">추천 PR</h2>
-          <div className="text-xs text-purple-600 md:text-sm">
+          <h2 className="font-medium text-gray-900 text-[10px] md:text-base">추천 PR</h2>
+          <div className="text-[10px] text-purple-600 md:text-sm">
             매일 새로운 PR이 업데이트됩니다
           </div>
         </div>

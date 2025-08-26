@@ -14,9 +14,9 @@ export default function MockPr({ onModal }: Props) {
         <div className="absolute inset-0 bg-black bg-opacity-30 z-20 overflow-hidden">
           <div className="h-[calc(100vh-6rem)] flex flex-col bg-gray-50 max-w-4xl overflow-hidden sm:rounded-lg">
             <div className="p-4 mb-4 bg-white border-b border-gray-200 flex justify-between items-center">
-              <h3 className="font-semibold text-lg text-gray-800">변경된 파일</h3>
+              <h3 className="font-semibold text-sm md:text-lg text-gray-800">변경된 파일</h3>
               <button
-                className="px-3 py-1 text-sm border border-gray-300 rounded"
+                className="px-2 py-0.7 md:px-3 md:py-1 text-sm border border-gray-300 rounded"
                 disabled={true}
               >
                 닫기
@@ -45,7 +45,7 @@ export default function MockPr({ onModal }: Props) {
               </button>
             </div>
             <div className="flex-1 flex justify-center">
-              <span className="px-2 py-1 text-xs bg-purple-100 text-purple-800 rounded-full md:text-sm">
+              <span className="px-2 py-1 text-[10px] bg-purple-100 text-purple-800 rounded-full md:text-sm">
                 Step 1/3
               </span>
             </div>
@@ -70,40 +70,38 @@ export default function MockPr({ onModal }: Props) {
               </button>
             </div>
           </div>
-          <h1 className="text-base font-semibold text-gray-900">
+          <h1 className="text-xs md:text-base font-semibold text-gray-900">
             Refactor login flow to improve readability and error handling
           </h1>
         </div>
       </div>
 
       {/* Content */}
-      <div className="p-4 overflow-y-hidden scrollbar-hide mt-32">
+      <div className="p-2 md:p-4 overflow-y-hidden scrollbar-hide mt-28 md:mt-32">
         <div className="space-y-4 mx-auto max-w-xl lg:max-w-none lg:mx-0">
-          <div className="bg-white p-4 rounded-lg border border-gray-200 px-4">
-            <h3 className="font-medium mb-2">PR 설명 작성</h3>
-            <p className="text-sm text-gray-600">
+          <div className="bg-white p-2 md:p-4 rounded-lg border border-gray-200">
+            <h3 className="text-[10px] md:text-base font-medium mb-2">PR 설명 작성</h3>
+            <p className="text-[8px] md:text-sm text-gray-600">
               변경된 파일을 확인하여 PR을 작성해 주세요.
             </p>
           </div>
           <div className="relative">
             <div
-              className="w-full h-32 p-3 border border-gray-300 rounded-lg text-sm bg-white text-base whitespace-pre-wrap overflow-auto"
+              className="w-full h-22 md:h-32 p-2 md:p-3 border border-gray-300 rounded-lg text-[10px] md:text-sm bg-white text-base whitespace-pre-wrap overflow-auto"
             >
-              refactor: 로그인 흐름 리팩토링{'\n\n'}- 가독성과 오류 처리 개선
+              refactor: 로그인 흐름 리팩토링{'\n'}- 가독성과 오류 처리 개선
             </div>
-            <div className="absolute bottom-2 right-2 text-xs text-gray-500">
+            <div className="absolute bottom-2 right-2 text-[6px] md:text-xs text-gray-500">
               0/500
             </div>
           </div>
-          <div className="mt-4 bg-white border border-gray-200 rounded-lg p-4">
-            <div className="text-sm">
-              <h4 className="font-medium mb-2">AI 리뷰</h4>
-              <div className="bg-gray-50 p-3 rounded border border-gray-200 text-gray-600 whitespace-pre-line">
+          <div className="mt-4 bg-white border border-gray-200 rounded-lg p-2 md:p-4">
+              <h4 className="font-medium mb-2 text-[10px] md:text-sm">AI 리뷰</h4>
+              <div className="bg-gray-50 p-3 rounded border border-gray-200 text-gray-600 whitespace-pre-line text-[8px] md:text-xs">
                 <Fragment>
                   좋은 지적입니다. 해당 부분은 사용자 경험과 코드 유지보수 측면에서 더 고민해볼 여지가 있는 것 같습니다.
                 </Fragment>
               </div>
-            </div>
           </div>
         </div>
         <div className="hidden">
@@ -112,10 +110,10 @@ export default function MockPr({ onModal }: Props) {
       </div>
 
       {/* Bottom button */}
-      <div className="sticky bottom-0 left-0 right-0 p-2 bg-white border-t border-gray-200 z-10">
+      <div className="absolute bottom-0 left-0 right-0 p-2 bg-white border-t border-gray-200 z-10">
         <div className="max-w-xl mx-auto">
           <button
-            className="w-full py-3 bg-purple-600 text-white rounded-xl text-lg font-medium"
+            className="w-full py-1 md:py-2 bg-purple-600 text-white rounded-xl text-sm md:text-lg font-medium"
             disabled={true}
           >
             다음 단계
