@@ -65,7 +65,7 @@ export default function WordSection({ scrollContainerRef }: Props) {
 `;
 
   // sticky가 뷰포트를 정확히 채운 순간 감지
-  const isStickyFull = useInView(stickyRef, { amount: 1 });
+  const isStickyFull = useInView(stickyRef, { amount: 0.95 });
 
   useEffect(() => {
     if (isStickyFull) {
@@ -86,7 +86,7 @@ export default function WordSection({ scrollContainerRef }: Props) {
     <section ref={sectionRef} className="relative w-full" style={{ height: sectionHeight }}>
       <div
         ref={stickyRef}
-        className="sticky top-0 h-dvh md:h-screen bg-white flex items-center justify-center overflow-hidden"
+        className="sticky top-0 h-dvh md:h-screen bg-white flex items-center justify-center overflow-visible"
       >
         <div className="relative w-full h-full px-6 grid grid-cols-1 gap-1 md:grid-cols-2 md:gap-8 md:items-stretch lg:px-16">
           {/* ✅ 모바일 전용: 상단 스크림 */}
@@ -136,7 +136,9 @@ export default function WordSection({ scrollContainerRef }: Props) {
           </div>
 
           {/* 오른쪽: mock 트랙 */}
-          <div className="h-[60svh] md:h-dvh max-h-[560px] pb-[env(safe-area-inset-bottom)]">
+          <div className="min-h-[max(60svh,560px)] md:h-dvh pb-[env(safe-area-inset-bottom)] overflow-visible flex items-center">
+
+          {/* <div className="h-[60svh] md:h-[100vh] max-h-[560px] md:max-h-full pb-[env(safe-area-inset-bottom)]"> */}
             <ScrollMockTrack
               progress={scrollYProgress}
               slides={slides}
