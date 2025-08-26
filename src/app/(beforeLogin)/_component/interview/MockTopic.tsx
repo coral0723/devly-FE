@@ -24,18 +24,18 @@ export default function MockTopic() {
       {/* Header */}
       <div className="bg-white p-4 border-b border-gray-200">
         <div className="max-w-xl mx-auto">
-          <h1 className="text-base font-semibold text-gray-900 md:text-lg">모의 면접</h1>
-          <p className="text-xs text-gray-500 mt-1 md:text-sm">
+          <h1 className="text-sm font-semibold text-gray-900 md:text-lg">모의 면접</h1>
+          <p className="text-[9px] md:text-xs text-gray-500 mt-1">
             AI 면접관과 함께하는 기술 면접을 연습해보세요
           </p>
         </div>
       </div>
 
       {/* Content - add top padding to account for header height */}
-      <div className="max-w-xl mx-auto p-4 space-y-4">
+      <div className="max-w-xl mx-auto pt-4 px-2 md:p-4 space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="font-medium text-gray-900 text-xs md:text-sm">추천 주제</h2>
-          <div className="text-orange-600 text-xs md:text-sm">
+          <h2 className="font-medium text-gray-900 text-[10px] md:text-base">추천 주제</h2>
+          <div className="text-orange-600 text-[10px] md:text-sm">
             매일 새로운 주제가 업데이트됩니다
           </div>
         </div>

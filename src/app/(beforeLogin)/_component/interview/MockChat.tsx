@@ -48,9 +48,9 @@ export default function MockChat() {
                   <path d="m6 6 12 12"/>
                 </svg>
               </button>
-              <span className="ml-2 text-base font-medium md:text-lg">React Virtual DOM</span>
+              <span className="ml-2 text-xs font-medium md:text-lg">React Virtual DOM</span>
             </div>
-            <span className="text-sm text-gray-500">
+            <span className="text-[10px] md:text-sm text-gray-500">
               00:28
             </span>
           </div>
@@ -77,10 +77,10 @@ export default function MockChat() {
       <div className="absolute bottom-0 left-0 right-0 p-2 bg-white border border-gray-200 z-10">
         <div className="max-w-xl mx-auto">
           <button 
-            className={`w-full py-3 text-white text-md font-medium rounded-lg flex items-center justify-center bg-red-500 hover:bg-red-600`}
+            className={`w-full py-1 md:py-3 text-white text-sm md:text-base font-medium rounded-lg flex items-center justify-center bg-red-500 hover:bg-red-600`}
             disabled={true}
           >
-            <Mic className="mr-2 h-4 w-4" />
+            <Mic className="mr-2 h-3 w-3 md:h-4 md:w-4" />
             녹음 중...
           </button>
         </div>

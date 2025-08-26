@@ -21,13 +21,13 @@ export default function MockChatMessages({ chat }: Props) {
         </div>
       )}
       <div 
-        className={`py-3 px-3 max-h-96 overflow-y-auto w-fit max-w-[calc(100%-3rem)] ${
+        className={`p-2 md:p-3 max-h-96 overflow-y-auto w-fit max-w-[calc(100%-3rem)] ${
           chat.role === 'ai' 
             ? 'bg-orange-100 border-orange-200 rounded-b-xl rounded-tr-xl' 
             : 'bg-white rounded-b-xl rounded-tl-xl'
         }`}
       >
-        <div className="whitespace-pre-wrap break-words text-xs md:text-sm">
+        <div className="whitespace-pre-wrap break-words text-[10px] md:text-sm">
           {chat.content}
         </div>
       </div>
