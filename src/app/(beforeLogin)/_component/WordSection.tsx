@@ -78,15 +78,15 @@ export default function WordSection({ scrollContainerRef }: Props) {
   const sectionHeight = `calc(${slides.length} * 100vh + ${releaseVH}vh)`;
 
   // 모바일 분기: phoneWidth/Height/edgeStart 조절
-  const phoneWidth = isMobile ? 280 : 330;
-  const phoneHeight = isMobile ? 500 : 600;
+  const phoneWidth = isMobile ? 245 : 330;
+  const phoneHeight = isMobile ? 465 : 600;
   const edgeStart = isMobile ? 16 : 256;
 
   return (
     <section ref={sectionRef} className="relative w-full" style={{ height: sectionHeight }}>
       <div
         ref={stickyRef}
-        className="sticky top-0 h-dvh md:h-screen bg-white flex items-center justify-center overflow-visible"
+        className="sticky top-0 h-dvh md:h-screen bg-white flex items-center justify-center overflow-hidden"
       >
         <div className="relative w-full h-full px-6 grid grid-cols-1 gap-1 md:grid-cols-2 md:gap-8 md:items-stretch lg:px-16">
           {/* ✅ 모바일 전용: 상단 스크림 */}
@@ -136,9 +136,7 @@ export default function WordSection({ scrollContainerRef }: Props) {
           </div>
 
           {/* 오른쪽: mock 트랙 */}
-          <div className="min-h-[max(60svh,560px)] md:h-dvh pb-[env(safe-area-inset-bottom)] overflow-visible flex items-center">
-
-          {/* <div className="h-[60svh] md:h-[100vh] max-h-[560px] md:max-h-full pb-[env(safe-area-inset-bottom)]"> */}
+          <div className="h-[60svh] md:h-[100vh] max-h-[560px] md:max-h-full pb-[env(safe-area-inset-bottom)]">
             <ScrollMockTrack
               progress={scrollYProgress}
               slides={slides}
