@@ -113,7 +113,7 @@ export default function KnowledgeLearningContainer({ isReview }: Props) {
         ref={containerRef}
         headerMobileHeight={68}
         headerDesktopHeight={68}
-        className="h-[calc(100vh-20px)] overflow-y-auto scrollbar-hide"
+        className="h-[calc(100vh-20px)] overflow-y-auto scrollbar-hide max-w-3xl mx-auto"
       >
         <KnowledgeStep
           knowledge={filteredKnowledges[currentKnowledgeIndex]}

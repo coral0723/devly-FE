@@ -125,7 +125,7 @@ export default function WordLearningContainer({ isReview }: Props) {
         ref={containerRef}
         headerMobileHeight={68}
         headerDesktopHeight={68}
-        className="overflow-y-auto scrollbar-hide"
+        className="overflow-y-auto scrollbar-hide max-w-3xl mx-auto"
       >
         {step === 'word' && (
           <WordStep 
