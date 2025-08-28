@@ -1,6 +1,7 @@
+import ContentsWrapper from "../ContentsWrapper";
 import MockInterviewCard from "./MockInterviewCard";
 
-export default function MockTopic() {
+export default function MockInterviewTopic() {
   const interviews = [
     {
       id: 1,
@@ -22,7 +23,7 @@ export default function MockTopic() {
   return (
     <div className="flex-grow relative w-full h-full bg-gray-50">
       {/* Header */}
-      <div className="bg-white p-4 border-b border-gray-200">
+      <div className="absolute top-0 left-0 right-0 bg-white p-4 border-b border-gray-200">
         <div className="max-w-xl mx-auto">
           <h1 className="text-sm font-semibold text-gray-900 md:text-lg">모의 면접</h1>
           <p className="text-[9px] md:text-xs text-gray-500 mt-1">
@@ -31,8 +32,10 @@ export default function MockTopic() {
         </div>
       </div>
 
-      {/* Content - add top padding to account for header height */}
-      <div className="max-w-xl mx-auto pt-4 px-2 md:p-4 space-y-4">
+      <ContentsWrapper
+        headerMobileHeight={70}
+        headerDesktopHeight={80}
+      >
         <div className="flex items-center justify-between">
           <h2 className="font-medium text-gray-900 text-[10px] md:text-base">추천 주제</h2>
           <div className="text-orange-600 text-[10px] md:text-sm">
@@ -42,7 +45,7 @@ export default function MockTopic() {
         {interviews.map((interview) => (
           <MockInterviewCard key={interview.id} interview={interview}/>
         ))}
-      </div>
+      </ContentsWrapper>
     </div>
   )
 }

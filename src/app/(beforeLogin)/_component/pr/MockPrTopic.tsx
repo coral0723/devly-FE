@@ -1,7 +1,7 @@
 import ContentsWrapper from "../ContentsWrapper";
 import MockPrCard from "./MockPrCard";
 
-export default function MockTopic() {
+export default function MockPrTopic() {
   const prs = [
     {
       id: 1,

@@ -12,7 +12,7 @@ import {
 } from "framer-motion";
 import { GitPullRequest } from "lucide-react";
 import { useMediaQuery } from "../_hook/UseMediaQuery";
-import MockTopic from "./pr/MockTopic";
+import MockPrTopic from "./pr/MockPrTopic";
 import MockPr from "./pr/MockPr";
 import dynamic from "next/dynamic";
 const ScrollMockTrack = dynamic(() => import("./ScrollMockTrack"), { ssr: false }); //마운트 후 화면 크기 측정으로 첫 렌더 고정
@@ -24,7 +24,7 @@ type Props = {
 export default function PrSection({ scrollContainerRef }: Props) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const stickyRef = useRef<HTMLDivElement>(null);
-  const slides = [<MockTopic key="a" />, <MockPr key="b" onModal={false}/>, <MockPr key="c" onModal={true}/>];
+  const slides = [<MockPrTopic key="a" />, <MockPr key="b" onModal={false}/>, <MockPr key="c" onModal={true}/>];
 
   // Tailwind md 기준: <768px
   const isMobile = useMediaQuery("(max-width: 767px)");

@@ -1,5 +1,6 @@
 import { Mic } from "lucide-react";
 import MockChatMessages from "./MockChatMessage";
+import ContentsWrapper from "../ContentsWrapper";
 
 export default function MockChat() {
   const chats = [
@@ -20,12 +21,6 @@ export default function MockChat() {
       role: 'ai',
       content: '좋아요! 그렇다면 Virtual DOM과 실제 DOM을 비교할 때 성능상 어떤 장점이 있는지 설명해주실 수 있나요?',
       end: false
-    },
-    {
-      id: 3,
-      role: 'user',
-      content: 'Virtual DOM을 사용하면 변경 사항이 가상 DOM에서 먼저 계산되므로, 불필요한 렌더링을 줄여 성능 최적화를 할 수 있습니다.',
-      end: false
     }
   ];
 
@@ -33,7 +28,7 @@ export default function MockChat() {
     <div className="flex-grow relative overflow-hidden w-full h-full bg-gray-50">
 
       {/* Header */}
-      <div className="sticky top-0 bg-white border-b border-gray-200">
+      <div className="absolute top-0 left-0 right-0 bg-white border-b border-gray-200">
         <div className="px-4 py-2">
           <div className="flex items-center justify-between">
             <div className="flex items-center">
@@ -63,15 +58,17 @@ export default function MockChat() {
         </div>
       </div>
 
-      {/* Chat */}
-      <div className="max-w-4xl mx-auto p-4 pb-24 overflow-y-auto scrollbar-hide" style={{ height: 'calc(100vh - 40px)' }}>
+      <ContentsWrapper
+        headerMobileHeight={52}
+        headerDesktopHeight={60}  
+      >
         {chats.map((chat) => (
           <MockChatMessages
             key={chat.id}
             chat={chat}
           />
         ))}
-      </div>
+      </ContentsWrapper>
 
       {/* Bottom Button */}
       <div className="absolute bottom-0 left-0 right-0 p-2 bg-white border border-gray-200 z-10">
