@@ -42,7 +42,7 @@ export default function InterviewSection({ scrollContainerRef }: Props) {
   const leftColor = useTransform(
     t,
     [0, 1],
-    ["rgba(255,255,255,0.9)", "#fcf4e9ff"]
+    ["rgba(255,255,255,0.9)", "#FFEDD5"]
   );
 
   // gradient 문자열에 MotionValue를 실시간 바인딩

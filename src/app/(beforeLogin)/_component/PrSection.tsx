@@ -42,7 +42,7 @@ export default function PrSection({ scrollContainerRef }: Props) {
   const leftColor = useTransform(
     t,
     [0, 1],
-    ["rgba(255,255,255,0.9)", "#f4eefaff"]
+    ["rgba(255,255,255,0.9)", "#EDE9FE"]
   );
 
   // gradient 문자열에 MotionValue를 실시간 바인딩
