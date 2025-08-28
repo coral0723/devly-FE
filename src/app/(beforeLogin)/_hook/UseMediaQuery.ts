@@ -1,4 +1,3 @@
-// src/hooks/useMediaQuery.ts
 import { useEffect, useState } from "react";
 
 /** 클라이언트에서만 동작하도록 SSR 안전 처리 */

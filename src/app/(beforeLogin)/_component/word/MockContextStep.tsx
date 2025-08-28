@@ -1,41 +1,20 @@
 import { Fragment } from "react";
+import Header from "./Header";
+import ContentsWrapper from "../ContentsWrapper";
+import WhiteBox from "../WhiteBox";
 
 export default function MockContextStep() {
   const text = "Encapsulation helps to protect an object's internal state by restricting direct access."
 
   return (
     <div className="flex-grow relative w-full h-full bg-gray-50">
-      {/* Header */}
-      <div className="absolute top-0 left-0 right-0 z-10 bg-white border-b border-gray-200">
-        <div className="px-4 py-2">
-          <div className="flex items-center justify-between mb-2">
-            <button
-                className="p-2 -ml-2 rounded-full"
-                disabled={true}
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" 
-                className="w-4 h-4 md:w-6 md:h-6"
-                viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M18 6 6 18"/>
-                <path d="m6 6 12 12"/>
-              </svg>
-            </button>
-            <span className="text-xs text-gray-500 md:text-base">
-              1 / 5
-            </span>
-          </div>
-          <div className="h-1 bg-gray-100 rounded-full overflow-hidden">
-            <div
-              className="h-full bg-green-500 transition-all duration-300"
-              style={{ width: `${(1 / 5) * 100}%`}}
-            />
-          </div>
-        </div>
-      </div>
+      <Header
+        currentStep={1}
+        endStep={5}
+      />
       
-      {/* Content */}
-      <div className="pt-20 px-2 space-y-4 md:pt-24 md:px-8">
-        <div className="bg-white rounded-xl p-4 md:p-6 shadow-sm max-w-3xl sm:mx-6 md:mx-auto">
+      <ContentsWrapper>
+        <WhiteBox>
           <div className="flex items-center gap-2 mb-2 text-gray-500 text-[8px] md:text-xs">
             <svg xmlns="http://www.w3.org/2000/svg" 
               className="w-3 h-3 md:w-4 md:h-4 flex-shrink-0"
@@ -59,18 +38,18 @@ export default function MockContextStep() {
           <div className="text-gray-600 text-xs border-t border-gray-100 pt-4 md:text-base">
             캡슐화는 직접적인 접근을 제한함으로써 객체의 내부 상태를 보호하는 데 도움이 됩니다.
           </div>
-        </div>
+        </WhiteBox>
+      </ContentsWrapper>
 
-        {/* Bottom button */}
-        <div className="absolute bottom-0 left-0 right-0 p-2 bg-white border border-gray-200 z-10">
-          <div className='max-w-xl mx-auto'>
-            <button
-              className="w-full py-1 bg-green-500 text-white rounded-xl text-xs font-medium md:text-lg md:py-2"
-              disabled={true}
-            >
-              다음
-            </button>
-          </div>
+      {/* Bottom button */}
+      <div className="absolute bottom-0 left-0 right-0 p-2 bg-white border border-gray-200 z-10">
+        <div className='max-w-xl mx-auto'>
+          <button
+            className="w-full py-1 bg-green-500 text-white rounded-xl text-xs font-medium md:text-lg md:py-2"
+            disabled={true}
+          >
+            다음
+          </button>
         </div>
       </div>
     </div>

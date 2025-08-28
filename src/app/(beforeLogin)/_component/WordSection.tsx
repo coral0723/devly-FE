@@ -11,20 +11,21 @@ import {
   useScroll,
 } from "framer-motion";
 import MockWordStep from "./word/MockWordStep";
-import MockQuizStep from "./word/MockQuizStep";
+import MockWordQuizStep from "./word/MockWordQuizStep";
 import MockContextStep from "./word/MockContextStep";
 import { BookOpen } from "lucide-react";
 import { useMediaQuery } from "../_hook/UseMediaQuery";
 import dynamic from "next/dynamic";
 const ScrollMockTrack = dynamic(() => import("./ScrollMockTrack"), { ssr: false }); //마운트 후 화면 크기 측정으로 첫 렌더 고정
 
-
-type Props = { scrollContainerRef?: RefObject<HTMLDivElement | null> };
+type Props = { 
+  scrollContainerRef?: RefObject<HTMLDivElement | null>;
+};
 
 export default function WordSection({ scrollContainerRef }: Props) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const stickyRef = useRef<HTMLDivElement>(null);
-  const slides = [<MockWordStep key="a" />, <MockContextStep key="b" />, <MockQuizStep key="c" />];
+  const slides = [<MockWordStep key="a" />, <MockContextStep key="b" />, <MockWordQuizStep key="c" />];
 
   // Tailwind md 기준: <768px
   const isMobile = useMediaQuery("(max-width: 767px)");
@@ -40,7 +41,7 @@ export default function WordSection({ scrollContainerRef }: Props) {
 
   // 0 → 1 (애니메이션으로 제어)
   const t = useMotionValue(0);
-  // white/90 → emerald-100/90
+
   const leftColor = useTransform(
     t,
     [0, 1],
@@ -66,7 +67,7 @@ export default function WordSection({ scrollContainerRef }: Props) {
   )
 `;
 
-  // sticky가 뷰포트를 정확히 채운 순간 감지
+  // sticky가 뷰포트를 amount 값만큼 채운 순간 감지
   const isStickyFull = useInView(stickyRef, { amount: 0.95 });
 
   useEffect(() => {
