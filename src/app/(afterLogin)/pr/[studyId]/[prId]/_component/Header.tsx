@@ -13,7 +13,7 @@ type Props = {
 
 export default function Header({title, currentStep, stepLength, setCurrentStep, setShowFiles, onExit}: Props) {
   return (
-    <div className="sticky top-0 z-10 bg-white p-4 border-b border-gray-200 shadow-sm">
+    <div className="fixed top-0 left-0 right-0 z-10 bg-white p-4 border-b border-gray-200 shadow-sm">
       <div className="flex flex-col gap-3">
         <div className="flex items-center justify-between relative w-full">
           <div className="flex items-center gap-2 flex-1">
@@ -22,7 +22,7 @@ export default function Header({title, currentStep, stepLength, setCurrentStep, 
                 onClick={onExit}
                 className="p-2 -ml-2 hover:bg-gray-100 rounded-full"
               >
-                <X size={24}/>
+                <X className="w-5 h-5 md:w-6 md:h-6"/>
               </button>
               ) : (
                 <div className="relative group inline-block">
@@ -30,7 +30,7 @@ export default function Header({title, currentStep, stepLength, setCurrentStep, 
                     onClick={() => setCurrentStep(currentStep - 1)}
                     className="p-2 -ml-2 hover:bg-gray-100 rounded-full"
                   >
-                    <ArrowLeft size={24} className="text-purple-800"/>
+                    <ArrowLeft className="w-5 h-5 md:w-6 md:h-6 text-purple-800"/>
                   </button>
                   <span className="absolute mb-2 left-1 transform translate-x-1/2 
                     bg-purple-100 text-purple-800 text-sm rounded px-2 py-1 opacity-0 
@@ -42,7 +42,7 @@ export default function Header({title, currentStep, stepLength, setCurrentStep, 
             }
           </div>
           <div className="flex-1 flex justify-center">
-            <span className="px-2 py-1 text-sm bg-purple-100 text-purple-800 rounded-full">
+            <span className="px-2 py-1 text-xs md:text-sm bg-purple-100 text-purple-800 rounded-full">
               Step {currentStep}/{stepLength}
             </span>
           </div>
@@ -51,7 +51,7 @@ export default function Header({title, currentStep, stepLength, setCurrentStep, 
               onClick={() => setShowFiles(true)}
               className="p-2 -ml-2 hover:bg-gray-100 rounded-full"
             >
-              <FileCode2 size={24} className="text-purple-800"/>
+              <FileCode2 className="w-5 h-5 md:w-6 md:h-6 text-purple-800"/>
             </button>
             <span className="absolute mb-2 transform -translate-x-1/2 
               bg-purple-100 text-purple-800 text-sm rounded px-2 py-1 opacity-0 
@@ -60,7 +60,7 @@ export default function Header({title, currentStep, stepLength, setCurrentStep, 
             </span>
           </div>
         </div>
-        <h1 className="text-lg font-semibold text-gray-900">{title}</h1>
+        <h1 className="text-base md:text-lg font-semibold text-gray-900">{title}</h1>
       </div>
     </div>
   )

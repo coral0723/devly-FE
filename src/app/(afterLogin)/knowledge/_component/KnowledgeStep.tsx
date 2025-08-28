@@ -204,7 +204,7 @@ export default function KnowledgeStep({knowledge, knowledgesLength, currentStep,
         <div className="max-w-xl mx-auto">
           <button
             onClick={showCorect ? onNext : onCheck}
-            className={`w-full py-3 text-white rounded-xl text-lg font-medium transition-all
+            className={`w-full py-3 text-white rounded-xl md:text-lg font-medium transition-all
               ${selectedDistractor === null 
                 ? 'bg-gray-300 cursor-not-allowed' 
                 : showCorect && currentStep === knowledgesLength - 1

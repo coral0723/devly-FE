@@ -22,6 +22,7 @@ import { CompletionModal } from "./CompletionModal"
 import PrMainContent from "./PrMainContent"
 import axios from "axios"
 import ExitConfirmModal from "./ExitConfirmModal"
+import ContentsWrapper from "@/app/_component/ContentsWrapper"
 // import { FinalFeedback } from "@/model/pr/FinalFeedback"
 // import FinalScoreModal from "./FinalScoreModal"
 
@@ -183,25 +184,31 @@ export default function PrLearningContainer({ isReview, userId = undefined }: Pr
         onExit={() => setShowExitConfirm(true)}
       />
 
-      <PrMainContent
-        currentStep={currentStep}
-        prComments={prComments}
-        prHistory={prHistory}
-        replies={replies}
-        feedbacks={feedbacks}
-        isPostAnswerLoading={isPostAnswerLoading}
-        prChangedFiles={prChangedFiles}
-        setReplies={setReplies}
-        setCurrentStep={setCurrentStep}
-        postAnswer={postAnswer}
-      />
+      <ContentsWrapper
+        headerMobileHeight={129}
+        headerDesktopHeight={113}
+        className="overflow-y-auto h-[calc(100vh-70px)] md:h-[100vh] pb-2 md:pb-4"
+      >
+        <PrMainContent
+          currentStep={currentStep}
+          prComments={prComments}
+          prHistory={prHistory}
+          replies={replies}
+          feedbacks={feedbacks}
+          isPostAnswerLoading={isPostAnswerLoading}
+          prChangedFiles={prChangedFiles}
+          setReplies={setReplies}
+          setCurrentStep={setCurrentStep}
+          postAnswer={postAnswer}
+        />
+      </ContentsWrapper>
 
 			{/* 마무리 버튼 - 모든 답변이 제출되었을 때만 표시 */}
 			{currentStep === prComments.comments.length && feedbacks[currentStep-1] && (
         <div className="fixed bottom-0 left-0 right-0 p-2 bg-white border border-gray-200 z-10">
 					<div className="max-w-lg mx-auto">
 						<button
-							className="w-full py-3 bg-gradient-to-r from-purple-400 to-pink-500 hover:from-purple-500 hover:to-pink-600 text-white text-lg font-medium rounded-lg"
+							className="w-full py-3 bg-gradient-to-r from-purple-400 to-pink-500 hover:from-purple-500 hover:to-pink-600 text-white md:text-lg font-medium rounded-lg"
 							onClick={() => {
                 if(prHistory) {
                   router.back();

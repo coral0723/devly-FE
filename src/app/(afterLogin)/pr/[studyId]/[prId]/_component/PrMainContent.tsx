@@ -8,6 +8,7 @@ import LoadingSpinner from "@/app/_component/LoadingSpinner";
 import { useRouter } from "next/navigation";
 import ChangedFiles from "./ChangedFiles";
 import { PrChangedFiles } from "@/model/pr/PrChangedFiles";
+import WhiteBox from "@/app/_component/WhiteBox";
 
 type Props = {
   currentStep: number,
@@ -43,25 +44,25 @@ export default function PrMainContent({ currentStep, prComments, prHistory, repl
   
   // 버튼 스타일을 결정하는 함수
   const getButtonStyle = () => {
-    if (isPostAnswerLoading) return "w-full py-3 bg-purple-600 text-white rounded-lg text-lg font-medium hover:bg-purple-700";
-    if (hasText()) return "w-full mx-auto py-3 bg-purple-600 text-white rounded-lg text-lg font-medium hover:bg-purple-700";
-    return "w-full mx-auto py-3 bg-gray-300 text-white rounded-lg text-lg font-medium cursor-not-allowed";
+    if (isPostAnswerLoading) return "w-full py-3 bg-purple-600 text-white rounded-lg md:text-lg font-medium hover:bg-purple-700";
+    if (hasText()) return "w-full mx-auto py-3 bg-purple-600 text-white rounded-lg md:text-lg font-medium hover:bg-purple-700";
+    return "w-full mx-auto py-3 bg-gray-300 text-white rounded-lg md:text-lg font-medium cursor-not-allowed";
   };
   
   return (
-    <div className="p-4 overflow-y-auto scrollbar-hide" style={{ height: 'calc(100vh - 113px)' }}>
+    <>
       <div className="lg:grid grid-cols-2">
         <div className="space-y-4 mx-auto max-w-xl lg:max-w-none lg:mx-0">
-          <div className="bg-white p-4 rounded-lg border border-gray-200">
-            <h3 className="font-medium mb-2">{currentStep === 1 ? "PR 설명 작성" : "리뷰어 답변"}</h3>
-            <p className="text-sm text-gray-600">
+          <WhiteBox>
+            <h3 className="font-medium mb-2 text-sm md:text-base">{currentStep === 1 ? "PR 설명 작성" : "리뷰어 답변"}</h3>
+            <p className="text-xs md:text-sm text-gray-600">
               {currentStep === 1 ? prComments.comments[0].content : "리뷰어의 코멘트에 답변해주세요."}
             </p>
-          </div>
+          </WhiteBox>
           {currentStep === 1 ? (
             <div className="relative">
               <textarea
-                className="w-full h-32 p-3 border border-gray-300 rounded-lg text-sm bg-white text-base outline-none"
+                className="w-full h-32 p-3 border border-gray-300 rounded-lg text-xs md:text-sm bg-white outline-none"
                 placeholder="(최소 10자 이상)"
                 spellCheck="false"
                 value={prHistory ? prHistory.answers[0] : replies[0]}
@@ -81,13 +82,13 @@ export default function PrMainContent({ currentStep, prComments, prHistory, repl
           ) : (
               <div className="bg-white border border-gray-200 rounded-lg p-4">
                 <div className="bg-gray-50 p-3 rounded-lg mb-3">
-                  <p className="text-sm text-gray-700">
+                  <p className="text-xs md:text-sm text-gray-700">
                     {prComments.comments[currentStep-1].content}
                   </p>
                 </div>
                 <div className="relative">
                   <textarea
-                    className="w-full h-32 p-3 border border-gray-300 rounded-lg text-sm bg-white"
+                    className="w-full h-32 p-3 border border-gray-300 rounded-lg text-xs md:text-sm bg-white"
                     placeholder="답변을 작성해주세요 (최소 10자 이상)"
                     value={prHistory ? prHistory.answers[currentStep-1] : replies[currentStep-1]}
                     onChange={(e) => {
@@ -124,7 +125,7 @@ export default function PrMainContent({ currentStep, prComments, prHistory, repl
                   if (prHistory && currentStep === feedbacks.length) {
                     return (
                       <button
-                        className="w-full py-3 bg-purple-600 text-white text-lg font-medium rounded-lg hover:bg-purple-700"
+                        className="w-full py-3 bg-purple-600 text-white md:text-lg font-medium rounded-lg hover:bg-purple-700"
                         onClick={() => router.back()}
                       >
                         돌아가기
@@ -136,7 +137,7 @@ export default function PrMainContent({ currentStep, prComments, prHistory, repl
                   if (prHistory || feedbacks[currentStep-1]) {
                     return (
                       <button
-                        className="w-full py-3 bg-purple-600 text-white rounded-lg text-lg font-medium hover:bg-purple-700"
+                        className="w-full py-3 bg-purple-600 text-white rounded-lg md:text-lg font-medium hover:bg-purple-700"
                         onClick={() => setCurrentStep(currentStep + 1)}
                       >
                         다음 단계
@@ -172,6 +173,6 @@ export default function PrMainContent({ currentStep, prComments, prHistory, repl
           />
         </div>
       </div>
-    </div>
+    </>
   )
 }
