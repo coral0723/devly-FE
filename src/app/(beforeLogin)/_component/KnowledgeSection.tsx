@@ -10,7 +10,7 @@ import {
   animate,
   useScroll,
 } from "framer-motion";
-import MockQuizStep from "./knowledge/MockQuizStep";
+import MockKnowledgeQuizStep from "./knowledge/MockKnowledgeQuizStep";
 import { Lightbulb } from "lucide-react";
 import { useMediaQuery } from "../_hook/UseMediaQuery";
 import MockKnowledgeStep from "./knowledge/MockKnowledgeStep";
@@ -18,12 +18,14 @@ import MockExampleStep from "./knowledge/MockExampleStep";
 import dynamic from "next/dynamic";
 const ScrollMockTrack = dynamic(() => import("./ScrollMockTrack"), { ssr: false }); //마운트 후 화면 크기 측정으로 첫 렌더 고정
 
-type Props = { scrollContainerRef?: RefObject<HTMLDivElement | null> };
+type Props = { 
+  scrollContainerRef?: RefObject<HTMLDivElement | null>; 
+};
 
 export default function KnowledgeSection({ scrollContainerRef }: Props) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const stickyRef = useRef<HTMLDivElement>(null);
-  const slides = [<MockKnowledgeStep key="a" />, <MockExampleStep key="b" />, <MockQuizStep key="c" />];
+  const slides = [<MockKnowledgeStep key="a" />, <MockExampleStep key="b" />, <MockKnowledgeQuizStep key="c" />];
 
   // Tailwind md 기준: <768px
   const isMobile = useMediaQuery("(max-width: 767px)");
@@ -39,7 +41,6 @@ export default function KnowledgeSection({ scrollContainerRef }: Props) {
 
   // 0 → 1 (애니메이션으로 제어)
   const t = useMotionValue(0);
-  // white/90 → emerald-100/90
   const leftColor = useTransform(
     t,
     [0, 1],
@@ -65,8 +66,8 @@ export default function KnowledgeSection({ scrollContainerRef }: Props) {
   )
 `;
 
-  // sticky가 뷰포트를 정확히 채운 순간 감지
-  const isStickyFull = useInView(stickyRef, { amount: 1 });
+  // sticky가 뷰포트를 amount 값만큼 채운 순간 감지
+  const isStickyFull = useInView(stickyRef, { amount: 0.95 });
 
   useEffect(() => {
     if (isStickyFull) {
@@ -121,7 +122,7 @@ export default function KnowledgeSection({ scrollContainerRef }: Props) {
                       이해-적용-검증의 3스텝
                     </span>
 
-                    {/* 태블릿, 데스크탑: 세 줄 */}
+                    {/* 태블릿, 데스크탑: 두 줄 */}
                     <span className="hidden md:block">
                       <span className="block md:mb-4">이해-적용-검증의</span>
                       <span className="block">3스텝</span>
@@ -143,8 +144,8 @@ export default function KnowledgeSection({ scrollContainerRef }: Props) {
             <ScrollMockTrack
               progress={scrollYProgress}
               slides={slides}
-              phoneWidth={phoneW}     // ✅ 모바일 280, 데스크탑 330
-              phoneHeight={phoneH}   // ✅ 모바일 500, 데스크탑 600
+              phoneWidth={phoneW} 
+              phoneHeight={phoneH}  
               gap={128}
               edgeStart={edgeStart}
               edgeEnd={200}
