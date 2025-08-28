@@ -13,32 +13,32 @@ type Props = {
 const techLogos = [
   {
     node: (
-      <div className="w-16 h-16 rounded-full bg-emerald-100 flex items-center justify-center border-2 border-emerald-500">
-        <BookOpen className="w-8 h-8 text-emerald-500" />
+      <div className="w-12 h-12 md:w-16 md:h-16 w rounded-full bg-emerald-100 flex items-center justify-center border-2 border-emerald-500">
+        <BookOpen className="w-6 h-6 md:w-8 md:h-8 text-emerald-500" />
       </div>
     ),
     title: "개발 용어",
   },
   {
     node: (
-      <div className="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center border-2 border-blue-500">
-        <Lightbulb className="w-8 h-8 text-blue-500" />
+      <div className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-blue-100 flex items-center justify-center border-2 border-blue-500">
+        <Lightbulb className="w-6 h-6 md:w-8 md:h-8 text-blue-500" />
       </div>
     ),
     title: "CS 지식",
   },
   {
     node: (
-      <div className="w-16 h-16 rounded-full bg-purple-100 flex items-center justify-center border-2 border-purple-500">
-        <GitPullRequest className="w-8 h-8 text-purple-500" />
+      <div className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-purple-100 flex items-center justify-center border-2 border-purple-500">
+        <GitPullRequest className="w-6 h-6 md:w-8 md:h-8 text-purple-500" />
       </div>
     ),
     title: "모의 PR",
   },
   {
     node: (
-      <div className="w-16 h-16 rounded-full bg-orange-100 flex items-center justify-center border-2 border-orange-500">
-        <MessageSquare className="w-8 h-8 text-orange-500" />
+      <div className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-orange-100 flex items-center justify-center border-2 border-orange-500">
+        <MessageSquare className="w-6 h-6 md:w-8 md:h-8 text-orange-500" />
       </div>
     ),
     title: "모의 면접",
@@ -91,7 +91,7 @@ export default function SolutionSection({ scrollContainerRef }: Props) {
           to={{ opacity: 1, y: 0 }}
         />
 
-        <div className="mt-12" style={{ height: '200px', position: 'relative', overflow: 'hidden'}}>
+        <div className="mt-4 md:mt-12" style={{ height: '200px', position: 'relative', overflow: 'hidden'}}>
           <LogoLoop
             logos={techLogos}
             speed={120}
