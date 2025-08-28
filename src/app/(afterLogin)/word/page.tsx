@@ -20,7 +20,7 @@ export default async function WordPage({ searchParams }: Props) {
       {/* Main Content */}
       <div className="max-w-xl mx-auto relative">
         <FloatingIcons/>
-        <div className="z-10 pb-24">
+        <div className="z-10 pb-24 px-2 md:px-4">
           {wordTotal === "5" 
             ? <LearningSection/> 
             : <ReviewSection 

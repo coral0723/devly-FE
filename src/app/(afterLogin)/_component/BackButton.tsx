@@ -7,7 +7,7 @@ export default function BackButton() {
   const router = useRouter();
 
   return (
-    <div className="p-6">
+    <div className="p-4 md:p-6">
       <button
         onClick={() => router.push('/home')}
         className="p-2 -ml-2 hover:bg-gray-100 rounded-full flex items-center"
