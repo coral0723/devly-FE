@@ -4,6 +4,7 @@ import { Fragment } from 'react';
 import { BookOpen } from 'lucide-react';
 import { Word } from '@/model/word/Word';
 import { Example } from '@/model/word/Example';
+import WhiteBox from '@/app/_component/WhiteBox';
 
 type Props = {
   index: number;
@@ -16,13 +17,13 @@ export function ContextStep({ index, word, wordsLength, onNext }: Props) {
   const example: Example = JSON.parse(word.example);
 
   return (
-    <div className="max-w-2xl mx-auto">
-      <div className="bg-white rounded-xl p-6 shadow-sm">
-        <div className="flex items-center gap-2 mb-4 text-gray-500 text-sm">
-          <BookOpen size={16}/>
+    <>
+      <WhiteBox>
+        <div className="flex items-center gap-2 mb-4 text-gray-500 text-xs md:text-sm">
+          <BookOpen className='w-3 h-3 md:w-4 md:h-4'/>
           <span>출처: {example.source}</span>
         </div>
-        <div className="text-lg mb-4 font-mono">
+        <div className="md:text-lg mb-4 font-mono">
           {example.text.split(new RegExp(`(${word.word})`, 'i')).map((part, i) => (
             <Fragment key={i}>
               {part.toLowerCase() === word.word.toLowerCase() ? (
@@ -33,15 +34,17 @@ export function ContextStep({ index, word, wordsLength, onNext }: Props) {
             </Fragment>
           ))}
         </div>
-        <div className="text-gray-600 border-t border-gray-100 pt-4">
+        <div className="text-gray-600 border-t border-gray-100 pt-4 text-sm md:text-base">
           {example.translation}
         </div>
-      </div>
+      </WhiteBox>
+
+      {/* Bottom Button */}
       <div className="fixed bottom-0 left-0 right-0 bg-white p-2 border border-gray-200 z-10">
         <div className='max-w-xl mx-auto'>
           <button
             onClick={onNext}
-            className={`w-full py-3 text-white rounded-xl text-lg font-medium transition-all active:scale-[0.98]
+            className={`w-full py-3 text-white rounded-xl md:text-lg font-medium transition-all active:scale-[0.98]
               ${index === wordsLength-1 
                 ? "bg-gradient-to-r from-green-400 to-teal-500 hover:from-green-500 hover:to-teal-600" 
                 : "bg-green-500 hover:bg-green-600"
@@ -70,6 +73,6 @@ export function ContextStep({ index, word, wordsLength, onNext }: Props) {
           </button>
         </div>
       </div>
-    </div>
+    </>
   );
 }

@@ -11,7 +11,7 @@ import {
   useScroll,
 } from "framer-motion";
 import { GitPullRequest } from "lucide-react";
-import { useMediaQuery } from "../hook/UseMediaQuery";
+import { useMediaQuery } from "../../../_component/hook/UseMediaQuery";
 import MockPrTopic from "../pr/MockPrTopic";
 import MockPr from "../pr/MockPr";
 import dynamic from "next/dynamic";

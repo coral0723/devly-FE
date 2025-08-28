@@ -1,4 +1,4 @@
-import ContentsWrapper from "../ContentsWrapper";
+import ContentsWrapper from "@/app/_component/ContentsWrapper";
 import Header from "./Header";
 
 export default function MockWordStep() {

@@ -12,7 +12,7 @@ import {
 } from "framer-motion";
 import MockKnowledgeQuizStep from "../knowledge/MockKnowledgeQuizStep";
 import { Lightbulb } from "lucide-react";
-import { useMediaQuery } from "../hook/UseMediaQuery";
+import { useMediaQuery } from "../../../_component/hook/UseMediaQuery";
 import MockKnowledgeStep from "../knowledge/MockKnowledgeStep";
 import MockExampleStep from "../knowledge/MockExampleStep";
 import dynamic from "next/dynamic";

@@ -14,7 +14,7 @@ import MockWordStep from "../word/MockWordStep";
 import MockWordQuizStep from "../word/MockWordQuizStep";
 import MockContextStep from "../word/MockContextStep";
 import { BookOpen } from "lucide-react";
-import { useMediaQuery } from "../hook/UseMediaQuery";
+import { useMediaQuery } from "../../../_component/hook/UseMediaQuery";
 import dynamic from "next/dynamic";
 const ScrollMockTrack = dynamic(() => import("../ScrollMockTrack"), { ssr: false }); //마운트 후 화면 크기 측정으로 첫 렌더 고정
 

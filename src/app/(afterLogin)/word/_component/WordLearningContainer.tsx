@@ -17,6 +17,7 @@ import QuizStep from "./QuizStep";
 import { ExitConfirmModal } from "./ExitConfirmModal";
 import { CompletionModal } from "./CompletionModal";
 import axios from "axios";
+import ContentsWrapper from "@/app/_component/ContentsWrapper";
 
 type Props = {
   isReview: boolean;
@@ -120,7 +121,11 @@ export default function WordLearningContainer({ isReview }: Props) {
       />
 
       {/* Main Content */}
-      <div ref={containerRef} className="p-5 h-[calc(100vh-150px)] overflow-y-auto scrollbar-hide">
+      <ContentsWrapper
+        ref={containerRef}
+        headerMobileHeight={68}
+        headerDesktopHeight={68}
+      >
         {step === 'word' && (
           <WordStep 
             word={filteredWords[currentWordIndex]} 
@@ -150,7 +155,7 @@ export default function WordLearningContainer({ isReview }: Props) {
             onScrollUp={onScrollUp}
           />
         )}
-      </div>
+      </ContentsWrapper>
 
       {showExitConfirm && (
         <ExitConfirmModal 

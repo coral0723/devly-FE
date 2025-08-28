@@ -11,7 +11,7 @@ import {
   useScroll,
 } from "framer-motion";
 import { MessageSquare } from "lucide-react";
-import { useMediaQuery } from "../hook/UseMediaQuery";
+import { useMediaQuery } from "../../../_component/hook/UseMediaQuery";
 import MockInterviewTopic from "../interview/MockInterviewTopic";
 import MockChat from "../interview/MockChat";
 import dynamic from "next/dynamic";

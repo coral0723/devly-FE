@@ -1,4 +1,4 @@
-import ContentsWrapper from "../ContentsWrapper";
+import ContentsWrapper from "@/app/_component/ContentsWrapper";
 import MockInterviewCard from "./MockInterviewCard";
 
 export default function MockInterviewTopic() {

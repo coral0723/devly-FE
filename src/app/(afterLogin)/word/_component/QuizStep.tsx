@@ -5,6 +5,7 @@ import { Fragment, useEffect, useState } from "react";
 import { Word } from "@/model/word/Word";
 import { Example } from "@/model/word/Example";
 import { Quiz } from "@/model/word/Quiz";
+import WhiteBox from "@/app/_component/WhiteBox";
 
 type Props = {
   index: number;
@@ -97,28 +98,28 @@ export default function QuizStep({ index, word, wordsLength, handleQuizNext, onS
   };
 
   return (
-    <div className="space-y-8 max-w-xl mx-auto">
-      <div className="bg-white rounded-xl p-6 shadow-sm">
-          <div className="flex items-center gap-2 mb-4 text-gray-500 text-sm">
-              <BookOpen size={16}/>
-              <span>출처: {example.source}</span>
-          </div>
-          <div className="text-lg mb-4 font-mono">
-              {example.text.split(new RegExp(`(${word.word})`, 'i')).map((part, i) => (
-                  <Fragment key={i}>
-                    {part.toLowerCase() === word.word.toLowerCase() ? (
-                      <div className="inline-block border-2 border-gray p-1">
-                        <span className="font-bold text-blue-600">
-                          {showCorrect ? part : <span className="opacity-0">{part}</span>}
-                        </span>
-                      </div>
-                    ) : part}
-                  </Fragment>
-              ))}
-          </div>
-      </div>
+    <>
+      <WhiteBox>
+        <div className="flex items-center gap-2 mb-4 text-gray-500 text-xs md:text-sm">
+            <BookOpen className='w-3 h-3 md:w-4 md:h-4'/>
+            <span>출처: {example.source}</span>
+        </div>
+        <div className="md:text-lg mb-4 font-mono">
+            {example.text.split(new RegExp(`(${word.word})`, 'i')).map((part, i) => (
+                <Fragment key={i}>
+                  {part.toLowerCase() === word.word.toLowerCase() ? (
+                    <div className="inline-block border-2 border-gray p-1">
+                      <span className="font-bold text-blue-600">
+                        {showCorrect ? part : <span className="opacity-0">{part}</span>}
+                      </span>
+                    </div>
+                  ) : part}
+                </Fragment>
+            ))}
+        </div>
+      </WhiteBox>
 
-      <div className="bg-white rounded-xl p-6 shadow-sm">
+      <WhiteBox>
         <div className="space-y-4">
           {distractors.map((distractor, idx) => (
             <button
@@ -127,25 +128,26 @@ export default function QuizStep({ index, word, wordsLength, handleQuizNext, onS
               className={`w-full flex items-center gap-4 p-4 text-left border rounded-lg transition-all ${getButtonStyle(distractor, idx)}`}
               disabled={showCorrect}
             >
-              <div className={`w-8 h-8 flex items-center justify-center rounded-full border-2 flex-shrink-0 ${getCircleStyle(distractor, idx)}`}>
+              <div className={`w-7 h-7 md:w-8 md:h-8 flex items-center justify-center rounded-full border-2 flex-shrink-0 ${getCircleStyle(distractor, idx)}`}>
                 {(selectedDistractor === idx || (showCorrect && distractor === word.word)) && 
-                  <Check size={16} className="text-white" />
+                  <Check className="w-3 h-3 md:w-4 md:h-4 text-white" />
                 }
                 {selectedDistractor !== idx && !showCorrect && 
                   <span className="text-gray-500">{idx + 1}</span>
                 }
               </div>
-              <span className="text-lg">{distractor}</span>
+              <span className="md:text-lg">{distractor}</span>
             </button>
           ))}
         </div>
-      </div>
+      </WhiteBox>
 
+      {/* Bottom Button */}
       <div className="fixed bottom-0 left-0 right-0 bg-white p-2 border border-gray-200 z-10">
         <div className="max-w-xl mx-auto">
           <button
             onClick={showCorrect ? onNext : onCheck}
-            className={`w-full py-3 text-white text-lg font-medium rounded-xl transition-all
+            className={`w-full py-3 text-white md:text-lg font-medium rounded-xl transition-all
               ${selectedDistractor === null 
                 ? 'bg-gray-300 cursor-not-allowed' 
                 : showCorrect && index === wordsLength - 1
@@ -168,6 +170,6 @@ export default function QuizStep({ index, word, wordsLength, handleQuizNext, onS
           </button>
         </div>
       </div>
-    </div>
+    </>
   )
 }

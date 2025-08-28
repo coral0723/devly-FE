@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import MockChangedFiles from "./MockChangedFiles";
-import ContentsWrapper from "../ContentsWrapper";
+import ContentsWrapper from "@/app/_component/ContentsWrapper";
 
 type Props = {
   onModal: boolean;
@@ -50,7 +50,7 @@ export default function MockPr({ onModal }: Props) {
                 Step 1/3
               </span>
             </div>
-            <div className="flex flex-1 justify-end gap-2 relative group inline-block lg:invisible">
+            <div className="flex flex-1 justify-end gap-2 relative group">
               <button
                 className="p-2 -ml-2 rounded-full"
                 disabled={true}

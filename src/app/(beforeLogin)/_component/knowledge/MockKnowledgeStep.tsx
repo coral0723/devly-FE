@@ -1,5 +1,5 @@
-import ContentsWrapper from "../ContentsWrapper";
-import WhiteBox from "../WhiteBox";
+import ContentsWrapper from "@/app/_component/ContentsWrapper";
+import WhiteBox from "../../../_component/WhiteBox";
 import Header from "./Header";
 import NavigationTabs from "./NavigationTabs";
 

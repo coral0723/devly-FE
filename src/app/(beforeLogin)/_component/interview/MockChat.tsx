@@ -1,6 +1,6 @@
 import { Mic } from "lucide-react";
 import MockChatMessages from "./MockChatMessage";
-import ContentsWrapper from "../ContentsWrapper";
+import ContentsWrapper from "@/app/_component/ContentsWrapper";
 
 export default function MockChat() {
   const chats = [

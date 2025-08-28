@@ -1,7 +1,7 @@
 import { Code } from "lucide-react";
 import Header from "./Header";
-import ContentsWrapper from "../ContentsWrapper";
-import WhiteBox from "../WhiteBox";
+import ContentsWrapper from "@/app/_component/ContentsWrapper";
+import WhiteBox from "../../../_component/WhiteBox";
 import NavigationTabs from "./NavigationTabs";
 
 export default function MockExampleStep() {

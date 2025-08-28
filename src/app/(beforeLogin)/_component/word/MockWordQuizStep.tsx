@@ -2,8 +2,8 @@
 
 import { Fragment } from "react";
 import Header from "./Header";
-import ContentsWrapper from "../ContentsWrapper";
-import WhiteBox from "../WhiteBox";
+import ContentsWrapper from "@/app/_component/ContentsWrapper";
+import WhiteBox from "../../../_component/WhiteBox";
 
 export default function MockWordQuizStep() {
   const text = "Encapsulation helps to protect an object's internal state by restricting direct access."

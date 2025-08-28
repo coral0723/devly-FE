@@ -47,12 +47,12 @@ export function WordStep({ word, onNext }: Props) {
   }, [word.word]);
 
   return (
-    <div className="mt-8 space-y-8">
+    <div className="mt-8 md:mt-10 space-y-8">
       <div className="text-center">
-        <h1 className="text-2xl font-bold mb-2">{word.word}</h1>
-        <p className="text-gray-500">{word.pronunciation}</p>
+        <h1 className="text-xl md:text-2xl font-bold mb-2">{word.word}</h1>
+        <p className="text-gray-500 text-sm md:text-base">{word.pronunciation}</p>
         <button
-          className={`mt-4 p-4 rounded-full transition-all duration-200
+          className={`mt-4 p-3 md:p-4 rounded-full transition-all duration-200
             ${isPlaying 
               ? 'bg-blue-100 hover:bg-blue-200 ring-2 ring-blue-400 ring-opacity-50' 
               : 'bg-gray-100 hover:bg-gray-200'
@@ -63,14 +63,28 @@ export function WordStep({ word, onNext }: Props) {
         >
           {isPlaying ? (
             // 재생 중일 때의 아이콘
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4B5563" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="animate-pulse">
+            <svg xmlns="http://www.w3.org/2000/svg" 
+              className='w-4 h-4 md:w-6 md:h-6'
+              viewBox="0 0 24 24" 
+              fill="none" 
+              stroke="#4B5563" 
+              strokeWidth="2" 
+              strokeLinecap="round" 
+              strokeLinejoin="round">
               <path d="M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z"/>
               <path d="M16 9a5 5 0 0 1 0 6"/>
               <path d="M19.364 18.364a9 9 0 0 0 0-12.728"/>
             </svg>
             ) : (
               // 기본 아이콘
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6B7280" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg xmlns="http://www.w3.org/2000/svg" 
+                className='w-4 h-4 md:w-6 md:h-6'
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="#6B7280" 
+                strokeWidth="2" 
+                strokeLinecap="round" 
+                strokeLinejoin="round">
                 <path d="M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z"/>
                 <path d="M16 9a5 5 0 0 1 0 6"/>
                 <path d="M19.364 18.364a9 9 0 0 0 0-12.728"/>
@@ -78,13 +92,15 @@ export function WordStep({ word, onNext }: Props) {
             )}
         </button>
       </div>
-      <div className="text-center text-lg text-gray-600">
+      <div className="text-center md:text-lg text-gray-600">
         {word.meaning}
       </div>
+
+      {/* Bottom Button */}
       <div className="fixed bottom-0 left-0 right-0 p-2 bg-white border border-gray-200 z-10">
         <div className='max-w-xl mx-auto'>
           <button
-            className=" w-full py-3 bg-green-500 text-white rounded-xl text-lg font-medium hover:bg-green-600 active:scale-[0.98] transition-all"
+            className=" w-full py-3 bg-green-500 text-white rounded-xl md:text-lg font-medium hover:bg-green-600 active:scale-[0.98] transition-all"
             onClick={onNext}
           >
             다음
