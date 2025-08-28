@@ -31,7 +31,7 @@ export default function MockKnowledgeQuizStep() {
       />
 
       {/* Content */}
-      <ContentsWrapper>
+      <ContentsWrapper page="knowledge">
         <WhiteBox>
           <div className="flex items-center gap-4 mb-4">
             <h1 className="text-sm md:text-lg font-bold flex-1">스레드의 기본 개념</h1>

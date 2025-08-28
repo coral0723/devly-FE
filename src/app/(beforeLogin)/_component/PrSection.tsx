@@ -17,7 +17,9 @@ import MockPr from "./pr/MockPr";
 import dynamic from "next/dynamic";
 const ScrollMockTrack = dynamic(() => import("./ScrollMockTrack"), { ssr: false }); //마운트 후 화면 크기 측정으로 첫 렌더 고정
 
-type Props = { scrollContainerRef?: RefObject<HTMLDivElement | null> };
+type Props = { 
+  scrollContainerRef?: RefObject<HTMLDivElement | null>; 
+};
 
 export default function PrSection({ scrollContainerRef }: Props) {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -38,7 +40,6 @@ export default function PrSection({ scrollContainerRef }: Props) {
 
   // 0 → 1 (애니메이션으로 제어)
   const t = useMotionValue(0);
-  // white/90 → emerald-100/90
   const leftColor = useTransform(
     t,
     [0, 1],
@@ -64,8 +65,8 @@ export default function PrSection({ scrollContainerRef }: Props) {
   )
 `;
 
-  // sticky가 뷰포트를 정확히 채운 순간 감지
-  const isStickyFull = useInView(stickyRef, { amount: 1 });
+  // sticky가 뷰포트를 amount 값만큼 채운 순간 감지
+  const isStickyFull = useInView(stickyRef, { amount: 0.98 });
 
   useEffect(() => {
     if (isStickyFull) {
@@ -119,7 +120,7 @@ export default function PrSection({ scrollContainerRef }: Props) {
                       실제 협업처럼 PR을 연습하세요
                     </span>
 
-                    {/* 태블릿, 데스크탑: 세 줄 */}
+                    {/* 태블릿, 데스크탑: 두 줄 */}
                     <span className="hidden md:block">
                       <span className="block md:mb-4">실제 협업처럼</span>
                       <span className="block">PR을 연습하세요</span>
@@ -141,8 +142,8 @@ export default function PrSection({ scrollContainerRef }: Props) {
             <ScrollMockTrack
               progress={scrollYProgress}
               slides={slides}
-              phoneWidth={phoneW}     // ✅ 모바일 280, 데스크탑 330
-              phoneHeight={phoneH}   // ✅ 모바일 500, 데스크탑 600
+              phoneWidth={phoneW}     
+              phoneHeight={phoneH}   
               gap={128}
               edgeStart={edgeStart}
               edgeEnd={200}

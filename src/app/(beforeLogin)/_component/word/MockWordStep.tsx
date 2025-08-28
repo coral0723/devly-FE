@@ -10,7 +10,7 @@ export default function MockWordStep() {
         endStep={5}
       />
 
-      <ContentsWrapper>
+      <ContentsWrapper page="word">
         <div className="text-center mt-8 md:mt-10">
           <h1 className="text-sm font-bold mb-2 md:text-2xl">Encapsulation</h1>
           <p className="text-xs text-gray-500 md:text-base">/ɛnˌkæpsjʊˈleɪʃən/</p>
