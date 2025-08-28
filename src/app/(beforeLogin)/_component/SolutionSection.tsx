@@ -13,7 +13,7 @@ type Props = {
 const techLogos = [
   {
     node: (
-      <div className="w-16 h-16 rounded-full bg-emerald-100 flex items-center justify-center">
+      <div className="w-16 h-16 rounded-full bg-emerald-100 flex items-center justify-center border-2 border-emerald-500">
         <BookOpen className="w-8 h-8 text-emerald-500" />
       </div>
     ),
@@ -21,7 +21,7 @@ const techLogos = [
   },
   {
     node: (
-      <div className="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center">
+      <div className="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center border-2 border-blue-500">
         <Lightbulb className="w-8 h-8 text-blue-500" />
       </div>
     ),
@@ -29,7 +29,7 @@ const techLogos = [
   },
   {
     node: (
-      <div className="w-16 h-16 rounded-full bg-purple-100 flex items-center justify-center">
+      <div className="w-16 h-16 rounded-full bg-purple-100 flex items-center justify-center border-2 border-purple-500">
         <GitPullRequest className="w-8 h-8 text-purple-500" />
       </div>
     ),
@@ -37,7 +37,7 @@ const techLogos = [
   },
   {
     node: (
-      <div className="w-16 h-16 rounded-full bg-orange-100 flex items-center justify-center">
+      <div className="w-16 h-16 rounded-full bg-orange-100 flex items-center justify-center border-2 border-orange-500">
         <MessageSquare className="w-8 h-8 text-orange-500" />
       </div>
     ),
