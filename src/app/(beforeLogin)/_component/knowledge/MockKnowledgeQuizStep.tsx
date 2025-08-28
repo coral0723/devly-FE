@@ -44,14 +44,11 @@ export default function MockKnowledgeQuizStep() {
             currentTab="문제"
           />
 
-          <div className="bg-blue-50 border border-blue-100 rounded-lg p-3 md:p-4 mt-4 md:mt-6">
-            <h2 className="text-xs md:text-base font-semibold text-blue-800 mb-2">문제</h2>
-            <p className="text-blue-900 text-[9px] md:text-sm">다음 중 스레드의 특징이 아닌 것은?</p>
-          </div>
-        </WhiteBox>
-
-        <WhiteBox>
           <div className="space-y-2 md:space-y-4">
+            <div className="bg-blue-50 border border-blue-100 rounded-lg p-3 md:p-4 mt-4">
+              <h2 className="text-xs md:text-base font-semibold text-blue-800 mb-2">문제</h2>
+              <p className="text-blue-900 text-[9px] md:text-sm">다음 중 스레드의 특징이 아닌 것은?</p>
+            </div>
             {distractors.map((distractor, idx) => (
               <button
                 key={distractor.id}

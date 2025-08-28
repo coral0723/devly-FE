@@ -10,7 +10,7 @@ type Props = {
 
 export default function Header({ currentKnowledgeIndex, knowledgesLength, onExit }: Props) {
   return (
-    <div className="sticky top-0 z-20 bg-white border-b border-gray-200">
+    <div className="fixed top-0 left-0 right-0 z-10 bg-white border-b border-gray-200">
       <div className="px-4 py-2">
         <div className="flex items-center justify-between mb-2">
           <button

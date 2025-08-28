@@ -27,7 +27,7 @@ export default async function KnowledgePage({ searchParams }: Props) {
       <BackButton/>
       {/* Main Content */}
       <div className="max-w-xl mx-auto relative">
-        <div className="z-10 pb-24">
+        <div className="z-10 pb-24 px-2 md:px-4">
           <FloatingIcons/>
           {knowledgeTotal === "3" 
             ? <LearningSection/>

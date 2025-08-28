@@ -14,6 +14,7 @@ import KnowledgeStep from "./KnowledgeStep";
 import ExitConfirmModal from "./ExitConfirmModal";
 import CompletionModal from "./CompletionModal";
 import { authApi } from "@/app/_lib/axios";
+import ContentsWrapper from "@/app/_component/ContentsWrapper";
 
 type Props = {
   isReview: boolean;
@@ -99,7 +100,7 @@ export default function KnowledgeLearningContainer({ isReview }: Props) {
   }
 
   return (
-    <div className="relative min-h-screen bg-gray-50">
+    <div className="relative min-h-screen bg-gray-50 scrollbar-hide">
       {/* Progress Header */}
       <Header
         currentKnowledgeIndex={currentKnowledgeIndex}
@@ -108,7 +109,12 @@ export default function KnowledgeLearningContainer({ isReview }: Props) {
       />
 
       {/* Main Content */}
-      <div ref={containerRef} className="p-5 h-[calc(100vh-140px)] overflow-y-auto scrollbar-hide">
+      <ContentsWrapper
+        ref={containerRef}
+        headerMobileHeight={68}
+        headerDesktopHeight={68}
+        className="h-[calc(100vh-20px)] overflow-y-auto scrollbar-hide"
+      >
         <KnowledgeStep
           knowledge={filteredKnowledges[currentKnowledgeIndex]}
           knowledgesLength={filteredKnowledges.length}
@@ -118,7 +124,7 @@ export default function KnowledgeLearningContainer({ isReview }: Props) {
           handleNext={handleNext}
           onScrollUp={onScrollUp}
         />
-      </div>
+      </ContentsWrapper>
 
       {showExitConfirm && (
         <ExitConfirmModal 

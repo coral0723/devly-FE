@@ -18,7 +18,7 @@ export default function NavigationTabs({ currentTab }: Props) {
           role="tab"
           aria-selected={isActive("개념")}
           className={[
-            "flex items-center py-1 space-x-1 text-[9px] font-medium transition-colors md:px-2 md:py-3 md:text-sm md:space-x-2",
+            "flex items-center py-1 space-x-1 text-[9px] font-medium transition-colors md:p-2 md:text-sm md:space-x-2",
             isActive("개념") ? "text-blue-600" : "text-gray-500 hover:text-gray-700",
           ].join(" ")}
           disabled={isActive("개념")}

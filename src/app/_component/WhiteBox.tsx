@@ -1,13 +1,16 @@
-// src/components/ContentsWrapper.tsx
-import { ReactNode } from "react";
+import { ReactNode, HTMLAttributes } from "react";
 
 type Props = {
   children: ReactNode;
-};
+  className?: string;
+} & HTMLAttributes<HTMLDivElement>;
 
-export default function WhiteBox({ children }: Props) {
+export default function WhiteBox({ children, className = "", ...rest }: Props) {
   return (
-    <div className="bg-white rounded-xl p-4 md:p-6 shadow-sm max-w-3xl sm:mx-6 md:mx-auto">
+    <div
+      className={`bg-white rounded-xl p-4 md:p-6 shadow-sm max-w-3xl sm:mx-6 md:mx-auto ${className}`}
+      {...rest}
+    >
       {children}
     </div>
   );
