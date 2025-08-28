@@ -82,31 +82,29 @@ export default function MockPr({ onModal }: Props) {
         headerMobileHeight={109}
         headerDesktopHeight={133}
       >
-        <div className="space-y-4 mx-auto max-w-xl lg:max-w-none lg:mx-0">
-          <div className="bg-white p-2 md:p-4 rounded-lg border border-gray-200">
-            <h3 className="text-[10px] md:text-base font-medium mb-2">PR 설명 작성</h3>
-            <p className="text-[8px] md:text-sm text-gray-600">
-              변경된 파일을 확인하여 PR을 작성해 주세요.
-            </p>
+        <div className="bg-white p-2 md:p-4 rounded-lg border border-gray-200">
+          <h3 className="text-[10px] md:text-base font-medium mb-2">PR 설명 작성</h3>
+          <p className="text-[8px] md:text-sm text-gray-600">
+            변경된 파일을 확인하여 PR을 작성해 주세요.
+          </p>
+        </div>
+        <div className="relative">
+          <div
+            className="w-full h-22 md:h-32 p-2 md:p-3 border border-gray-300 rounded-lg text-[8px] md:text-sm bg-white whitespace-pre-wrap overflow-auto"
+          >
+            refactor: 로그인 흐름 리팩토링{'\n'}- 가독성과 오류 처리 개선
           </div>
-          <div className="relative">
-            <div
-              className="w-full h-22 md:h-32 p-2 md:p-3 border border-gray-300 rounded-lg text-[8px] md:text-sm bg-white whitespace-pre-wrap overflow-auto"
-            >
-              refactor: 로그인 흐름 리팩토링{'\n'}- 가독성과 오류 처리 개선
+          <div className="absolute bottom-2 right-2 text-[6px] md:text-xs text-gray-500">
+            0/500
+          </div>
+        </div>
+        <div className="mt-4 bg-white border border-gray-200 rounded-lg p-2 md:p-4">
+            <h4 className="font-medium mb-2 text-[10px] md:text-sm">AI 리뷰</h4>
+            <div className="bg-gray-50 p-2 md:p-3 rounded border border-gray-200 text-gray-600 whitespace-pre-line text-[8px] md:text-xs">
+              <Fragment>
+                좋은 지적입니다. 해당 부분은 사용자 경험과 코드 유지보수 측면에서 더 고민해볼 여지가 있는 것 같습니다.
+              </Fragment>
             </div>
-            <div className="absolute bottom-2 right-2 text-[6px] md:text-xs text-gray-500">
-              0/500
-            </div>
-          </div>
-          <div className="mt-4 bg-white border border-gray-200 rounded-lg p-2 md:p-4">
-              <h4 className="font-medium mb-2 text-[10px] md:text-sm">AI 리뷰</h4>
-              <div className="bg-gray-50 p-2 md:p-3 rounded border border-gray-200 text-gray-600 whitespace-pre-line text-[8px] md:text-xs">
-                <Fragment>
-                  좋은 지적입니다. 해당 부분은 사용자 경험과 코드 유지보수 측면에서 더 고민해볼 여지가 있는 것 같습니다.
-                </Fragment>
-              </div>
-          </div>
         </div>
         <div className="hidden">
           <MockChangedFiles/>
