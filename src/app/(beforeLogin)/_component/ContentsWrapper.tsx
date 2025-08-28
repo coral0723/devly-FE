@@ -1,5 +1,5 @@
 import { ReactNode, useMemo } from "react";
-import { useMediaQuery } from "../_hook/UseMediaQuery";
+import { useMediaQuery } from "./hook/UseMediaQuery";
 
 type Props = {
   children: ReactNode;

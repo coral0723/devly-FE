@@ -1,8 +1,8 @@
 "use client";
 
 import { motion, useInView } from "framer-motion";
-import ShinyText from "../_animations/ShynyText";
-import SplitText from "../_animations/SplitText";
+import ShinyText from "../../_animations/ShynyText";
+import SplitText from "../../_animations/SplitText";
 import { RefObject, useEffect, useRef, useState } from "react";
 
 type Props = {

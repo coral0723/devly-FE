@@ -1,9 +1,9 @@
 "use client"
 
 import { motion } from "framer-motion";
-import FadeContent from "../_animations/FadeContent";
-import SignInBtn from "./SignInBtn";
-import SignUpBtn from "./SignUpBtn";
+import FadeContent from "../../_animations/FadeContent";
+import SignInBtn from "../SignInBtn";
+import SignUpBtn from "../SignUpBtn";
 import { ChevronDown } from "lucide-react";
 
 export default function MainSection() {

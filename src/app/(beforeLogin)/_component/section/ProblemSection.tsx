@@ -3,7 +3,7 @@
 
 import { RefObject, useRef, useState, useEffect } from "react";
 import { useInView } from "framer-motion";
-import SplitText from "../_animations/SplitText";
+import SplitText from "../../_animations/SplitText";
 
 type Props = {
   scrollContainerRef?: RefObject<Element | null>;

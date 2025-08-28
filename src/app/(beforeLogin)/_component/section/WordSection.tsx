@@ -10,22 +10,22 @@ import {
   animate,
   useScroll,
 } from "framer-motion";
-import MockKnowledgeQuizStep from "./knowledge/MockKnowledgeQuizStep";
-import { Lightbulb } from "lucide-react";
-import { useMediaQuery } from "../_hook/UseMediaQuery";
-import MockKnowledgeStep from "./knowledge/MockKnowledgeStep";
-import MockExampleStep from "./knowledge/MockExampleStep";
+import MockWordStep from "../word/MockWordStep";
+import MockWordQuizStep from "../word/MockWordQuizStep";
+import MockContextStep from "../word/MockContextStep";
+import { BookOpen } from "lucide-react";
+import { useMediaQuery } from "../hook/UseMediaQuery";
 import dynamic from "next/dynamic";
-const ScrollMockTrack = dynamic(() => import("./ScrollMockTrack"), { ssr: false }); //마운트 후 화면 크기 측정으로 첫 렌더 고정
+const ScrollMockTrack = dynamic(() => import("../ScrollMockTrack"), { ssr: false }); //마운트 후 화면 크기 측정으로 첫 렌더 고정
 
 type Props = { 
-  scrollContainerRef?: RefObject<HTMLDivElement | null>; 
+  scrollContainerRef?: RefObject<HTMLDivElement | null>;
 };
 
-export default function KnowledgeSection({ scrollContainerRef }: Props) {
+export default function WordSection({ scrollContainerRef }: Props) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const stickyRef = useRef<HTMLDivElement>(null);
-  const slides = [<MockKnowledgeStep key="a" />, <MockExampleStep key="b" />, <MockKnowledgeQuizStep key="c" />];
+  const slides = [<MockWordStep key="a" />, <MockContextStep key="b" />, <MockWordQuizStep key="c" />];
 
   // Tailwind md 기준: <768px
   const isMobile = useMediaQuery("(max-width: 767px)");
@@ -41,10 +41,11 @@ export default function KnowledgeSection({ scrollContainerRef }: Props) {
 
   // 0 → 1 (애니메이션으로 제어)
   const t = useMotionValue(0);
+
   const leftColor = useTransform(
     t,
     [0, 1],
-    ["rgba(255,255,255,0.9)", "#DBEAFE"]
+    ["rgba(255,255,255,0.9)", "rgba(209,250,229,0.9)"]
   );
 
   // gradient 문자열에 MotionValue를 실시간 바인딩
@@ -79,7 +80,6 @@ export default function KnowledgeSection({ scrollContainerRef }: Props) {
 
   const sectionHeight = `calc(${slides.length} * 100vh + ${releaseVH}vh)`;
 
-
   // 모바일 분기: phoneWidth/Height/edgeStart 조절
   const RATIO = 600 / 330; // 기존 비율
   const vw = typeof window !== 'undefined' ? window.innerWidth : 390;
@@ -111,21 +111,22 @@ export default function KnowledgeSection({ scrollContainerRef }: Props) {
             <div className="max-w-xl mx-auto flex flex-col items-center text-center pt-8 md:pl-8 lg:pl-16 md:pt-16 lg:pt-24 md:mx-0 md:items-start md:text-left">
               <div className="flex flex-col gap-1 w-full">
                 <div className="flex justify-center md:justify-start md:flex-col gap-3">
-                  <div className="w-8 h-8 md:w-32 md:h-32 lg:w-36 lg:h-36 rounded-full bg-blue-100 border-2 md:border-4 border-blue-500 flex items-center justify-center md:mb-5">
-                    <Lightbulb className="w-4 h-4 md:w-16 md:h-16 lg:w-20 lg:h-20 text-blue-500" />
+                  <div className="w-8 h-8 md:w-32 md:h-32 lg:w-36 lg:h-36 rounded-full bg-emerald-100 border-2 md:border-4 border-emerald-500 flex items-center justify-center md:mb-5">
+                    <BookOpen className="w-4 h-4 md:w-16 md:h-16 lg:w-20 lg:h-20 text-emerald-500" />
                   </div>
 
                   {/* 반응형 제목 */}
                   <h2 className="font-extrabold tracking-tight text-lg sm:text-5xl md:text-6xl lg:text-7xl text-left">
                     {/* 모바일: 한 줄 */}
                     <span className="block md:hidden">
-                      이해-적용-검증의 3스텝
+                      버그 잡듯 영어 용어도 잡아보세요
                     </span>
 
-                    {/* 태블릿, 데스크탑: 두 줄 */}
+                    {/* 태블릿, 데스크탑: 세 줄 */}
                     <span className="hidden md:block">
-                      <span className="block md:mb-4">이해-적용-검증의</span>
-                      <span className="block">3스텝</span>
+                      <span className="block md:mb-4">버그 잡듯</span>
+                      <span className="block md:mb-4">영어 용어도</span>
+                      <span className="block">잡아보세요</span>
                     </span>
 
                   </h2>
@@ -133,7 +134,7 @@ export default function KnowledgeSection({ scrollContainerRef }: Props) {
 
                 {/* 두 번째 줄: 설명 */}
                 <p className="mt-1 text-gray-700 text-base sm:text-lg md:text-xl lg:text-2xl text-center md:text-left md:mt-5">
-                  CS 개념, 코드 예시, 퀴즈까지 한 번에.
+                  스펠링·발음·예문·퀴즈까지 한 번에.
                 </p>
               </div>
             </div>
@@ -144,8 +145,8 @@ export default function KnowledgeSection({ scrollContainerRef }: Props) {
             <ScrollMockTrack
               progress={scrollYProgress}
               slides={slides}
-              phoneWidth={phoneW} 
-              phoneHeight={phoneH}  
+              phoneWidth={phoneW}
+              phoneHeight={phoneH} 
               gap={128}
               edgeStart={edgeStart}
               edgeEnd={200}

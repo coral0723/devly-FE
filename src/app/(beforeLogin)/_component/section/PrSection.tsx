@@ -11,11 +11,11 @@ import {
   useScroll,
 } from "framer-motion";
 import { GitPullRequest } from "lucide-react";
-import { useMediaQuery } from "../_hook/UseMediaQuery";
-import MockPrTopic from "./pr/MockPrTopic";
-import MockPr from "./pr/MockPr";
+import { useMediaQuery } from "../hook/UseMediaQuery";
+import MockPrTopic from "../pr/MockPrTopic";
+import MockPr from "../pr/MockPr";
 import dynamic from "next/dynamic";
-const ScrollMockTrack = dynamic(() => import("./ScrollMockTrack"), { ssr: false }); //마운트 후 화면 크기 측정으로 첫 렌더 고정
+const ScrollMockTrack = dynamic(() => import("../ScrollMockTrack"), { ssr: false }); //마운트 후 화면 크기 측정으로 첫 렌더 고정
 
 type Props = { 
   scrollContainerRef?: RefObject<HTMLDivElement | null>; 

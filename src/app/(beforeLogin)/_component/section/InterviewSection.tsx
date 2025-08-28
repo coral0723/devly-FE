@@ -11,11 +11,11 @@ import {
   useScroll,
 } from "framer-motion";
 import { MessageSquare } from "lucide-react";
-import { useMediaQuery } from "../_hook/UseMediaQuery";
-import MockInterviewTopic from "./interview/MockInterviewTopic";
-import MockChat from "./interview/MockChat";
+import { useMediaQuery } from "../hook/UseMediaQuery";
+import MockInterviewTopic from "../interview/MockInterviewTopic";
+import MockChat from "../interview/MockChat";
 import dynamic from "next/dynamic";
-const ScrollMockTrack = dynamic(() => import("./ScrollMockTrack"), { ssr: false }); //마운트 후 화면 크기 측정으로 첫 렌더 고정
+const ScrollMockTrack = dynamic(() => import("../ScrollMockTrack"), { ssr: false }); //마운트 후 화면 크기 측정으로 첫 렌더 고정
 
 type Props = { 
   scrollContainerRef?: RefObject<HTMLDivElement | null>; 

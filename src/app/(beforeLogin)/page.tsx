@@ -2,14 +2,14 @@
 
 import { useRef } from "react";
 import FloatingIcons from "./_component/FloatingIcons";
-import InterviewSection from "./_component/InterviewSection";
-import KnowledgeSection from "./_component/KnowledgeSection";
-import LastSection from "./_component/LastSection";
-import MainSection from "./_component/MainSection";
-import PrSection from "./_component/PrSection";
-import WordSection from "./_component/WordSection";
-import ProblemSection from "./_component/ProblemSection";
-import SolutionSection from "./_component/SolutionSection";
+import MainSection from "./_component/section/MainSection";
+import ProblemSection from "./_component/section/ProblemSection";
+import SolutionSection from "./_component/section/SolutionSection";
+import WordSection from "./_component/section/WordSection";
+import KnowledgeSection from "./_component/section/KnowledgeSection";
+import PrSection from "./_component/section/PrSection";
+import InterviewSection from "./_component/section/InterviewSection";
+import LastSection from "./_component/section/LastSection";
 
 export default function LoginPage() {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
