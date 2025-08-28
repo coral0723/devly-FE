@@ -52,7 +52,7 @@ export default function PrMainContent({ currentStep, prComments, prHistory, repl
   return (
     <>
       <div className="lg:grid grid-cols-2">
-        <div className="space-y-4 mx-auto max-w-xl lg:max-w-none lg:mx-0">
+        <div className="space-y-4 mx-auto max-w-5xl lg:max-w-none lg:mx-0">
           <WhiteBox>
             <h3 className="font-medium mb-2 text-sm md:text-base">{currentStep === 1 ? "PR 설명 작성" : "리뷰어 답변"}</h3>
             <p className="text-xs md:text-sm text-gray-600">
