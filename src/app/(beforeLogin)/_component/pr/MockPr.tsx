@@ -1,5 +1,6 @@
 import { Fragment } from "react";
 import MockChangedFiles from "./MockChangedFiles";
+import ContentsWrapper from "../ContentsWrapper";
 
 type Props = {
   onModal: boolean;
@@ -77,7 +78,10 @@ export default function MockPr({ onModal }: Props) {
       </div>
 
       {/* Content */}
-      <div className="p-2 md:p-4 overflow-y-hidden scrollbar-hide mt-28 md:mt-32">
+      <ContentsWrapper
+        headerMobileHeight={109}
+        headerDesktopHeight={133}
+      >
         <div className="space-y-4 mx-auto max-w-xl lg:max-w-none lg:mx-0">
           <div className="bg-white p-2 md:p-4 rounded-lg border border-gray-200">
             <h3 className="text-[10px] md:text-base font-medium mb-2">PR 설명 작성</h3>
@@ -107,7 +111,7 @@ export default function MockPr({ onModal }: Props) {
         <div className="hidden">
           <MockChangedFiles/>
         </div>
-      </div>
+      </ContentsWrapper>
 
       {/* Bottom button */}
       <div className="absolute bottom-0 left-0 right-0 p-2 bg-white border-t border-gray-200 z-10">

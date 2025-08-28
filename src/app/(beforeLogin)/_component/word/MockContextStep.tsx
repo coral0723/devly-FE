@@ -13,7 +13,10 @@ export default function MockContextStep() {
         endStep={5}
       />
       
-      <ContentsWrapper page="word">
+      <ContentsWrapper
+        headerMobileHeight={60}
+        headerDesktopHeight={68}
+      >
         <WhiteBox>
           <div className="flex items-center gap-2 mb-2 text-gray-500 text-[8px] md:text-xs">
             <svg xmlns="http://www.w3.org/2000/svg" 
