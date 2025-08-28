@@ -145,7 +145,7 @@ export default function PrSection({ scrollContainerRef }: Props) {
               phoneHeight={phoneH}   // ✅ 모바일 500, 데스크탑 600
               gap={128}
               edgeStart={edgeStart}
-              edgeEnd={636}
+              edgeEnd={200}
               releaseUnits={releaseUnits}
             />
           </div>

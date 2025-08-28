@@ -148,7 +148,7 @@ export default function WordSection({ scrollContainerRef }: Props) {
               phoneHeight={phoneH} 
               gap={128}
               edgeStart={edgeStart}
-              edgeEnd={636}
+              edgeEnd={200}
               releaseUnits={releaseUnits}
             />
           </div>
