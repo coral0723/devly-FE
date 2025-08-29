@@ -13,6 +13,7 @@ import BottomButton from './BottomButton';
 import TimeoutModal from './TimeoutModal';
 import { CompletionModal } from './CompletionModal';
 import ExitConfirmModal from './ExitConfirmModal';
+import ContentsWrapper from '@/app/_component/ContentsWrapper';
 
 declare global {
   interface Window {
@@ -249,68 +250,74 @@ export default function InterviewLearningContainer({ isReview }: Props) {
    return (
      <div className="min-h-screen bg-gray-50">
    
-       {/* Progress Header */}
-       <Header
-         timeLeft={timeLeft}
-         setShowExitConfirm={setShowExitConfirm}
-       />
+      {/* Progress Header */}
+      <Header
+        timeLeft={timeLeft}
+        setShowExitConfirm={setShowExitConfirm}
+      />
    
-       {/* Chat Messages */}
-       <div ref={containerRef} className="max-w-4xl mx-auto p-4 pb-24 overflow-y-auto scrollbar-hide" style={{ height: 'calc(100vh - 40px)' }}>
-         {interview && chats.map((chat) => (
-           <ChatMessage
-             key={chat.id}
-             chat={chat}
-             isLoading={chat.role === 'ai' && chat.content === '' && postChat.isPending}
-           />
-         ))}
-        </div>
-   
-       {/* Recording Button */}
-       <BottomButton
-         isRecording={isRecording}
-         isEnd={isEnd}
-         setShowCompletion={setShowCompletion}
-         handleRecord={handleRecord}
-       />
-   
-       {/* Timeout Modal */}
-       {showTimeoutModal && (
-         <TimeoutModal
-           onClose={() => {
-             queryClient.removeQueries({
-               queryKey: ["interview", "learn", id],
-               exact: true
-             });
-             setChats([]);
-             router.replace('/home');
-           }}/>
-       )}
-   
-       {showCompletion && (
-         <CompletionModal
-          isReview={isReview}
+      {/* Chat Messages */}
+      <ContentsWrapper
+        ref={containerRef}
+        headerMobileHeight={56}
+        headerDesktopHeight={60}
+        className='max-w-4xl mx-auto overflow-y-auto scrollbar-hide h-[calc(100vh-40px)] pb-24'
+      >
+        {interview && chats.map((chat) => (
+          <ChatMessage
+            key={chat.id}
+            chat={chat}
+            isLoading={chat.role === 'ai' && chat.content === '' && postChat.isPending}
+          />
+        ))}
+
+      </ContentsWrapper>
+  
+      {/* Recording Button */}
+      <BottomButton
+        isRecording={isRecording}
+        isEnd={isEnd}
+        setShowCompletion={setShowCompletion}
+        handleRecord={handleRecord}
+      />
+  
+      {/* Timeout Modal */}
+      {showTimeoutModal && (
+        <TimeoutModal
           onClose={() => {
+            queryClient.removeQueries({
+              queryKey: ["interview", "learn", id],
+              exact: true
+            });
+            setChats([]);
             router.replace('/home');
+          }}/>
+      )}
+  
+      {showCompletion && (
+        <CompletionModal
+        isReview={isReview}
+        onClose={() => {
+          router.replace('/home');
+        }}
+        />
+      )}
+  
+      {showExitConfirm && (
+        <ExitConfirmModal 
+          onClose={() => {
+            setShowExitConfirm(false);
           }}
-         />
-       )}
-   
-       {showExitConfirm && (
-         <ExitConfirmModal 
-           onClose={() => {
-             setShowExitConfirm(false);
-           }}
-           onExit={() => {
-             queryClient.removeQueries({
-               queryKey: ["interview", "learn", id],
-               exact: true
-             });
-             setChats([]);
-             router.replace('/home');
-           }}/> //query clear하는 코드 필요
-       )}
-     </div>
-   );
+          onExit={() => {
+            queryClient.removeQueries({
+              queryKey: ["interview", "learn", id],
+              exact: true
+            });
+            setChats([]);
+            router.replace('/home');
+          }}/>
+      )}
+    </div>
+  );
 }
 

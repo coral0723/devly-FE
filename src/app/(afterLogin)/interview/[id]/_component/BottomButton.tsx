@@ -22,7 +22,7 @@ export default function BottomButton({isRecording, isEnd, setShowCompletion, han
     <div className="fixed bottom-0 left-0 right-0 p-2 bg-white border border-gray-200 z-10">
       <div className="max-w-xl mx-auto">
         <button 
-          className={`w-full py-3 text-white text-lg font-medium rounded-lg flex items-center justify-center ${
+          className={`w-full py-3 text-white md:text-lg font-medium rounded-lg flex items-center justify-center ${
             isEnd 
               ? 'bg-gradient-to-r from-orange-400 to-amber-500 hover:from-orange-500 hover:to-amber-600'
               : isRecording 

@@ -15,7 +15,7 @@ export default function Header({ timeLeft, setShowExitConfirm }: Props) {
    };
 
   return (
-    <div className="sticky top-0 bg-white border-b border-gray-200">
+    <div className="fixed top-0 left-0 right-0 bg-white border-b border-gray-200">
       <div className="px-4 py-2">
         <div className="flex items-center justify-between">
           <div className="flex items-center">
@@ -23,9 +23,9 @@ export default function Header({ timeLeft, setShowExitConfirm }: Props) {
               onClick={() => setShowExitConfirm(true)}
               className="p-2 -ml-2 hover:bg-gray-100 rounded-full"
             >
-              <X size={24}/>
+              <X className="w-5 h-5 md:w-6 md:h-6"/>
             </button>
-            <span className="ml-2 text-xl font-medium">React Virtual DOM</span>
+            <span className="ml-2 text-base md:text-xl font-medium">React Virtual DOM</span>
           </div>
           <span className="text-sm text-gray-500">
             {formatTime(timeLeft)}
