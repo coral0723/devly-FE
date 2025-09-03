@@ -27,6 +27,26 @@
 
 <br>
 
+## 개발 히스토리
+
+### Next.js 15 변화 & 라우팅
+- [Next.js 15, 이제는 params와 searchParams만 사용한다.](https://likeornament.tistory.com/16)
+- [params가 갑자기 Promise? Next.js 15가 바꿔놓은 것들](https://likeornament.tistory.com/15)
+
+### 서버/클라이언트 컴포넌트 & 데이터 패칭
+- [Next.js 서버 컴포넌트, 정말 껍데기처럼만 써도 될까?](https://likeornament.tistory.com/19)
+- [서버 컴포넌트에서 prefetchQuery가 실패하는 이유와 useQuery가 만들어낸 착각](https://likeornament.tistory.com/17)
+- [Laytout에서 클라이언트 컴포넌트로 감쌀 때 렌더링과 성능 이슈 정리](https://likeornament.tistory.com/20)
+
+### UI/레이아웃 & 재사용
+- [정확한 가운데와 눈으로 보는 가운데, 어느 쪽을 선택할까?](https://likeornament.tistory.com/27)
+- [Next.js 프로젝트에서 학습 & 복습 페이지 컴포넌트 재사용하기](https://likeornament.tistory.com/28)
+
+### 네트워크/에러 처리
+- [Axios에서 302 리디렉션이 인터셉터에서 안 잡힐 때 해결 방법](https://likeornament.tistory.com/18)
+
+<br>
+
 ## 팀원 구성
 
 <div align="center">
