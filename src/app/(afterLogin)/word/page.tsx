@@ -3,9 +3,7 @@ import BottomButton from './_component/BottomButton';
 import BackButton from '../_component/BackButton';
 import LearningSection from './_component/LearningSection';
 import ReviewSection from './_component/ReviewSection';
-import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
-import { getWords } from './_lib/getWords';
-import { getValidationWordResult } from './_lib/getValidationWordResult';
+import WordHydrator from './_component/WordHydrator';
 
 type Props = {
   searchParams: Promise<{
@@ -17,14 +15,9 @@ type Props = {
 export default async function WordPage({ searchParams }: Props) {
   const { studyId, wordTotal } = await searchParams;
 
-  const queryClient = new QueryClient();
-  await queryClient.prefetchQuery({queryKey: ["word", "learn", studyId], queryFn: getWords});
-  await queryClient.prefetchQuery({queryKey: ["word", "validation", studyId], queryFn: getValidationWordResult});
-  const dehydratedState = dehydrate(queryClient);
-
   return (
-    <div className="min-h-screen bg-gray-50 relative overflow-hidden">
-      <HydrationBoundary state={dehydratedState}>
+    <WordHydrator studyId={studyId}>
+      <div className="min-h-screen bg-gray-50 relative overflow-hidden">
         <BackButton/>
         {/* Main Content */}
         <div className="max-w-xl mx-auto relative">
@@ -42,7 +35,7 @@ export default async function WordPage({ searchParams }: Props) {
             wordTotal={wordTotal}
             />
         </div>
-      </HydrationBoundary>
-    </div>
+      </div>
+    </WordHydrator>
   )
 }
