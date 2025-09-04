@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 import { getWords } from "../_lib/getWords";
 import { getValidationWordResult } from "../_lib/getValidationWordResult";
+import { msUntilNextMidnight } from "../../_utils/msUntilNextMidnight";
 
 type Props = {
   studyId: string;
@@ -15,17 +16,18 @@ export default function BottomButton({ studyId, wordTotal }: Props) {
   const queryClient = useQueryClient();
 
   const prefetch = async () => {
+    const freshFor = msUntilNextMidnight();
     if (!studyId) return;
     await Promise.all([
       queryClient.prefetchQuery({
         queryKey: ["word", "learn", studyId],
         queryFn: getWords,
-        staleTime: 60_000,
+        staleTime: freshFor,
       }),
       queryClient.prefetchQuery({
         queryKey: ["word", "validation", studyId],
         queryFn: getValidationWordResult,
-        staleTime: 60_000,
+        staleTime: freshFor,
       }),
     ]);
   };

@@ -6,6 +6,7 @@ import { ChevronRight } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
 import { getPrChangedFiles } from "../[prId]/_lib/getPrChangedFiles";
 import { getPrComments } from "../[prId]/_lib/getPrComments";
+import { msUntilNextMidnight } from "@/app/(afterLogin)/_utils/msUntilNextMidnight";
 
 type Props = {
   pr: IPrCard;
@@ -17,17 +18,18 @@ export default function PrCard({ pr }: Props) {
   const queryClient = useQueryClient();
 
   const prefetch = async () => {
+    const freshFor = msUntilNextMidnight();
     if (!studyId) return;
     await Promise.all([
       queryClient.prefetchQuery({
         queryKey: ["pr", "changedFiles", String(pr.id)],
         queryFn: getPrChangedFiles,
-        staleTime: 60_000,
+        staleTime: freshFor,
       }),
       queryClient.prefetchQuery({
         queryKey: ["pr", "comments", String(pr.id)],
         queryFn: getPrComments,
-        staleTime: 60_000,
+        staleTime: freshFor,
       }),
     ]);
   };

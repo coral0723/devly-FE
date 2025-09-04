@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation"
 import { ChevronRight } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
 import { getInterview } from "../[id]/_lib/getInterview";
+import { msUntilNextMidnight } from "../../_utils/msUntilNextMidnight";
 
 type Props = {
   interview: IInterviewCard;
@@ -15,11 +16,12 @@ export default function InterviewCard({ interview }: Props) {
   const queryClient = useQueryClient();
 
   const prefetch = async () => {
+    const freshFor = msUntilNextMidnight();
     await Promise.all([
       queryClient.prefetchQuery({
         queryKey: ["interview", "learn", String(interview.id)],
         queryFn: getInterview,
-        staleTime: 60_000,
+        staleTime: freshFor,
       }),
     ]);
   };

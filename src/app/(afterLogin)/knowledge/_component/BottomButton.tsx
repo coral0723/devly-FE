@@ -4,6 +4,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation"
 import { getKnowledges } from "../_lib/getKnowledges";
 import { getValidationKnowledgeResult } from "../_lib/getValidationKnowledgeResult";
+import { msUntilNextMidnight } from "../../_utils/msUntilNextMidnight";
 
 type Props = {
   studyId: string;
@@ -15,17 +16,18 @@ export default function BottomButton({ studyId, knowledgeTotal }: Props) {
   const queryClient = useQueryClient();
 
   const prefetch = async () => {
+    const freshFor = msUntilNextMidnight();
     if (!studyId) return;
     await Promise.all([
       queryClient.prefetchQuery({
         queryKey: ["knowledge", "learn", studyId],
         queryFn: getKnowledges,
-        staleTime: 60_000,
+        staleTime: freshFor,
       }),
       queryClient.prefetchQuery({
         queryKey: ["knowledge", "validation", studyId],
         queryFn: getValidationKnowledgeResult,
-        staleTime: 60_000,
+        staleTime: freshFor,
       }),
     ]);
   };
