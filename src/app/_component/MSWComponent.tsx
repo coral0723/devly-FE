@@ -26,11 +26,6 @@ const mockingEnabledPromise =
         },
       })
       worker.use(...handlers);
-      if ((module as { hot?: { dispose(callback: () => void): void } }).hot) {
-        (module as { hot?: { dispose(callback: () => void): void } }).hot?.dispose(() => {
-          worker.stop();
-        });
-      }
       console.log(worker.listHandlers())
     })
     : Promise.resolve()
