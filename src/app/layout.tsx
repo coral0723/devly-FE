@@ -5,10 +5,15 @@ import { MSWProvider } from "./_component/MSWComponent";
 import RQProvider from "./(afterLogin)/_component/RQProvider";
 
 // SSR용 MSW 코드
-if (process.env.NEXT_RUNTIME === 'nodejs' && process.env.NEXT_PUBLIC_API_MOCKING !== 'false') {
-  const { server } = require('@/mocks/http');
-  server.listen();
-};
+if (
+  process.env.NEXT_RUNTIME === "nodejs" &&
+  process.env.NEXT_PUBLIC_API_MOCKING !== "false"
+) {
+  (async () => {
+    const { server } = await import("@/mocks/http");
+    server.listen();
+  })();
+}
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
