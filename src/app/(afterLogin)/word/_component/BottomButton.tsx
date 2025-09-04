@@ -12,17 +12,17 @@ type Props = {
 
 export default function BottomButton({ studyId, wordTotal }: Props) {
   const router = useRouter();
-  const qc = useQueryClient();
+  const queryClient = useQueryClient();
 
   const prefetch = async () => {
     if (!studyId) return;
     await Promise.all([
-      qc.prefetchQuery({
+      queryClient.prefetchQuery({
         queryKey: ["word", "learn", studyId],
         queryFn: getWords,
         staleTime: 60_000,
       }),
-      qc.prefetchQuery({
+      queryClient.prefetchQuery({
         queryKey: ["word", "validation", studyId],
         queryFn: getValidationWordResult,
         staleTime: 60_000,
