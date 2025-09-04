@@ -861,7 +861,7 @@ export const handlers = [
       })
     );
   }),
-  http.get(`${baseUrl}/mock/rankings`, async ({ }) => {
+  http.get(`/mock/rankings`, async ({ }) => {
     return new HttpResponse(
       JSON.stringify({
         code: "SUCCESS",
