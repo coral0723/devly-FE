@@ -46,8 +46,8 @@ export default function InterviewLearningContainer({ isReview }: Props) {
   const {data: interview, isLoading} = useQuery<Chat[], object, Chat[], [_1: string, _2: string, string]>({
     queryKey: ['interview', 'learn', id],
     queryFn: getInterview,
-    staleTime: 0,
-    refetchOnMount: 'always',
+    staleTime: 60 * 1000,
+    refetchOnMount: false,
   });
   
   //쿼리와 채팅 상태를 동시에 업데이트 하는 함수
