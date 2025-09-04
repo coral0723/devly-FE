@@ -15,6 +15,7 @@ import ExitConfirmModal from "./ExitConfirmModal";
 import CompletionModal from "./CompletionModal";
 import { authApi } from "@/app/_lib/axios";
 import ContentsWrapper from "@/app/_component/ContentsWrapper";
+import { msUntilNextMidnight } from "../../_utils/msUntilNextMidnight";
 
 type Props = {
   isReview: boolean;
@@ -33,15 +34,13 @@ export default function KnowledgeLearningContainer({ isReview }: Props) {
   const {data: knowledges, isLoading, refetch: knowledgeRefetch} = useQuery<Knowledge[], object, Knowledge[], [_1: string, _2: string, string]>({
     queryKey: ['knowledge', 'learn', studyId!],
     queryFn: getKnowledges,
-    staleTime: 0,
-    refetchOnMount: 'always',
+    staleTime: msUntilNextMidnight(),
   });
 
   const {data: validationResult, refetch: validationRefetch} = useQuery<ValidationResult, object, ValidationResult, [_1: string, _2: string, string]>({
     queryKey: ['knowledge', 'validation', studyId!],
     queryFn: getValidationKnowledgeResult,
-    staleTime: 0,
-    refetchOnMount: 'always',
+    staleTime: msUntilNextMidnight(),
     enabled: !isReview,
   });
 

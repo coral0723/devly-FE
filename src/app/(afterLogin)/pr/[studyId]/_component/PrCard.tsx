@@ -3,6 +3,10 @@
 import { PrCard as IPrCard } from "@/model/pr/PrCard";
 import { useRouter, useParams } from "next/navigation"
 import { ChevronRight } from "lucide-react";
+import { useQueryClient } from "@tanstack/react-query";
+import { getPrChangedFiles } from "../[prId]/_lib/getPrChangedFiles";
+import { getPrComments } from "../[prId]/_lib/getPrComments";
+import { msUntilNextMidnight } from "@/app/(afterLogin)/_utils/msUntilNextMidnight";
 
 type Props = {
   pr: IPrCard;
@@ -11,11 +15,39 @@ type Props = {
 export default function PrCard({ pr }: Props) {
   const router = useRouter();
   const studyId = useParams().studyId;
+  const queryClient = useQueryClient();
+
+  const prefetch = async () => {
+    const freshFor = msUntilNextMidnight();
+    if (!studyId) return;
+    await Promise.all([
+      queryClient.prefetchQuery({
+        queryKey: ["pr", "changedFiles", String(pr.id)],
+        queryFn: getPrChangedFiles,
+        staleTime: freshFor,
+      }),
+      queryClient.prefetchQuery({
+        queryKey: ["pr", "comments", String(pr.id)],
+        queryFn: getPrComments,
+        staleTime: freshFor,
+      }),
+    ]);
+  };
+
+  const handleClick = async () => {
+    if (studyId && pr) {
+      // 모바일에서는 hover가 없으니 클릭 직전에라도 prefetch
+      await prefetch();
+      router.replace(`/pr/${studyId}/${pr.id}`);
+    } else {
+      router.replace("/home");
+    }
+  };
 
   return (
     <div
       key={pr.id}
-      onClick={() => router.replace(`/pr/${studyId}/${pr.id}`)}
+      onClick={handleClick}
       className="bg-white rounded-xl border border-gray-200 p-4 space-y-3 hover:border-purple-200 cursor-pointer"
     >
       <div className="flex items-start justify-between">

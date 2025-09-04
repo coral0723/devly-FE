@@ -10,19 +10,22 @@ const mockingEnabledPromise =
         return;
       }
       await worker.start({
+        serviceWorker: { url: '/mockServiceWorker.js' },
         onUnhandledRequest(request, print) {
-          if (request.url.includes('_next')) {
+          const url = request.url;
+          if (
+            url.includes('/_next') ||
+            url.includes('_rsc=') ||
+            url.endsWith('/favicon.ico') ||
+            url.includes('/fonts') ||
+            url.includes('/images')
+          ) {
             return
           }
-          print.warning()
+          print.warning();
         },
       })
       worker.use(...handlers);
-      if ((module as { hot?: { dispose(callback: () => void): void } }).hot) {
-        (module as { hot?: { dispose(callback: () => void): void } }).hot?.dispose(() => {
-          worker.stop();
-        });
-      }
       console.log(worker.listHandlers())
     })
     : Promise.resolve()

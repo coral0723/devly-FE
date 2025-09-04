@@ -23,6 +23,7 @@ import PrMainContent from "./PrMainContent"
 import axios from "axios"
 import ExitConfirmModal from "./ExitConfirmModal"
 import ContentsWrapper from "@/app/_component/ContentsWrapper"
+import { msUntilNextMidnight } from "@/app/(afterLogin)/_utils/msUntilNextMidnight"
 // import { FinalFeedback } from "@/model/pr/FinalFeedback"
 // import FinalScoreModal from "./FinalScoreModal"
 
@@ -48,29 +49,25 @@ export default function PrLearningContainer({ isReview, userId = undefined }: Pr
   const {data: prCards, isLoading: isCardsLoading} = useQuery<PrCard, object, PrCard, [_1: string, _2: string, string]>({
     queryKey: ['pr', 'cards', studyId as string],
     queryFn: getPrCards,
-    staleTime: 0,
-    refetchOnMount: 'always',
+    staleTime: msUntilNextMidnight(),
   });
 
   const {data: prChangedFiles, isLoading: isChangedFilesLoading} = useQuery<PrChangedFiles, object, PrChangedFiles, [_1: string, _2: string, string]>({
     queryKey: ['pr', 'changedFiles', prId as string],
     queryFn: getPrChangedFiles,
-    staleTime: 0,
-    refetchOnMount: 'always',
+    staleTime: msUntilNextMidnight(),
   });
 
   const {data: prComments, isLoading: isCommentsLoading} = useQuery<PrComments, object, PrComments, [_1: string, _2: string, string]>({
     queryKey: ['pr', 'comments', prId as string],
     queryFn: getPrComments,
-    staleTime: 0,
-    refetchOnMount: 'always',
+    staleTime: msUntilNextMidnight(),
   });
 
   const {data: prHistory, isLoading: isPrHistoryLoading} = useQuery<PrHistory, object, PrHistory, [_1: string, _2: string, string, string]>({
     queryKey: ['pr', 'history', prId as string, userId as string],
     queryFn: getPrHistory,
-    staleTime: 0,
-    refetchOnMount: 'always',
+    staleTime: 60 * 1000,
     enabled: !!userId,
   });
 

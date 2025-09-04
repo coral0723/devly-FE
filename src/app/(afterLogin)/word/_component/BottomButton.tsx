@@ -1,26 +1,53 @@
-"use client"
+"use client";
 
-import { useRouter } from "next/navigation"
+import { useRouter } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
+import { getWords } from "../_lib/getWords";
+import { getValidationWordResult } from "../_lib/getValidationWordResult";
+import { msUntilNextMidnight } from "../../_utils/msUntilNextMidnight";
 
 type Props = {
   studyId: string;
   wordTotal: string;
-}
+};
 
-export default function BottomButton({studyId, wordTotal}: Props) {
+export default function BottomButton({ studyId, wordTotal }: Props) {
   const router = useRouter();
-  
+  const queryClient = useQueryClient();
+
+  const prefetch = async () => {
+    const freshFor = msUntilNextMidnight();
+    if (!studyId) return;
+    await Promise.all([
+      queryClient.prefetchQuery({
+        queryKey: ["word", "learn", studyId],
+        queryFn: getWords,
+        staleTime: freshFor,
+      }),
+      queryClient.prefetchQuery({
+        queryKey: ["word", "validation", studyId],
+        queryFn: getValidationWordResult,
+        staleTime: freshFor,
+      }),
+    ]);
+  };
+
+  const handleClick = async () => {
+    if (studyId && wordTotal) {
+      // 모바일에서는 hover가 없으니 클릭 직전에라도 prefetch
+      await prefetch();
+      router.replace(`/word/learn?studyId=${studyId}`);
+    } else {
+      router.replace("/home");
+    }
+  };
+
   return (
     <div className="fixed bottom-0 left-0 right-0 p-2 bg-white border border-gray-200 z-10">
       <div className="max-w-xl mx-auto">
         <button
-          onClick={() => {
-            if(studyId && wordTotal) {
-              router.replace(`/word/learn?studyId=${studyId}`);
-            } else {
-              router.replace('/home');
-            }
-          }}
+          onMouseEnter={prefetch} // 데스크톱 hover prefetch
+          onClick={handleClick}   // 모바일 fallback
           className={`w-full py-3 text-white rounded-xl text-lg font-medium active:scale-[0.98] transition-all 
           ${wordTotal !== "5" ? "bg-rose-500 hover:bg-rose-600 " : "bg-green-500 hover:bg-green-600"}`}
         >
@@ -28,5 +55,5 @@ export default function BottomButton({studyId, wordTotal}: Props) {
         </button>
       </div>
     </div>
-  )
+  );
 }

@@ -3,6 +3,9 @@
 import { InterviewCard as IInterviewCard } from "@/model/interview/InterviewCard";
 import { useRouter } from "next/navigation"
 import { ChevronRight } from "lucide-react";
+import { useQueryClient } from "@tanstack/react-query";
+import { getInterview } from "../[id]/_lib/getInterview";
+import { msUntilNextMidnight } from "../../_utils/msUntilNextMidnight";
 
 type Props = {
   interview: IInterviewCard;
@@ -10,11 +13,33 @@ type Props = {
 
 export default function InterviewCard({ interview }: Props) {
   const router = useRouter();
+  const queryClient = useQueryClient();
+
+  const prefetch = async () => {
+    const freshFor = msUntilNextMidnight();
+    await Promise.all([
+      queryClient.prefetchQuery({
+        queryKey: ["interview", "learn", String(interview.id)],
+        queryFn: getInterview,
+        staleTime: freshFor,
+      }),
+    ]);
+  };
+
+  const handleClick = async () => {
+    if (interview) {
+      // 모바일에서는 hover가 없으니 클릭 직전에라도 prefetch
+      await prefetch();
+      router.replace(`/interview/${interview.id}`);
+    } else {
+      router.replace("/home");
+    }
+  };
 
   return (
     <div
       key={interview.id}
-      onClick={() => router.replace(`/interview/${interview.id}`)}
+      onClick={handleClick}
       className="bg-white rounded-xl border border-gray-200 p-4 space-y-3 hover:border-orange-200 cursor-pointer"
     >
       <div className="flex items-start justify-between">

@@ -18,6 +18,7 @@ import { ExitConfirmModal } from "./ExitConfirmModal";
 import { CompletionModal } from "./CompletionModal";
 import axios from "axios";
 import ContentsWrapper from "@/app/_component/ContentsWrapper";
+import { msUntilNextMidnight } from "../../_utils/msUntilNextMidnight";
 
 type Props = {
   isReview: boolean;
@@ -37,15 +38,13 @@ export default function WordLearningContainer({ isReview }: Props) {
   const {data: words, isLoading, refetch: wordsRefetch} = useQuery<Word[], object, Word[], [_1: string, _2: string, string]>({
     queryKey: ['word', 'learn', studyId!],
     queryFn: getWords,
-    staleTime: 0,
-    refetchOnMount: 'always',
+    staleTime: msUntilNextMidnight(),
   });
   
   const {data: validationResult, refetch: validationRefetch} = useQuery<ValidationResult, object, ValidationResult, [_1: string, _2: string, string]>({
     queryKey: ['word', 'validation', studyId!],
     queryFn: getValidationWordResult,
-    staleTime: 0,
-    refetchOnMount: 'always',
+    staleTime: msUntilNextMidnight(),
     enabled: !isReview,
   });
 

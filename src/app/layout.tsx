@@ -5,10 +5,10 @@ import { MSWProvider } from "./_component/MSWComponent";
 import RQProvider from "./(afterLogin)/_component/RQProvider";
 
 // SSR용 MSW 코드
-// if (process.env.NEXT_RUNTIME === 'nodejs' && process.env.NODE_ENV !== 'production' && process.env.NEXT_PUBLIC_MSW_ENABLED !== 'false') {
-//   const { server } = require('@/mocks/http');
-//   server.listen();
-// };
+if (process.env.NEXT_RUNTIME === 'nodejs' && process.env.NEXT_PUBLIC_API_MOCKING !== 'false') {
+  const { server } = require('@/mocks/http');
+  server.listen();
+};
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,6 +29,7 @@ export const viewport = {
 };
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://devly-ten.vercel.app"),
   title: { default: "devly", template: "%s · devly" },
   description: "개발자 학습을 더 쉽게",
   icons: {
