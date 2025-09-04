@@ -29,6 +29,7 @@ export const viewport = {
 };
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://devly-ten.vercel.app"),
   title: { default: "devly", template: "%s · devly" },
   description: "개발자 학습을 더 쉽게",
   icons: {
