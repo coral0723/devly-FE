@@ -2,16 +2,8 @@ import axios from 'axios';
 
 // 인증이 필요한 요청을 위한 인스턴스
 const authApi = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_BACKEND_URL
-});
-
-// 인증 인스턴스 추가
-authApi.interceptors.request.use((config) => {
-  const token = localStorage.getItem('accessToken');
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
+  baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
+  withCredentials: true, //쿠키 자동 전송
 });
 
 export { authApi };
@@ -27,7 +19,6 @@ authApi.interceptors.response.use(
     if (error.code === "ERR_NETWORK" || !error.response) {
       console.log("네트워크 오류 또는 응답 없음");
       alert("서버 연결에 문제가 있거나 토큰이 만료되었습니다. 다시 로그인해주세요.");
-      localStorage.removeItem('accessToken');
       window.location.replace('/');
       return Promise.reject(error);
     }
@@ -39,7 +30,6 @@ authApi.interceptors.response.use(
           error.response.status === 302
         ) {
         alert("토큰이 만료되었습니다. 다시 로그인해주세요.");
-        localStorage.removeItem('accessToken');
         
         // 인터셉터 내부에서는 router 사용이 불가능하므로 window.location 사용
         window.location.replace('/');
