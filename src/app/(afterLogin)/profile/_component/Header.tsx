@@ -1,19 +1,21 @@
 "use client"
 
+import axios from 'axios';
 import { ArrowLeft, LogOut } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 export default function Header() {
   const router = useRouter();
 
-  const handleLogout = () => {
-  // localStorage에서 accessToken 삭제
-  localStorage.removeItem('accessToken');
+  const handleLogout = async () => {
+    try {
+      await axios.post("/api/mockLogout"); // 쿠키 삭제 API 호출
+      router.push("/"); // 로그아웃 후 리다이렉트
+    } catch (err) {
+      console.error("로그아웃 실패:", err);
+    }
+  };
 
-  // 로그아웃 후 로그인 페이지로 이동 (필요에 따라 경로 변경 가능)
-  router.push('/');
-};
-  
   return (
     <div className="bg-white p-4 border-b border-gray-200">
       <div className="flex items-center justify-between">

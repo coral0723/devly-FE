@@ -1,11 +1,12 @@
 "use client"
+import axios from "axios";
 import { useRouter } from "next/navigation"
 
 export default function SignInBtn() {
   const router = useRouter();
-  const handleLogin = () => {
+  const handleLogin = async () => {
     // window.location.replace(`${process.env.NEXT_PUBLIC_BACKEND_URL}/oauth2/authorization/google?developerType=2`);
-    localStorage.setItem('accessToken', 'guest');
+    await axios.post("/api/mockLogin");
     router.replace('/home');
   }
   return (
