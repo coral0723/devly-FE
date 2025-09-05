@@ -14,7 +14,7 @@ export default function MockPr({ onModal }: Props) {
       {onModal && (
         <div className="absolute inset-0 bg-black bg-opacity-30 z-20 overflow-hidden">
           <div className="h-[calc(100vh-6rem)] flex flex-col bg-gray-50 max-w-4xl overflow-hidden sm:rounded-lg">
-            <div className="p-4 mb-4 bg-white border-b border-gray-200 flex justify-between items-center">
+            <div className="p-4 mb-2 md:mb-4 bg-white border-b border-gray-200 flex justify-between items-center">
               <h3 className="font-semibold text-sm md:text-lg text-gray-800">변경된 파일</h3>
               <button
                 className="px-2 py-0.7 md:px-3 md:py-1 text-sm border border-gray-300 rounded"
@@ -90,7 +90,7 @@ export default function MockPr({ onModal }: Props) {
         </div>
         <div className="relative">
           <div
-            className="w-full h-22 md:h-32 p-2 md:p-3 border border-gray-300 rounded-lg text-[8px] md:text-sm bg-white whitespace-pre-wrap overflow-auto"
+            className="w-full h-22 md:h-32 p-2 md:p-3 border border-gray-200 rounded-lg text-[8px] md:text-sm bg-white whitespace-pre-wrap overflow-auto"
           >
             refactor: 로그인 흐름 리팩토링{'\n'}- 가독성과 오류 처리 개선
           </div>
