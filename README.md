@@ -35,8 +35,9 @@
 
 ### 서버/클라이언트 컴포넌트 & 데이터 패칭
 - [Next.js 서버 컴포넌트, 정말 껍데기처럼만 써도 될까?](https://likeornament.tistory.com/19)
-- [서버 컴포넌트에서 prefetchQuery가 실패하는 이유와 useQuery가 만들어낸 착각](https://likeornament.tistory.com/17)
 - [Laytout에서 클라이언트 컴포넌트로 감쌀 때 렌더링과 성능 이슈 정리](https://likeornament.tistory.com/20)
+- [서버 컴포넌트에서 prefetchQuery가 실패하는 이유와 useQuery가 만들어낸 착각](https://likeornament.tistory.com/17)
+- [로딩 시간 58% 감소, 스피너 100% 제거 — prefetch가 바꾼 UX](https://likeornament.tistory.com/29)
 
 ### UI/레이아웃 & 재사용
 - [정확한 가운데와 눈으로 보는 가운데, 어느 쪽을 선택할까?](https://likeornament.tistory.com/27)
