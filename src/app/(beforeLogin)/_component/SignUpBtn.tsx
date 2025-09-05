@@ -1,13 +1,14 @@
 "use client"
 
+import axios from "axios";
 import { useRouter } from "next/navigation";
 
 export default function SignUpBtn() {
   const router = useRouter();
 
-  const handleSignup = () => {
+  const handleSignup = async () => {
     // router.push('/selectDev');
-    localStorage.setItem('accessToken', 'guest');
+    await axios.post("/api/mockLogin");
     router.replace('/home');
   };
   
