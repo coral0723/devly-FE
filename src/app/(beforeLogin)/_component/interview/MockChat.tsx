@@ -33,7 +33,7 @@ export default function MockChat() {
           <div className="flex items-center justify-between">
             <div className="flex items-center">
               <button
-                className="p-2 -ml-2 hover:bg-gray-100 rounded-full"
+                className="p-2 -ml-2 rounded-full"
                 disabled={true}
               >
                 <svg xmlns="http://www.w3.org/2000/svg" 
@@ -74,7 +74,7 @@ export default function MockChat() {
       <div className="absolute bottom-0 left-0 right-0 p-2 bg-white border border-gray-200 z-10">
         <div className="max-w-xl mx-auto">
           <button 
-            className={`w-full py-1 md:py-3 text-white text-xs md:text-base font-medium rounded-lg flex items-center justify-center bg-red-500 hover:bg-red-600`}
+            className={`w-full py-1 md:py-3 text-white text-xs md:text-base font-medium rounded-lg flex items-center justify-center bg-red-500`}
             disabled={true}
           >
             <Mic className="mr-2 h-3 w-3 md:h-4 md:w-4" />
