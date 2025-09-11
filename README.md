@@ -40,6 +40,7 @@
 - [콘텐츠 표시 완료 시간 58% 감소, 로딩 스피너 100% 제거 — prefetch가 바꾼 UX](https://likeornament.tistory.com/29)
 
 ### UI/레이아웃 & 재사용
+- [교실에서 찾은 불편함, 내 프로젝트 UI는 괜찮을까?](https://likeornament.tistory.com/30)
 - [정확한 가운데와 눈으로 보는 가운데, 어느 쪽을 선택할까?](https://likeornament.tistory.com/27)
 - [Next.js 프로젝트에서 학습 & 복습 페이지 컴포넌트 재사용하기](https://likeornament.tistory.com/28)
 
