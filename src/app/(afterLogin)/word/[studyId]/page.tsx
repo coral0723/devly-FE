@@ -1,18 +1,21 @@
 import FloatingIcons from './_component/FloatingIcons';
 import BottomButton from './_component/BottomButton';
-import BackButton from '../_component/BackButton';
+import BackButton from '../../_component/BackButton';
 import LearningSection from './_component/LearningSection';
 import ReviewSection from './_component/ReviewSection';
 
 type Props = {
-  searchParams: Promise<{
+  params: Promise<{
     studyId: string;
+  }>;
+  searchParams: Promise<{
     wordTotal: string;
-  }>
+  }>;
 }
 
-export default async function WordPage({ searchParams }: Props) {
-  const { studyId, wordTotal } = await searchParams;
+export default async function WordPage({ params, searchParams }: Props) {
+  const { studyId } = await params;
+  const { wordTotal } = await searchParams;
 
   return (
     <div className="min-h-screen bg-gray-50 relative overflow-hidden">

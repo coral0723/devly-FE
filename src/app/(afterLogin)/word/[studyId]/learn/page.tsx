@@ -2,7 +2,14 @@ import { Suspense } from "react";
 import WordLearningContainer from "../_component/WordLearningContainer";
 import LoadingSpinner from "@/app/_component/LoadingSpinner";
 
-export default async function WordLearnPage() {
+type Props = {
+  params: Promise<{
+    studyId: string;
+  }>;
+}
+
+export default async function WordLearnPage({ params }: Props) {
+  const { studyId } = await params;
 
   return (
     <Suspense fallback={
@@ -10,7 +17,7 @@ export default async function WordLearnPage() {
         <LoadingSpinner size={"md"}/>
       </div>
     }>
-      <WordLearningContainer isReview={false}/>
+      <WordLearningContainer studyId={studyId} isReview={false}/>
     </Suspense>
   )
 }

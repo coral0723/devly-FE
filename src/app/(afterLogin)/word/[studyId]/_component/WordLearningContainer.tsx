@@ -18,13 +18,14 @@ import { ExitConfirmModal } from "./ExitConfirmModal";
 import { CompletionModal } from "./CompletionModal";
 import axios from "axios";
 import ContentsWrapper from "@/app/_component/ContentsWrapper";
-import { msUntilNextMidnight } from "../../_utils/msUntilNextMidnight";
+import { msUntilNextMidnight } from "../../../_utils/msUntilNextMidnight";
 
 type Props = {
+  studyId: string;
   isReview: boolean;
 }
 
-export default function WordLearningContainer({ isReview }: Props) {
+export default function WordLearningContainer({ studyId, isReview }: Props) {
   const [currentWordIndex, setCurrentWordIndex] = useState<number>(0);
   const [step, setStep] = useState<'word' | 'context' | 'quiz'>('word');
   const [showExitConfirm, setShowExitConfirm] = useState<boolean>(false);
@@ -33,8 +34,7 @@ export default function WordLearningContainer({ isReview }: Props) {
   const [incorrectIds, setIncorrectIds] = useState<number[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
-  const studyId = useSearchParams().get('studyId');
-  
+
   const {data: words, isLoading, refetch: wordsRefetch} = useQuery<Word[], object, Word[], [_1: string, _2: string, string]>({
     queryKey: ['word', 'learn', studyId!],
     queryFn: getWords,
