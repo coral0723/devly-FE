@@ -4,9 +4,14 @@ import PrLearningContainer from "../../_component/PrLearningContainer";
 import { useParams } from "next/navigation";
 
 export default function PrSolutionPage() {
-  const { userId } = useParams();
+  const { studyId, prId, userId } = useParams();
 
   return (
-    <PrLearningContainer isReview={false} userId={userId as string}/>
+    <PrLearningContainer 
+      studyId={studyId as string}
+      prId={prId as string}
+      userId={userId as string}
+      isReview={false}
+    />
   )
 }

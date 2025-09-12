@@ -7,7 +7,6 @@ import { useEffect, useState } from "react"
 import { Feedback } from "@/model/pr/Feedback"
 import { PrChangedFiles } from "@/model/pr/PrChangedFiles"
 import { useMutation, useQuery } from "@tanstack/react-query"
-import { useParams } from "next/navigation"
 import { getPrCards } from "../../_lib/getPrCards"
 import { PrCard } from "@/model/pr/PrCard"
 import { getPrChangedFiles } from "../_lib/getPrChangedFiles"
@@ -28,23 +27,22 @@ import { msUntilNextMidnight } from "@/app/(afterLogin)/_utils/msUntilNextMidnig
 // import FinalScoreModal from "./FinalScoreModal"
 
 type Props = {
+  studyId: string;
+  prId: string;
   isReview: boolean;
   userId?: string;
 }
 
-export default function PrLearningContainer({ isReview, userId = undefined }: Props) {
+export default function PrLearningContainer({ studyId, prId, isReview, userId = undefined }: Props) {
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [showExitConfirm, setShowExitConfirm] = useState<boolean>(false);
   const [showCompletion, setShowCompletion] = useState<boolean>(false);
   const [replies, setReplies] = useState<string[]>([]); //답안들 저장용
   const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
   const [showFiles, setShowFiles] = useState<boolean>(false); //"커밋 내역" Modal
-  const { studyId, prId } = useParams();
   const router = useRouter();
   // const [showFinalScore, setShowFinalScore] = useState<boolean>(false); //"점수 포함된 최종 결과" Modal
   // const [finalFeedback, setFinalFeedback] = useState<FinalFeedback>(); 
-
-  console.log(studyId, prId);
 
   const {data: prCards, isLoading: isCardsLoading} = useQuery<PrCard, object, PrCard, [_1: string, _2: string, string]>({
     queryKey: ['pr', 'cards', studyId as string],

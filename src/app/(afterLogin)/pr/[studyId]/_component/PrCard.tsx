@@ -38,7 +38,7 @@ export default function PrCard({ pr }: Props) {
     if (studyId && pr) {
       // 모바일에서는 hover가 없으니 클릭 직전에라도 prefetch
       await prefetch();
-      router.replace(`/pr/${studyId}/${pr.id}`);
+      router.replace(`/pr/${studyId}/${pr.id}/learn`);
     } else {
       router.replace("/home");
     }

@@ -1,6 +1,6 @@
-import { Suspense } from "react"
-import PrLearningContainer from "../_component/PrLearningContainer"
-import LoadingSpinner from "@/app/_component/LoadingSpinner"
+import { Suspense } from 'react';
+import PrLearningContainer from '../_component/PrLearningContainer';
+import LoadingSpinner from '@/app/_component/LoadingSpinner';
 
 type Props = {
   params: Promise<{
@@ -9,7 +9,7 @@ type Props = {
   }>
 }
 
-export default async function PrReviewPage({ params }: Props) {
+export default async function PRLearnPage({ params }: Props) {
   const { studyId, prId } = await params;
 
   return (
@@ -21,8 +21,8 @@ export default async function PrReviewPage({ params }: Props) {
       <PrLearningContainer 
         studyId={studyId}
         prId={prId}
-        isReview={true}
+        isReview={false}
       />
     </Suspense>
-  )
-}
+  );
+};
