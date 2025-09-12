@@ -96,7 +96,7 @@ export default function MainFeatures() {
       <div
           className={`bg-white rounded-2xl border border-gray-200 p-5 space-y-2 transition-all
             ${tasks.interview.completed === false && "cursor-pointer hover:bg-orange-50 hover:border-orange-200 active:scale-95"}`}
-          onClick={tasks.interview.completed ? undefined : (() => {router.replace(`/interview?studyId=${tasks.interview.studyId}`)})}
+          onClick={tasks.interview.completed ? undefined : (() => {router.replace(`/interview/${tasks.interview.studyId}`)})}
       >
         <div className="flex items-center justify-between">
           <MessageSquare size={24} className="text-orange-500"/>

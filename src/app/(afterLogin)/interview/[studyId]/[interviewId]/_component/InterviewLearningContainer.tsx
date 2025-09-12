@@ -3,7 +3,7 @@
 import { Chat } from '@/model/interview/Chat';
 import { SpeechRecognition as ISpeechRecognition } from '@/model/Speech';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useParams, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { getInterview } from '../_lib/getInterview';
 import axios from 'axios';
@@ -24,10 +24,11 @@ declare global {
 }
 
 type Props = {
+  interviewId: string;
   isReview: boolean;
 }
 
-export default function InterviewLearningContainer({ isReview }: Props) {
+export default function InterviewLearningContainer({ interviewId, isReview }: Props) {
   const [timeLeft, setTimeLeft] = useState<number>(30); // 30초
   const [showTimeoutModal, setShowTimeoutModal] = useState<boolean>(false);
   const [showExitConfirm, setShowExitConfirm] = useState<boolean>(false);
@@ -41,11 +42,9 @@ export default function InterviewLearningContainer({ isReview }: Props) {
   const queryClient = useQueryClient();
   const router = useRouter();
   const temporaryMessageId = useRef<number | null>(null);
-  const params = useParams();
-  const id = params.id as string;
 
   const {data: interview, isLoading} = useQuery<Chat[], object, Chat[], [_1: string, _2: string, string]>({
-    queryKey: ['interview', 'learn', id],
+    queryKey: ['interview', 'learn', interviewId],
     queryFn: getInterview,
     staleTime: msUntilNextMidnight(),
   });
@@ -55,7 +54,7 @@ export default function InterviewLearningContainer({ isReview }: Props) {
     const queryCache = queryClient.getQueryCache();
     const queryKeys = queryCache.getAll().map(cache => cache.queryKey);
     queryKeys.forEach((queryKey) => {
-      if (queryKey[0] === "interview" && queryKey[1] === "learn" && queryKey[2] === id) {
+      if (queryKey[0] === "interview" && queryKey[1] === "learn" && queryKey[2] === interviewId) {
         queryClient.setQueryData(queryKey, newChats);
         setChats(newChats);
       }
@@ -110,7 +109,7 @@ export default function InterviewLearningContainer({ isReview }: Props) {
       const queryCache = queryClient.getQueryCache();
       const queryKeys = queryCache.getAll().map(cache => cache.queryKey);
       queryKeys.forEach((queryKey) => {
-        if(queryKey[0] === "interview" && queryKey[1] === "learn" && queryKey[2] === id) {
+        if(queryKey[0] === "interview" && queryKey[1] === "learn" && queryKey[2] === interviewId) {
           const value: Chat[] = queryClient.getQueryData(queryKey) ?? []; //undefined라면 빈 배열 추가
           const shallow = [...value];
           if (temporaryMessageId.current) {
@@ -136,7 +135,7 @@ export default function InterviewLearningContainer({ isReview }: Props) {
       const queryCache = queryClient.getQueryCache();
       const queryKeys = queryCache.getAll().map(cache => cache.queryKey);
       queryKeys.forEach((queryKey) => {
-        if(queryKey[0] === "interview" && queryKey[1] === "learn" && queryKey[2] === id) {
+        if(queryKey[0] === "interview" && queryKey[1] === "learn" && queryKey[2] === interviewId) {
           const value: Chat[] = queryClient.getQueryData(queryKey) ?? [];
           const shallow = [...value];
           // 마지막 메시지(빈 AI 응답)를 실제 응답으로 교체
@@ -178,7 +177,7 @@ export default function InterviewLearningContainer({ isReview }: Props) {
          const queryCache = queryClient.getQueryCache();
          const queryKeys = queryCache.getAll().map(cache => cache.queryKey);
          queryKeys.forEach((queryKey) => {
-           if (queryKey[0] === "interview" && queryKey[1] === "learn" && queryKey[2] === id) {
+           if (queryKey[0] === "interview" && queryKey[1] === "learn" && queryKey[2] === interviewId) {
              const value: Chat[] = queryClient.getQueryData(queryKey) ?? [];
              const newChats = [...value, newMessage];
              queryClient.setQueryData(queryKey, newChats);
@@ -207,7 +206,7 @@ export default function InterviewLearningContainer({ isReview }: Props) {
            const queryCache = queryClient.getQueryCache();
            const queryKeys = queryCache.getAll().map(cache => cache.queryKey);
            queryKeys.forEach((queryKey) => {
-             if (queryKey[0] === "interview" && queryKey[1] === "learn" && queryKey[2] === id) {
+             if (queryKey[0] === "interview" && queryKey[1] === "learn" && queryKey[2] === interviewId) {
                const value: Chat[] = queryClient.getQueryData(queryKey) ?? [];
                const shallow = [...value];
                const messageIndex = shallow.findIndex(chat => chat.id === temporaryMessageId.current);
@@ -286,7 +285,7 @@ export default function InterviewLearningContainer({ isReview }: Props) {
         <TimeoutModal
           onClose={() => {
             queryClient.removeQueries({
-              queryKey: ["interview", "learn", id],
+              queryKey: ["interview", "learn", interviewId],
               exact: true
             });
             setChats([]);
@@ -310,7 +309,7 @@ export default function InterviewLearningContainer({ isReview }: Props) {
           }}
           onExit={() => {
             queryClient.removeQueries({
-              queryKey: ["interview", "learn", id],
+              queryKey: ["interview", "learn", interviewId],
               exact: true
             });
             setChats([]);

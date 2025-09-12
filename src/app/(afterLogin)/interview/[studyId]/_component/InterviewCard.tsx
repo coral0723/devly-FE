@@ -1,11 +1,11 @@
 "use client"
 
 import { InterviewCard as IInterviewCard } from "@/model/interview/InterviewCard";
-import { useRouter } from "next/navigation"
+import { useRouter, useParams } from "next/navigation"
 import { ChevronRight } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
-import { getInterview } from "../[id]/_lib/getInterview";
-import { msUntilNextMidnight } from "../../_utils/msUntilNextMidnight";
+import { getInterview } from "../[interviewId]/_lib/getInterview";
+import { msUntilNextMidnight } from "../../../_utils/msUntilNextMidnight";
 
 type Props = {
   interview: IInterviewCard;
@@ -13,6 +13,7 @@ type Props = {
 
 export default function InterviewCard({ interview }: Props) {
   const router = useRouter();
+  const studyId = useParams().studyId;
   const queryClient = useQueryClient();
 
   const prefetch = async () => {
@@ -30,7 +31,7 @@ export default function InterviewCard({ interview }: Props) {
     if (interview) {
       // 모바일에서는 hover가 없으니 클릭 직전에라도 prefetch
       await prefetch();
-      router.replace(`/interview/${interview.id}`);
+      router.replace(`/interview/${studyId}/${interview.id}/learn`);
     } else {
       router.replace("/home");
     }

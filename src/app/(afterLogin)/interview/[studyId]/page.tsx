@@ -1,17 +1,17 @@
 // import UnderDevelopment from "../_component/UnderDevelopment";
 import InterviewCardsArea from "./_component/InterviewCardsArea";
-import BottomNavigation from "../_component/BottomNavigation";
+import BottomNavigation from "../../_component/BottomNavigation";
 import Header from "./_component/Header";
 import ContentsWrapper from "@/app/_component/ContentsWrapper";
 
 type Props = {
-  searchParams: Promise<{
+  params: Promise<{
     studyId: string;
   }>
 }
 
-export default async function InterviewPage({ searchParams }: Props) {
-  const { studyId } = await searchParams;
+export default async function InterviewPage({ params }: Props) {
+  const { studyId } = await params;
 
   // 미완성 기능일 때 보여주는 컴포넌트
   // const isDevelopment = process.env.NODE_ENV === 'development';
