@@ -302,7 +302,7 @@ export default function InterviewLearningContainer({ interviewId, isReview }: Pr
               exact: true
             });
             setChats([]);
-          router.replace('/home');
+          router.replace(isReview ? '/review' : '/home');
         }}
         />
       )}
@@ -318,7 +318,7 @@ export default function InterviewLearningContainer({ interviewId, isReview }: Pr
               exact: true
             });
             setChats([]);
-            router.replace('/home');
+            router.replace(isReview ? '/review' : '/home');
           }}/>
       )}
     </div>
