@@ -297,6 +297,11 @@ export default function InterviewLearningContainer({ interviewId, isReview }: Pr
         <CompletionModal
         isReview={isReview}
         onClose={() => {
+          queryClient.removeQueries({
+              queryKey: ["interview", "learn", interviewId],
+              exact: true
+            });
+            setChats([]);
           router.replace('/home');
         }}
         />

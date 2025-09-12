@@ -15,9 +15,9 @@ export default function Log({studyLog}: Props) {
     if(log.study === 'pr') {
       router.push(`/${log.study}/${log.id}/${log.prId}/review`);
     } else if (log.study === 'interview') {
-      router.push(`/${log.study}/${log.id}/review`)
+      router.push(`/${log.study}/${log.id}/${log.interviewId}/review`)
     } else {
-      router.push(`/${log.study}/review?studyId=${log.id}`);
+      router.push(`/${log.study}/${log.id}/review`);
     }
   }
 

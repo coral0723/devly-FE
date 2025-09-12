@@ -922,6 +922,7 @@ export const handlers = [
           },
           {
             id: 4,
+            interviewId: 1,
             study: 'interview',
             title: "React Vitual DOM",
             exp: 200
