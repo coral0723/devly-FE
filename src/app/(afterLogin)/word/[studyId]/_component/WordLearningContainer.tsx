@@ -2,7 +2,6 @@
 
 import { Word } from "@/model/word/Word";
 import { useQuery } from "@tanstack/react-query";
-import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import { getWords } from "../_lib/getWords";
