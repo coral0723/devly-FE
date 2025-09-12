@@ -4,7 +4,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation"
 import { getKnowledges } from "../_lib/getKnowledges";
 import { getValidationKnowledgeResult } from "../_lib/getValidationKnowledgeResult";
-import { msUntilNextMidnight } from "../../_utils/msUntilNextMidnight";
+import { msUntilNextMidnight } from "../../../_utils/msUntilNextMidnight";
 
 type Props = {
   studyId: string;
@@ -36,7 +36,7 @@ export default function BottomButton({ studyId, knowledgeTotal }: Props) {
     if (studyId && knowledgeTotal) {
       // 모바일에서는 hover가 없으니 클릭 직전에라도 prefetch
       await prefetch();
-      router.replace(`/knowledge/learn?studyId=${studyId}`);
+      router.replace(`/knowledge/${studyId}/learn`);
     } else {
       router.replace("/home");
     }

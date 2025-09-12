@@ -52,7 +52,7 @@ export default function MainFeatures() {
       <div
           className={`bg-white rounded-2xl border border-gray-200 p-5 space-y-3 transition-all
             ${tasks.knowledge.completed === false && "cursor-pointer hover:bg-blue-50 hover:border-blue-200 active:scale-95"}`}
-          onClick={tasks.knowledge.completed ? undefined : (() => {router.replace(`/knowledge?studyId=${tasks.knowledge.studyId}&knowledgeTotal=${tasks.knowledge.total}`)})}
+          onClick={tasks.knowledge.completed ? undefined : (() => {router.replace(`/knowledge/${tasks.knowledge.studyId}?knowledgeTotal=${tasks.knowledge.total}`)})}
       >
         <div className="flex items-center justify-between">
           <Lightbulb size={32} className="text-blue-500"/>

@@ -2,7 +2,7 @@
 
 import { Knowledge } from "@/model/knowledge/Knowledge";
 import { useQuery } from "@tanstack/react-query";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import { getKnowledges } from "../_lib/getKnowledges";
 import { ValidationResult } from "@/model/ValidationResult";
@@ -15,13 +15,14 @@ import ExitConfirmModal from "./ExitConfirmModal";
 import CompletionModal from "./CompletionModal";
 import { authApi } from "@/app/_lib/axios";
 import ContentsWrapper from "@/app/_component/ContentsWrapper";
-import { msUntilNextMidnight } from "../../_utils/msUntilNextMidnight";
+import { msUntilNextMidnight } from "../../../_utils/msUntilNextMidnight";
 
 type Props = {
+  studyId: string;
   isReview: boolean;
 }
 
-export default function KnowledgeLearningContainer({ isReview }: Props) {
+export default function KnowledgeLearningContainer({ studyId, isReview }: Props) {
   const [currentKnowledgeIndex, setCurrentKnowledgeIndex] = useState<number>(0);
   const [showExitConfirm, setShowExitConfirm] = useState<boolean>(false);
   const [showCompletion, setShowCompletion] = useState<boolean>(false);
@@ -29,7 +30,6 @@ export default function KnowledgeLearningContainer({ isReview }: Props) {
   const [incorrectIds, setInCorrectIds] = useState<number[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
-  const studyId = useSearchParams().get('studyId');
 
   const {data: knowledges, isLoading, refetch: knowledgeRefetch} = useQuery<Knowledge[], object, Knowledge[], [_1: string, _2: string, string]>({
     queryKey: ['knowledge', 'learn', studyId!],
