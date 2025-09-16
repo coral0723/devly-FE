@@ -3,7 +3,7 @@
 import { Chat } from '@/model/interview/Chat';
 import { SpeechRecognition as ISpeechRecognition } from '@/model/Speech';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
+import { useRouter } from "nextjs-toploader/app";
 import { useEffect, useRef, useState } from 'react';
 import { getInterview } from '../_lib/getInterview';
 import axios from 'axios';

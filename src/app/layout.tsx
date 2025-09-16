@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { MSWProvider } from "./_component/MSWComponent";
 import RQProvider from "./(afterLogin)/_component/RQProvider";
+import TopLoader from "./_component/TopLoader";
 
 // SSR용 MSW 코드
 if (
@@ -60,6 +61,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <TopLoader/>
         <MSWProvider>
           <RQProvider>
             {children}

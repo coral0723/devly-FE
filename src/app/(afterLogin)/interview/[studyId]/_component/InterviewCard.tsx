@@ -1,7 +1,8 @@
 "use client"
 
 import { InterviewCard as IInterviewCard } from "@/model/interview/InterviewCard";
-import { useRouter, useParams } from "next/navigation"
+import { useRouter } from "nextjs-toploader/app";
+import { useParams } from "next/navigation"
 import { ChevronRight } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
 import { getInterview } from "../[interviewId]/_lib/getInterview";

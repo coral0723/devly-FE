@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter } from "nextjs-toploader/app";
 import { useQueryClient } from "@tanstack/react-query";
 import { getWords } from "../_lib/getWords";
 import { getValidationWordResult } from "../_lib/getValidationWordResult";

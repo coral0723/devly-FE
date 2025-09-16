@@ -1,7 +1,7 @@
 "use client"
 
 import { useQueryClient } from "@tanstack/react-query";
-import { useRouter } from "next/navigation"
+import { useRouter } from "nextjs-toploader/app";
 import { getKnowledges } from "../_lib/getKnowledges";
 import { getValidationKnowledgeResult } from "../_lib/getValidationKnowledgeResult";
 import { msUntilNextMidnight } from "../../../_utils/msUntilNextMidnight";

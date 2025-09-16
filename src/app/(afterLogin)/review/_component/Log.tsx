@@ -2,7 +2,7 @@
 
 import { Log as ILog, StudyLog } from "@/model/StudyLog"
 import { BookOpen, GitPullRequest, Lightbulb, MessageSquare } from "lucide-react"
-import { useRouter } from "next/navigation"
+import { useRouter } from "nextjs-toploader/app";
 
 type Props = {
   studyLog: StudyLog

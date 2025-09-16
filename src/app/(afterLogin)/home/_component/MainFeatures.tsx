@@ -3,7 +3,7 @@
 import { Tasks } from '@/model/Tasks';
 import { useQuery } from '@tanstack/react-query';
 import { BookOpen, Lightbulb, GitPullRequest, MessageSquare } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { useRouter } from "nextjs-toploader/app";
 import { getTodayTasks } from '../_lib/getTodayTasks';
 import MainFeaturesSkeleton from './skeleton/MainFeaturesSkeleton';
 

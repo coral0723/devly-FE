@@ -2,7 +2,7 @@
 
 import { Knowledge } from "@/model/knowledge/Knowledge";
 import { useQuery } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
+import { useRouter } from "nextjs-toploader/app";
 import { useRef, useState } from "react";
 import { getKnowledges } from "../_lib/getKnowledges";
 import { ValidationResult } from "@/model/ValidationResult";

@@ -2,7 +2,7 @@
 
 import { usePathname} from 'next/navigation';
 import {Book, BookmarkIcon, MessageCircleIcon, Trophy } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { useRouter } from "nextjs-toploader/app";
 
 const NAV_ITEMS = [
   { path: '/home', label: '학습', icon: Book },
