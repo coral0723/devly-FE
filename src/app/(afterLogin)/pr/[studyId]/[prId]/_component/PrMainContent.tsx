@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import ChangedFiles from "./ChangedFiles";
 import { PrChangedFiles } from "@/model/pr/PrChangedFiles";
 import WhiteBox from "@/app/_component/WhiteBox";
+import DOMPurify from "dompurify";
 
 type Props = {
   currentStep: number,
@@ -62,12 +63,12 @@ export default function PrMainContent({ currentStep, prComments, prHistory, repl
           {currentStep === 1 ? (
             <div className="relative">
               <textarea
-                className="w-full h-32 p-3 border border-gray-300 rounded-lg text-xs md:text-sm bg-white outline-none"
+                className="w-full h-40 p-3 border border-gray-300 rounded-lg text-xs md:text-sm bg-white outline-none resize-none"
                 placeholder="(최소 10자 이상)"
                 spellCheck="false"
                 value={prHistory ? prHistory.answers[0] : replies[0]}
                 onChange={(e) => {
-                  const value = e.target.value;
+                  const value = DOMPurify.sanitize(e.target.value); // XSS 방어
                   if (value.length <= MAX_CHAR_LIMIT) {
                     const updatedReplies = [e.target.value, ...replies.slice(1)];
                     setReplies(updatedReplies);
@@ -75,7 +76,7 @@ export default function PrMainContent({ currentStep, prComments, prHistory, repl
                 }}
                 maxLength={MAX_CHAR_LIMIT}
               />
-              <div className="absolute bottom-2 right-2 text-xs text-gray-500">
+              <div className="absolute bottom-2 right-4 text-xs text-gray-500">
                 {getCharCount(prHistory ? prHistory.answers[0] : replies[0])}/{MAX_CHAR_LIMIT}
               </div>
             </div>
