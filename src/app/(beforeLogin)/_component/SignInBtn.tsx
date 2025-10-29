@@ -1,14 +1,18 @@
 "use client"
-import axios from "axios";
+
 import { useRouter } from "next/navigation"
 
 export default function SignInBtn() {
   const router = useRouter();
-  const handleLogin = async () => {
+
+  const handleLogin = () => {
+    // 실제 서비스 코드
     // window.location.replace(`${process.env.NEXT_PUBLIC_BACKEND_URL}/oauth2/authorization/google?developerType=2`);
-    await axios.post("/api/mockLogin");
-    router.replace('/home');
+
+    // mockLogin 코드
+    router.replace('/auth/callback');
   }
+
   return (
     <button
       onClick={handleLogin}
