@@ -44,6 +44,9 @@
 - [정확한 가운데와 눈으로 보는 가운데, 어느 쪽을 선택할까?](https://likeornament.tistory.com/27)
 - [Next.js 프로젝트에서 학습 & 복습 페이지 컴포넌트 재사용하기](https://likeornament.tistory.com/28)
 
+### 성능 최적화
+- [React Compiler로 최적화 끝낼 수 있을까? 수동 메모이제이션과 React Compiler의 성능 비교](https://likeornament.tistory.com/32)
+
 ### 네트워크/에러 처리
 - [Axios에서 302 리디렉션이 인터셉터에서 안 잡힐 때 해결 방법](https://likeornament.tistory.com/18)
 
