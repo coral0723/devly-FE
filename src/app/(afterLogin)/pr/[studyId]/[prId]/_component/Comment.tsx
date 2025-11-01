@@ -2,14 +2,13 @@
 
 import WhiteBox from "@/app/_component/WhiteBox"
 import { PrComments } from "@/model/pr/PrComments"
-import { memo } from "react"
 
 type Props = {
   currentStep: number,
   prComments: PrComments,
 }
 
-export default memo(function Comment({ currentStep, prComments }: Props) {
+export default function Comment({ currentStep, prComments }: Props) {
   return (
     <WhiteBox>
       <h3 className="font-medium mb-2 text-sm md:text-base">{currentStep === 1 ? "PR 설명 작성" : "리뷰어 답변"}</h3>
@@ -18,4 +17,4 @@ export default memo(function Comment({ currentStep, prComments }: Props) {
       </p>
     </WhiteBox>
   )
-})
+}
