@@ -2,13 +2,13 @@
 
 import WhiteBox from "@/app/_component/WhiteBox"
 import { Feedback } from "@/model/pr/Feedback"
-import { Fragment } from "react"
+import { Fragment, memo } from "react"
 
 type Props = {
   feedback: Feedback
 }
 
-export default function ReviewAssessment({feedback}: Props) {
+export default memo(function ReviewAssessment({feedback}: Props) {
   return (
     <WhiteBox>
       <h4 className="font-medium mb-2 text-sm md:text-base">AI 리뷰</h4>
@@ -19,4 +19,4 @@ export default function ReviewAssessment({feedback}: Props) {
       </div>
     </WhiteBox>
   )
-}
+})

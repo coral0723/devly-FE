@@ -2,13 +2,14 @@
 
 import { PrChangedFiles } from "@/model/pr/PrChangedFiles";
 import ChangedFiles from "./ChangedFiles";
+import { memo } from "react";
 
 type Props = {
   prChangedFiles: PrChangedFiles;
   onClose: () => void;
 };
 
-export default function ChangedFilesModal({ prChangedFiles, onClose }: Props) {
+export default memo(function ChangedFilesModal({ prChangedFiles, onClose }: Props) {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-30 z-50">
       <div className="h-screen md:h-[calc(100vh-8rem)] mt-0 md:mt-8 flex flex-col bg-gray-50 max-w-3xl mx-auto md:rounded-lg overflow-hidden">
@@ -27,4 +28,4 @@ export default function ChangedFilesModal({ prChangedFiles, onClose }: Props) {
       </div>
     </div>
   );
-}
+})

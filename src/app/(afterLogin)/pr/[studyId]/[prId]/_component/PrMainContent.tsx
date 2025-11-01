@@ -8,7 +8,7 @@ import LoadingSpinner from "@/app/_component/LoadingSpinner";
 import { useRouter } from "next/navigation";
 import ChangedFiles from "./ChangedFiles";
 import { PrChangedFiles } from "@/model/pr/PrChangedFiles";
-import WhiteBox from "@/app/_component/WhiteBox";
+import Comment from "../_component/Comment";
 import DOMPurify from "dompurify";
 
 type Props = {
@@ -54,12 +54,10 @@ export default function PrMainContent({ currentStep, prComments, prHistory, repl
     <>
       <div className="lg:grid grid-cols-2">
         <div className="space-y-4 mx-auto max-w-5xl lg:max-w-none lg:mx-0">
-          <WhiteBox>
-            <h3 className="font-medium mb-2 text-sm md:text-base">{currentStep === 1 ? "PR 설명 작성" : "리뷰어 답변"}</h3>
-            <p className="text-xs md:text-sm text-gray-600">
-              {currentStep === 1 ? prComments.comments[0].content : "리뷰어의 코멘트에 답변해주세요."}
-            </p>
-          </WhiteBox>
+          <Comment
+            currentStep={currentStep}
+            prComments={prComments}
+          />
           {currentStep === 1 ? (
             <div className="relative">
               <textarea

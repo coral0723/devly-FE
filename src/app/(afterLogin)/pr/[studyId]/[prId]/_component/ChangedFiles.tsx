@@ -2,12 +2,13 @@
 
 import { PrChangedFiles } from "@/model/pr/PrChangedFiles"
 import { colorizeCode } from "../_lib/colorizeCode";
+import { memo } from "react";
 
 type Props = {
   prChangedFiles: PrChangedFiles;
 }
 
-export default function ChangedFiles({ prChangedFiles }: Props) {
+export default memo(function ChangedFiles({ prChangedFiles }: Props) {
   return (
       <div className="flex-1 overflow-hidden px-4">
         {/* Code Area */}
@@ -39,4 +40,4 @@ export default function ChangedFiles({ prChangedFiles }: Props) {
         </div>
       </div>
   )
-}
+})

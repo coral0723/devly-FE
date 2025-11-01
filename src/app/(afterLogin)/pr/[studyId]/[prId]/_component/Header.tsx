@@ -1,6 +1,7 @@
 "use client"
 
 import { ArrowLeft, FileCode2, X } from "lucide-react";
+import { memo } from "react";
 
 type Props = {
   title: string;
@@ -11,7 +12,7 @@ type Props = {
   onExit: () => void;
 }
 
-export default function Header({title, currentStep, stepLength, setCurrentStep, setShowFiles, onExit}: Props) {
+export default memo(function Header({title, currentStep, stepLength, setCurrentStep, setShowFiles, onExit}: Props) {
   return (
     <div className="fixed top-0 left-0 right-0 z-10 bg-white p-4 border-b border-gray-200 shadow-sm">
       <div className="flex flex-col gap-3">
@@ -64,4 +65,4 @@ export default function Header({title, currentStep, stepLength, setCurrentStep, 
       </div>
     </div>
   )
-}
+})

@@ -3,7 +3,7 @@
 import LoadingSpinner from "@/app/_component/LoadingSpinner"
 import Header from "./Header"
 import ChangedFilesModal from "./ChangedFilesModal"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { Feedback } from "@/model/pr/Feedback"
 import { PrChangedFiles } from "@/model/pr/PrChangedFiles"
 import { useMutation, useQuery } from "@tanstack/react-query"
@@ -160,6 +160,19 @@ export default function PrLearningContainer({ studyId, prId, isReview, userId = 
     }
   });
 
+  const handleShowFiles = useCallback(() => {
+    setShowFiles(true);
+  }, []);
+
+  const handleExit = useCallback(() => {
+    setShowExitConfirm(true);
+  }, []);
+
+  const handleStepChange = useCallback((step: number) => {
+    setCurrentStep(step);
+  }, []);
+
+
   if(isCardsLoading || isChangedFilesLoading || isCommentsLoading || isPrHistoryLoading || !prCards || !prChangedFiles || !prComments || (userId && !prHistory)) {
     return (
 			<div className='flex max-w-lg mx-auto min-h-screen bg-gray-50 items-center justify-center'>
@@ -175,8 +188,8 @@ export default function PrLearningContainer({ studyId, prId, isReview, userId = 
         currentStep={currentStep}
         stepLength={prComments.comments.length}
         setCurrentStep={setCurrentStep}
-        setShowFiles={setShowFiles}
-        onExit={() => setShowExitConfirm(true)}
+        setShowFiles={handleShowFiles}
+        onExit={handleExit}
       />
 
       <ContentsWrapper
@@ -193,7 +206,7 @@ export default function PrLearningContainer({ studyId, prId, isReview, userId = 
           isPostAnswerLoading={isPostAnswerLoading}
           prChangedFiles={prChangedFiles}
           setReplies={setReplies}
-          setCurrentStep={setCurrentStep}
+          setCurrentStep={handleStepChange}
           postAnswer={postAnswer}
         />
       </ContentsWrapper>
