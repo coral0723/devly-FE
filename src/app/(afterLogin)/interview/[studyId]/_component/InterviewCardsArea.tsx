@@ -15,7 +15,7 @@ export default function InterviewCardsArea({ studyId }: Props) {
   const {data: interviewCards, isLoading} = useQuery<IInterviewCard[], object, IInterviewCard[], [_1: string, _2: string, string]>({
     queryKey: ['interview', 'cards', studyId],
     queryFn: getInterviewCards,
-    staleTime: 60 * 1000,
+    staleTime: 0,
     gcTime: 300 * 1000
   });
 

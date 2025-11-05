@@ -40,7 +40,7 @@ export default function KnowledgeLearningContainer({ studyId, isReview }: Props)
   const {data: validationResult, refetch: validationRefetch} = useQuery<ValidationResult, object, ValidationResult, [_1: string, _2: string, string]>({
     queryKey: ['knowledge', 'validation', studyId!],
     queryFn: getValidationKnowledgeResult,
-    staleTime: msUntilNextMidnight(),
+    staleTime: 0,
     enabled: !isReview,
   });
 

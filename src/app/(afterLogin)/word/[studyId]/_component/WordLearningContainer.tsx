@@ -43,7 +43,7 @@ export default function WordLearningContainer({ studyId, isReview }: Props) {
   const {data: validationResult, refetch: validationRefetch} = useQuery<ValidationResult, object, ValidationResult, [_1: string, _2: string, string]>({
     queryKey: ['word', 'validation', studyId!],
     queryFn: getValidationWordResult,
-    staleTime: msUntilNextMidnight(),
+    staleTime: 0,
     enabled: !isReview,
   });
 
