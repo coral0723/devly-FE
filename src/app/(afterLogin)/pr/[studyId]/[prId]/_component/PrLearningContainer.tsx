@@ -151,6 +151,10 @@ export default function PrLearningContainer({ studyId, prId, isReview, userId = 
       }
     },
     onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['pr', 'cards', studyId],
+      });
+      
       // isReview일 때도 setShowCompletion을 위에서 이미 호출하므로
       // 여기서는 API 요청 후의 경우에만 의미 있음
       if (!isReview) {
@@ -255,9 +259,6 @@ export default function PrLearningContainer({ studyId, prId, isReview, userId = 
         <CompletionModal
           isReview={isReview}
           onClose={() => {
-            queryClient.invalidateQueries({
-              queryKey: ['pr', 'cards', studyId],
-            });
             router.replace(isReview ? '/review' : '/home')
           }}
         />

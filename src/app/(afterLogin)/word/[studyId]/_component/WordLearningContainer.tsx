@@ -94,6 +94,9 @@ export default function WordLearningContainer({ studyId, isReview }: Props) {
         }
 
         if(response.status === 200) {
+          queryClient.invalidateQueries({
+            queryKey: ['word', 'validation', studyId],
+          })
           setShowCompletion(true);
         }
       } catch (error) {
@@ -170,9 +173,6 @@ export default function WordLearningContainer({ studyId, isReview }: Props) {
           isReview={isReview} 
           incorrectIds={incorrectIds}
           onClose={() => {
-            queryClient.invalidateQueries({
-              queryKey: ['word', 'validation', studyId],
-            })
             router.replace(isReview ? '/review' : '/home');
           }}
         />

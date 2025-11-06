@@ -81,6 +81,9 @@ export default function KnowledgeLearningContainer({ studyId, isReview }: Props)
         }
 
         if(response.status === 200) {
+          queryClient.invalidateQueries({
+            queryKey: ['knowledge', 'validation', studyId],
+          })
           setShowCompletion(true);
         }
       } catch(error) {
@@ -138,9 +141,6 @@ export default function KnowledgeLearningContainer({ studyId, isReview }: Props)
           isReview={isReview}
           incorrectIds={incorrectIds}
           onClose={() => {
-            queryClient.invalidateQueries({
-              queryKey: ['knowledge', 'validation', studyId],
-            })
             router.replace(isReview ? '/review' : '/home');
           }}
         />
