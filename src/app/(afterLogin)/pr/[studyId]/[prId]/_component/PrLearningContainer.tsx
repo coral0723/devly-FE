@@ -23,6 +23,7 @@ import axios from "axios"
 import ExitConfirmModal from "./ExitConfirmModal"
 import ContentsWrapper from "@/app/_component/ContentsWrapper"
 import { msUntilNextMidnight } from "@/app/(afterLogin)/_utils/msUntilNextMidnight"
+import { useQueryClient } from "@tanstack/react-query"
 // import { FinalFeedback } from "@/model/pr/FinalFeedback"
 // import FinalScoreModal from "./FinalScoreModal"
 
@@ -41,6 +42,7 @@ export default function PrLearningContainer({ studyId, prId, isReview, userId = 
   const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
   const [showFiles, setShowFiles] = useState<boolean>(false); //"커밋 내역" Modal
   const router = useRouter();
+  const queryClient = useQueryClient();
   // const [showFinalScore, setShowFinalScore] = useState<boolean>(false); //"점수 포함된 최종 결과" Modal
   // const [finalFeedback, setFinalFeedback] = useState<FinalFeedback>(); 
 
@@ -252,7 +254,12 @@ export default function PrLearningContainer({ studyId, prId, isReview, userId = 
       {showCompletion ? (
         <CompletionModal
           isReview={isReview}
-          onClose={() => router.replace(isReview ? '/review' : '/home')}
+          onClose={() => {
+            queryClient.invalidateQueries({
+              queryKey: ['pr', 'cards', studyId],
+            });
+            router.replace(isReview ? '/review' : '/home')
+          }}
         />
       ): <></>}
     </div>

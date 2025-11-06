@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getPrCards } from "../_lib/getPrCards";
 import PrCard from "./PrCard";
 import LoadingSpinner from "@/app/_component/LoadingSpinner";
+import { msUntilNextMidnight } from "@/app/(afterLogin)/_utils/msUntilNextMidnight";
 
 type Props = {
   studyId: string;
@@ -15,8 +16,7 @@ export default function PrCardsArea({ studyId }: Props) {
   const {data: prCards, isLoading} = useQuery<IPRCard, object, IPRCard, [_1: string, _2: string, string]>({
     queryKey: ['pr', 'cards', studyId],
     queryFn: getPrCards,
-    staleTime: 0,
-    refetchOnMount: 'always',
+    staleTime: msUntilNextMidnight(),
   });
 
   if(isLoading || !prCards) {
