@@ -12,8 +12,6 @@ import { PrCard } from "@/model/pr/PrCard"
 import { getPrChangedFiles } from "../_lib/getPrChangedFiles"
 import { PrComments } from "@/model/pr/PrComments"
 import { getPrComments } from "../_lib/getPrComments"
-import { PrHistory } from "@/model/pr/prHistory"
-import { getPrHistory } from "../_lib/getPrHistory"
 import { useRouter } from "nextjs-toploader/app"
 import { authApi } from "@/app/_lib/axios"
 import { Answer } from "@/model/pr/Answer"
@@ -24,17 +22,14 @@ import ExitConfirmModal from "./ExitConfirmModal"
 import ContentsWrapper from "@/app/_component/ContentsWrapper"
 import { msUntilNextMidnight } from "@/app/(afterLogin)/_utils/msUntilNextMidnight"
 import { useQueryClient } from "@tanstack/react-query"
-// import { FinalFeedback } from "@/model/pr/FinalFeedback"
-// import FinalScoreModal from "./FinalScoreModal"
 
 type Props = {
   studyId: string;
   prId: string;
   isReview: boolean;
-  userId?: string;
 }
 
-export default function PrLearningContainer({ studyId, prId, isReview, userId = undefined }: Props) {
+export default function PrLearningContainer({ studyId, prId, isReview }: Props) {
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [showExitConfirm, setShowExitConfirm] = useState<boolean>(false);
   const [showCompletion, setShowCompletion] = useState<boolean>(false);
@@ -43,8 +38,6 @@ export default function PrLearningContainer({ studyId, prId, isReview, userId = 
   const [showFiles, setShowFiles] = useState<boolean>(false); //"커밋 내역" Modal
   const router = useRouter();
   const queryClient = useQueryClient();
-  // const [showFinalScore, setShowFinalScore] = useState<boolean>(false); //"점수 포함된 최종 결과" Modal
-  // const [finalFeedback, setFinalFeedback] = useState<FinalFeedback>(); 
 
   const {data: prCards, isLoading: isCardsLoading} = useQuery<PrCard, object, PrCard, [_1: string, _2: string, string]>({
     queryKey: ['pr', 'cards', studyId as string],
@@ -64,25 +57,11 @@ export default function PrLearningContainer({ studyId, prId, isReview, userId = 
     staleTime: msUntilNextMidnight(),
   });
 
-  const {data: prHistory, isLoading: isPrHistoryLoading} = useQuery<PrHistory, object, PrHistory, [_1: string, _2: string, string, string]>({
-    queryKey: ['pr', 'history', prId as string, userId as string],
-    queryFn: getPrHistory,
-    staleTime: 60 * 1000,
-    enabled: !!userId,
-  });
-
   // prComments가 로드되면 replies 배열 초기화
   useEffect(() => {
-    if (prComments) {
-      if (prHistory) {
-        // prHistory가 있으면 history에서 답변 가져오기
-        setReplies(prHistory.answers);
-      } else {
-        // prHistory가 없으면 빈 문자열로 초기화된 배열 생성
-        setReplies(Array(prComments.comments.length).fill(''));
-      }
-    }
-  }, [prComments, prHistory]);
+    if (prComments) 
+      setReplies(Array(prComments.comments.length).fill(''));
+  }, [prComments]);
 
   const { mutate: postAnswer, isPending: isPostAnswerLoading } = useMutation<
     Feedback,
@@ -121,20 +100,6 @@ export default function PrLearningContainer({ studyId, prId, isReview, userId = 
 		}
 	});
 
-  // 추후 점수 추가 된 Feedback 개발 되면 사용 예정
-  // const { mutate: getFinalFeedback, isPending: isFinalLoading } = useMutation({
-  //   mutationFn: async () => {
-	// 		return await authApi.post(`${process.env.NEXT_PUBLIC_BASE_URL}/study/pr/${prId}/finalFeedback`);
-  //   },
-  //   onSuccess: (response) => {
-	// 		setFinalFeedback(response.data);
-	// 		setShowFinalScore(true);
-  //   },
-  //   onError: (error) => {
-	// 		console.log('에러 상세:', error);
-  //   }
-  // });
-
   const { mutate: completeStudy, isPending: isCompleteLoading } = useMutation({
     mutationFn: async () => {
       if (isReview) { // 복습 페이지에서는 학습 완료 요청 안 보내게끔
@@ -166,7 +131,7 @@ export default function PrLearningContainer({ studyId, prId, isReview, userId = 
     }
   });
 
-  if(isCardsLoading || isChangedFilesLoading || isCommentsLoading || isPrHistoryLoading || !prCards || !prChangedFiles || !prComments || (userId && !prHistory)) {
+  if(isCardsLoading || isChangedFilesLoading || isCommentsLoading || !prCards || !prChangedFiles || !prComments) {
     return (
 			<div className='flex max-w-lg mx-auto min-h-screen bg-gray-50 items-center justify-center'>
 				<LoadingSpinner size={"md"} />
@@ -193,7 +158,6 @@ export default function PrLearningContainer({ studyId, prId, isReview, userId = 
         <PrMainContent
           currentStep={currentStep}
           prComments={prComments}
-          prHistory={prHistory}
           replies={replies}
           feedbacks={feedbacks}
           isPostAnswerLoading={isPostAnswerLoading}
@@ -210,13 +174,7 @@ export default function PrLearningContainer({ studyId, prId, isReview, userId = 
 					<div className="max-w-lg mx-auto">
 						<button
 							className="w-full py-3 bg-gradient-to-r from-purple-400 to-pink-500 hover:from-purple-500 hover:to-pink-600 text-white md:text-lg font-medium rounded-lg"
-							onClick={() => {
-                if(prHistory) {
-                  router.back();
-                } else {
-                  completeStudy();
-                }
-              }}
+							onClick={() => completeStudy()}
               disabled={isCompleteLoading}
 						>
 							{isCompleteLoading
@@ -238,15 +196,6 @@ export default function PrLearningContainer({ studyId, prId, isReview, userId = 
 				/>
 
 			): <></>}
-
-			{/* {showFinalScore && finalFeedback ? (
-				<FinalScoreModal
-          isReview={isReview}
-          studyId={studyId as string}
-          prId={prId as string}
-					finalFeedback={finalFeedback}
-				/>
-			): <></>} */}
 
       {showExitConfirm && (
         <ExitConfirmModal 
