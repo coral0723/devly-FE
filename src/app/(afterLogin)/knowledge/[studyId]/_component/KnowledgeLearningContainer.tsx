@@ -16,6 +16,7 @@ import CompletionModal from "./CompletionModal";
 import { authApi } from "@/app/_lib/axios";
 import ContentsWrapper from "@/app/_component/ContentsWrapper";
 import { msUntilNextMidnight } from "../../../_utils/msUntilNextMidnight";
+import { useQueryClient } from "@tanstack/react-query";
 
 type Props = {
   studyId: string;
@@ -30,17 +31,18 @@ export default function KnowledgeLearningContainer({ studyId, isReview }: Props)
   const [incorrectIds, setIncorrectIds] = useState<number[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+  const queryClient = useQueryClient();
 
-  const {data: knowledges, isLoading, refetch: knowledgeRefetch} = useQuery<Knowledge[], object, Knowledge[], [_1: string, _2: string, string]>({
+  const { data: knowledges, isLoading } = useQuery<Knowledge[], object, Knowledge[], [_1: string, _2: string, string]>({
     queryKey: ['knowledge', 'learn', studyId!],
     queryFn: getKnowledges,
     staleTime: msUntilNextMidnight(),
   });
 
-  const {data: validationResult, refetch: validationRefetch} = useQuery<ValidationResult, object, ValidationResult, [_1: string, _2: string, string]>({
+  const { data: validationResult } = useQuery<ValidationResult, object, ValidationResult, [_1: string, _2: string, string]>({
     queryKey: ['knowledge', 'validation', studyId!],
     queryFn: getValidationKnowledgeResult,
-    staleTime: 0,
+    staleTime: msUntilNextMidnight(),
     enabled: !isReview,
   });
 
@@ -136,8 +138,9 @@ export default function KnowledgeLearningContainer({ studyId, isReview }: Props)
           isReview={isReview}
           incorrectIds={incorrectIds}
           onClose={() => {
-            validationRefetch();
-            knowledgeRefetch();
+            queryClient.invalidateQueries({
+              queryKey: ['knowledge', 'validation', studyId],
+            })
             router.replace(isReview ? '/review' : '/home');
           }}
         />
