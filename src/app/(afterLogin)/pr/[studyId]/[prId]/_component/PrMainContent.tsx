@@ -1,7 +1,6 @@
 "use client"
 
 import { PrComments } from "@/model/pr/PrComments"
-import { PrHistory } from "@/model/pr/prHistory"
 import ReviewAssessment from "./ReviewAssessment";
 import { Feedback } from "@/model/pr/Feedback";
 import LoadingSpinner from "@/app/_component/LoadingSpinner";
@@ -14,7 +13,6 @@ import DOMPurify from "dompurify";
 type Props = {
   currentStep: number,
   prComments: PrComments,
-  prHistory?: PrHistory,
   replies: string[],
   feedbacks: Feedback[],
   isPostAnswerLoading: boolean,
@@ -24,7 +22,7 @@ type Props = {
   postAnswer: (params: {commentId: number, answer: string}) => void
 }
 
-export default function PrMainContent({ currentStep, prComments, prHistory, replies, feedbacks, isPostAnswerLoading, prChangedFiles, setReplies, setCurrentStep, postAnswer }: Props) {
+export default function PrMainContent({ currentStep, prComments, replies, feedbacks, isPostAnswerLoading, prChangedFiles, setReplies, setCurrentStep, postAnswer }: Props) {
   const router = useRouter();
   const MAX_CHAR_LIMIT = 500;
 
@@ -32,14 +30,10 @@ export default function PrMainContent({ currentStep, prComments, prHistory, repl
     return text ? text.length : 0;
   };
   
-  const currentReplyLength = getCharCount(prHistory
-    ? prHistory.answers[currentStep - 1]
-    : replies[currentStep - 1] || ''
-  );
+  const currentReplyLength = getCharCount(replies[currentStep - 1] || '');
   
   // 현재 텍스트가 있는지 확인하는 함수
   const hasText = () => {
-    if (prHistory) return true; // 이미 제출된 히스토리가 있으면 항상 true
     return (replies[currentStep - 1] && replies[currentStep - 1].trim().length > 10);
   };
   
@@ -64,7 +58,7 @@ export default function PrMainContent({ currentStep, prComments, prHistory, repl
                 className="w-full h-40 p-3 border border-gray-300 rounded-lg text-xs md:text-sm bg-white outline-none resize-none"
                 placeholder="(최소 10자 이상)"
                 spellCheck="false"
-                value={prHistory ? prHistory.answers[0] : replies[0]}
+                value={replies[0]}
                 onChange={(e) => {
                   const value = DOMPurify.sanitize(e.target.value); // XSS 방어
                   if (value.length <= MAX_CHAR_LIMIT) {
@@ -75,7 +69,7 @@ export default function PrMainContent({ currentStep, prComments, prHistory, repl
                 maxLength={MAX_CHAR_LIMIT}
               />
               <div className="absolute bottom-2 right-4 text-xs text-gray-500">
-                {getCharCount(prHistory ? prHistory.answers[0] : replies[0])}/{MAX_CHAR_LIMIT}
+                {getCharCount(replies[0])}/{MAX_CHAR_LIMIT}
               </div>
             </div>
           ) : (
@@ -89,7 +83,7 @@ export default function PrMainContent({ currentStep, prComments, prHistory, repl
                   <textarea
                     className="w-full h-32 p-3 border border-gray-300 rounded-lg text-xs md:text-sm bg-white"
                     placeholder="답변을 작성해주세요 (최소 10자 이상)"
-                    value={prHistory ? prHistory.answers[currentStep-1] : replies[currentStep-1]}
+                    value={replies[currentStep-1]}
                     onChange={(e) => {
                       const value = e.target.value;
                       if (value.length <= MAX_CHAR_LIMIT) {
@@ -106,34 +100,18 @@ export default function PrMainContent({ currentStep, prComments, prHistory, repl
                 </div>
             </div>
           )}
-            {feedbacks[currentStep-1]
-              ? <ReviewAssessment feedback={feedbacks[currentStep-1]}/>
-              : prHistory
-                && <ReviewAssessment feedback={prHistory.feedbacks[currentStep-1]}/>
-            }
+            {feedbacks[currentStep-1] && <ReviewAssessment feedback={feedbacks[currentStep-1]}/>}
           <div className="fixed bottom-0 left-0 right-0 p-2 bg-white border border-gray-200 z-10">
             <div className="max-w-xl mx-auto">
               {
                 (() => {
                   // 모든 단계가 완료된 경우 버튼을 표시하지 않음
-                  if (currentStep === prComments.comments.length && feedbacks[currentStep-1] && !prHistory) {
+                  if (currentStep === prComments.comments.length && feedbacks[currentStep-1]) {
                     return null; // 아무것도 렌더링하지 않음
                   }
                   
-                  // 돌아가기 버튼 조건
-                  if (prHistory && currentStep === feedbacks.length) {
-                    return (
-                      <button
-                        className="w-full py-3 bg-purple-600 text-white md:text-lg font-medium rounded-lg hover:bg-purple-700"
-                        onClick={() => router.back()}
-                      >
-                        돌아가기
-                      </button>
-                    );
-                  }
-                  
                   // 다음 단계 버튼 조건
-                  if (prHistory || feedbacks[currentStep-1]) {
+                  if (feedbacks[currentStep-1]) {
                     return (
                       <button
                         className="w-full py-3 bg-purple-600 text-white rounded-lg md:text-lg font-medium hover:bg-purple-700"
