@@ -70,13 +70,12 @@ export default function KnowledgeLearningContainer({ studyId, isReview }: Props)
             correctIds: correctIds
           });
         } else {
-          const endPoint = `/api/studies/${studyId}/knowledge/review`;
-          const method = validationResult?.correctIds.length === 0 ? 'post' : 'put';
+          const endPoint = `/api/knowledge/review/study/${studyId}`;
           const payload = validationResult?.correctIds.length === 0 
             ? {correctIds, incorrectIds}
             : {correctIds}; 
   
-          response = await authApi[method](endPoint, payload);
+          response = await authApi.put(endPoint, payload);
         }
 
         if(response.status === 200) {
