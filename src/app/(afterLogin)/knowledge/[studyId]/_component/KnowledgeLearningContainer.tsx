@@ -27,7 +27,7 @@ export default function KnowledgeLearningContainer({ studyId, isReview }: Props)
   const [showExitConfirm, setShowExitConfirm] = useState<boolean>(false);
   const [showCompletion, setShowCompletion] = useState<boolean>(false);
   const [correctIds, setCorrectIds] = useState<number[]>([]);
-  const [incorrectIds, setInCorrectIds] = useState<number[]>([]);
+  const [incorrectIds, setIncorrectIds] = useState<number[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
@@ -119,7 +119,7 @@ export default function KnowledgeLearningContainer({ studyId, isReview }: Props)
           knowledgesLength={filteredKnowledges.length}
           currentStep={currentKnowledgeIndex}
           setCorrectIds={setCorrectIds}
-          setIncorrectIds={setInCorrectIds}
+          setIncorrectIds={setIncorrectIds}
           handleNext={handleNext}
           onScrollUp={onScrollUp}
         />
