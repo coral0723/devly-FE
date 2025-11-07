@@ -1,17 +1,24 @@
 "use client"
 
 import { Mic } from "lucide-react";
+import { useQueryClient } from "@tanstack/react-query";
 
 type Props = {
+  interviewId: string;
   isRecording: boolean;
   isEnd: boolean;
   setShowCompletion: (completion: boolean) => void;
   handleRecord: () => void;
 }
 
-export default function BottomButton({isRecording, isEnd, setShowCompletion, handleRecord}: Props) {
+export default function BottomButton({ interviewId, isRecording, isEnd, setShowCompletion, handleRecord }: Props) {
+  const queryClient = useQueryClient();
+  
   const handleClick = () => {
     if (isEnd) {
+      queryClient.invalidateQueries({
+        queryKey: ["interview", "learn", interviewId],
+      })
       setShowCompletion(true);
     } else {
       handleRecord();
