@@ -81,7 +81,6 @@ export default function InterviewLearningContainer({ interviewId, isReview }: Pr
         content: transcript,
       });
     },
-
     onMutate: () => {
       queryClient.setQueryData(["interview", "learn", interviewId], (old?: Chat[]) => {
         if (!old) return [];
@@ -104,7 +103,6 @@ export default function InterviewLearningContainer({ interviewId, isReview }: Pr
         return next;
       });
     },
-
     onSuccess: (response) => {
       const recomment = response.data;
 
@@ -122,6 +120,10 @@ export default function InterviewLearningContainer({ interviewId, isReview }: Pr
         setIsEnd(true);
       }
     },
+    onError: (error) => {
+      console.error('Mutation error:', error);
+      alert("메시지를 전송하지 못했습니다. 다시 시도해주세요.");
+    }
   });
 
 
