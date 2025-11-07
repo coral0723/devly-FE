@@ -19,7 +19,7 @@ export default function PrCard({ pr }: Props) {
   const queryClient = useQueryClient();
 
   const prefetch = async () => {
-    const freshFor = msUntilNextMidnight();
+    const freshFor = msUntilNextMidnight(); // 두 prefetch가 서로 다른 시간값을 갖지 않게 하기 위해
     if (!studyId) return;
     await Promise.all([
       queryClient.prefetchQuery({

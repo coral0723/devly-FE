@@ -18,14 +18,12 @@ export default function InterviewCard({ interview }: Props) {
   const queryClient = useQueryClient();
 
   const prefetch = async () => {
-    const freshFor = msUntilNextMidnight();
-    await Promise.all([
-      queryClient.prefetchQuery({
-        queryKey: ["interview", "learn", String(interview.id)],
-        queryFn: getInterview,
-        staleTime: freshFor,
-      }),
-    ]);
+    if (!studyId) return;
+    await queryClient.prefetchQuery({
+      queryKey: ["interview", "learn", String(interview.id)],
+      queryFn: getInterview,
+      staleTime: msUntilNextMidnight(),
+    })
   };
 
   const handleClick = async () => {
@@ -51,27 +49,6 @@ export default function InterviewCard({ interview }: Props) {
         </div>
         <ChevronRight className="text-gray-400" />
       </div>
-
-      {/* <div className="flex items-center gap-3 text-sm">
-        <span className="px-2 py-1 bg-orange-100 text-orange-600 rounded-full">
-          {interview.difficulty}
-        </span>
-        <div className="flex items-center gap-1 text-gray-500">
-          <Clock size={14} />
-          <span>{interview.estimatedTime}</span>
-        </div>
-      </div>
-
-      <div className="flex flex-wrap gap-2">
-        {interview.tags.map((tag) => (
-          <span
-            key={tag}
-            className="px-2 py-1 bg-gray-100 text-gray-600 rounded-full text-xs"
-          >
-            {tag}
-          </span>
-        ))}
-      </div> */}
     </div>
   )
 }

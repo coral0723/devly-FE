@@ -1,4 +1,3 @@
-// import UnderDevelopment from "../_component/UnderDevelopment";
 import InterviewCardsArea from "./_component/InterviewCardsArea";
 import BottomNavigation from "../../_component/BottomNavigation";
 import Header from "./_component/Header";
@@ -12,13 +11,6 @@ type Props = {
 
 export default async function InterviewPage({ params }: Props) {
   const { studyId } = await params;
-
-  // 미완성 기능일 때 보여주는 컴포넌트
-  // const isDevelopment = process.env.NODE_ENV === 'development';
-
-  // if(!isDevelopment) {//배포환경에서는 <UnderDevelopment/> 렌더링
-  //   return <UnderDevelopment/>;
-  // }
   
   return (
     <div className="min-h-screen bg-gray-50 pb-20">
