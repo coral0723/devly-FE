@@ -1,21 +1,15 @@
-// ProblemSection.tsx
 "use client";
 
-import { RefObject, useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useInView } from "framer-motion";
 import SplitText from "../../_animations/SplitText";
 
-type Props = {
-  scrollContainerRef?: RefObject<Element | null>;
-};
-
-export default function ProblemSection({ scrollContainerRef }: Props) {
+export default function ProblemSection() {
   const sectionRef = useRef<HTMLElement>(null);
-  const [started, setStarted] = useState(false);      // 애니메이션 시작
+  const [started, setStarted] = useState(false); // 애니메이션 시작
 
   const fullyInView = useInView(sectionRef, {
-    root: scrollContainerRef,
-    amount: 0.9,
+    amount: 0.6,
     margin: "0px",
     once: true,
   });

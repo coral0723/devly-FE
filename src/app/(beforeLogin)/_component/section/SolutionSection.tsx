@@ -2,13 +2,9 @@
 
 import { BookOpen, Lightbulb, GitPullRequest, MessageSquare } from "lucide-react";
 import LogoLoop from "../../_animations/LogoLoop";
-import { RefObject, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useInView } from "framer-motion";
 import SplitText from "../../_animations/SplitText";
-
-type Props = {
-  scrollContainerRef?: RefObject<Element | null>;
-};
 
 const techLogos = [
   {
@@ -45,13 +41,12 @@ const techLogos = [
   },
 ];
 
-export default function SolutionSection({ scrollContainerRef }: Props) {
+export default function SolutionSection() {
   const sectionRef = useRef<HTMLElement>(null);
-  const [started, setStarted] = useState(false);      // 애니메이션 시작
+  const [started, setStarted] = useState(false); // 애니메이션 시작
 
   const fullyInView = useInView(sectionRef, {
-    root: scrollContainerRef,
-    amount: 0.9,
+    amount: 0.6,
     margin: "0px",
     once: true,
   });
