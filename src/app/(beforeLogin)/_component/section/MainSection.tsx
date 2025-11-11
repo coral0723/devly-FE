@@ -1,19 +1,17 @@
-"use client"
-
-import { motion } from "framer-motion";
 import FadeContent from "../../_animations/FadeContent";
 import SignInBtn from "../SignInBtn";
 import SignUpBtn from "../SignUpBtn";
 import { ChevronDown } from "lucide-react";
+import Floaty from "../../_animations/Floaty";
 
 export default function MainSection() {
   return (
     <section
       className={[
-        // ⬇️ iOS Safari에서 URL/툴바 높이를 반영: svh 지원 시엔 100svh, 아니면 h-screen
+        // iOS Safari에서 URL/툴바 높이를 반영: svh 지원 시엔 100svh, 아니면 h-screen
         "h-screen supports-[height:100svh]:h-[100svh]",
         "w-full snap-start flex flex-col justify-center lg:flex-row items-center px-6 lg:px-16 relative",
-        // ⬇️ iOS 하단 안전영역 + 여유 간격
+        // iOS 하단 안전영역 + 여유 간격
         "pb-[max(1.25rem,calc(env(safe-area-inset-bottom)+12px))]"
       ].join(" ")}
     >
@@ -54,17 +52,10 @@ export default function MainSection() {
       </div>
 
       {/* 하단 중앙: 스크롤 안내 화살표 */}
-      <div
-        className="absolute inset-x-0 z-10 flex justify-center
-                   bottom-[max(1rem,calc(env(safe-area-inset-bottom)+10px))]"
-      >
-        <motion.div
-          className="text-gray-400"
-          animate={{ y: [0, -10, 0], opacity: [1, 0.5, 1] }}
-          transition={{ duration: 1.5, repeat: Infinity }}
-        >
+      <div className="absolute inset-x-0 z-10 flex justify-center bottom-[max(1rem,calc(env(safe-area-inset-bottom)+10px))]">
+        <Floaty className="text-gray-400">
           <ChevronDown size={32} />
-        </motion.div>
+        </Floaty>
       </div>
     </section>
   );

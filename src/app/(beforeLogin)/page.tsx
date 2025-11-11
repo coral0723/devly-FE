@@ -1,6 +1,3 @@
-"use client";
-
-import { useRef } from "react";
 import FloatingIcons from "./_component/FloatingIcons";
 import MainSection from "./_component/section/MainSection";
 import ProblemSection from "./_component/section/ProblemSection";
@@ -11,23 +8,18 @@ import PrSection from "./_component/section/PrSection";
 import InterviewSection from "./_component/section/InterviewSection";
 import LastSection from "./_component/section/LastSection";
 
-export default function LoginPage() {
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-
+export default function LandingPage() {
   return (
-    <div
-      ref={scrollContainerRef}
-      className="h-screen w-full overflow-y-scroll"
-    >
+    <div className="min-h-screen w-full">
       <FloatingIcons />
       <MainSection />
       <ProblemSection/>
       <SolutionSection/>
-      <WordSection scrollContainerRef={scrollContainerRef}/>
-      <KnowledgeSection scrollContainerRef={scrollContainerRef}/>
-      <PrSection scrollContainerRef={scrollContainerRef}/>
-      <InterviewSection scrollContainerRef={scrollContainerRef}/>
-      <LastSection scrollContainerRef={scrollContainerRef} />
+      <WordSection/>
+      <KnowledgeSection/>
+      <PrSection/>
+      <InterviewSection/>
+      <LastSection/>
     </div>
   );
 }

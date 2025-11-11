@@ -1,23 +1,17 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
+import { useRef } from "react";
 import { useInView } from "framer-motion";
 import SplitText from "../../_animations/SplitText";
 
 export default function ProblemSection() {
   const sectionRef = useRef<HTMLElement>(null);
-  const [started, setStarted] = useState(false); // 애니메이션 시작
 
   const fullyInView = useInView(sectionRef, {
-    amount: 0.6,
+    amount: 0.7,
     margin: "0px",
     once: true,
   });
-
-  useEffect(() => {
-    if (fullyInView) 
-      setStarted(true);
-  }, [fullyInView]);
 
   return (
     <section
@@ -29,7 +23,7 @@ export default function ProblemSection() {
           text="개발자들이 놓치기 쉬운 공부들"
           className="font-extrabold text-2xl sm:text-3xl md:text-4xl lg:text-5xl mb-6"
           trigger="manual"
-          in={started}
+          in={fullyInView}
           delay={45}
           duration={0.5}
           ease="power3.out"
@@ -43,7 +37,7 @@ export default function ProblemSection() {
 하지만 이런 것들을 꾸준히 공부하기 쉽지 않죠`}
           className="text-gray-700 whitespace-pre-line leading-relaxed text-base sm:text-lg md:text-xl lg:text-2xl"
           trigger="manual"
-          in={started} 
+          in={fullyInView} 
           splitType="words"
           delay={45}
           duration={0.5}

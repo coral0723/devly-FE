@@ -9,7 +9,8 @@ export default function Header({ currentStep, endStep }: Props) {
       <div className="px-4 py-2">
         <div className="flex items-center justify-between mb-2">
           <button
-              className="p-2 -ml-2 hover:bg-gray-100 rounded-full"
+              className="p-2 -ml-2 rounded-full"
+              disabled={true}
           >
             <svg xmlns="http://www.w3.org/2000/svg" 
               className="w-4 h-4 md:w-6 md:h-6"

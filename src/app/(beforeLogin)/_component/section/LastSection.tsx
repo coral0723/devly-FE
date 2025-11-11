@@ -3,36 +3,23 @@
 import { motion, useInView } from "framer-motion";
 import ShinyText from "../../_animations/ShynyText";
 import SplitText from "../../_animations/SplitText";
-import { RefObject, useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 
-type Props = {
-  scrollContainerRef: RefObject<Element | null>;
-}
-
-export default function LastSection({ scrollContainerRef }: Props) {
+export default function LastSection() {
   const sectionRef = useRef<HTMLElement>(null);
-  const [started, setStarted] = useState(false);      // 애니메이션 시작
 
   const handleScrollToTop = () => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
-    }
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    })
   };
 
   const fullyInView = useInView(sectionRef, {
-    root: scrollContainerRef,
-    amount: 0.9,
+    amount: 0.7,
     margin: "0px",
     once: true,
   });
-
-  useEffect(() => {
-    if (fullyInView) 
-      setStarted(true);
-  }, [fullyInView]);
 
   return (
     <motion.section
@@ -44,7 +31,7 @@ export default function LastSection({ scrollContainerRef }: Props) {
           text="하루 한 걸음,"
           className="text-xl font-bold mb-0 sm:text-3xl sm:mb-3 lg:mb-6 lg:text-5xl"
           trigger="manual"
-          in={started}
+          in={fullyInView}
           delay={45}
           duration={0.5}
           ease="power3.out"
@@ -55,7 +42,7 @@ export default function LastSection({ scrollContainerRef }: Props) {
           text="지금 학습의 첫 걸음을 내딛어보세요."
           className="text-xl font-bold mb-0 sm:text-3xl sm:mb-3 lg:mb-6 lg:text-5xl"
           trigger="manual"
-          in={started}
+          in={fullyInView}
           delay={45}
           duration={0.5}
           ease="power3.out"

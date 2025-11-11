@@ -1,6 +1,6 @@
 "use client";
 
-import { RefObject, useRef, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import {
   motion,
   useInView,
@@ -16,40 +16,36 @@ import MockContextStep from "../word/MockContextStep";
 import { BookOpen } from "lucide-react";
 import { useMediaQuery } from "../../../_component/hook/UseMediaQuery";
 import dynamic from "next/dynamic";
-const ScrollMockTrack = dynamic(() => import("../ScrollMockTrack"), { ssr: false }); //마운트 후 화면 크기 측정으로 첫 렌더 고정
 
-type Props = { 
-  scrollContainerRef?: RefObject<HTMLDivElement | null>;
-};
+const ScrollMockTrack = dynamic(() => import("../ScrollMockTrack"), { ssr: false }); // 마운트 후 DOM 크기 측정으로 첫 렌더 고정
 
-export default function WordSection({ scrollContainerRef }: Props) {
+export default function WordSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const stickyRef = useRef<HTMLDivElement>(null);
   const slides = [<MockWordStep key="a" />, <MockContextStep key="b" />, <MockWordQuizStep key="c" />];
 
-  // Tailwind md 기준: <768px
+  // Tailwind md 기준: < 768px
   const isMobile = useMediaQuery("(max-width: 767px)");
 
+  // ScrollMockTrack의 여유 스크롤 영역 높이(마지막 slide의 여백)
   const releaseVH = 40;
-  const releaseUnits = releaseVH / 100;
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
-    container: scrollContainerRef,
     offset: ["start start", "end start"],
   });
 
-  // 0 → 1 (애니메이션으로 제어)
+  // 0 → 1로 부드럽게 바뀔 value(애니메이션으로 제어)
   const t = useMotionValue(0);
-
   const leftColor = useTransform(
-    t,
-    [0, 1],
-    ["rgba(255,255,255,0.9)", "rgba(209,250,229,0.9)"]
+    t, // inputValue
+    [0, 1], // inputRange
+    ["rgba(255,255,255,0.9)", "rgba(209,250,229,0.9)"] // outputRange
   );
 
-  // gradient 문자열에 MotionValue를 실시간 바인딩
-  const leftBg = useMotionTemplate`
+  // gradient 문자열에 MotionValue(leftColor)를 실시간 바인딩
+  // 데스크탑/태블릿에서 사용
+  const leftBg = useMotionTemplate` 
     linear-gradient(
       to right,
       ${leftColor} 0%,
@@ -58,6 +54,7 @@ export default function WordSection({ scrollContainerRef }: Props) {
     )
   `;
 
+  // 모바일에서 사용
   const topBg = useMotionTemplate`
   linear-gradient(
     to bottom,
@@ -78,6 +75,7 @@ export default function WordSection({ scrollContainerRef }: Props) {
     }
   }, [isStickyFull, t]);
 
+  // slide 개수와 마지막 여백 길이로 section의 높이 결정
   const sectionHeight = `calc(${slides.length} * 100vh + ${releaseVH}vh)`;
 
   // 모바일 분기: phoneWidth/Height/edgeStart 조절
@@ -94,7 +92,7 @@ export default function WordSection({ scrollContainerRef }: Props) {
         className="sticky top-0 h-dvh md:h-screen bg-white flex items-center justify-center overflow-hidden"
       >
         <div className="relative w-full h-full px-6 grid grid-cols-1 gap-1 md:grid-cols-2 md:gap-8 md:items-stretch lg:px-16">
-          {/* ✅ 모바일 전용: 상단 스크림 */}
+          {/* 모바일 전용: 상단 스크림 */}
           <motion.div
             style={{ background: topBg }}
             className="pointer-events-none absolute left-0 top-0 w-full h-[20vh] md:hidden z-10"
@@ -122,7 +120,7 @@ export default function WordSection({ scrollContainerRef }: Props) {
                       버그 잡듯 영어 용어도 잡아보세요
                     </span>
 
-                    {/* 태블릿, 데스크탑: 세 줄 */}
+                    {/* 데스크탑/태블릿: 세 줄 */}
                     <span className="hidden md:block">
                       <span className="block md:mb-4">버그 잡듯</span>
                       <span className="block md:mb-4">영어 용어도</span>
@@ -150,7 +148,7 @@ export default function WordSection({ scrollContainerRef }: Props) {
               gap={128}
               edgeStart={edgeStart}
               edgeEnd={200}
-              releaseUnits={releaseUnits}
+              releaseUnits={releaseVH / 100} // ex. 40vh -> 0.4로 변환 
             />
           </div>
         </div>

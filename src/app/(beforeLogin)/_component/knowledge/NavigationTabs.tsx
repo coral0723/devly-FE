@@ -19,7 +19,7 @@ export default function NavigationTabs({ currentTab }: Props) {
           aria-selected={isActive("개념")}
           className={[
             "flex items-center py-1 space-x-1 text-[9px] font-medium transition-colors md:p-2 md:text-sm md:space-x-2",
-            isActive("개념") ? "text-blue-600" : "text-gray-500 hover:text-gray-700",
+            isActive("개념") ? "text-blue-600 cursor-default" : "text-gray-500 cursor-default",
           ].join(" ")}
           disabled={isActive("개념")}
         >
@@ -53,7 +53,7 @@ export default function NavigationTabs({ currentTab }: Props) {
           aria-selected={isActive("코드")}
           className={[
             "flex items-center py-1 space-x-1 text-[9px] font-medium rounded-t-lg transition-colors md:p-2 md:text-sm md:space-x-2",
-            isActive("코드") ? "text-blue-600" : "text-gray-500 hover:text-gray-700",
+            isActive("코드") ? "text-blue-600 cursor-default" : "text-gray-500 cursor-default",
           ].join(" ")}
           disabled={isActive("코드")}
         >
@@ -88,7 +88,7 @@ export default function NavigationTabs({ currentTab }: Props) {
           aria-selected={isActive("문제")}
           className={[
             "flex items-center py-1 space-x-1 text-[9px] font-medium rounded-t-lg transition-colors md:p-2 md:text-sm md:space-x-2",
-            isActive("문제") ? "text-blue-600" : "text-gray-500 hover:text-gray-700",
+            isActive("문제") ? "text-blue-600 cursor-default" : "text-gray-500 cursor-default",
           ].join(" ")}
           disabled={isActive("문제")}
         >
