@@ -2,7 +2,6 @@ import FadeContent from "../../_animations/FadeContent";
 import SignInBtn from "../SignInBtn";
 import SignUpBtn from "../SignUpBtn";
 import { ChevronDown } from "lucide-react";
-import Floaty from "../../_animations/Floaty";
 
 export default function MainSection() {
   return (
@@ -53,9 +52,7 @@ export default function MainSection() {
 
       {/* 하단 중앙: 스크롤 안내 화살표 */}
       <div className="absolute inset-x-0 z-10 flex justify-center bottom-[max(1rem,calc(env(safe-area-inset-bottom)+10px))]">
-        <Floaty className="text-gray-400">
-          <ChevronDown size={32} />
-        </Floaty>
+        <ChevronDown size={32} className="text-gray-400 animate-float-fast"/>
       </div>
     </section>
   );
