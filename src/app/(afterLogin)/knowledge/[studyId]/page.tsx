@@ -1,4 +1,3 @@
-// import UnderDevelopment from '../_component/UnderDevelopment';
 import BackButton from '../../_component/BackButton';
 import BottomButton from './_component/BottomButton';
 import LearningSection from './_component/LearningSection';
@@ -17,13 +16,6 @@ type Props = {
 export default async function KnowledgePage({ params, searchParams }: Props) {
   const { studyId } = await params;
   const { knowledgeTotal } = await searchParams;
-
-  // 미완성 기능일 때 보여주는 컴포넌트
-  // const isDevelopment = process.env.NODE_ENV === 'development';
-
-  // if(!isDevelopment) { //배포환경에서는 <UnderDevelopment/> 렌더링
-  //   return <UnderDevelopment/>;
-  // }
 
   return (
     <div className="min-h-screen bg-gray-50 relative overflow-hidden">
