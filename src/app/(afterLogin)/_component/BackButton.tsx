@@ -1,19 +1,19 @@
 "use client"
 
-import { useRouter } from "next/navigation";
 import { ChevronLeft } from 'lucide-react';
+import Link from "next/link";
 
 export default function BackButton() {
-  const router = useRouter();
 
   return (
-    <div className="p-4 md:p-6">
-      <button
-        onClick={() => router.push('/home')}
+    <div className="inline-block p-4 md:p-6">
+      <Link
         className="p-2 -ml-2 hover:bg-gray-100 rounded-full flex items-center"
+        href={'/home'}
+        replace
       >
         <ChevronLeft size={24} className="text-gray-600" />
-      </button>
+      </Link>
     </div>
   )
 }
