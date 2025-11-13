@@ -2,7 +2,7 @@
 
 import { usePathname} from 'next/navigation';
 import {Book, BookmarkIcon, MessageCircleIcon, Trophy } from 'lucide-react';
-import { useRouter } from "nextjs-toploader/app";
+import Link from 'next/link';
 
 const NAV_ITEMS = [
   { path: '/home', label: '학습', icon: Book },
@@ -12,7 +12,6 @@ const NAV_ITEMS = [
 ];
 
 export default function BottomNavigation() {
-  const router = useRouter();
   const pathname = usePathname();
 
   return (
@@ -20,10 +19,11 @@ export default function BottomNavigation() {
       <div className="max-w-lg mx-auto px-4">
         <div className="flex justify-around py-3">
           {NAV_ITEMS.map(({ path, label, icon: Icon }) => (
-            <button
+            <Link
               key={path}
+              href={path}
               className="flex flex-col items-center gap-1"
-              onClick={() => {router.push(path)}}
+              replace
             >
             <Icon
               size={20}
@@ -37,7 +37,7 @@ export default function BottomNavigation() {
             >
               {label}
             </span>
-            </button>
+            </Link>
           ))}
         </div>
       </div>
