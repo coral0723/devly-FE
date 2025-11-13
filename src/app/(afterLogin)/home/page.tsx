@@ -6,9 +6,7 @@ import WeeklyActivity from "./_component/WeeklyActivity";
 import { getTodayTasks } from "./_lib/getTodayTasks";
 import { getWeeklyActivity } from "./_lib/getWeeklyActivity";
 
-export default async function Home() {
-  // const isDevelopment = process.env.NODE_ENV === 'development';
-
+export default async function HomePage() {
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery({queryKey: ["todayTasks"], queryFn: getTodayTasks});
   await queryClient.prefetchQuery({queryKey: ["weeklyActivity"], queryFn: getWeeklyActivity});
@@ -35,7 +33,6 @@ export default async function Home() {
                   </svg>
                 </div>
               </div>
-              {/* {isDevelopment && <WeeklyActivity/>} */}
               <WeeklyActivity/>
               {/* Second Icon Section */}
               <div className="relative h-9 z-0"> 

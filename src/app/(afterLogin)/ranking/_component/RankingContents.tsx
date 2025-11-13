@@ -6,20 +6,22 @@ import MyRanking from "./MyRanking"
 import RankingsList from "./RankingsList"
 import { Rankings } from "@/model/Rankings"
 import { getRankings } from "../_lib/getRankings"
+import LoadingSpinner from "@/app/_component/LoadingSpinner"
+import BottomNavigation from "../../_component/BottomNavigation"
 
-export default function RankingContents() {
+export default function RankingPage() {
   const {data: rankings} = useQuery<Rankings, object, Rankings, [_1: string]>({
     queryKey: ["rankings"],
     queryFn: getRankings,
-    staleTime: 60 * 1000,
-    gcTime: 300 * 1000,
+    staleTime: 0,
   })
 
   // 데이터 로딩 중일 때 표시할 내용
   if (!rankings) {
     return (
-      <div className="flex items-center justify-center h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-purple-500"></div>
+      <div className="h-[100dvh] bg-gray-50 flex items-center justify-center">
+        <LoadingSpinner size={"md"}/>
+        <BottomNavigation/>
       </div>
     )
   }

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 
-type props = {
+type Props = {
   title?: string;
   message?: string;
 }
@@ -10,7 +10,7 @@ type props = {
 export default function UnderDevelopment({
   title = "기능 개발 중",
   message = "현재 이 기능은 개발 중입니다. 곧 만나보실 수 있어요!",
-}: props) {
+}: Props) {
   
   return (
     <div className="min-h-screen flex flex-col items-center justify-center py-12 px-6 bg-white shadow-md relative">

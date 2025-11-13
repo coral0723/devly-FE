@@ -201,7 +201,7 @@ export default function InterviewLearningContainer({ interviewId, isReview }: Pr
 
   if( isInterviewLoading || !interview ) {
     return (
-      <div className='flex max-w-lg mx-auto min-h-screen bg-gray-50 items-center justify-center'>
+      <div className='flex h-[100dvh] bg-gray-50 items-center justify-center'>
         <LoadingSpinner size={"md"} />
       </div>
     )

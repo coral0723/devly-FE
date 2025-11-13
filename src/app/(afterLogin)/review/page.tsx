@@ -31,8 +31,9 @@ export default function ReviewPage() {
   // 로딩 중이거나 데이터가 없는 경우
   if(isLoading || !data) {
     return (
-      <div className="max-w-lg mx-auto h-[100dvh] bg-gray-100 flex flex-col items-center justify-center">
+      <div className="h-[100dvh] bg-gray-50 flex items-center justify-center">
         <LoadingSpinner size={"md"}/>
+        <BottomNavigation/>
       </div>
     );
   }

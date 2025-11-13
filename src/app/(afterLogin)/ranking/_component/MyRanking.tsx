@@ -7,7 +7,7 @@ type Props = {
   totalUsers: number;
 }
 
-export default function MyRanking({myRank, totalUsers}: Props) {
+export default function MyRanking({ myRank, totalUsers }: Props) {
   return (
     <div className="bg-white rounded-xl p-4 border border-gray-200 mb-6">
     <div className="flex items-center justify-between mb-2">
