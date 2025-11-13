@@ -1,4 +1,4 @@
-import { Skeleton } from "@/components/ui/skeleton";
+import { Skeleton } from "@/app/(afterLogin)/_component/Skeleton";
 
 export default function WeeklyActivitySkeleton() {
   return (
