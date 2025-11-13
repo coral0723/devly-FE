@@ -3,13 +3,13 @@
 import { useQuery } from "@tanstack/react-query";
 import { Stats } from "@/model/Stats";
 import { getProfileStats } from "../_lib/getProfileStats";
+import ProfileStatsSkeleton from "./skeleton/ProfileStatsSkeleton";
 
 export default function ProfileStats() {
-  const {data} = useQuery<Stats, object, Stats, [_1: string, _2: string]>({
+  const {data: stats, isLoading} = useQuery<Stats, object, Stats, [_1: string, _2: string]>({
     queryKey: ["profile", "stats"],
     queryFn: getProfileStats,
-    staleTime: 60 * 1000,
-    gcTime: 300 * 1000,
+    staleTime: 0,
   });
 
   const statsConfig = [
@@ -20,6 +20,10 @@ export default function ProfileStats() {
     { label: "완료한 PR", key: "pr", suffix: "개" },
     { label: "참여 면접", key: "interview", suffix: "회" },
   ];
+
+  if( isLoading || !stats ) {
+    return <ProfileStatsSkeleton/>
+  }
     
   return (
     <div className="max-w-xl mx-auto">
@@ -28,7 +32,7 @@ export default function ProfileStats() {
           <div key={idx} className="bg-white rounded-xl border border-gray-200 p-4">
             <div className="text-gray-500 text-sm">{stat.label}</div>
             <div className="text-xl font-semibold mt-1">
-              {data ? `${data[stat.key as keyof Stats]}${stat.suffix}` : '-'}
+              {stats ? `${stats[stat.key as keyof Stats]}${stat.suffix}` : '-'}
             </div>
           </div>
         ))}
