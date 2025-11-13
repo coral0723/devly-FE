@@ -1,24 +1,23 @@
 "use client"
 
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
-type UnderDevelopmentProps = {
+type props = {
   title?: string;
   message?: string;
 }
 
-const UnderDevelopment: React.FC<UnderDevelopmentProps> = ({
+export default function UnderDevelopment({
   title = "기능 개발 중",
   message = "현재 이 기능은 개발 중입니다. 곧 만나보실 수 있어요!",
-}) => {
-  const router = useRouter();
+}: props) {
   
   return (
     <div className="min-h-screen flex flex-col items-center justify-center py-12 px-6 bg-white shadow-md relative">
-      <button 
-        onClick={() => router.replace('/home')}
+      <Link 
         className="absolute top-4 left-4 p-2 rounded-full hover:bg-gray-100 transition-colors duration-200"
-        aria-label="돌아가기"
+        href={'/home'}
+        replace
       >
         <svg 
           xmlns="http://www.w3.org/2000/svg" 
@@ -32,7 +31,7 @@ const UnderDevelopment: React.FC<UnderDevelopmentProps> = ({
         >
           <path d="M19 12H5M12 19l-7-7 7-7"/>
         </svg>
-      </button>
+      </Link>
 
       <div className="mb-6 relative">
         <div className="w-24 h-24 rounded-full bg-black flex items-center justify-center">
@@ -56,5 +55,3 @@ const UnderDevelopment: React.FC<UnderDevelopmentProps> = ({
     </div>
   );
 };
-
-export default UnderDevelopment;
