@@ -26,12 +26,13 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+// 모바일 UI 안정성을 위한 설정
 export const viewport = {
-  width: "device-width",
-  initialScale: 1.0,
-  maximumScale: 1.0,
-  userScalable: "no",
-  viewportFit: 'cover',
+  width: "device-width", // 화면 전체 너비 사용
+  initialScale: 1.0, // 처음 확대 비율
+  maximumScale: 1.0, // 최대 확대 제한
+  userScalable: "no", // 유저의 확대/축소 금지
+  viewportFit: 'cover', // Iphone notch 영역까지 UI 사용 가능
 };
 
 export const metadata: Metadata = {
