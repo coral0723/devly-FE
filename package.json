@@ -27,6 +27,7 @@
     "react-dom": "^19.2.3",
     "react-hot-toast": "^2.5.2",
     "react-intersection-observer": "^9.15.1",
+    "react-optimistic-chat": "^1.0.0",
     "tailwind-merge": "^2.6.0",
     "tailwind-scrollbar-hide": "^2.0.0",
     "tailwindcss-animate": "^1.0.7"
