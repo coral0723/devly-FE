@@ -5,7 +5,7 @@ import { Bot } from "lucide-react"
 
 type Props = {
   chat: {
-    id: number;
+    id: number | string;
     role: string;
     content: string;
   };
@@ -17,19 +17,19 @@ export default function ChatMessage({chat, isLoading}: Props) {
     <div 
       key={chat.id} 
       className={`flex mb-4 items-start ${
-        chat.role === 'ai' 
+        chat.role.toLowerCase() === 'ai'
           ? 'justify-start' 
           : 'justify-end'
       }`}
     >
-      {chat.role === 'ai' && (
+      {chat.role.toLowerCase() === 'ai' && (
         <div className="bg-orange-100 rounded-full p-2 mr-2 border-2 border-orange-400">
           <Bot size={24} className="text-orange-400"/>
         </div>
       )}
       <div 
         className={`py-3 px-3 max-h-96 overflow-y-auto w-fit max-w-[calc(100%-3rem)] ${
-          chat.role === 'ai' 
+          chat.role.toLowerCase() === 'ai' 
             ? 'bg-orange-100 border-orange-200 rounded-b-xl rounded-tr-xl' 
             : 'bg-white rounded-b-xl rounded-tl-xl'
         }`}
