@@ -124,7 +124,6 @@ export default function InterviewLearningContainer({ interviewId, isReview }: Pr
       </ContentsWrapper>
 
       <BottomButton
-        interviewId={interviewId}
         isRecording={voice.isRecording}
         isEnd={isEnd}
         setShowCompletion={setShowCompletion}

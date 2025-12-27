@@ -658,7 +658,7 @@ export const handlers = [
         id: Date.now() + 1,
         role: 'ai',
         content: '좋은 답변이었습니다.',
-        end: Math.random() > 0.7,
+        end: Math.random() < 0.7,
       })
     )
   }),
