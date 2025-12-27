@@ -14,8 +14,8 @@ import ExitConfirmModal from "./ExitConfirmModal";
 import ContentsWrapper from "@/app/_component/ContentsWrapper";
 import { msUntilNextMidnight } from "@/app/(afterLogin)/_utils/msUntilNextMidnight";
 import LoadingSpinner from "@/app/_component/LoadingSpinner";
-import { useBrowserSpeechRecognition, useVoiceOptimisticChat } from "react-optimistic-chat";
-import { fetchInterview } from "../_lib/fetchInterview";
+import { useBrowserSpeechRecognition, useVoiceChat } from "react-optimistic-chat";
+import { getInterview } from "../_lib/getInterview";
 
 type Props = {
   interviewId: string;
@@ -39,31 +39,37 @@ export default function InterviewLearningContainer({ interviewId, isReview }: Pr
     isInitialLoading,
     startRecording,
     stopRecording,
-  } = useVoiceOptimisticChat<Chat>({
+  } = useVoiceChat<Chat>({
     voice,
     queryKey: ["interview", "learn", interviewId],
-    queryFn: () => fetchInterview(interviewId),
+    queryFn: (pageParam) => getInterview(interviewId, pageParam as number),
+    initialPageParam: 0,
+    getNextPageParam(lastPage, allPages) {
+      console.log(`lastPage: ${lastPage}, allPages: ${allPages}`)
+      if (!lastPage) return undefined;
+
+      if (lastPage.length === 10) {
+        return allPages.length;
+      }
+      return undefined;
+    },
     mutationFn: async (content: string): Promise<Chat> => {
       const res = await axios.post(
         `/mock/study/interview/recomment/${messages[messages.length - 1].id}`, 
         {role: "user", content }
       );
+
+      if(res.data.end === true) setIsEnd(true);
+
       return res.data;
     },
     map: (raw) => ({
       id: raw.id,
       role: raw.role === "ai" ? "AI" : "USER",
       content: raw.content,
-      end: raw.end,
     }),
     staleTime: msUntilNextMidnight(),
   });
-
-  // AI 응답으로 end 감지
-  useEffect(() => {
-    const last = messages[messages.length - 1];
-    if (last?.end) setIsEnd(true);
-  }, [messages]);
 
   // 남은 시간 계산 
   useEffect(() => {

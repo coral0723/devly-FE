@@ -638,7 +638,7 @@ export const handlers = [
       })
     )
   }),
-  http.get(`${baseUrl}/mock/study/interview/:id`, async ({ }) => {
+  http.get(`${baseUrl}/mock/study/interview/:id`, async ({ request }) => {
     return new HttpResponse(
       JSON.stringify({
         code: "SUCCESS",
@@ -647,7 +647,6 @@ export const handlers = [
           id: Date.now(),
           role: 'ai',
           content: 'Virtual DOM의 개념에 대해 설명해주시겠어요?',
-          end: false
         }]
       })
     );
@@ -659,7 +658,7 @@ export const handlers = [
         id: Date.now() + 1,
         role: 'ai',
         content: '좋은 답변이었습니다.',
-        end: Math.random() < 0.7,
+        end: Math.random() > 0.7,
       })
     )
   }),

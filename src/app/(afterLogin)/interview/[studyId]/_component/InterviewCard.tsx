@@ -19,9 +19,10 @@ export default function InterviewCard({ interview }: Props) {
 
   const prefetch = async () => {
     if (!studyId) return;
-    await queryClient.prefetchQuery({
+    await queryClient.prefetchInfiniteQuery({
       queryKey: ["interview", "learn", String(interview.id)],
-      queryFn: getInterview,
+      queryFn: (pageParam) => getInterview(String(interview.id), Number(pageParam)),
+      initialPageParam: 0,
       staleTime: msUntilNextMidnight(),
     })
   };
