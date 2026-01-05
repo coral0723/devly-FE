@@ -1,4 +1,4 @@
-import "react-optimistic-chat/style.css";
+// import "react-optimistic-chat/style.css";
 
 export default function AfterLoginLayout({
   children,
