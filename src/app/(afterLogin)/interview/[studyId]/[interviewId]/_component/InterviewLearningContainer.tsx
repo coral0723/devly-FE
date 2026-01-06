@@ -71,6 +71,13 @@ export default function InterviewLearningContainer({ interviewId, isReview }: Pr
     staleTime: msUntilNextMidnight(),
   });
 
+  // 녹음 중이고, 마지막 메시지가 USER이고, content가 비어 있으면
+  const lastMessage = messages[messages.length - 1];
+  const disableStopRecording = 
+    voice.isRecording &&
+    lastMessage?.role === "USER" &&
+    lastMessage?.content.trim() === "";
+
   // 남은 시간 계산 
   useEffect(() => {
     if (timeLeft > 0 && !isEnd) {
@@ -89,6 +96,9 @@ export default function InterviewLearningContainer({ interviewId, isReview }: Pr
 
   const handleRecord = () => {
     if (voice.isRecording) {
+      // 녹음 된 내용이 없다면 녹음 중지 막음
+      if (disableStopRecording) return;
+
       stopRecording();
       setTimeLeft(30);
     } else {
@@ -128,6 +138,7 @@ export default function InterviewLearningContainer({ interviewId, isReview }: Pr
         isEnd={isEnd}
         setShowCompletion={setShowCompletion}
         handleRecord={handleRecord}
+        disabled={disableStopRecording}
       />
 
       {showTimeoutModal && (

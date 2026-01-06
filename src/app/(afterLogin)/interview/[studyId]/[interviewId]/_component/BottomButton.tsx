@@ -3,13 +3,14 @@
 import { Mic } from "lucide-react";
 
 type Props = {
+  disabled: boolean;
   isRecording: boolean;
   isEnd: boolean;
   setShowCompletion: (completion: boolean) => void;
   handleRecord: () => void;
 }
 
-export default function BottomButton({ isRecording, isEnd, setShowCompletion, handleRecord }: Props) {
+export default function BottomButton({ disabled, isRecording, isEnd, setShowCompletion, handleRecord }: Props) {
   const handleClick = () => {
     if (isEnd) {
       setShowCompletion(true);
@@ -23,11 +24,13 @@ export default function BottomButton({ isRecording, isEnd, setShowCompletion, ha
       <div className="max-w-xl mx-auto">
         <button 
           className={`w-full py-3 text-white md:text-lg font-medium rounded-lg flex items-center justify-center ${
-            isEnd 
-              ? 'bg-gradient-to-r from-orange-400 to-amber-500 hover:from-orange-500 hover:to-amber-600'
-              : isRecording 
-              ? 'bg-red-500 hover:bg-red-600' 
-              : 'bg-orange-500 hover:bg-orange-600'
+            disabled
+              ? "bg-gray-300 cursor-not-allowed"
+              :isEnd 
+                ? 'bg-gradient-to-r from-orange-400 to-amber-500 hover:from-orange-500 hover:to-amber-600'
+                : isRecording 
+                  ? 'bg-red-500 hover:bg-red-600' 
+                  : 'bg-orange-500 hover:bg-orange-600'
           }`}
           onClick={handleClick}
         >
