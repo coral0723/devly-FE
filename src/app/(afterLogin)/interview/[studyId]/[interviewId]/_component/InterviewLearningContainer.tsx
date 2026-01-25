@@ -6,14 +6,13 @@ import { useRouter } from "nextjs-toploader/app";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import Header from "./Header";
-import ChatMessage from "./ChatMessage";
+import { ChatMessage, LoadingSpinner } from "react-optimistic-chat";
 import BottomButton from "./BottomButton";
 import TimeoutModal from "./TimeoutModal";
 import { CompletionModal } from "./CompletionModal";
 import ExitConfirmModal from "./ExitConfirmModal";
 import ContentsWrapper from "@/app/_component/ContentsWrapper";
 import { msUntilNextMidnight } from "@/app/(afterLogin)/_utils/msUntilNextMidnight";
-import LoadingSpinner from "@/app/_component/LoadingSpinner";
 import { useBrowserSpeechRecognition, useVoiceChat } from "react-optimistic-chat";
 import { getInterview } from "../_lib/getInterview";
 
@@ -23,7 +22,7 @@ type Props = {
 };
 
 export default function InterviewLearningContainer({ interviewId, isReview }: Props) {
-  const [timeLeft, setTimeLeft] = useState<number>(30);
+  const [timeLeft, setTimeLeft] = useState<number>(300);
   const [showTimeoutModal, setShowTimeoutModal] = useState<boolean>(false);
   const [showExitConfirm, setShowExitConfirm] = useState<boolean>(false);
   const [showCompletion, setShowCompletion] = useState<boolean>(false);
@@ -35,7 +34,6 @@ export default function InterviewLearningContainer({ interviewId, isReview }: Pr
 
   const {
     messages,
-    isPending,
     isInitialLoading,
     startRecording,
     stopRecording,
@@ -70,6 +68,8 @@ export default function InterviewLearningContainer({ interviewId, isReview }: Pr
     }),
     staleTime: msUntilNextMidnight(),
   });
+
+  console.log(messages)
 
   // 녹음 중이고, 마지막 메시지가 USER이고, content가 비어 있으면
   const lastMessage = messages[messages.length - 1];
@@ -127,8 +127,10 @@ export default function InterviewLearningContainer({ interviewId, isReview }: Pr
         {messages.map((chat) => (
           <ChatMessage
             key={chat.id}
-            chat={chat}
-            isLoading={chat.role === "AI" && chat.content === "" && isPending}
+            {...chat}
+            aiIconColor="text-orange-400"
+            aiIconWrapperClassName="!border-orange-400 !bg-orange-100"
+            aiBubbleClassName="!bg-orange-100 !border-orange-200"
           />
         ))}
       </ContentsWrapper>
