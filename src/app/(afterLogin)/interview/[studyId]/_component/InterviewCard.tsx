@@ -4,9 +4,6 @@ import { InterviewCard as IInterviewCard } from "@/model/interview/InterviewCard
 import { useRouter } from "nextjs-toploader/app";
 import { useParams } from "next/navigation"
 import { ChevronRight } from "lucide-react";
-import { useQueryClient } from "@tanstack/react-query";
-import { getInterview } from "../[interviewId]/_lib/getInterview";
-import { msUntilNextMidnight } from "../../../_utils/msUntilNextMidnight";
 
 type Props = {
   interview: IInterviewCard;
@@ -15,22 +12,9 @@ type Props = {
 export default function InterviewCard({ interview }: Props) {
   const router = useRouter();
   const studyId = useParams().studyId;
-  const queryClient = useQueryClient();
-
-  const prefetch = async () => {
-    if (!studyId) return;
-    await queryClient.prefetchInfiniteQuery({
-      queryKey: ["interview", "learn", String(interview.id)],
-      queryFn: (pageParam) => getInterview(String(interview.id), Number(pageParam)),
-      initialPageParam: 0,
-      staleTime: msUntilNextMidnight(),
-    })
-  };
 
   const handleClick = async () => {
     if (interview) {
-      // 모바일에서는 hover가 없으니 클릭 직전에라도 prefetch
-      await prefetch();
       router.replace(`/interview/${studyId}/${interview.id}/learn`);
     } else {
       router.replace("/home");
