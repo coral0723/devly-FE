@@ -1,4 +1,4 @@
-# 개발자 AI 교육 서비스 **devly**
+# 매일 개발 학습 콘텐츠를 제공하는 개발자 교육 서비스 **"devly"**
 
 <div align="center">
   <img width="350" height="240" alt="Image" src="https://github.com/user-attachments/assets/e93df2b5-585b-4075-84ef-92f5070ef2e6" />
