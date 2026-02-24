@@ -15,7 +15,7 @@ export default function SignUpBtn() {
   
   return (
     <button
-      className="w-full py-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-xl font-medium hover:opacity-90 active:scale-[0.98] transition-all flex items-center justify-center gap-3 shadow-sm"
+      className="w-full py-4 bg-black text-white rounded-xl font-medium hover:opacity-90 active:scale-[0.98] transition-all flex items-center justify-center gap-3 shadow-sm"
       onClick={handleSignup}
     >
       <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" className="opacity-90">
