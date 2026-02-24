@@ -22,7 +22,7 @@ type Props = {
 };
 
 export default function InterviewLearningContainer({ interviewId, isReview }: Props) {
-  const [timeLeft, setTimeLeft] = useState<number>(300);
+  const [timeLeft, setTimeLeft] = useState<number>(30);
   const [showTimeoutModal, setShowTimeoutModal] = useState<boolean>(false);
   const [showExitConfirm, setShowExitConfirm] = useState<boolean>(false);
   const [showCompletion, setShowCompletion] = useState<boolean>(false);
@@ -37,7 +37,7 @@ export default function InterviewLearningContainer({ interviewId, isReview }: Pr
     isInitialLoading,
     startRecording,
     stopRecording,
-  } = useVoiceChat<Chat>({
+  } = useVoiceChat({
     voice,
     queryKey: ["interview", "learn", interviewId],
     queryFn: (pageParam) => getInterview(interviewId, pageParam as number),
@@ -61,11 +61,14 @@ export default function InterviewLearningContainer({ interviewId, isReview }: Pr
 
       return res.data;
     },
-    map: (raw) => ({
-      id: raw.id,
-      role: raw.role === "ai" ? "AI" : "USER",
-      content: raw.content,
-    }),
+    keyMap: {
+      id: "id",
+      role: "role",
+      content: "content"
+    },
+    roleResolver: (sender) => {
+      return sender === "ai" ? "AI" : "USER";
+    },
     staleTime: msUntilNextMidnight(),
   });
 
